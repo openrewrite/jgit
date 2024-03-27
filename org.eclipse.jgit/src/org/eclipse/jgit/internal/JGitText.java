@@ -44,6 +44,8 @@ public class JGitText extends TranslationBundle {
 	/***/ public String applyBinaryBaseOidWrong;
 	/***/ public String applyBinaryOidTooShort;
 	/***/ public String applyBinaryResultOidWrong;
+	/***/ public String applyPatchDestInvalid;
+	/***/ public String applyPatchSourceInvalid;
 	/***/ public String applyingCommit;
 	/***/ public String archiveFormatAlreadyAbsent;
 	/***/ public String archiveFormatAlreadyRegistered;
@@ -575,6 +577,8 @@ public class JGitText extends TranslationBundle {
 	/***/ public String packWriterStatistics;
 	/***/ public String panicCantRenameIndexFile;
 	/***/ public String patchApplyException;
+	/***/ public String patchApplyErrorWithHunk;
+	/***/ public String patchApplyErrorWithoutHunk;
 	/***/ public String patchFormatException;
 	/***/ public String pathNotConfigured;
 	/***/ public String peeledLineBeforeRef;
