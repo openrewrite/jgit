@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "openrewrite-jgit"
+rootProject.name = "jgit"
