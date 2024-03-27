@@ -1,9 +1,13 @@
-/.project
-/target
-infer-out
-bazel-*
-
-# Do not add editor- and OS-specific files like *~ (Emacs) and .DS_Store
-# (macOS). Instead, add them to $XDG_CONFIG_HOME/git/ignore
-# (~/.config/git/ignore if $XDG_CONFIG_HOME is not set) or
-# $GIT_DIR/info/exclude. See "git help gitignore" for details.
+bin/
+build/
+.gradle/
+out/
+.idea/
+.project
+.classpath
+.settings/
+.DS_Store
+**/node_modules/
+IDE.properties
+# ASDF https://asdf-vm.com/
+.tool-versions
