@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
 
 /**
  * A filter for extracting changes between two versions of the dircache. In
- * addition to what {@link org.eclipse.jgit.treewalk.filter.TreeFilter#ANY_DIFF}
+ * addition to what {@link org.openrewrite.jgit.treewalk.filter.TreeFilter#ANY_DIFF}
  * would do, it also detects changes that will affect decorations and show up in
  * an attempt to commit.
  */

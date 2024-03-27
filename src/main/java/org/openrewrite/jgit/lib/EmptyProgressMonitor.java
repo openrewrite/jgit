@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 /**
  * A convenient base class which provides empty method bodies for all

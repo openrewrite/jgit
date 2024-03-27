@@ -7,20 +7,20 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_DEEPEN_RELATIVE;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_FILTER;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_AGENT;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_INCLUDE_TAG;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_NO_PROGRESS;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_OFS_DELTA;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_SERVER_OPTION;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_SIDEBAND_ALL;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_SIDE_BAND_64K;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_THIN_PACK;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_WAIT_FOR_DONE;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_WANT_REF;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_DEEPEN_RELATIVE;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_FILTER;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_AGENT;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_INCLUDE_TAG;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_NO_PROGRESS;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_OFS_DELTA;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_SERVER_OPTION;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_SIDEBAND_ALL;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_SIDE_BAND_64K;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_THIN_PACK;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_WAIT_FOR_DONE;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_WANT_REF;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -28,10 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.eclipse.jgit.errors.InvalidObjectIdException;
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.errors.InvalidObjectIdException;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * Parse the incoming git protocol lines from the wire and translate them into a

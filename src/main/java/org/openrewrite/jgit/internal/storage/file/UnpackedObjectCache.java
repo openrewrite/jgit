@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /** Remembers objects that are currently unpacked. */
 class UnpackedObjectCache {

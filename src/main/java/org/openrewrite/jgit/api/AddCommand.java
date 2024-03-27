@@ -8,12 +8,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.FileMode.GITLINK;
-import static org.eclipse.jgit.lib.FileMode.TYPE_GITLINK;
-import static org.eclipse.jgit.lib.FileMode.TYPE_TREE;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.lib.FileMode.GITLINK;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_GITLINK;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_TREE;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,25 +21,25 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.eclipse.jgit.api.errors.FilterFailedException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoFilepatternException;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheBuildIterator;
-import org.eclipse.jgit.dircache.DirCacheBuilder;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.NameConflictTreeWalk;
-import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.openrewrite.jgit.api.errors.FilterFailedException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoFilepatternException;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheBuildIterator;
+import org.openrewrite.jgit.dircache.DirCacheBuilder;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.NameConflictTreeWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
 
 /**
  * A class used to execute a {@code Add} command. It has setters for all
@@ -62,7 +62,7 @@ public class AddCommand extends GitCommand<DirCache> {
 	 * Constructor for AddCommand
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	public AddCommand(Repository repo) {
 		super(repo);
@@ -91,7 +91,7 @@ public class AddCommand extends GitCommand<DirCache> {
 	 * Allow clients to provide their own implementation of a FileTreeIterator
 	 *
 	 * @param f
-	 *            a {@link org.eclipse.jgit.treewalk.WorkingTreeIterator}
+	 *            a {@link org.openrewrite.jgit.treewalk.WorkingTreeIterator}
 	 *            object.
 	 * @return {@code this}
 	 */

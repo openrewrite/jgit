@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -18,7 +18,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Combines messages from an OutputStream (hopefully in UTF-8) and a Writer.
@@ -34,7 +34,7 @@ import org.eclipse.jgit.util.RawParseUtils;
  * {@link #toString()} returns all written data, after converting it to a String
  * under the assumption of UTF-8 encoding.
  * <p>
- * Internally {@link org.eclipse.jgit.util.RawParseUtils#decode(byte[])} is used
+ * Internally {@link org.openrewrite.jgit.util.RawParseUtils#decode(byte[])} is used
  * by {@code toString()} tries to work out a reasonably correct character set
  * for the raw data.
  */

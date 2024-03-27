@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,17 +19,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.RemoteRefUpdate.Status;
 
 /**
  * Class performing push operation on remote repository.

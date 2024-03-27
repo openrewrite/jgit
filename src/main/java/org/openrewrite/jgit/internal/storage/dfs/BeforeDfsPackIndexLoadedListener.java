@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import org.eclipse.jgit.events.RepositoryListener;
+import org.openrewrite.jgit.events.RepositoryListener;
 
 /**
  * Receives
- * {@link org.eclipse.jgit.internal.storage.dfs.BeforeDfsPackIndexLoadedEvent}s.
+ * {@link org.openrewrite.jgit.internal.storage.dfs.BeforeDfsPackIndexLoadedEvent}s.
  */
 public interface BeforeDfsPackIndexLoadedListener extends RepositoryListener {
 	/**

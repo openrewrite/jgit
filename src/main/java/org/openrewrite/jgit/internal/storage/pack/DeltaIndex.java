@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,7 +19,7 @@ import java.io.OutputStream;
  * The index can be passed a result buffer, and output an instruction sequence
  * that transforms the source buffer used by the index into the result buffer.
  * The instruction sequence can be executed by
- * {@link org.eclipse.jgit.internal.storage.pack.BinaryDelta} to recreate the
+ * {@link org.openrewrite.jgit.internal.storage.pack.BinaryDelta} to recreate the
  * result buffer.
  * <p>
  * An index stores the entire contents of the source buffer, but also a table of

@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -18,9 +18,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.jgit.util.time.ProposedTimestamp;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.SystemReader;
+import org.openrewrite.jgit.util.time.ProposedTimestamp;
 
 /**
  * A combination of a person identity and time in Git.
@@ -132,24 +132,24 @@ public class PersonIdent implements Serializable {
 	 * This new PersonIdent gets the info from the default committer as available
 	 * from the configuration.
 	 *
-	 * @param repo a {@link org.eclipse.jgit.lib.Repository} object.
+	 * @param repo a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	public PersonIdent(Repository repo) {
 		this(repo.getConfig().get(UserConfig.KEY));
 	}
 
 	/**
-	 * Copy a {@link org.eclipse.jgit.lib.PersonIdent}.
+	 * Copy a {@link org.openrewrite.jgit.lib.PersonIdent}.
 	 *
 	 * @param pi
-	 *            Original {@link org.eclipse.jgit.lib.PersonIdent}
+	 *            Original {@link org.openrewrite.jgit.lib.PersonIdent}
 	 */
 	public PersonIdent(PersonIdent pi) {
 		this(pi.getName(), pi.getEmailAddress());
 	}
 
 	/**
-	 * Construct a new {@link org.eclipse.jgit.lib.PersonIdent} with current
+	 * Construct a new {@link org.openrewrite.jgit.lib.PersonIdent} with current
 	 * time.
 	 *
 	 * @param aName
@@ -162,7 +162,7 @@ public class PersonIdent implements Serializable {
 	}
 
 	/**
-	 * Construct a new {@link org.eclipse.jgit.lib.PersonIdent} with current
+	 * Construct a new {@link org.openrewrite.jgit.lib.PersonIdent} with current
 	 * time.
 	 *
 	 * @param aName
@@ -170,7 +170,7 @@ public class PersonIdent implements Serializable {
 	 * @param aEmailAddress
 	 *            a {@link java.lang.String} object.
 	 * @param when
-	 *            a {@link org.eclipse.jgit.util.time.ProposedTimestamp} object.
+	 *            a {@link org.openrewrite.jgit.util.time.ProposedTimestamp} object.
 	 * @since 4.6
 	 */
 	public PersonIdent(String aName, String aEmailAddress,
@@ -182,7 +182,7 @@ public class PersonIdent implements Serializable {
 	 * Copy a PersonIdent, but alter the clone's time stamp
 	 *
 	 * @param pi
-	 *            original {@link org.eclipse.jgit.lib.PersonIdent}
+	 *            original {@link org.openrewrite.jgit.lib.PersonIdent}
 	 * @param when
 	 *            local time
 	 * @param tz
@@ -193,11 +193,11 @@ public class PersonIdent implements Serializable {
 	}
 
 	/**
-	 * Copy a {@link org.eclipse.jgit.lib.PersonIdent}, but alter the clone's
+	 * Copy a {@link org.openrewrite.jgit.lib.PersonIdent}, but alter the clone's
 	 * time stamp
 	 *
 	 * @param pi
-	 *            original {@link org.eclipse.jgit.lib.PersonIdent}
+	 *            original {@link org.openrewrite.jgit.lib.PersonIdent}
 	 * @param aWhen
 	 *            local time
 	 */
@@ -225,7 +225,7 @@ public class PersonIdent implements Serializable {
 	 * Copy a PersonIdent, but alter the clone's time stamp
 	 *
 	 * @param pi
-	 *            original {@link org.eclipse.jgit.lib.PersonIdent}
+	 *            original {@link org.openrewrite.jgit.lib.PersonIdent}
 	 * @param aWhen
 	 *            local time stamp
 	 * @param aTZ
@@ -246,7 +246,7 @@ public class PersonIdent implements Serializable {
 	}
 
 	/**
-	 * Construct a {@link org.eclipse.jgit.lib.PersonIdent}.
+	 * Construct a {@link org.openrewrite.jgit.lib.PersonIdent}.
 	 * <p>
 	 * Whitespace in the name and email is preserved for the lifetime of this
 	 * object, but are trimmed by {@link #toExternalString()}. This means that

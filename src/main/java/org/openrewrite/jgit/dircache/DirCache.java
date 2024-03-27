@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 
@@ -31,34 +31,34 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IndexReadException;
-import org.eclipse.jgit.errors.LockFailedException;
-import org.eclipse.jgit.errors.UnmergedPathException;
-import org.eclipse.jgit.events.IndexChangedEvent;
-import org.eclipse.jgit.events.IndexChangedListener;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.FileSnapshot;
-import org.eclipse.jgit.internal.storage.file.LockFile;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Config.ConfigEnum;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.MutableInteger;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.TemporaryBuffer;
-import org.eclipse.jgit.util.io.SilentFileInputStream;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IndexReadException;
+import org.openrewrite.jgit.errors.LockFailedException;
+import org.openrewrite.jgit.errors.UnmergedPathException;
+import org.openrewrite.jgit.events.IndexChangedEvent;
+import org.openrewrite.jgit.events.IndexChangedListener;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.FileSnapshot;
+import org.openrewrite.jgit.internal.storage.file.LockFile;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Config.ConfigEnum;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
+import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.MutableInteger;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.util.io.SilentFileInputStream;
 
 /**
  * Support for the Git dircache (aka index file).
@@ -154,7 +154,7 @@ public class DirCache {
 	 *         it exists) or an empty cache if the file does not exist.
 	 * @throws java.io.IOException
 	 *             the index file is present but could not be read.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the index file is using a format or extension that this
 	 *             library does not support.
 	 */
@@ -181,7 +181,7 @@ public class DirCache {
 	 *         it exists) or an empty cache if the file does not exist.
 	 * @throws java.io.IOException
 	 *             the index file is present but could not be read.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the index file is using a format or extension that this
 	 *             library does not support.
 	 */
@@ -210,7 +210,7 @@ public class DirCache {
 	 * @throws java.io.IOException
 	 *             the index file is present but could not be read, or the lock
 	 *             could not be obtained.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the index file is using a format or extension that this
 	 *             library does not support.
 	 */
@@ -247,7 +247,7 @@ public class DirCache {
 	 * @throws java.io.IOException
 	 *             the index file is present but could not be read, or the lock
 	 *             could not be obtained.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the index file is using a format or extension that this
 	 *             library does not support.
 	 * @since 2.0
@@ -281,7 +281,7 @@ public class DirCache {
 	 * @throws java.io.IOException
 	 *             the index file is present but could not be read, or the lock
 	 *             could not be obtained.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the index file is using a format or extension that this
 	 *             library does not support.
 	 */
@@ -348,7 +348,7 @@ public class DirCache {
 	 * Create a new builder to update this cache.
 	 * <p>
 	 * Callers should add all entries to the builder, then use
-	 * {@link org.eclipse.jgit.dircache.DirCacheBuilder#finish()} to update this
+	 * {@link org.openrewrite.jgit.dircache.DirCacheBuilder#finish()} to update this
 	 * instance.
 	 *
 	 * @return a new builder instance for this cache.
@@ -361,7 +361,7 @@ public class DirCache {
 	 * Create a new editor to recreate this cache.
 	 * <p>
 	 * Callers should add commands to the editor, then use
-	 * {@link org.eclipse.jgit.dircache.DirCacheEditor#finish()} to update this
+	 * {@link org.openrewrite.jgit.dircache.DirCacheEditor#finish()} to update this
 	 * instance.
 	 *
 	 * @return a new builder instance for this cache.
@@ -390,7 +390,7 @@ public class DirCache {
 	 * @throws java.io.IOException
 	 *             the index file is present but could not be read. This
 	 *             DirCache instance may not be populated correctly.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the index file is using a format or extension that this
 	 *             library does not support.
 	 */
@@ -944,7 +944,7 @@ public class DirCache {
 	 *            responsible for flushing the inserter before trying to use the
 	 *            returned tree identity.
 	 * @return identity for the root tree.
-	 * @throws org.eclipse.jgit.errors.UnmergedPathException
+	 * @throws org.openrewrite.jgit.errors.UnmergedPathException
 	 *             one or more paths contain higher-order stages (stage &gt; 0),
 	 *             which cannot be stored in a tree object.
 	 * @throws java.lang.IllegalStateException

@@ -8,30 +8,30 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.notes;
+package org.openrewrite.jgit.notes;
 
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevTree;
 
 /**
  * Index of notes from a note branch.
  *
  * This class is not thread-safe, and relies on an
- * {@link org.eclipse.jgit.lib.ObjectReader} that it borrows/shares with the
+ * {@link org.openrewrite.jgit.lib.ObjectReader} that it borrows/shares with the
  * caller. The reader can be used during any call, and is not released by this
  * class. The caller should arrange for releasing the shared
  * {@code ObjectReader} at the proper times.
@@ -50,7 +50,7 @@ public class NoteMap implements Iterable<Note> {
 
 	/**
 	 * Shorten the note ref name by trimming off the
-	 * {@link org.eclipse.jgit.lib.Constants#R_NOTES} prefix if it exists.
+	 * {@link org.openrewrite.jgit.lib.Constants#R_NOTES} prefix if it exists.
 	 *
 	 * @param noteRefName
 	 *            a {@link java.lang.String} object.
@@ -74,11 +74,11 @@ public class NoteMap implements Iterable<Note> {
 	 * @return the note map read from the commit.
 	 * @throws java.io.IOException
 	 *             the repository cannot be accessed through the reader.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             a tree object is corrupt and cannot be read.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             a tree object wasn't actually a tree.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             a reference tree object doesn't exist.
 	 */
 	public static NoteMap read(ObjectReader reader, RevCommit commit)
@@ -99,11 +99,11 @@ public class NoteMap implements Iterable<Note> {
 	 * @return the note map read from the tree.
 	 * @throws java.io.IOException
 	 *             the repository cannot be accessed through the reader.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             a tree object is corrupt and cannot be read.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             a tree object wasn't actually a tree.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             a reference tree object doesn't exist.
 	 */
 	public static NoteMap read(ObjectReader reader, RevTree tree)
@@ -124,11 +124,11 @@ public class NoteMap implements Iterable<Note> {
 	 * @return the note map read from the tree.
 	 * @throws java.io.IOException
 	 *             the repository cannot be accessed through the reader.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             a tree object is corrupt and cannot be read.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             a tree object wasn't actually a tree.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             a reference tree object doesn't exist.
 	 */
 	public static NoteMap readTree(ObjectReader reader, ObjectId treeId)
@@ -235,9 +235,9 @@ public class NoteMap implements Iterable<Note> {
 	 *            larger than this limit, LargeObjectException will be thrown.
 	 * @return if a note is defined for {@code id}, the note content. If no note
 	 *         is defined, null.
-	 * @throws org.eclipse.jgit.errors.LargeObjectException
+	 * @throws org.openrewrite.jgit.errors.LargeObjectException
 	 *             the note data is larger than {@code sizeLimit}.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the note's blob does not exist in the repository.
 	 * @throws java.io.IOException
 	 *             the note's blob cannot be read from the repository

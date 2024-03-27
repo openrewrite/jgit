@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.blame;
+package org.openrewrite.jgit.blame;
 
 /**
  * Region of the result that still needs to be computed.

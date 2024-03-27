@@ -39,10 +39,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.errors.UnsupportedCredentialItem;
-import org.eclipse.jgit.transport.NetRC.NetRCEntry;
+import org.openrewrite.jgit.errors.UnsupportedCredentialItem;
+import org.openrewrite.jgit.transport.NetRC.NetRCEntry;
 
 /**
  * Simple .netrc credentials provider. It can lookup the first machine entry

@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -24,19 +24,19 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipException;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.InflaterCache;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectStream;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.MutableInteger;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.InflaterCache;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectStream;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.MutableInteger;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Loose object loader. This class loads an object not stored in a pack.

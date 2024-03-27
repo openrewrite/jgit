@@ -8,23 +8,23 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.ReflogEntry;
 
 /**
  * Merges multiple reference tables together.
  * <p>
- * A {@link org.eclipse.jgit.internal.storage.reftable.MergedReftable}
+ * A {@link org.openrewrite.jgit.internal.storage.reftable.MergedReftable}
  * merge-joins multiple
- * {@link org.eclipse.jgit.internal.storage.reftable.ReftableReader} on the fly.
+ * {@link org.openrewrite.jgit.internal.storage.reftable.ReftableReader} on the fly.
  * Tables higher/later in the stack shadow lower/earlier tables, hiding
  * references that been updated/replaced.
  * <p>

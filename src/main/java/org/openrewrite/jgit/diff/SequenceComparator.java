@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 /**
- * Equivalence function for a {@link org.eclipse.jgit.diff.Sequence} compared by
+ * Equivalence function for a {@link org.openrewrite.jgit.diff.Sequence} compared by
  * difference algorithm.
  * <p>
  * Difference algorithms can use a comparator to compare portions of two

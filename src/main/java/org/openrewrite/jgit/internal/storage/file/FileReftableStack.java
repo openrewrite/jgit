@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -30,16 +30,16 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.LockFailedException;
-import org.eclipse.jgit.internal.storage.io.BlockSource;
-import org.eclipse.jgit.internal.storage.reftable.MergedReftable;
-import org.eclipse.jgit.internal.storage.reftable.ReftableCompactor;
-import org.eclipse.jgit.internal.storage.reftable.ReftableConfig;
-import org.eclipse.jgit.internal.storage.reftable.ReftableReader;
-import org.eclipse.jgit.internal.storage.reftable.ReftableWriter;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.LockFailedException;
+import org.openrewrite.jgit.internal.storage.io.BlockSource;
+import org.openrewrite.jgit.internal.storage.reftable.MergedReftable;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableCompactor;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableConfig;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableReader;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableWriter;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
  * A mutable stack of reftables on local filesystem storage. Not thread-safe.

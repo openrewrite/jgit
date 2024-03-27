@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.eclipse.jgit.lib.Ref.UNDEFINED_UPDATE_INDEX;
-import static org.eclipse.jgit.lib.Ref.Storage.NEW;
+import static org.openrewrite.jgit.lib.Ref.UNDEFINED_UPDATE_INDEX;
+import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -19,18 +19,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.lib.RefRename;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.SymbolicRef;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.util.RefList;
-import org.eclipse.jgit.util.RefMap;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.lib.RefRename;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.util.RefList;
+import org.openrewrite.jgit.util.RefMap;
 
 /**
  * Abstract DfsRefDatabase class.
@@ -299,7 +299,7 @@ public abstract class DfsRefDatabase extends RefDatabase {
 	 * @param oldRef
 	 *            old value to compare to. If the reference is expected to not
 	 *            exist the old value has a storage of
-	 *            {@link org.eclipse.jgit.lib.Ref.Storage#NEW} and an ObjectId
+	 *            {@link org.openrewrite.jgit.lib.Ref.Storage#NEW} and an ObjectId
 	 *            value of {@code null}.
 	 * @param newRef
 	 *            new reference to store.

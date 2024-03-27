@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -29,54 +29,54 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.api.RebaseResult.Status;
-import org.eclipse.jgit.api.ResetCommand.ResetType;
-import org.eclipse.jgit.api.errors.CheckoutConflictException;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRebaseStepException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.NoMessageException;
-import org.eclipse.jgit.api.errors.RefAlreadyExistsException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.api.errors.StashApplyFailureException;
-import org.eclipse.jgit.api.errors.UnmergedPathsException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
-import org.eclipse.jgit.diff.DiffFormatter;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheCheckout;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.RevisionSyntaxException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.RebaseTodoLine;
-import org.eclipse.jgit.lib.RebaseTodoLine.Action;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.merge.ContentMergeStrategy;
-import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevSort;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.api.RebaseResult.Status;
+import org.openrewrite.jgit.api.ResetCommand.ResetType;
+import org.openrewrite.jgit.api.errors.CheckoutConflictException;
+import org.openrewrite.jgit.api.errors.ConcurrentRefUpdateException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRebaseStepException;
+import org.openrewrite.jgit.api.errors.InvalidRefNameException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.api.errors.NoMessageException;
+import org.openrewrite.jgit.api.errors.RefAlreadyExistsException;
+import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.api.errors.StashApplyFailureException;
+import org.openrewrite.jgit.api.errors.UnmergedPathsException;
+import org.openrewrite.jgit.api.errors.WrongRepositoryStateException;
+import org.openrewrite.jgit.diff.DiffFormatter;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheCheckout;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.RevisionSyntaxException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.RebaseTodoLine;
+import org.openrewrite.jgit.lib.RebaseTodoLine.Action;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.merge.ContentMergeStrategy;
+import org.openrewrite.jgit.merge.MergeStrategy;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevSort;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * A class used to execute a {@code Rebase} command. It has setters for all
@@ -223,7 +223,7 @@ public class RebaseCommand extends GitCommand<RebaseResult> {
 	 * </p>
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected RebaseCommand(Repository repo) {
 		super(repo);
@@ -275,7 +275,7 @@ public class RebaseCommand extends GitCommand<RebaseResult> {
 						|| !walk.isMergedInto(
 								walk.parseCommit(repo.resolve(Constants.HEAD)),
 								upstreamCommit)) {
-					org.eclipse.jgit.api.Status status = Git.wrap(repo)
+					org.openrewrite.jgit.api.Status status = Git.wrap(repo)
 							.status().setIgnoreSubmodules(IgnoreSubmoduleMode.ALL).call();
 					if (status.hasUncommittedChanges()) {
 						List<String> list = new ArrayList<>();
@@ -1224,11 +1224,11 @@ public class RebaseCommand extends GitCommand<RebaseResult> {
 	 * Check if we can fast-forward and returns the new head if it is possible
 	 *
 	 * @param newCommit
-	 *            a {@link org.eclipse.jgit.revwalk.RevCommit} object to check
+	 *            a {@link org.openrewrite.jgit.revwalk.RevCommit} object to check
 	 *            if we can fast-forward to.
 	 * @return the new head, or null
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.api.errors.GitAPIException
+	 * @throws org.openrewrite.jgit.api.errors.GitAPIException
 	 */
 	public RevCommit tryFastForward(RevCommit newCommit) throws IOException,
 			GitAPIException {
@@ -1411,7 +1411,7 @@ public class RebaseCommand extends GitCommand<RebaseResult> {
 			dco.setProgressMonitor(monitor);
 			try {
 				dco.checkout();
-			} catch (org.eclipse.jgit.errors.CheckoutConflictException cce) {
+			} catch (org.openrewrite.jgit.errors.CheckoutConflictException cce) {
 				throw new CheckoutConflictException(dco.getConflicts(), cce);
 			}
 			// update the HEAD
@@ -1478,7 +1478,7 @@ public class RebaseCommand extends GitCommand<RebaseResult> {
 	 * @param upstream
 	 *            the name of the upstream branch
 	 * @return {@code this}
-	 * @throws org.eclipse.jgit.api.errors.RefNotFoundException
+	 * @throws org.openrewrite.jgit.api.errors.RefNotFoundException
 	 */
 	public RebaseCommand setUpstream(String upstream)
 			throws RefNotFoundException {
@@ -1544,13 +1544,13 @@ public class RebaseCommand extends GitCommand<RebaseResult> {
 	 * <p>
 	 * Does not stop after initialization of interactive rebase. This is
 	 * equivalent to
-	 * {@link org.eclipse.jgit.api.RebaseCommand#runInteractively(InteractiveHandler, boolean)
+	 * {@link org.openrewrite.jgit.api.RebaseCommand#runInteractively(InteractiveHandler, boolean)
 	 * runInteractively(handler, false)};
 	 * </p>
 	 *
 	 * @param handler
 	 *            the
-	 *            {@link org.eclipse.jgit.api.RebaseCommand.InteractiveHandler}
+	 *            {@link org.openrewrite.jgit.api.RebaseCommand.InteractiveHandler}
 	 *            to use
 	 * @return this
 	 */
@@ -1563,12 +1563,12 @@ public class RebaseCommand extends GitCommand<RebaseResult> {
 	 * <p>
 	 * If stopAfterRebaseInteractiveInitialization is {@code true} the rebase
 	 * stops after initialization of interactive rebase returning
-	 * {@link org.eclipse.jgit.api.RebaseResult#INTERACTIVE_PREPARED_RESULT}
+	 * {@link org.openrewrite.jgit.api.RebaseResult#INTERACTIVE_PREPARED_RESULT}
 	 * </p>
 	 *
 	 * @param handler
 	 *            the
-	 *            {@link org.eclipse.jgit.api.RebaseCommand.InteractiveHandler}
+	 *            {@link org.openrewrite.jgit.api.RebaseCommand.InteractiveHandler}
 	 *            to use
 	 * @param stopAfterRebaseInteractiveInitialization
 	 *            if {@code true} the rebase stops after initialization

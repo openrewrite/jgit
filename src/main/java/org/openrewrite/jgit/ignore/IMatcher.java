@@ -7,11 +7,11 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore;
+package org.openrewrite.jgit.ignore;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.ignore.internal.PathMatcher;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.ignore.internal.PathMatcher;
 
 /**
  * Generic path matcher.

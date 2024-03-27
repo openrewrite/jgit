@@ -7,15 +7,15 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.lib.IndexDiff;
-import org.eclipse.jgit.lib.IndexDiff.StageState;
+import org.openrewrite.jgit.lib.IndexDiff;
+import org.openrewrite.jgit.lib.IndexDiff.StageState;
 
 /**
  * A class telling where the working-tree, the index and the current HEAD differ
@@ -40,7 +40,7 @@ public class Status {
 	 * Constructor for Status.
 	 *
 	 * @param diff
-	 *            the {@link org.eclipse.jgit.lib.IndexDiff} having the status
+	 *            the {@link org.openrewrite.jgit.lib.IndexDiff} having the status
 	 */
 	public Status(IndexDiff diff) {
 		super();
@@ -161,7 +161,7 @@ public class Status {
 	 * Get StageState of conflicting files
 	 *
 	 * @return a map from conflicting path to its
-	 *         {@link org.eclipse.jgit.lib.IndexDiff.StageState}.
+	 *         {@link org.openrewrite.jgit.lib.IndexDiff.StageState}.
 	 * @since 3.0
 	 */
 	public Map<String, StageState> getConflictingStageState() {

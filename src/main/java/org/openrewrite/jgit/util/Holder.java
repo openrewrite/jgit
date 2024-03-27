@@ -39,13 +39,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 /**
  * Holder of an object.
  *
  * @param <T>
- *            the type of value held by this {@link org.eclipse.jgit.util.Holder}
+ *            the type of value held by this {@link org.openrewrite.jgit.util.Holder}
  * @since 4.3
  */
 public class Holder<T> {
@@ -62,20 +62,20 @@ public class Holder<T> {
 	}
 
 	/**
-	 * Get the value held by this {@link org.eclipse.jgit.util.Holder}
+	 * Get the value held by this {@link org.openrewrite.jgit.util.Holder}
 	 *
-	 * @return the value held by this {@link org.eclipse.jgit.util.Holder}
+	 * @return the value held by this {@link org.openrewrite.jgit.util.Holder}
 	 */
 	public T get() {
 		return value;
 	}
 
 	/**
-	 * Set a new value held by this {@link org.eclipse.jgit.util.Holder}
+	 * Set a new value held by this {@link org.openrewrite.jgit.util.Holder}
 	 *
 	 * @param value
 	 *            to be set as new value held by this
-	 *            {@link org.eclipse.jgit.util.Holder}
+	 *            {@link org.openrewrite.jgit.util.Holder}
 	 */
 	public void set(T value) {
 		this.value = value;

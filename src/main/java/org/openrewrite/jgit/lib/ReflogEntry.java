@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 /**
  * Parsed reflog entry
@@ -80,7 +80,7 @@ public interface ReflogEntry {
 	/**
 	 * Parse checkout
 	 *
-	 * @return a {@link org.eclipse.jgit.lib.CheckoutEntry} with parsed
+	 * @return a {@link org.openrewrite.jgit.lib.CheckoutEntry} with parsed
 	 *         information about a branch switch, or null if the entry is not a
 	 *         checkout
 	 */

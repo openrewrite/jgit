@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
-import org.eclipse.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
 
 /**
  * Output stream to create a file on the DFS.

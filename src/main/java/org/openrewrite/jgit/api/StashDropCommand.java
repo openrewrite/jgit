@@ -7,9 +7,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import static org.eclipse.jgit.lib.Constants.R_STASH;
+import static org.openrewrite.jgit.lib.Constants.R_STASH;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,22 +17,22 @@ import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.errors.LockFailedException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.RefDirectory;
-import org.eclipse.jgit.internal.storage.file.ReflogWriter;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.ReflogReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRefNameException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.errors.LockFailedException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.RefDirectory;
+import org.openrewrite.jgit.internal.storage.file.ReflogWriter;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.ReflogReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
  * Command class to delete a stashed commit reference
@@ -54,7 +54,7 @@ public class StashDropCommand extends GitCommand<ObjectId> {
 	 * Constructor for StashDropCommand.
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	public StashDropCommand(Repository repo) {
 		super(repo);

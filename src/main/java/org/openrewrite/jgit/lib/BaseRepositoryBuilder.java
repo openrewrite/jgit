@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BARE;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_WORKTREE;
-import static org.eclipse.jgit.lib.Constants.DOT_GIT;
-import static org.eclipse.jgit.lib.Constants.GIT_ALTERNATE_OBJECT_DIRECTORIES_KEY;
-import static org.eclipse.jgit.lib.Constants.GIT_CEILING_DIRECTORIES_KEY;
-import static org.eclipse.jgit.lib.Constants.GIT_DIR_KEY;
-import static org.eclipse.jgit.lib.Constants.GIT_INDEX_FILE_KEY;
-import static org.eclipse.jgit.lib.Constants.GIT_OBJECT_DIRECTORY_KEY;
-import static org.eclipse.jgit.lib.Constants.GIT_WORK_TREE_KEY;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BARE;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_WORKTREE;
+import static org.openrewrite.jgit.lib.Constants.DOT_GIT;
+import static org.openrewrite.jgit.lib.Constants.GIT_ALTERNATE_OBJECT_DIRECTORIES_KEY;
+import static org.openrewrite.jgit.lib.Constants.GIT_CEILING_DIRECTORIES_KEY;
+import static org.openrewrite.jgit.lib.Constants.GIT_DIR_KEY;
+import static org.openrewrite.jgit.lib.Constants.GIT_INDEX_FILE_KEY;
+import static org.openrewrite.jgit.lib.Constants.GIT_OBJECT_DIRECTORY_KEY;
+import static org.openrewrite.jgit.lib.Constants.GIT_WORK_TREE_KEY;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,20 +28,20 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
-import org.eclipse.jgit.storage.file.FileBasedConfig;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.api.errors.InvalidRefNameException;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.RepositoryNotFoundException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.FileRepository;
+import org.openrewrite.jgit.lib.RepositoryCache.FileKey;
+import org.openrewrite.jgit.storage.file.FileBasedConfig;
+import org.openrewrite.jgit.storage.file.FileRepositoryBuilder;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.SystemReader;
 
 /**
  * Base builder to customize repository construction.

@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,25 +17,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.revwalk.BitmappedObjectReachabilityChecker;
-import org.eclipse.jgit.internal.revwalk.BitmappedReachabilityChecker;
-import org.eclipse.jgit.internal.revwalk.PedestrianObjectReachabilityChecker;
-import org.eclipse.jgit.internal.revwalk.PedestrianReachabilityChecker;
-import org.eclipse.jgit.revwalk.ObjectReachabilityChecker;
-import org.eclipse.jgit.revwalk.ObjectWalk;
-import org.eclipse.jgit.revwalk.ReachabilityChecker;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.revwalk.BitmappedObjectReachabilityChecker;
+import org.openrewrite.jgit.internal.revwalk.BitmappedReachabilityChecker;
+import org.openrewrite.jgit.internal.revwalk.PedestrianObjectReachabilityChecker;
+import org.openrewrite.jgit.internal.revwalk.PedestrianReachabilityChecker;
+import org.openrewrite.jgit.revwalk.ObjectReachabilityChecker;
+import org.openrewrite.jgit.revwalk.ObjectWalk;
+import org.openrewrite.jgit.revwalk.ReachabilityChecker;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
- * Reads an {@link org.eclipse.jgit.lib.ObjectDatabase} for a single thread.
+ * Reads an {@link org.openrewrite.jgit.lib.ObjectDatabase} for a single thread.
  * <p>
  * Readers that can support efficient reuse of pack encoded objects should also
  * implement the companion interface
- * {@link org.eclipse.jgit.internal.storage.pack.ObjectReuseAsIs}.
+ * {@link org.openrewrite.jgit.internal.storage.pack.ObjectReuseAsIs}.
  */
 public abstract class ObjectReader implements AutoCloseable {
 	/** Type hint indicating the caller doesn't know the type. */
@@ -176,7 +176,7 @@ public abstract class ObjectReader implements AutoCloseable {
 	 *            identity of the object to test for existence of.
 	 * @param typeHint
 	 *            hint about the type of object being requested, e.g.
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_BLOB};
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_BLOB};
 	 *            {@link #OBJ_ANY} if the object type is not known, or does not
 	 *            matter to the caller.
 	 * @return true if the specified object is stored in this database.
@@ -200,9 +200,9 @@ public abstract class ObjectReader implements AutoCloseable {
 	 *
 	 * @param objectId
 	 *            identity of the object to open.
-	 * @return a {@link org.eclipse.jgit.lib.ObjectLoader} for accessing the
+	 * @return a {@link org.openrewrite.jgit.lib.ObjectLoader} for accessing the
 	 *         object.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object does not exist.
 	 * @throws java.io.IOException
 	 *             the object store cannot be accessed.
@@ -219,14 +219,14 @@ public abstract class ObjectReader implements AutoCloseable {
 	 *            identity of the object to open.
 	 * @param typeHint
 	 *            hint about the type of object being requested, e.g.
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_BLOB};
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_BLOB};
 	 *            {@link #OBJ_ANY} if the object type is not known, or does not
 	 *            matter to the caller.
-	 * @return a {@link org.eclipse.jgit.lib.ObjectLoader} for accessing the
+	 * @return a {@link org.openrewrite.jgit.lib.ObjectLoader} for accessing the
 	 *         object.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object does not exist.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             typeHint was not OBJ_ANY, and the object's actual type does
 	 *             not match typeHint.
 	 * @throws java.io.IOException
@@ -312,13 +312,13 @@ public abstract class ObjectReader implements AutoCloseable {
 	 *            identity of the object to open.
 	 * @param typeHint
 	 *            hint about the type of object being requested, e.g.
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_BLOB};
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_BLOB};
 	 *            {@link #OBJ_ANY} if the object type is not known, or does not
 	 *            matter to the caller.
 	 * @return size of object in bytes.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object does not exist.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             typeHint was not OBJ_ANY, and the object's actual type does
 	 *             not match typeHint.
 	 * @throws java.io.IOException
@@ -465,10 +465,10 @@ public abstract class ObjectReader implements AutoCloseable {
 	}
 
 	/**
-	 * Get the {@link org.eclipse.jgit.lib.ObjectInserter} from which this
+	 * Get the {@link org.openrewrite.jgit.lib.ObjectInserter} from which this
 	 * reader was created using {@code inserter.newReader()}
 	 *
-	 * @return the {@link org.eclipse.jgit.lib.ObjectInserter} from which this
+	 * @return the {@link org.openrewrite.jgit.lib.ObjectInserter} from which this
 	 *         reader was created using {@code inserter.newReader()}, or null if
 	 *         this reader was not created from an inserter.
 	 * @since 4.4

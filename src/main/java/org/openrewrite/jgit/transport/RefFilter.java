@@ -8,17 +8,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Map;
 
-import org.eclipse.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref;
 
 /**
  * Filters the list of refs that are advertised to the client.
  * <p>
- * The filter is called by {@link org.eclipse.jgit.transport.ReceivePack} and
- * {@link org.eclipse.jgit.transport.UploadPack} to ensure that the refs are
+ * The filter is called by {@link org.openrewrite.jgit.transport.ReceivePack} and
+ * {@link org.openrewrite.jgit.transport.UploadPack} to ensure that the refs are
  * filtered before they are advertised to the client.
  * <p>
  * This can be used by applications to control visibility of certain refs based

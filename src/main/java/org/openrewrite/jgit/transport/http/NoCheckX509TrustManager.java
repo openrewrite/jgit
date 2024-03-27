@@ -11,7 +11,7 @@
  *    Saša Živkov 2016 - initial API
  *    Thomas Wolf 2020 - extracted from HttpSupport
  */
-package org.eclipse.jgit.transport.http;
+package org.openrewrite.jgit.transport.http;
 
 import java.security.cert.X509Certificate;
 

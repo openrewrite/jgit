@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.InflaterInputStream;
 
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectStream;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectStream;
 
 final class LargePackedWholeObject extends ObjectLoader {
 	private final int type;

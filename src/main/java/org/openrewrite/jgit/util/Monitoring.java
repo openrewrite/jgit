@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -21,9 +21,9 @@ import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.lib.ConfigConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +42,7 @@ public class Monitoring {
 	 *            the mbean object to register
 	 * @param metricName
 	 *            name of the JGit metric, will be prefixed with
-	 *            "org.eclipse.jgit/"
+	 *            "org.openrewrite.jgit/"
 	 * @return the registered mbean's object instance
 	 */
 	public static @Nullable ObjectInstance registerMBean(Object mbean,
@@ -83,7 +83,7 @@ public class Monitoring {
 
 	private static ObjectName objectName(Class mbean, String metricName)
 			throws MalformedObjectNameException {
-		return new ObjectName(String.format("org.eclipse.jgit/%s:type=%s", //$NON-NLS-1$
+		return new ObjectName(String.format("org.openrewrite.jgit/%s:type=%s", //$NON-NLS-1$
 				metricName, mbean.getSimpleName()));
 	}
 }

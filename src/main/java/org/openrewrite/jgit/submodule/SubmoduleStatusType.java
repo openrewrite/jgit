@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.submodule;
+package org.openrewrite.jgit.submodule;
 
 /**
  * Enumeration of different statuses that a submodule can be in

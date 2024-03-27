@@ -13,11 +13,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.util.zip.Deflater.DEFAULT_COMPRESSION;
 
-import org.eclipse.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.lib.Config.SectionParser;
 
 /**
  * This class keeps git repository core parameters.

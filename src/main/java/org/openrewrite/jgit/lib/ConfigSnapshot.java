@@ -15,11 +15,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import static org.eclipse.jgit.util.StringUtils.compareIgnoreCase;
-import static org.eclipse.jgit.util.StringUtils.compareWithCase;
-import static org.eclipse.jgit.util.StringUtils.toLowerCase;
+import static org.openrewrite.jgit.util.StringUtils.compareIgnoreCase;
+import static org.openrewrite.jgit.util.StringUtils.compareWithCase;
+import static org.openrewrite.jgit.util.StringUtils.toLowerCase;
 
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.StringUtils;
 
 class ConfigSnapshot {
 	final List<ConfigLine> entryList;

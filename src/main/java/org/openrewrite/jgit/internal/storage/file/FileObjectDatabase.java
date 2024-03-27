@@ -8,23 +8,23 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
-import org.eclipse.jgit.internal.storage.pack.ObjectToPack;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ObjectDatabase;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.internal.storage.pack.ObjectToPack;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ObjectDatabase;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.util.FS;
 
 abstract class FileObjectDatabase extends ObjectDatabase {
 	enum InsertLooseObjectResult {

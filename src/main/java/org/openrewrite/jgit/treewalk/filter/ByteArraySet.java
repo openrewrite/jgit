@@ -11,9 +11,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Specialized set for byte arrays, interpreted as strings for use in

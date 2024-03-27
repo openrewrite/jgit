@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk;
+package org.openrewrite.jgit.treewalk;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -34,51 +34,51 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jgit.api.errors.FilterFailedException;
-import org.eclipse.jgit.attributes.AttributesNode;
-import org.eclipse.jgit.attributes.AttributesRule;
-import org.eclipse.jgit.attributes.FilterCommand;
-import org.eclipse.jgit.attributes.FilterCommandRegistry;
-import org.eclipse.jgit.diff.RawText;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.NoWorkTreeException;
-import org.eclipse.jgit.ignore.FastIgnoreRule;
-import org.eclipse.jgit.ignore.IgnoreNode;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig.CheckStat;
-import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
-import org.eclipse.jgit.lib.CoreConfig.SymLinks;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.submodule.SubmoduleWalk;
-import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FS.ExecutionResult;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.Holder;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.Paths;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.TemporaryBuffer;
-import org.eclipse.jgit.util.TemporaryBuffer.LocalFile;
-import org.eclipse.jgit.util.io.EolStreamTypeUtil;
-import org.eclipse.jgit.util.sha1.SHA1;
+import org.openrewrite.jgit.api.errors.FilterFailedException;
+import org.openrewrite.jgit.attributes.AttributesNode;
+import org.openrewrite.jgit.attributes.AttributesRule;
+import org.openrewrite.jgit.attributes.FilterCommand;
+import org.openrewrite.jgit.attributes.FilterCommandRegistry;
+import org.openrewrite.jgit.diff.RawText;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.NoWorkTreeException;
+import org.openrewrite.jgit.ignore.FastIgnoreRule;
+import org.openrewrite.jgit.ignore.IgnoreNode;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.CoreConfig.CheckStat;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.lib.CoreConfig.SymLinks;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.submodule.SubmoduleWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FS.ExecutionResult;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.Holder;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.Paths;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.util.TemporaryBuffer.LocalFile;
+import org.openrewrite.jgit.util.io.EolStreamTypeUtil;
+import org.openrewrite.jgit.util.sha1.SHA1;
 
 /**
  * Walks a working directory tree as part of a
- * {@link org.eclipse.jgit.treewalk.TreeWalk}.
+ * {@link org.openrewrite.jgit.treewalk.TreeWalk}.
  * <p>
  * Most applications will want to use the standard implementation of this
- * iterator, {@link org.eclipse.jgit.treewalk.FileTreeIterator}, as that does
+ * iterator, {@link org.openrewrite.jgit.treewalk.FileTreeIterator}, as that does
  * all IO through the standard <code>java.io</code> package. Plugins for a Java
  * based IDE may however wish to create their own implementations of this class
  * to allow traversal of the IDE's project space, as well as benefit from any
@@ -212,7 +212,7 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	}
 
 	/**
-	 * Define the matching {@link org.eclipse.jgit.dircache.DirCacheIterator},
+	 * Define the matching {@link org.openrewrite.jgit.dircache.DirCacheIterator},
 	 * to optimize ObjectIds.
 	 *
 	 * Once the DirCacheIterator has been set this iterator must only be
@@ -224,7 +224,7 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 *            the walk that will be advancing this iterator.
 	 * @param treeId
 	 *            index of the matching
-	 *            {@link org.eclipse.jgit.dircache.DirCacheIterator}.
+	 *            {@link org.openrewrite.jgit.dircache.DirCacheIterator}.
 	 */
 	public void setDirCacheIterator(TreeWalk walk, int treeId) {
 		state.walk = walk;
@@ -326,7 +326,7 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 * Get submodule id for given entry.
 	 *
 	 * @param e
-	 *            a {@link org.eclipse.jgit.treewalk.WorkingTreeIterator.Entry}
+	 *            a {@link org.openrewrite.jgit.treewalk.WorkingTreeIterator.Entry}
 	 *            object.
 	 * @return non-null submodule id
 	 */
@@ -349,7 +349,7 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 * @param directory
 	 *            a {@link java.io.File} object.
 	 * @param e
-	 *            a {@link org.eclipse.jgit.treewalk.WorkingTreeIterator.Entry}
+	 *            a {@link org.openrewrite.jgit.treewalk.WorkingTreeIterator.Entry}
 	 *            object.
 	 * @return non-null submodule id
 	 */
@@ -754,10 +754,10 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	}
 
 	/**
-	 * Retrieves the {@link org.eclipse.jgit.attributes.AttributesNode} for the
+	 * Retrieves the {@link org.openrewrite.jgit.attributes.AttributesNode} for the
 	 * current entry.
 	 *
-	 * @return the {@link org.eclipse.jgit.attributes.AttributesNode} for the
+	 * @return the {@link org.openrewrite.jgit.attributes.AttributesNode} for the
 	 *         current entry.
 	 * @throws IOException
 	 */
@@ -889,13 +889,13 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 
 	/**
 	 * Compare the metadata (mode, length, modification-timestamp) of the
-	 * current entry and a {@link org.eclipse.jgit.dircache.DirCacheEntry}
+	 * current entry and a {@link org.openrewrite.jgit.dircache.DirCacheEntry}
 	 *
 	 * @param entry
-	 *            the {@link org.eclipse.jgit.dircache.DirCacheEntry} to compare
+	 *            the {@link org.openrewrite.jgit.dircache.DirCacheEntry} to compare
 	 *            with
 	 * @return a
-	 *         {@link org.eclipse.jgit.treewalk.WorkingTreeIterator.MetadataDiff}
+	 *         {@link org.openrewrite.jgit.treewalk.WorkingTreeIterator.MetadataDiff}
 	 *         which tells whether and how the entries metadata differ
 	 */
 	public MetadataDiff compareMetadata(DirCacheEntry entry) {
@@ -937,7 +937,7 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 
 	/**
 	 * Checks whether this entry differs from a given entry from the
-	 * {@link org.eclipse.jgit.dircache.DirCache}.
+	 * {@link org.openrewrite.jgit.dircache.DirCache}.
 	 *
 	 * File status information is used and if status is same we consider the
 	 * file identical to the state in the working directory. Native git uses
@@ -1005,9 +1005,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 * in the index.
 	 *
 	 * @param indexIter
-	 *            {@link org.eclipse.jgit.dircache.DirCacheIterator} positioned
+	 *            {@link org.openrewrite.jgit.dircache.DirCacheIterator} positioned
 	 *            at the same entry as this iterator or null if no
-	 *            {@link org.eclipse.jgit.dircache.DirCacheIterator} is
+	 *            {@link org.openrewrite.jgit.dircache.DirCacheIterator} is
 	 *            available at this iterator's current entry
 	 * @return index file mode
 	 */
@@ -1417,8 +1417,8 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 *
 	 * @return the eol stream type for the current entry or <code>null</code> if
 	 *         it cannot be determined. When state or state.walk is null or the
-	 *         {@link org.eclipse.jgit.treewalk.TreeWalk} is not based on a
-	 *         {@link org.eclipse.jgit.lib.Repository} then null is returned.
+	 *         {@link org.openrewrite.jgit.treewalk.TreeWalk} is not based on a
+	 *         {@link org.openrewrite.jgit.lib.Repository} then null is returned.
 	 * @throws java.io.IOException
 	 * @since 4.3
 	 */

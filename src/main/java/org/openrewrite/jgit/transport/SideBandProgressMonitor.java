@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.eclipse.jgit.lib.BatchingProgressMonitor;
-import org.eclipse.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.BatchingProgressMonitor;
+import org.openrewrite.jgit.lib.Constants;
 
 /** Write progress messages out to the sideband channel. */
 class SideBandProgressMonitor extends BatchingProgressMonitor {

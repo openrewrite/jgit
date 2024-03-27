@@ -8,21 +8,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.notes;
+package org.openrewrite.jgit.notes;
 
-import static org.eclipse.jgit.lib.FileMode.TREE;
+import static org.openrewrite.jgit.lib.FileMode.TREE;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.TreeFormatter;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.TreeFormatter;
 
 /**
  * A note tree holding only note subtrees, each named using a 2 digit hex name.

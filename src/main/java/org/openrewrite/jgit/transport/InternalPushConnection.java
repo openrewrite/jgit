@@ -8,19 +8,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.UncheckedIOException;
 
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.resolver.ReceivePackFactory;
-import org.eclipse.jgit.transport.resolver.ServiceNotAuthorizedException;
-import org.eclipse.jgit.transport.resolver.ServiceNotEnabledException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.resolver.ReceivePackFactory;
+import org.openrewrite.jgit.transport.resolver.ServiceNotAuthorizedException;
+import org.openrewrite.jgit.transport.resolver.ServiceNotEnabledException;
 
 class InternalPushConnection<C> extends BasePackPushConnection {
 	private Thread worker;
@@ -29,15 +29,15 @@ class InternalPushConnection<C> extends BasePackPushConnection {
 	 * Constructor for InternalPushConnection.
 	 *
 	 * @param transport
-	 *            a {@link org.eclipse.jgit.transport.PackTransport}
+	 *            a {@link org.openrewrite.jgit.transport.PackTransport}
 	 * @param receivePackFactory
 	 *            a
-	 *            {@link org.eclipse.jgit.transport.resolver.ReceivePackFactory}
+	 *            {@link org.openrewrite.jgit.transport.resolver.ReceivePackFactory}
 	 * @param req
 	 *            a request
 	 * @param remote
-	 *            the {@link org.eclipse.jgit.lib.Repository}
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             if any.
 	 */
 	public InternalPushConnection(PackTransport transport,

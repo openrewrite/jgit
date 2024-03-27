@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.fnmatch;
+package org.openrewrite.jgit.fnmatch;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.internal.JGitText;
 
 final class GroupHead extends AbstractHead {
 	private final List<CharacterPattern> characterClasses;

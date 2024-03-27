@@ -8,22 +8,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
 
 /**
- * Utility methods for {@link org.eclipse.jgit.revwalk.RevWalk}.
+ * Utility methods for {@link org.openrewrite.jgit.revwalk.RevWalk}.
  */
 public final class RevWalkUtils {
 
@@ -38,7 +38,7 @@ public final class RevWalkUtils {
 	 * but not in <code>end</code>.
 	 * <p>
 	 * Note that this method calls
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#reset()} at the beginning. Also
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#reset()} at the beginning. Also
 	 * note that the existing rev filter on the walk is left as-is, so be sure
 	 * to set the right rev filter before calling this method.
 	 *
@@ -50,8 +50,8 @@ public final class RevWalkUtils {
 	 *            the commit where counting should end, or null if counting
 	 *            should be done until there are no more commits
 	 * @return the number of commits
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 * @throws java.io.IOException
 	 */
 	public static int count(final RevWalk walk, final RevCommit start,
@@ -67,7 +67,7 @@ public final class RevWalkUtils {
 	 * <code>end</code>.
 	 * <p>
 	 * Note that this method calls
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#reset()} at the beginning. Also
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#reset()} at the beginning. Also
 	 * note that the existing rev filter on the walk is left as-is, so be sure
 	 * to set the right rev filter before calling this method.
 	 *
@@ -79,8 +79,8 @@ public final class RevWalkUtils {
 	 *            the commit where counting should end, or null if counting
 	 *            should be done until there are no more commits
 	 * @return the commits found
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 * @throws java.io.IOException
 	 */
 	public static List<RevCommit> find(final RevWalk walk,
@@ -103,7 +103,7 @@ public final class RevWalkUtils {
 	 * parents.
 	 * <p>
 	 * Note that this method calls
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#reset()} at the beginning.
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#reset()} at the beginning.
 	 * <p>
 	 * In order to improve performance this method assumes clock skew among
 	 * committers is never larger than 24 hours.
@@ -115,8 +115,8 @@ public final class RevWalkUtils {
 	 * @param refs
 	 *            the set of branches we want to see reachability from
 	 * @return the list of branches a given commit is reachable from
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 * @throws java.io.IOException
 	 */
 	public static List<Ref> findBranchesReachableFrom(RevCommit commit,
@@ -132,7 +132,7 @@ public final class RevWalkUtils {
 	 * parents.
 	 * <p>
 	 * Note that this method calls
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#reset()} at the beginning.
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#reset()} at the beginning.
 	 * <p>
 	 * In order to improve performance this method assumes clock skew among
 	 * committers is never larger than 24 hours.
@@ -146,8 +146,8 @@ public final class RevWalkUtils {
 	 * @param monitor
 	 *            the callback for progress and cancellation
 	 * @return the list of branches a given commit is reachable from
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 * @throws java.io.IOException
 	 * @since 5.4
 	 */

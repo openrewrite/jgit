@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 abstract class AbstractRevQueue extends Generator {
 	static final AbstractRevQueue EMPTY_QUEUE = new AlwaysEmptyQueue();
@@ -106,7 +106,7 @@ abstract class AbstractRevQueue extends Generator {
 	 * @param s
 	 *            a StringBuilder
 	 * @param c
-	 *            a {@link org.eclipse.jgit.revwalk.RevCommit}
+	 *            a {@link org.openrewrite.jgit.revwalk.RevCommit}
 	 */
 	protected static void describe(StringBuilder s, RevCommit c) {
 		s.append(c.toString());

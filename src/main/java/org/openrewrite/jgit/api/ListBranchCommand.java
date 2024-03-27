@@ -9,11 +9,11 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import static org.eclipse.jgit.lib.Constants.HEAD;
-import static org.eclipse.jgit.lib.Constants.R_HEADS;
-import static org.eclipse.jgit.lib.Constants.R_REMOTES;
+import static org.openrewrite.jgit.lib.Constants.HEAD;
+import static org.openrewrite.jgit.lib.Constants.R_HEADS;
+import static org.openrewrite.jgit.lib.Constants.R_REMOTES;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -22,16 +22,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.RevWalkUtils;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.RevWalkUtils;
 
 /**
  * Used to obtain a list of branches.
@@ -67,7 +67,7 @@ public class ListBranchCommand extends GitCommand<List<Ref>> {
 	 * Constructor for ListBranchCommand.
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	protected ListBranchCommand(Repository repo) {
 		super(repo);

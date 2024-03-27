@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,14 +20,14 @@ import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 import java.util.Set;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.FileObjectDatabase.InsertLooseObjectResult;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.FileObjectDatabase.InsertLooseObjectResult;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This is the loose object representation for a Git object database, where
  * objects are stored loose by hashing them into directories by their
- * {@link org.eclipse.jgit.lib.ObjectId}.
+ * {@link org.openrewrite.jgit.lib.ObjectId}.
  */
 class LooseObjects {
 	private static final Logger LOG = LoggerFactory

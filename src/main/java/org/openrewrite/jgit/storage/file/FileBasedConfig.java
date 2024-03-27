@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.storage.file;
+package org.openrewrite.jgit.storage.file;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -24,19 +24,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.LockFailedException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.FileSnapshot;
-import org.eclipse.jgit.internal.storage.file.LockFile;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.LockFailedException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.FileSnapshot;
+import org.openrewrite.jgit.internal.storage.file.LockFile;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

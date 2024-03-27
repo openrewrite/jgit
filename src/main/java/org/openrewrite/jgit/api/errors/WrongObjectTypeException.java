@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * A given object is not of an expected object type.

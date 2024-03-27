@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.storage.file;
+package org.openrewrite.jgit.storage.file;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.BaseRepositoryBuilder;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.errors.RepositoryNotFoundException;
+import org.openrewrite.jgit.internal.storage.file.FileRepository;
+import org.openrewrite.jgit.lib.BaseRepositoryBuilder;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
- * Constructs a {@link org.eclipse.jgit.internal.storage.file.FileRepository}.
+ * Constructs a {@link org.openrewrite.jgit.internal.storage.file.FileRepository}.
  * <p>
  * Applications must set one of {@link #setGitDir(File)} or
  * {@link #setWorkTree(File)}, or use {@link #readEnvironment()} or
@@ -60,7 +60,7 @@ public class FileRepositoryBuilder extends
 
 	/**
 	 * Convenience factory method to construct a
-	 * {@link org.eclipse.jgit.internal.storage.file.FileRepository}.
+	 * {@link org.openrewrite.jgit.internal.storage.file.FileRepository}.
 	 *
 	 * @param gitDir
 	 *            {@code GIT_DIR}, the repository meta directory.

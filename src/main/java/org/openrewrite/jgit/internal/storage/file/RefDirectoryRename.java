@@ -9,20 +9,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.StandardCopyOption;
 
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.RefRename;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.RefRename;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

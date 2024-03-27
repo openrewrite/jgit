@@ -1,4 +1,4 @@
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -9,11 +9,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.internal.storage.reftable.ReftableConfig;
-import org.eclipse.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableConfig;
+import org.openrewrite.jgit.lib.RefDatabase;
 
 /**
  * Git repository stored entirely in the local process memory.

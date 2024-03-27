@@ -8,22 +8,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.lib.Constants.HEAD;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_ATOMIC;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_DELETE_REFS;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_OFS_DELTA;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_PUSH_OPTIONS;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_QUIET;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_REPORT_STATUS;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_SIDE_BAND_64K;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_AGENT;
-import static org.eclipse.jgit.transport.SideBandOutputStream.CH_DATA;
-import static org.eclipse.jgit.transport.SideBandOutputStream.CH_ERROR;
-import static org.eclipse.jgit.transport.SideBandOutputStream.CH_PROGRESS;
-import static org.eclipse.jgit.transport.SideBandOutputStream.MAX_BUF;
+import static org.openrewrite.jgit.lib.Constants.HEAD;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_ATOMIC;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_DELETE_REFS;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_OFS_DELTA;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_PUSH_OPTIONS;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_QUIET;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_REPORT_STATUS;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_SIDE_BAND_64K;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_AGENT;
+import static org.openrewrite.jgit.transport.SideBandOutputStream.CH_DATA;
+import static org.openrewrite.jgit.transport.SideBandOutputStream.CH_ERROR;
+import static org.openrewrite.jgit.transport.SideBandOutputStream.CH_PROGRESS;
+import static org.openrewrite.jgit.transport.SideBandOutputStream.MAX_BUF;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -41,45 +41,45 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.InvalidObjectIdException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.errors.TooLargePackException;
-import org.eclipse.jgit.errors.UnpackException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.PackLock;
-import org.eclipse.jgit.internal.submodule.SubmoduleValidator;
-import org.eclipse.jgit.internal.submodule.SubmoduleValidator.SubmoduleValidationException;
-import org.eclipse.jgit.internal.transport.connectivity.FullConnectivityChecker;
-import org.eclipse.jgit.internal.transport.parser.FirstCommand;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.BatchRefUpdate;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitmoduleEntry;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectChecker;
-import org.eclipse.jgit.lib.ObjectDatabase;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.ConnectivityChecker.ConnectivityCheckInfo;
-import org.eclipse.jgit.transport.PacketLineIn.InputOverLimitIOException;
-import org.eclipse.jgit.transport.ReceiveCommand.Result;
-import org.eclipse.jgit.transport.RefAdvertiser.PacketLineOutRefAdvertiser;
-import org.eclipse.jgit.util.io.InterruptTimer;
-import org.eclipse.jgit.util.io.LimitedInputStream;
-import org.eclipse.jgit.util.io.TimeoutInputStream;
-import org.eclipse.jgit.util.io.TimeoutOutputStream;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.InvalidObjectIdException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.errors.TooLargePackException;
+import org.openrewrite.jgit.errors.UnpackException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.PackLock;
+import org.openrewrite.jgit.internal.submodule.SubmoduleValidator;
+import org.openrewrite.jgit.internal.submodule.SubmoduleValidator.SubmoduleValidationException;
+import org.openrewrite.jgit.internal.transport.connectivity.FullConnectivityChecker;
+import org.openrewrite.jgit.internal.transport.parser.FirstCommand;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.BatchRefUpdate;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.GitmoduleEntry;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.lib.ObjectDatabase;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.ConnectivityChecker.ConnectivityCheckInfo;
+import org.openrewrite.jgit.transport.PacketLineIn.InputOverLimitIOException;
+import org.openrewrite.jgit.transport.ReceiveCommand.Result;
+import org.openrewrite.jgit.transport.RefAdvertiser.PacketLineOutRefAdvertiser;
+import org.openrewrite.jgit.util.io.InterruptTimer;
+import org.openrewrite.jgit.util.io.LimitedInputStream;
+import org.openrewrite.jgit.util.io.TimeoutInputStream;
+import org.openrewrite.jgit.util.io.TimeoutOutputStream;
 
 /**
  * Implements the server side of a push connection, receiving objects.
@@ -429,7 +429,7 @@ public class ReceivePack {
 	 * Set the refs advertised by this ReceivePack.
 	 * <p>
 	 * Intended to be called from a
-	 * {@link org.eclipse.jgit.transport.PreReceiveHook}.
+	 * {@link org.openrewrite.jgit.transport.PreReceiveHook}.
 	 *
 	 * @param allRefs
 	 *            explicit set of references to claim as advertised by this
@@ -499,8 +499,8 @@ public class ReceivePack {
 	 * not provide a forged SHA-1 reference to an object, in an attempt to
 	 * access parts of the DAG that they aren't allowed to see and which have
 	 * been hidden from them via the configured
-	 * {@link org.eclipse.jgit.transport.AdvertiseRefsHook} or
-	 * {@link org.eclipse.jgit.transport.RefFilter}.
+	 * {@link org.openrewrite.jgit.transport.AdvertiseRefsHook} or
+	 * {@link org.openrewrite.jgit.transport.RefFilter}.
 	 * <p>
 	 * Enabling this feature may imply at least some, if not all, of the same
 	 * functionality performed by {@link #setCheckReceivedObjects(boolean)}.
@@ -755,14 +755,14 @@ public class ReceivePack {
 	/**
 	 * Set the hook used while advertising the refs to the client.
 	 * <p>
-	 * If the {@link org.eclipse.jgit.transport.AdvertiseRefsHook} chooses to
+	 * If the {@link org.openrewrite.jgit.transport.AdvertiseRefsHook} chooses to
 	 * call {@link #setAdvertisedRefs(Map,Set)}, only refs set by this hook
-	 * <em>and</em> selected by the {@link org.eclipse.jgit.transport.RefFilter}
+	 * <em>and</em> selected by the {@link org.openrewrite.jgit.transport.RefFilter}
 	 * will be shown to the client. Clients may still attempt to create or
 	 * update a reference not advertised by the configured
-	 * {@link org.eclipse.jgit.transport.AdvertiseRefsHook}. These attempts
+	 * {@link org.openrewrite.jgit.transport.AdvertiseRefsHook}. These attempts
 	 * should be rejected by a matching
-	 * {@link org.eclipse.jgit.transport.PreReceiveHook}.
+	 * {@link org.openrewrite.jgit.transport.PreReceiveHook}.
 	 *
 	 * @param advertiseRefsHook
 	 *            the hook; may be null to show all refs.
@@ -779,7 +779,7 @@ public class ReceivePack {
 	 * <p>
 	 * Only refs allowed by this filter will be shown to the client. The filter
 	 * is run against the refs specified by the
-	 * {@link org.eclipse.jgit.transport.AdvertiseRefsHook} (if applicable).
+	 * {@link org.openrewrite.jgit.transport.AdvertiseRefsHook} (if applicable).
 	 *
 	 * @param refFilter
 	 *            the filter; may be null to show all refs.
@@ -876,7 +876,7 @@ public class ReceivePack {
 	 *
 	 * @return true if the client has advertised a side-band capability, false
 	 *         otherwise.
-	 * @throws org.eclipse.jgit.transport.RequestNotYetReadException
+	 * @throws org.openrewrite.jgit.transport.RequestNotYetReadException
 	 *             if the client's request has not yet been read from the wire,
 	 *             so we do not know if they expect side-band. Note that the
 	 *             client may have already written the request, it just has not
@@ -936,7 +936,7 @@ public class ReceivePack {
 	 * True if the client wants less verbose output.
 	 *
 	 * @return true if the client has requested the server to be less verbose.
-	 * @throws org.eclipse.jgit.transport.RequestNotYetReadException
+	 * @throws org.openrewrite.jgit.transport.RequestNotYetReadException
 	 *             if the client's request has not yet been read from the wire,
 	 *             so we do not know if they expect side-band. Note that the
 	 *             client may have already written the request, it just has not
@@ -1021,11 +1021,11 @@ public class ReceivePack {
 	 * message will be discarded, with no other indication to the caller or to
 	 * the client.
 	 * <p>
-	 * {@link org.eclipse.jgit.transport.PreReceiveHook}s should always try to
+	 * {@link org.openrewrite.jgit.transport.PreReceiveHook}s should always try to
 	 * use
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand#setResult(Result, String)}
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand#setResult(Result, String)}
 	 * with a result status of
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand.Result#REJECTED_OTHER_REASON}
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand.Result#REJECTED_OTHER_REASON}
 	 * to indicate any reasons for rejecting an update. Messages attached to a
 	 * command are much more likely to be returned to the client.
 	 *
@@ -1240,7 +1240,7 @@ public class ReceivePack {
 	 *            the advertisement formatter.
 	 * @throws java.io.IOException
 	 *             the formatter failed to write an advertisement.
-	 * @throws org.eclipse.jgit.transport.ServiceMayNotContinueException
+	 * @throws org.openrewrite.jgit.transport.ServiceMayNotContinueException
 	 *             the hook denied advertisement.
 	 */
 	public void sendAdvertisedRefs(RefAdvertiser adv)
@@ -2041,7 +2041,7 @@ public class ReceivePack {
 	 * Only valid commands (those which have no obvious errors according to the
 	 * received input and this instance's configuration) are passed into the
 	 * hook. The hook may mark a command with a result of any value other than
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand.Result#NOT_ATTEMPTED} to
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand.Result#NOT_ATTEMPTED} to
 	 * block its execution.
 	 * <p>
 	 * The hook may be called with an empty command collection if the current
@@ -2067,7 +2067,7 @@ public class ReceivePack {
 	 * Set the hook which is invoked after commands are executed.
 	 * <p>
 	 * Only successful commands (type is
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand.Result#OK}) are passed
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand.Result#OK}) are passed
 	 * into the hook. The hook may be called with an empty command collection if
 	 * the current set all resulted in an error.
 	 *

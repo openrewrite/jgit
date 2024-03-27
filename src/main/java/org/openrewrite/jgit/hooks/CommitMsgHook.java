@@ -7,15 +7,15 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.hooks;
+package org.openrewrite.jgit.hooks;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.eclipse.jgit.api.errors.AbortedByHookException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.api.errors.AbortedByHookException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * The <code>commit-msg</code> hook implementation. This hook is run before the

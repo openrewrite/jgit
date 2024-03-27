@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util.sha1;
+package org.openrewrite.jgit.util.sha1;
 
 import static java.lang.Integer.lowestOneBit;
 import static java.lang.Integer.numberOfTrailingZeros;
@@ -18,11 +18,11 @@ import static java.lang.Integer.rotateRight;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.SystemReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * sha1collisiondetection</a> for more information.
  * <p>
  * When detectCollision is true (default), this implementation throws
- * {@link org.eclipse.jgit.util.sha1.Sha1CollisionException} from any digest
+ * {@link org.openrewrite.jgit.util.sha1.Sha1CollisionException} from any digest
  * method if a potential collision was detected.
  *
  * @since 4.7
@@ -50,7 +50,7 @@ public class SHA1 {
 
 	static {
 		SystemReader sr = SystemReader.getInstance();
-		String v = sr.getProperty("org.eclipse.jgit.util.sha1.detectCollision"); //$NON-NLS-1$
+		String v = sr.getProperty("org.openrewrite.jgit.util.sha1.detectCollision"); //$NON-NLS-1$
 		DETECT_COLLISIONS = v != null ? Boolean.parseBoolean(v) : true;
 	}
 
@@ -91,7 +91,7 @@ public class SHA1 {
 	 * Default is {@code true}.
 	 * <p>
 	 * May also be set by system property:
-	 * {@code -Dorg.eclipse.jgit.util.sha1.detectCollision=true}.
+	 * {@code -Dorg.openrewrite.jgit.util.sha1.detectCollision=true}.
 	 *
 	 * @param detect
 	 *            a boolean.
@@ -481,7 +481,7 @@ public class SHA1 {
 	 * Once {@code digest()} is called, this instance should be discarded.
 	 *
 	 * @return the bytes for the resulting hash.
-	 * @throws org.eclipse.jgit.util.sha1.Sha1CollisionException
+	 * @throws org.openrewrite.jgit.util.sha1.Sha1CollisionException
 	 *             if a collision was detected and safeHash is false.
 	 */
 	public byte[] digest() throws Sha1CollisionException {
@@ -502,7 +502,7 @@ public class SHA1 {
 	 * Once {@code digest()} is called, this instance should be discarded.
 	 *
 	 * @return the ObjectId for the resulting hash.
-	 * @throws org.eclipse.jgit.util.sha1.Sha1CollisionException
+	 * @throws org.openrewrite.jgit.util.sha1.Sha1CollisionException
 	 *             if a collision was detected and safeHash is false.
 	 */
 	public ObjectId toObjectId() throws Sha1CollisionException {
@@ -517,7 +517,7 @@ public class SHA1 {
 	 *
 	 * @param id
 	 *            destination to copy the digest to.
-	 * @throws org.eclipse.jgit.util.sha1.Sha1CollisionException
+	 * @throws org.openrewrite.jgit.util.sha1.Sha1CollisionException
 	 *             if a collision was detected and safeHash is false.
 	 */
 	public void digest(MutableObjectId id) throws Sha1CollisionException {

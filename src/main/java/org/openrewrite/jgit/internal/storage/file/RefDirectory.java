@@ -11,19 +11,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.lib.Constants.HEAD;
-import static org.eclipse.jgit.lib.Constants.LOGS;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_STRING_LENGTH;
-import static org.eclipse.jgit.lib.Constants.PACKED_REFS;
-import static org.eclipse.jgit.lib.Constants.R_HEADS;
-import static org.eclipse.jgit.lib.Constants.R_REFS;
-import static org.eclipse.jgit.lib.Constants.R_TAGS;
-import static org.eclipse.jgit.lib.Ref.Storage.LOOSE;
-import static org.eclipse.jgit.lib.Ref.Storage.NEW;
-import static org.eclipse.jgit.lib.Ref.Storage.PACKED;
+import static org.openrewrite.jgit.lib.Constants.HEAD;
+import static org.openrewrite.jgit.lib.Constants.LOGS;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_STRING_LENGTH;
+import static org.openrewrite.jgit.lib.Constants.PACKED_REFS;
+import static org.openrewrite.jgit.lib.Constants.R_HEADS;
+import static org.openrewrite.jgit.lib.Constants.R_REFS;
+import static org.openrewrite.jgit.lib.Constants.R_TAGS;
+import static org.openrewrite.jgit.lib.Ref.Storage.LOOSE;
+import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
+import static org.openrewrite.jgit.lib.Ref.Storage.PACKED;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,46 +50,46 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.InvalidObjectIdException;
-import org.eclipse.jgit.errors.LockFailedException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.ObjectWritingException;
-import org.eclipse.jgit.events.RefsChangedEvent;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefComparator;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefWriter;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.SymbolicRef;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.RefList;
-import org.eclipse.jgit.util.RefMap;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.InvalidObjectIdException;
+import org.openrewrite.jgit.errors.LockFailedException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.ObjectWritingException;
+import org.openrewrite.jgit.events.RefsChangedEvent;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefComparator;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefWriter;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.RefList;
+import org.openrewrite.jgit.util.RefMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Traditional file system based {@link org.eclipse.jgit.lib.RefDatabase}.
+ * Traditional file system based {@link org.openrewrite.jgit.lib.RefDatabase}.
  * <p>
  * This is the classical reference database representation for a Git repository.
  * References are stored in two formats: loose, and packed.
  * <p>
  * Loose references are stored as individual files within the {@code refs/}
  * directory. The file name matches the reference name and the file contents is
- * the current {@link org.eclipse.jgit.lib.ObjectId} in string form.
+ * the current {@link org.openrewrite.jgit.lib.ObjectId} in string form.
  * <p>
  * Packed references are stored in a single text file named {@code packed-refs}.
  * In the packed format, each reference is stored on its own line. This file

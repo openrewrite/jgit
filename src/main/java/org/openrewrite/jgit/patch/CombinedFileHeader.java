@@ -8,19 +8,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.patch;
+package org.openrewrite.jgit.patch;
 
-import static org.eclipse.jgit.lib.Constants.encodeASCII;
-import static org.eclipse.jgit.util.RawParseUtils.match;
-import static org.eclipse.jgit.util.RawParseUtils.nextLF;
+import static org.openrewrite.jgit.lib.Constants.encodeASCII;
+import static org.openrewrite.jgit.util.RawParseUtils.match;
+import static org.openrewrite.jgit.util.RawParseUtils.nextLF;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.FileMode;
 
 /**
  * A file in the Git "diff --cc" or "diff --combined" format.

@@ -41,15 +41,15 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.eclipse.jgit.attributes;
+package org.openrewrite.jgit.attributes;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.jgit.attributes.Attribute.State;
-import org.eclipse.jgit.lib.Constants;
+import org.openrewrite.jgit.attributes.Attribute.State;
+import org.openrewrite.jgit.lib.Constants;
 
 /**
  * Represents a set of attributes for a path
@@ -63,7 +63,7 @@ public final class Attributes {
 	 * Creates a new instance
 	 *
 	 * @param attributes
-	 *            a {@link org.eclipse.jgit.attributes.Attribute}
+	 *            a {@link org.openrewrite.jgit.attributes.Attribute}
 	 */
 	public Attributes(Attribute... attributes) {
 		if (attributes != null) {
@@ -106,7 +106,7 @@ public final class Attributes {
 	 * Put an attribute
 	 *
 	 * @param a
-	 *            an {@link org.eclipse.jgit.attributes.Attribute}
+	 *            an {@link org.openrewrite.jgit.attributes.Attribute}
 	 */
 	public void put(Attribute a) {
 		map.put(a.getKey(), a);
@@ -127,7 +127,7 @@ public final class Attributes {
 	 *
 	 * @param key
 	 *            key of an attribute
-	 * @return true if the {@link org.eclipse.jgit.attributes.Attributes}
+	 * @return true if the {@link org.openrewrite.jgit.attributes.Attributes}
 	 *         contains this key
 	 */
 	public boolean containsKey(String key) {
@@ -152,7 +152,7 @@ public final class Attributes {
 	 * @param key
 	 *            a {@link java.lang.String} object.
 	 * @return true if the key is
-	 *         {@link org.eclipse.jgit.attributes.Attribute.State#SET}, false in
+	 *         {@link org.openrewrite.jgit.attributes.Attribute.State#SET}, false in
 	 *         all other cases
 	 */
 	public boolean isSet(String key) {
@@ -165,7 +165,7 @@ public final class Attributes {
 	 * @param key
 	 *            a {@link java.lang.String} object.
 	 * @return true if the key is
-	 *         {@link org.eclipse.jgit.attributes.Attribute.State#UNSET}, false
+	 *         {@link org.openrewrite.jgit.attributes.Attribute.State#UNSET}, false
 	 *         in all other cases
 	 */
 	public boolean isUnset(String key) {
@@ -178,7 +178,7 @@ public final class Attributes {
 	 * @param key
 	 *            a {@link java.lang.String} object.
 	 * @return true if the key is
-	 *         {@link org.eclipse.jgit.attributes.Attribute.State#UNSPECIFIED},
+	 *         {@link org.openrewrite.jgit.attributes.Attribute.State#UNSPECIFIED},
 	 *         false in all other cases
 	 */
 	public boolean isUnspecified(String key) {
@@ -191,7 +191,7 @@ public final class Attributes {
 	 * @param key
 	 *            a {@link java.lang.String} object.
 	 * @return true if the key is
-	 *         {@link org.eclipse.jgit.attributes.Attribute.State#CUSTOM}, false
+	 *         {@link org.openrewrite.jgit.attributes.Attribute.State#CUSTOM}, false
 	 *         in all other cases see {@link #getValue(String)} for the value of
 	 *         the key
 	 */

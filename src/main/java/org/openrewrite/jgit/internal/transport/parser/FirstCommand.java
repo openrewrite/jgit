@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.transport.parser;
+package org.openrewrite.jgit.internal.transport.parser;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptySet;
@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toSet;
 
 import java.util.Set;
 
-import org.eclipse.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.NonNull;
 
 /**
  * In a push, the client sends a list of commands. The first command

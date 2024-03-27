@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
-import org.eclipse.jgit.lib.CheckoutEntry;
-import org.eclipse.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.CheckoutEntry;
+import org.openrewrite.jgit.lib.ReflogEntry;
 
 /**
  * Parsed information about a checkout.

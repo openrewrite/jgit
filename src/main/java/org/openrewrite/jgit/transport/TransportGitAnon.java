@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -27,10 +27,10 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Transport through a git-daemon waiting for anonymous TCP connections.

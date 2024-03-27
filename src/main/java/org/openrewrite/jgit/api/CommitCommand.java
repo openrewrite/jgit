@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,57 +19,57 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.AbortedByHookException;
-import org.eclipse.jgit.api.errors.CanceledException;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
-import org.eclipse.jgit.api.errors.EmptyCommitException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoFilepatternException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.NoMessageException;
-import org.eclipse.jgit.api.errors.ServiceUnavailableException;
-import org.eclipse.jgit.api.errors.UnmergedPathsException;
-import org.eclipse.jgit.api.errors.UnsupportedSigningFormatException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheBuildIterator;
-import org.eclipse.jgit.dircache.DirCacheBuilder;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.UnmergedPathException;
-import org.eclipse.jgit.hooks.CommitMsgHook;
-import org.eclipse.jgit.hooks.Hooks;
-import org.eclipse.jgit.hooks.PostCommitHook;
-import org.eclipse.jgit.hooks.PreCommitHook;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.CommitBuilder;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.GpgConfig;
-import org.eclipse.jgit.lib.GpgConfig.GpgFormat;
-import org.eclipse.jgit.lib.GpgObjectSigner;
-import org.eclipse.jgit.lib.GpgSigner;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
-import org.eclipse.jgit.util.ChangeIdUtil;
+import org.openrewrite.jgit.api.errors.AbortedByHookException;
+import org.openrewrite.jgit.api.errors.CanceledException;
+import org.openrewrite.jgit.api.errors.ConcurrentRefUpdateException;
+import org.openrewrite.jgit.api.errors.EmptyCommitException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoFilepatternException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.api.errors.NoMessageException;
+import org.openrewrite.jgit.api.errors.ServiceUnavailableException;
+import org.openrewrite.jgit.api.errors.UnmergedPathsException;
+import org.openrewrite.jgit.api.errors.UnsupportedSigningFormatException;
+import org.openrewrite.jgit.api.errors.WrongRepositoryStateException;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheBuildIterator;
+import org.openrewrite.jgit.dircache.DirCacheBuilder;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.UnmergedPathException;
+import org.openrewrite.jgit.hooks.CommitMsgHook;
+import org.openrewrite.jgit.hooks.Hooks;
+import org.openrewrite.jgit.hooks.PostCommitHook;
+import org.openrewrite.jgit.hooks.PreCommitHook;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.CommitBuilder;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.GpgConfig;
+import org.openrewrite.jgit.lib.GpgConfig.GpgFormat;
+import org.openrewrite.jgit.lib.GpgObjectSigner;
+import org.openrewrite.jgit.lib.GpgSigner;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.RepositoryState;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.CredentialsProvider;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
+import org.openrewrite.jgit.util.ChangeIdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,7 +137,7 @@ public class CommitCommand extends GitCommand<RevCommit> {
 	 * Constructor for CommitCommand
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected CommitCommand(Repository repo) {
 		super(repo);
@@ -670,7 +670,7 @@ public class CommitCommand extends GitCommand<RevCommit> {
 	 *            <p>
 	 *            By default when creating a commit containing only specified
 	 *            paths an attempt to create an empty commit leads to a
-	 *            {@link org.eclipse.jgit.api.errors.JGitInternalException}. By
+	 *            {@link org.openrewrite.jgit.api.errors.JGitInternalException}. By
 	 *            setting this flag to <code>true</code> this exception will not
 	 *            be thrown.
 	 * @return {@code this}
@@ -727,7 +727,7 @@ public class CommitCommand extends GitCommand<RevCommit> {
 	 *
 	 * @return the committer used for the {@code commit}. If no committer was
 	 *         specified {@code null} is returned and the default
-	 *         {@link org.eclipse.jgit.lib.PersonIdent} of this repo is used
+	 *         {@link org.openrewrite.jgit.lib.PersonIdent} of this repo is used
 	 *         during execution of the command
 	 */
 	public PersonIdent getCommitter() {
@@ -771,7 +771,7 @@ public class CommitCommand extends GitCommand<RevCommit> {
 	 *
 	 * @return the author used for the {@code commit}. If no author was
 	 *         specified {@code null} is returned and the default
-	 *         {@link org.eclipse.jgit.lib.PersonIdent} of this repo is used
+	 *         {@link org.openrewrite.jgit.lib.PersonIdent} of this repo is used
 	 *         during execution of the command
 	 */
 	public PersonIdent getAuthor() {

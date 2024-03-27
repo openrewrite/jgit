@@ -8,20 +8,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.ByteBuffer;
 
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.References;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.References;
 
 /**
  * A (possibly mutable) SHA-1 abstraction.
  * <p>
- * If this is an instance of {@link org.eclipse.jgit.lib.MutableObjectId} the
+ * If this is an instance of {@link org.openrewrite.jgit.lib.MutableObjectId} the
  * concept of equality with this instance can alter at any time, if this
  * instance is modified to represent a different object name.
  */
@@ -105,15 +105,15 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 	 * @param index
 	 *            index of the byte to obtain from the raw form of the ObjectId.
 	 *            Must be in range [0,
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJECT_ID_LENGTH}).
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJECT_ID_LENGTH}).
 	 * @return the value of the requested byte at {@code index}. Returned values
 	 *         are unsigned and thus are in the range [0,255] rather than the
 	 *         signed byte range of [-128, 127].
 	 * @throws java.lang.ArrayIndexOutOfBoundsException
 	 *             {@code index} is less than 0, equal to
-	 *             {@link org.eclipse.jgit.lib.Constants#OBJECT_ID_LENGTH}, or
+	 *             {@link org.openrewrite.jgit.lib.Constants#OBJECT_ID_LENGTH}, or
 	 *             greater than
-	 *             {@link org.eclipse.jgit.lib.Constants#OBJECT_ID_LENGTH}.
+	 *             {@link org.openrewrite.jgit.lib.Constants#OBJECT_ID_LENGTH}.
 	 */
 	public final int getByte(int index) {
 		int w;
@@ -507,7 +507,7 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 	 * <p>
 	 * This implementation does not guarantee uniqueness. Callers should instead
 	 * use
-	 * {@link org.eclipse.jgit.lib.ObjectReader#abbreviate(AnyObjectId, int)} to
+	 * {@link org.openrewrite.jgit.lib.ObjectReader#abbreviate(AnyObjectId, int)} to
 	 * obtain a unique abbreviation within the scope of a particular object
 	 * database.
 	 *
@@ -528,7 +528,7 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 	 * Obtain an immutable copy of this current object name value.
 	 * <p>
 	 * Only returns <code>this</code> if this instance is an unsubclassed
-	 * instance of {@link org.eclipse.jgit.lib.ObjectId}; otherwise a new
+	 * instance of {@link org.openrewrite.jgit.lib.ObjectId}; otherwise a new
 	 * instance is returned holding the same value.
 	 * <p>
 	 * This method is useful to shed any additional memory that may be tied to

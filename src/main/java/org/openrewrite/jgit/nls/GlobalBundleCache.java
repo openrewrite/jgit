@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.nls;
+package org.openrewrite.jgit.nls;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.eclipse.jgit.errors.TranslationBundleLoadingException;
-import org.eclipse.jgit.errors.TranslationStringMissingException;
+import org.openrewrite.jgit.errors.TranslationBundleLoadingException;
+import org.openrewrite.jgit.errors.TranslationStringMissingException;
 
 /**
  * Global cache of translation bundles.

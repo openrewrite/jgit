@@ -8,28 +8,28 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
-import org.eclipse.jgit.api.errors.DetachedHeadException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.RefAlreadyExistsException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefRename;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.api.errors.DetachedHeadException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRefNameException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.api.errors.RefAlreadyExistsException;
+import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefRename;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
 
 /**
  * Used to rename branches.
@@ -49,7 +49,7 @@ public class RenameBranchCommand extends GitCommand<Ref> {
 	 * </p>
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected RenameBranchCommand(Repository repo) {
 		super(repo);

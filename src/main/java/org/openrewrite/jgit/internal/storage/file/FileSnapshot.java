@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
-import static org.eclipse.jgit.util.FS.FileStoreAttributes.FALLBACK_FILESTORE_ATTRIBUTES;
-import static org.eclipse.jgit.util.FS.FileStoreAttributes.FALLBACK_TIMESTAMP_RESOLUTION;
+import static org.openrewrite.jgit.util.FS.FileStoreAttributes.FALLBACK_FILESTORE_ATTRIBUTES;
+import static org.openrewrite.jgit.util.FS.FileStoreAttributes.FALLBACK_TIMESTAMP_RESOLUTION;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +25,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FS.FileStoreAttributes;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FS.FileStoreAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

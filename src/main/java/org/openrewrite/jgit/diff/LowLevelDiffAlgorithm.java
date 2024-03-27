@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 /**
  * Compares two sequences primarily based upon hash codes.
@@ -38,7 +38,7 @@ public abstract class LowLevelDiffAlgorithm extends DiffAlgorithm {
 	 * elimination of common starting and ending elements is automatically
 	 * performed by the {@link #diff(SequenceComparator, Sequence, Sequence)}
 	 * method, which invokes this method using
-	 * {@link org.eclipse.jgit.diff.Subsequence}s.
+	 * {@link org.openrewrite.jgit.diff.Subsequence}s.
 	 *
 	 * @param edits
 	 *            result list to append the region's edits onto.
@@ -47,13 +47,13 @@ public abstract class LowLevelDiffAlgorithm extends DiffAlgorithm {
 	 * @param a
 	 *            the first (also known as old or pre-image) sequence. Edits
 	 *            returned by this algorithm will reference indexes using the
-	 *            'A' side: {@link org.eclipse.jgit.diff.Edit#getBeginA()},
-	 *            {@link org.eclipse.jgit.diff.Edit#getEndA()}.
+	 *            'A' side: {@link org.openrewrite.jgit.diff.Edit#getBeginA()},
+	 *            {@link org.openrewrite.jgit.diff.Edit#getEndA()}.
 	 * @param b
 	 *            the second (also known as new or post-image) sequence. Edits
 	 *            returned by this algorithm will reference indexes using the
-	 *            'B' side: {@link org.eclipse.jgit.diff.Edit#getBeginB()},
-	 *            {@link org.eclipse.jgit.diff.Edit#getEndB()}.
+	 *            'B' side: {@link org.openrewrite.jgit.diff.Edit#getBeginB()},
+	 *            {@link org.openrewrite.jgit.diff.Edit#getEndB()}.
 	 * @param region
 	 *            the region being compared within the two sequences.
 	 */

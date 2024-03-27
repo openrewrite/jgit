@@ -7,20 +7,20 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.ReflogReader;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRefNameException;
+import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.ReflogReader;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * The reflog command
@@ -37,7 +37,7 @@ public class ReflogCommand extends GitCommand<Collection<ReflogEntry>> {
 	 * Constructor for ReflogCommand.
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	public ReflogCommand(Repository repo) {
 		super(repo);

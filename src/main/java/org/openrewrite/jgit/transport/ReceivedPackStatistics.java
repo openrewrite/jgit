@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Constants;
 
 /**
- * Statistics about {@link org.eclipse.jgit.transport.PackParser}.
+ * Statistics about {@link org.openrewrite.jgit.transport.PackParser}.
  *
  * @since 4.6
  */

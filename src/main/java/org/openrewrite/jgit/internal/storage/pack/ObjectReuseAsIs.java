@@ -8,25 +8,25 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.StoredObjectRepresentationNotAvailableException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.BitmapIndex.BitmapBuilder;
-import org.eclipse.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.StoredObjectRepresentationNotAvailableException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.BitmapIndex.BitmapBuilder;
+import org.openrewrite.jgit.lib.ProgressMonitor;
 
 /**
- * Extension of {@link org.eclipse.jgit.lib.ObjectReader} that supports reusing
+ * Extension of {@link org.openrewrite.jgit.lib.ObjectReader} that supports reusing
  * objects in packs.
  * <p>
  * {@code ObjectReader} implementations may also optionally implement this
  * interface to support
- * {@link org.eclipse.jgit.internal.storage.pack.PackWriter} with a means of
+ * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter} with a means of
  * copying an object that is already in pack encoding format directly into the
  * output stream, without incurring decompression and recompression overheads.
  */
@@ -34,7 +34,7 @@ public interface ObjectReuseAsIs {
 	/**
 	 * Allocate a new {@code PackWriter} state structure for an object.
 	 * <p>
-	 * {@link org.eclipse.jgit.internal.storage.pack.PackWriter} allocates these
+	 * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter} allocates these
 	 * objects to keep track of the per-object state, and how to load the
 	 * objects efficiently into the generated stream. Implementers may subclass
 	 * this type with additional object state, such as to remember what file and
@@ -53,7 +53,7 @@ public interface ObjectReuseAsIs {
 	 * <p>
 	 * Implementations should iterate through all available representations of
 	 * an object, and pass them in turn to the PackWriter though
-	 * {@link org.eclipse.jgit.internal.storage.pack.PackWriter#select(ObjectToPack, StoredObjectRepresentation)}
+	 * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter#select(ObjectToPack, StoredObjectRepresentation)}
 	 * so the writer can select the most suitable representation to reuse into
 	 * the output stream.
 	 * <p>
@@ -75,7 +75,7 @@ public interface ObjectReuseAsIs {
 	 *            once for each item in the iteration when selection is done.
 	 * @param objects
 	 *            the objects that are being packed.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             there is no representation available for the object, as it is
 	 *             no longer in the repository. Packing will abort.
 	 * @throws java.io.IOException
@@ -106,7 +106,7 @@ public interface ObjectReuseAsIs {
 	 * reduce data locality for the reader, slowing down data access.
 	 *
 	 * Invoking
-	 * {@link org.eclipse.jgit.internal.storage.pack.PackOutputStream#writeObject(ObjectToPack)}
+	 * {@link org.openrewrite.jgit.internal.storage.pack.PackOutputStream#writeObject(ObjectToPack)}
 	 * will cause
 	 * {@link #copyObjectAsIs(PackOutputStream, ObjectToPack, boolean)} to be
 	 * invoked recursively on {@code this} if the current object is scheduled
@@ -157,7 +157,7 @@ public interface ObjectReuseAsIs {
 	 *            corrupt before being reused. If false, validation may be
 	 *            skipped as it will be performed elsewhere in the processing
 	 *            pipeline.
-	 * @throws org.eclipse.jgit.errors.StoredObjectRepresentationNotAvailableException
+	 * @throws org.openrewrite.jgit.errors.StoredObjectRepresentationNotAvailableException
 	 *             the previously selected representation is no longer
 	 *             available. If thrown before {@code out.writeHeader} the pack
 	 *             writer will try to find another representation, and write

@@ -10,11 +10,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.transport.URIish;
+import org.openrewrite.jgit.transport.URIish;
 
 /**
  * Indicates a protocol error has occurred while fetching/pushing objects.

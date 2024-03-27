@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 /**
  * Supports {@link DeltaIndex} by performing a partial scan of the content.

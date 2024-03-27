@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Ref.Storage;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.SymbolicRef;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref.Storage;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 final class DfsRefUpdate extends RefUpdate {
 	private final DfsRefDatabase refdb;

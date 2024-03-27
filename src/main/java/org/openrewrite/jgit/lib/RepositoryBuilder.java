@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.File;
 
 /**
- * Base class to support constructing a {@link org.eclipse.jgit.lib.Repository}.
+ * Base class to support constructing a {@link org.openrewrite.jgit.lib.Repository}.
  * <p>
  * Applications must set one of {@link #setGitDir(File)} or
  * {@link #setWorkTree(File)}, or use {@link #readEnvironment()} or
@@ -31,7 +31,7 @@ import java.io.File;
  * 		.build()
  * </pre>
  *
- * @see org.eclipse.jgit.storage.file.FileRepositoryBuilder
+ * @see org.openrewrite.jgit.storage.file.FileRepositoryBuilder
  */
 public class RepositoryBuilder extends
 		BaseRepositoryBuilder<RepositoryBuilder, Repository> {

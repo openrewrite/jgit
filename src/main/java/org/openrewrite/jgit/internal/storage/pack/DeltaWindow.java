@@ -8,20 +8,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.Deflater;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.util.TemporaryBuffer;
 
 final class DeltaWindow {
 	private static final boolean NEXT_RES = false;

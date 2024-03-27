@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * An exception detailing multiple reasons for failure.

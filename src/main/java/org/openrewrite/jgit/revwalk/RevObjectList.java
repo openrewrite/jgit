@@ -10,15 +10,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.text.MessageFormat;
 import java.util.AbstractList;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
- * An ordered list of {@link org.eclipse.jgit.revwalk.RevObject} subclasses.
+ * An ordered list of {@link org.openrewrite.jgit.revwalk.RevObject} subclasses.
  *
  * @param <E>
  *            type of subclass of RevObject the list is storing.

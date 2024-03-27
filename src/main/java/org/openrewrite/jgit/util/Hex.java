@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Encodes and decodes to and from hexadecimal notation.

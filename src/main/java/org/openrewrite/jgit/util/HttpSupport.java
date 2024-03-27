@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -33,9 +33,9 @@ import java.util.Set;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManager;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.transport.http.HttpConnection;
-import org.eclipse.jgit.transport.http.NoCheckX509TrustManager;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.transport.http.HttpConnection;
+import org.openrewrite.jgit.transport.http.NoCheckX509TrustManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -221,7 +221,7 @@ public class HttpSupport {
 	 * @param c
 	 *            connection the code should be obtained from.
 	 * @return r HTTP status code, usually 200 to indicate success. See
-	 *         {@link org.eclipse.jgit.transport.http.HttpConnection} for other
+	 *         {@link org.openrewrite.jgit.transport.http.HttpConnection} for other
 	 *         defined constants.
 	 * @throws java.io.IOException
 	 *             communications error prevented obtaining the response code.
@@ -250,7 +250,7 @@ public class HttpSupport {
 	 * @param c
 	 *            connection the code should be obtained from.
 	 * @return r HTTP status code, usually 200 to indicate success. See
-	 *         {@link org.eclipse.jgit.transport.http.HttpConnection} for other
+	 *         {@link org.openrewrite.jgit.transport.http.HttpConnection} for other
 	 *         defined constants.
 	 * @throws java.io.IOException
 	 *             communications error prevented obtaining the response code.
@@ -318,7 +318,7 @@ public class HttpSupport {
 	 * Disable SSL and hostname verification for given HTTP connection
 	 *
 	 * @param conn
-	 *            a {@link org.eclipse.jgit.transport.http.HttpConnection}
+	 *            a {@link org.openrewrite.jgit.transport.http.HttpConnection}
 	 *            object.
 	 * @throws java.io.IOException
 	 * @since 4.3

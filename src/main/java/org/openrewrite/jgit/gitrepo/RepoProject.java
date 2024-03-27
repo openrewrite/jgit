@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.gitrepo;
+package org.openrewrite.jgit.gitrepo;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * The representation of a repo sub project.
@@ -332,7 +332,7 @@ public class RepoProject implements Comparable<RepoProject> {
 	/**
 	 * Add a copy file configuration.
 	 *
-	 * @param copyfile a {@link org.eclipse.jgit.gitrepo.RepoProject.CopyFile} object.
+	 * @param copyfile a {@link org.openrewrite.jgit.gitrepo.RepoProject.CopyFile} object.
 	 */
 	public void addCopyFile(CopyFile copyfile) {
 		copyfiles.add(copyfile);
@@ -343,7 +343,7 @@ public class RepoProject implements Comparable<RepoProject> {
 	 *
 	 * @param copyFiles
 	 *            a collection of
-	 *            {@link org.eclipse.jgit.gitrepo.RepoProject.CopyFile} objects
+	 *            {@link org.openrewrite.jgit.gitrepo.RepoProject.CopyFile} objects
 	 */
 	public void addCopyFiles(Collection<CopyFile> copyFiles) {
 		this.copyfiles.addAll(copyFiles);
@@ -361,7 +361,7 @@ public class RepoProject implements Comparable<RepoProject> {
 	/**
 	 * Add a link file configuration.
 	 *
-	 * @param linkfile a {@link org.eclipse.jgit.gitrepo.RepoProject.LinkFile} object.
+	 * @param linkfile a {@link org.openrewrite.jgit.gitrepo.RepoProject.LinkFile} object.
 	 * @since 4.8
 	 */
 	public void addLinkFile(LinkFile linkfile) {

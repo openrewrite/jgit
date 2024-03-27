@@ -7,10 +7,10 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.PushCertificate.NonceStatus;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.PushCertificate.NonceStatus;
 
 /**
  * A NonceGenerator is used to create a nonce to be sent out to the pusher who

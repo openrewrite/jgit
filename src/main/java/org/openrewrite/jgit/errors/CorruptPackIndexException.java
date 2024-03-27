@@ -8,9 +8,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
-import org.eclipse.jgit.annotations.Nullable;
+import org.openrewrite.jgit.annotations.Nullable;
 
 /**
  * Exception thrown when encounters a corrupt pack index file.

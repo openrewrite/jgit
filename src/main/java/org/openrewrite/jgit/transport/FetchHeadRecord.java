@@ -10,16 +10,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.lib.Constants.R_HEADS;
-import static org.eclipse.jgit.lib.Constants.R_REMOTES;
-import static org.eclipse.jgit.lib.Constants.R_TAGS;
+import static org.openrewrite.jgit.lib.Constants.R_HEADS;
+import static org.openrewrite.jgit.lib.Constants.R_REMOTES;
+import static org.openrewrite.jgit.lib.Constants.R_TAGS;
 
 import java.io.IOException;
 import java.io.Writer;
 
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
 
 class FetchHeadRecord {
 	ObjectId newValue;

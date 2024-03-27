@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
@@ -17,13 +17,13 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.BasePackFetchConnection.FetchConfig;
-import org.eclipse.jgit.transport.resolver.ReceivePackFactory;
-import org.eclipse.jgit.transport.resolver.UploadPackFactory;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.BasePackFetchConnection.FetchConfig;
+import org.openrewrite.jgit.transport.resolver.ReceivePackFactory;
+import org.openrewrite.jgit.transport.resolver.UploadPackFactory;
 
 /**
  * Protocol for transport between manually-specified repositories in tests.
@@ -37,7 +37,7 @@ import org.eclipse.jgit.transport.resolver.UploadPackFactory;
  * Unlike the other built-in protocols, which are automatically-registered
  * singletons, callers are expected to register/unregister specific protocol
  * instances on demand with
- * {@link org.eclipse.jgit.transport.Transport#register(TransportProtocol)}.
+ * {@link org.openrewrite.jgit.transport.Transport#register(TransportProtocol)}.
  *
  * @param <C>
  *            the connection type
@@ -67,11 +67,11 @@ public class TestProtocol<C> extends TransportProtocol {
 	 *
 	 * @param uploadPackFactory
 	 *            factory for creating
-	 *            {@link org.eclipse.jgit.transport.UploadPack} used by all
+	 *            {@link org.openrewrite.jgit.transport.UploadPack} used by all
 	 *            connections from this protocol instance.
 	 * @param receivePackFactory
 	 *            factory for creating
-	 *            {@link org.eclipse.jgit.transport.ReceivePack} used by all
+	 *            {@link org.openrewrite.jgit.transport.ReceivePack} used by all
 	 *            connections from this protocol instance.
 	 */
 	public TestProtocol(UploadPackFactory<C> uploadPackFactory,

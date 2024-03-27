@@ -8,31 +8,31 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.eclipse.jgit.diff.DiffConfig;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.diff.RenameDetector;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.StopWalkException;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.diff.DiffConfig;
+import org.openrewrite.jgit.diff.DiffEntry;
+import org.openrewrite.jgit.diff.DiffEntry.ChangeType;
+import org.openrewrite.jgit.diff.RenameDetector;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.StopWalkException;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
 
 /**
- * Filter applying a {@link org.eclipse.jgit.treewalk.filter.TreeFilter} against
+ * Filter applying a {@link org.openrewrite.jgit.treewalk.filter.TreeFilter} against
  * changed paths in each commit.
  * <p>
  * Each commit is differenced concurrently against all of its parents to look
  * for tree entries that are interesting to the
- * {@link org.eclipse.jgit.treewalk.filter.TreeFilter}.
+ * {@link org.openrewrite.jgit.treewalk.filter.TreeFilter}.
  *
  * @since 3.5
  */
@@ -45,14 +45,14 @@ public class TreeRevFilter extends RevFilter {
 	private final TreeWalk pathFilter;
 
 	/**
-	 * Create a {@link org.eclipse.jgit.revwalk.filter.RevFilter} from a
-	 * {@link org.eclipse.jgit.treewalk.filter.TreeFilter}.
+	 * Create a {@link org.openrewrite.jgit.revwalk.filter.RevFilter} from a
+	 * {@link org.openrewrite.jgit.treewalk.filter.TreeFilter}.
 	 *
 	 * @param walker
 	 *            walker used for reading trees.
 	 * @param t
 	 *            filter to compare against any changed paths in each commit. If
-	 *            a {@link org.eclipse.jgit.revwalk.FollowFilter}, will be
+	 *            a {@link org.openrewrite.jgit.revwalk.FollowFilter}, will be
 	 *            replaced with a new filter following new paths after a rename.
 	 * @since 3.5
 	 */

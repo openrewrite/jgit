@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.time.Instant.EPOCH;
@@ -62,23 +62,23 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.CommandFailedException;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.LockFailedException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.FileSnapshot;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.treewalk.FileTreeIterator.FileEntry;
-import org.eclipse.jgit.treewalk.FileTreeIterator.FileModeStrategy;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator.Entry;
-import org.eclipse.jgit.util.ProcessResult.Status;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.CommandFailedException;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.LockFailedException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.FileSnapshot;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.treewalk.FileTreeIterator.FileEntry;
+import org.openrewrite.jgit.treewalk.FileTreeIterator.FileModeStrategy;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator.Entry;
+import org.openrewrite.jgit.util.ProcessResult.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -297,18 +297,6 @@ public abstract class FS {
 					t.setDaemon(false);
 					return t;
 				});
-
-		static {
-			// Shut down the SAVE_RUNNER on System.exit()
-			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-				try {
-					SAVE_RUNNER.shutdownNow();
-					SAVE_RUNNER.awaitTermination(100, TimeUnit.MILLISECONDS);
-				} catch (Exception e) {
-					// Ignore; we're shutting down
-				}
-			}));
-		}
 
 		/**
 		 * Whether FileStore attributes should be determined asynchronously
@@ -1004,7 +992,7 @@ public abstract class FS {
 	private void detectSymlinkSupport() {
 		File tempFile = null;
 		try {
-			tempFile = File.createTempFile("tempsymlinktarget", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			tempFile = Files.createTempFile("tempsymlinktarget", "").toFile(); //$NON-NLS-1$ //$NON-NLS-2$
 			File linkName = new File(tempFile.getParentFile(), "tempsymlink"); //$NON-NLS-1$
 			createSymLink(linkName, tempFile.getPath());
 			supportSymlinks = Boolean.TRUE;
@@ -1332,7 +1320,7 @@ public abstract class FS {
 	 *            to be used to parse the command's output
 	 * @return the one-line output of the command or {@code null} if there is
 	 *         none
-	 * @throws org.eclipse.jgit.errors.CommandFailedException
+	 * @throws org.openrewrite.jgit.errors.CommandFailedException
 	 *             thrown when the command failed (return code was non-zero)
 	 */
 	@Nullable
@@ -1355,7 +1343,7 @@ public abstract class FS {
 	 *            current process
 	 * @return the one-line output of the command or {@code null} if there is
 	 *         none
-	 * @throws org.eclipse.jgit.errors.CommandFailedException
+	 * @throws org.openrewrite.jgit.errors.CommandFailedException
 	 *             thrown when the command failed (return code was non-zero)
 	 * @since 4.0
 	 */
@@ -1856,7 +1844,7 @@ public abstract class FS {
 
 	/**
 	 * See
-	 * {@link org.eclipse.jgit.util.FileUtils#relativizePath(String, String, String, boolean)}.
+	 * {@link org.openrewrite.jgit.util.FileUtils#relativizePath(String, String, String, boolean)}.
 	 *
 	 * @param base
 	 *            The path against which <code>other</code> should be
@@ -1912,7 +1900,7 @@ public abstract class FS {
 	 *            Arguments to pass to this hook. Cannot be <code>null</code>,
 	 *            but can be an empty array.
 	 * @return The ProcessResult describing this hook's execution.
-	 * @throws org.eclipse.jgit.api.errors.JGitInternalException
+	 * @throws org.openrewrite.jgit.api.errors.JGitInternalException
 	 *             if we fail to run the hook somehow. Causes may include an
 	 *             interrupted process or I/O errors.
 	 * @since 4.0
@@ -1946,7 +1934,7 @@ public abstract class FS {
 	 *            A string to pass on to the standard input of the hook. May be
 	 *            <code>null</code>.
 	 * @return The ProcessResult describing this hook's execution.
-	 * @throws org.eclipse.jgit.api.errors.JGitInternalException
+	 * @throws org.openrewrite.jgit.api.errors.JGitInternalException
 	 *             if we fail to run the hook somehow. Causes may include an
 	 *             interrupted process or I/O errors.
 	 * @since 5.11
@@ -1982,7 +1970,7 @@ public abstract class FS {
 	 *            A string to pass on to the standard input of the hook. May be
 	 *            <code>null</code>.
 	 * @return The ProcessResult describing this hook's execution.
-	 * @throws org.eclipse.jgit.api.errors.JGitInternalException
+	 * @throws org.openrewrite.jgit.api.errors.JGitInternalException
 	 *             if we fail to run the hook somehow. Causes may include an
 	 *             interrupted process or I/O errors.
 	 * @since 5.11

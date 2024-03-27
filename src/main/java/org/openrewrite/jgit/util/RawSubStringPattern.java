@@ -9,10 +9,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
 
 /**
  * Searches text using only substring search.

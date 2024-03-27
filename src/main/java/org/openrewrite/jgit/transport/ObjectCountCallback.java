@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.OutputStream;
 
-import org.eclipse.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.ProgressMonitor;
 
 /**
  * A callback to tell caller the count of objects ASAP.
@@ -22,19 +22,19 @@ import org.eclipse.jgit.lib.ProgressMonitor;
 public interface ObjectCountCallback {
 	/**
 	 * Invoked when the
-	 * {@link org.eclipse.jgit.internal.storage.pack.PackWriter} has counted the
+	 * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter} has counted the
 	 * objects to be written to pack.
 	 * <p>
 	 * An {@code ObjectCountCallback} can use this information to decide whether
 	 * the
-	 * {@link org.eclipse.jgit.internal.storage.pack.PackWriter#writePack(ProgressMonitor, ProgressMonitor, OutputStream)}
+	 * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter#writePack(ProgressMonitor, ProgressMonitor, OutputStream)}
 	 * operation should be aborted.
 	 * <p>
 	 * This callback will be called exactly once.
 	 *
 	 * @param objectCount
 	 *            the count of the objects.
-	 * @throws org.eclipse.jgit.transport.WriteAbortedException
+	 * @throws org.openrewrite.jgit.transport.WriteAbortedException
 	 *             to indicate that the write operation should be aborted.
 	 */
 	void setObjectCount(long objectCount) throws WriteAbortedException;

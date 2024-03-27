@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.revwalk;
+package org.openrewrite.jgit.internal.revwalk;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,18 +17,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.BitmapIndex;
-import org.eclipse.jgit.lib.BitmapIndex.Bitmap;
-import org.eclipse.jgit.lib.BitmapIndex.BitmapBuilder;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.revwalk.ReachabilityChecker;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevFlag;
-import org.eclipse.jgit.revwalk.RevSort;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.BitmapIndex;
+import org.openrewrite.jgit.lib.BitmapIndex.Bitmap;
+import org.openrewrite.jgit.lib.BitmapIndex.BitmapBuilder;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.revwalk.ReachabilityChecker;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.revwalk.RevSort;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
 
 /**
  * Checks the reachability using bitmaps.

@@ -40,7 +40,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -58,7 +58,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.util.FS;
 
 /**
  * NetRC file parser.

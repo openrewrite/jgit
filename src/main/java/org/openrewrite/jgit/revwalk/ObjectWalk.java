@@ -8,28 +8,28 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import static java.util.Objects.requireNonNull;
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.Constants.OBJ_COMMIT;
-import static org.eclipse.jgit.lib.Constants.OBJ_TREE;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.lib.Constants.OBJ_COMMIT;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TREE;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.filter.ObjectFilter;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.filter.ObjectFilter;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Specialized subclass of RevWalk to include trees, blobs and tags.
@@ -45,7 +45,7 @@ import org.eclipse.jgit.util.RawParseUtils;
  * each object exactly once. Objects are sorted and returned according to the
  * the commits that reference them and the order they appear within a tree.
  * Ordering can be affected by changing the
- * {@link org.eclipse.jgit.revwalk.RevSort} used to order the commits that are
+ * {@link org.openrewrite.jgit.revwalk.RevSort} used to order the commits that are
  * returned first.
  */
 public class ObjectWalk extends RevWalk {
@@ -186,8 +186,8 @@ public class ObjectWalk extends RevWalk {
 	 * Mark an object or commit to start graph traversal from.
 	 * <p>
 	 * Callers are encouraged to use
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#parseAny(AnyObjectId)} instead of
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}, as
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#parseAny(AnyObjectId)} instead of
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}, as
 	 * this method requires the object to be parsed before it can be added as a
 	 * root for the traversal.
 	 * <p>
@@ -197,25 +197,25 @@ public class ObjectWalk extends RevWalk {
 	 * also be 'poisoned' by the invalid RevObject.
 	 * <p>
 	 * This method will automatically call
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#markStart(RevCommit)} if passed
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#markStart(RevCommit)} if passed
 	 * RevCommit instance, or a RevTag that directly (or indirectly) references
 	 * a RevCommit.
 	 *
 	 * @param o
 	 *            the object to start traversing from. The object passed must be
 	 *            from this same revision walker.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object supplied is not available from the object
 	 *             database. This usually indicates the supplied object is
 	 *             invalid, but the reference was constructed during an earlier
 	 *             invocation to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}.
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object was not parsed yet and it was discovered during
 	 *             parsing that it is not actually the type of the instance
 	 *             passed in. This usually indicates the caller used the wrong
 	 *             type in a
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}
 	 *             call.
 	 * @throws java.io.IOException
 	 *             a pack file or loose object could not be read.
@@ -242,8 +242,8 @@ public class ObjectWalk extends RevWalk {
 	 * an otherwise interesting commit.
 	 * <p>
 	 * Callers are encouraged to use
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#parseAny(AnyObjectId)} instead of
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}, as
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#parseAny(AnyObjectId)} instead of
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}, as
 	 * this method requires the object to be parsed before it can be added as a
 	 * root for the traversal.
 	 * <p>
@@ -253,24 +253,24 @@ public class ObjectWalk extends RevWalk {
 	 * also be 'poisoned' by the invalid RevObject.
 	 * <p>
 	 * This method will automatically call
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#markStart(RevCommit)} if passed
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#markStart(RevCommit)} if passed
 	 * RevCommit instance, or a RevTag that directly (or indirectly) references
 	 * a RevCommit.
 	 *
 	 * @param o
 	 *            the object to start traversing from. The object passed must be
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object supplied is not available from the object
 	 *             database. This usually indicates the supplied object is
 	 *             invalid, but the reference was constructed during an earlier
 	 *             invocation to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}.
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object was not parsed yet and it was discovered during
 	 *             parsing that it is not actually the type of the instance
 	 *             passed in. This usually indicates the caller used the wrong
 	 *             type in a
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}
 	 *             call.
 	 * @throws java.io.IOException
 	 *             a pack file or loose object could not be read.
@@ -332,7 +332,7 @@ public class ObjectWalk extends RevWalk {
 	 *
 	 * @param newFilter
 	 *            the new filter. If null the special
-	 *            {@link org.eclipse.jgit.revwalk.filter.ObjectFilter#ALL}
+	 *            {@link org.openrewrite.jgit.revwalk.filter.ObjectFilter#ALL}
 	 *            filter will be used instead, as it matches every object.
 	 * @since 4.0
 	 */
@@ -396,11 +396,11 @@ public class ObjectWalk extends RevWalk {
 	 * Pop the next most recent object.
 	 *
 	 * @return next most recent object; null if traversal is over.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             one or more of the next objects are not available from the
 	 *             object database, but were thought to be candidates for
 	 *             traversal. This usually indicates a broken link.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             one or more of the objects in a tree do not match the type
 	 *             indicated.
 	 * @throws java.io.IOException
@@ -592,11 +592,11 @@ public class ObjectWalk extends RevWalk {
 	 * exception if there is a connectivity problem. The exception message
 	 * provides some detail about the connectivity failure.
 	 *
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             one or more of the next objects are not available from the
 	 *             object database, but were thought to be candidates for
 	 *             traversal. This usually indicates a broken link.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             one or more of the objects in a tree do not match the type
 	 *             indicated.
 	 * @throws java.io.IOException

@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
@@ -17,19 +17,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.FetchConnection;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.transport.Transport;
-import org.eclipse.jgit.transport.URIish;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRemoteException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.FetchConnection;
+import org.openrewrite.jgit.transport.RefSpec;
+import org.openrewrite.jgit.transport.Transport;
+import org.openrewrite.jgit.transport.URIish;
 
 /**
  * The ls-remote command
@@ -124,7 +124,7 @@ public class LsRemoteCommand extends
 	@Override
 	public Collection<Ref> call() throws GitAPIException,
 			InvalidRemoteException,
-			org.eclipse.jgit.api.errors.TransportException {
+			org.openrewrite.jgit.api.errors.TransportException {
 		return execute().values();
 	}
 
@@ -132,23 +132,23 @@ public class LsRemoteCommand extends
 	 * Same as {@link #call()}, but return Map instead of Collection.
 	 *
 	 * @return a map from names to references in the remote repository
-	 * @throws org.eclipse.jgit.api.errors.GitAPIException
+	 * @throws org.openrewrite.jgit.api.errors.GitAPIException
 	 *             or subclass thereof when an error occurs
-	 * @throws org.eclipse.jgit.api.errors.InvalidRemoteException
+	 * @throws org.openrewrite.jgit.api.errors.InvalidRemoteException
 	 *             when called with an invalid remote uri
-	 * @throws org.eclipse.jgit.api.errors.TransportException
+	 * @throws org.openrewrite.jgit.api.errors.TransportException
 	 *             for errors that occurs during transport
 	 * @since 3.5
 	 */
 	public Map<String, Ref> callAsMap() throws GitAPIException,
 			InvalidRemoteException,
-			org.eclipse.jgit.api.errors.TransportException {
+			org.openrewrite.jgit.api.errors.TransportException {
 		return Collections.unmodifiableMap(execute());
 	}
 
 	private Map<String, Ref> execute() throws GitAPIException,
 			InvalidRemoteException,
-			org.eclipse.jgit.api.errors.TransportException {
+			org.openrewrite.jgit.api.errors.TransportException {
 		checkCallable();
 
 		try (Transport transport = repo != null
@@ -186,7 +186,7 @@ public class LsRemoteCommand extends
 					JGitText.get().exceptionCaughtDuringExecutionOfLsRemoteCommand,
 					e);
 		} catch (TransportException e) {
-			throw new org.eclipse.jgit.api.errors.TransportException(
+			throw new org.openrewrite.jgit.api.errors.TransportException(
 					e.getMessage(),
 					e);
 		}

@@ -7,17 +7,17 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.transport.RemoteConfig;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.transport.RemoteConfig;
 
 /**
  * Used to remove an existing remote.
@@ -40,7 +40,7 @@ public class RemoteRemoveCommand extends GitCommand<RemoteConfig> {
 	 * </p>
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected RemoteRemoveCommand(Repository repo) {
 		super(repo);

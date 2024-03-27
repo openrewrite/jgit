@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore.internal;
+package org.openrewrite.jgit.ignore.internal;
 
 /**
  * Matcher for simple patterns ending with an asterisk, e.g. "Makefile.*"

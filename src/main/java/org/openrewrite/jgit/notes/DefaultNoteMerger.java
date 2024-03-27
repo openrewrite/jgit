@@ -8,19 +8,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.notes;
+package org.openrewrite.jgit.notes;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.util.io.UnionInputStream;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.util.io.UnionInputStream;
 
 /**
- * Default implementation of the {@link org.eclipse.jgit.notes.NoteMerger}.
+ * Default implementation of the {@link org.openrewrite.jgit.notes.NoteMerger}.
  * <p>
  * If ours and theirs are both non-null, which means they are either both edits
  * or both adds, then this merger will simply join the content of ours and

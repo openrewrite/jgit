@@ -7,17 +7,17 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
 
 /**
- * Skip {@link org.eclipse.jgit.treewalk.WorkingTreeIterator} entries that
+ * Skip {@link org.openrewrite.jgit.treewalk.WorkingTreeIterator} entries that
  * appear in gitignore files.
  */
 public class NotIgnoredFilter extends TreeFilter {

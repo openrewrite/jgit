@@ -7,11 +7,11 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Exception thrown when a hook returns a process result with a value different

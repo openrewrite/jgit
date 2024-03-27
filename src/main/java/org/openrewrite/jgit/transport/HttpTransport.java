@@ -10,11 +10,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.http.HttpConnectionFactory;
-import org.eclipse.jgit.transport.http.JDKHttpConnectionFactory;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.http.HttpConnectionFactory;
+import org.openrewrite.jgit.transport.http.JDKHttpConnectionFactory;
 
 /**
  * The base class for transports that use HTTP as underlying protocol. This class
@@ -29,10 +29,10 @@ public abstract class HttpTransport extends Transport {
 	protected static volatile HttpConnectionFactory connectionFactory = new JDKHttpConnectionFactory();
 
 	/**
-	 * Get the {@link org.eclipse.jgit.transport.http.HttpConnectionFactory}
+	 * Get the {@link org.openrewrite.jgit.transport.http.HttpConnectionFactory}
 	 * used to create new connections
 	 *
-	 * @return the {@link org.eclipse.jgit.transport.http.HttpConnectionFactory}
+	 * @return the {@link org.openrewrite.jgit.transport.http.HttpConnectionFactory}
 	 *         used to create new connections
 	 * @since 3.3
 	 */
@@ -41,7 +41,7 @@ public abstract class HttpTransport extends Transport {
 	}
 
 	/**
-	 * Set the {@link org.eclipse.jgit.transport.http.HttpConnectionFactory} to
+	 * Set the {@link org.openrewrite.jgit.transport.http.HttpConnectionFactory} to
 	 * be used to create new connections
 	 *
 	 * @param cf
@@ -70,7 +70,7 @@ public abstract class HttpTransport extends Transport {
 	/**
 	 * Create a minimal HTTP transport instance not tied to a single repository.
 	 *
-	 * @param uri a {@link org.eclipse.jgit.transport.URIish} object.
+	 * @param uri a {@link org.openrewrite.jgit.transport.URIish} object.
 	 */
 	protected HttpTransport(URIish uri) {
 		super(uri);

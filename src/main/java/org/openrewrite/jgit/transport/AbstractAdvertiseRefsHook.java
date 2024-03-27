@@ -40,18 +40,18 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
- * Implementation of {@link org.eclipse.jgit.transport.AdvertiseRefsHook} that advertises the same refs for
+ * Implementation of {@link org.openrewrite.jgit.transport.AdvertiseRefsHook} that advertises the same refs for
  * upload-pack and receive-pack.
  *
  * @since 2.0
@@ -84,7 +84,7 @@ public abstract class AbstractAdvertiseRefsHook implements AdvertiseRefsHook {
 	 * @param revWalk
 	 *            open rev walk on the repository.
 	 * @return set of refs to advertise.
-	 * @throws org.eclipse.jgit.transport.ServiceMayNotContinueException
+	 * @throws org.openrewrite.jgit.transport.ServiceMayNotContinueException
 	 *             abort; the message will be sent to the user.
 	 */
 	protected abstract Map<String, Ref> getAdvertisedRefs(
@@ -99,8 +99,8 @@ public abstract class AbstractAdvertiseRefsHook implements AdvertiseRefsHook {
 	 * @param revWalk
 	 *            open rev walk on the repository.
 	 * @return set of additional haves; see
-	 *         {@link org.eclipse.jgit.transport.ReceivePack#getAdvertisedObjects()}.
-	 * @throws org.eclipse.jgit.transport.ServiceMayNotContinueException
+	 *         {@link org.openrewrite.jgit.transport.ReceivePack#getAdvertisedObjects()}.
+	 * @throws org.openrewrite.jgit.transport.ServiceMayNotContinueException
 	 *             abort; the message will be sent to the user.
 	 */
 	protected Set<ObjectId> getAdvertisedHaves(

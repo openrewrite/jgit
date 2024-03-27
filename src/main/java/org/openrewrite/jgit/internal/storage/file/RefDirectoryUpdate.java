@@ -9,16 +9,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
-import static org.eclipse.jgit.lib.Constants.encode;
+import static org.openrewrite.jgit.lib.Constants.encode;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.Repository;
 
 /** Updates any reference stored by {@link RefDirectory}. */
 class RefDirectoryUpdate extends RefUpdate {

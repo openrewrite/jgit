@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ThreadSafeProgressMonitor;
-import org.eclipse.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ThreadSafeProgressMonitor;
+import org.openrewrite.jgit.storage.pack.PackConfig;
 
 final class DeltaTask implements Callable<Object> {
 	static final long MAX_METER = 9 << 20;

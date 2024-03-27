@@ -7,20 +7,20 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore.internal;
+package org.openrewrite.jgit.ignore.internal;
 
-import static org.eclipse.jgit.ignore.internal.Strings.checkWildCards;
-import static org.eclipse.jgit.ignore.internal.Strings.count;
-import static org.eclipse.jgit.ignore.internal.Strings.getPathSeparator;
-import static org.eclipse.jgit.ignore.internal.Strings.isWildCard;
-import static org.eclipse.jgit.ignore.internal.Strings.split;
+import static org.openrewrite.jgit.ignore.internal.Strings.checkWildCards;
+import static org.openrewrite.jgit.ignore.internal.Strings.count;
+import static org.openrewrite.jgit.ignore.internal.Strings.getPathSeparator;
+import static org.openrewrite.jgit.ignore.internal.Strings.isWildCard;
+import static org.openrewrite.jgit.ignore.internal.Strings.split;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.ignore.IMatcher;
-import org.eclipse.jgit.ignore.internal.Strings.PatternState;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.ignore.IMatcher;
+import org.openrewrite.jgit.ignore.internal.Strings.PatternState;
 
 /**
  * Matcher built by patterns consists of multiple path segments.
@@ -90,7 +90,7 @@ public class PathMatcher extends AbstractMatcher {
 	 * @param dirOnly
 	 *            a boolean.
 	 * @return never null
-	 * @throws org.eclipse.jgit.errors.InvalidPatternException
+	 * @throws org.openrewrite.jgit.errors.InvalidPatternException
 	 */
 	public static IMatcher createPathMatcher(String pattern,
 			Character pathSeparator, boolean dirOnly)

@@ -1,4 +1,4 @@
 /**
  * Utility classes for IO (streams).
  */
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;

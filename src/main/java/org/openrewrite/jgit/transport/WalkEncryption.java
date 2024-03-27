@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,9 +34,9 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.Base64;
-import org.eclipse.jgit.util.Hex;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.Base64;
+import org.openrewrite.jgit.util.Hex;
 
 abstract class WalkEncryption {
 	static final WalkEncryption NONE = new NoEncryption();

@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Thrown when a Pack uses a pack version not supported by JGit.

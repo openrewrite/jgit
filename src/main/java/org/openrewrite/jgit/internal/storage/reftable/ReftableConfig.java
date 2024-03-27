@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.MAX_BLOCK_SIZE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.MAX_BLOCK_SIZE;
 
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Configuration used by a reftable writer when constructing the stream.
@@ -46,7 +46,7 @@ public class ReftableConfig {
 
 	/**
 	 * Create a configuration honoring settings in a
-	 * {@link org.eclipse.jgit.lib.Config}.
+	 * {@link org.openrewrite.jgit.lib.Config}.
 	 *
 	 * @param cfg
 	 *            the source to read settings from. The source is not retained

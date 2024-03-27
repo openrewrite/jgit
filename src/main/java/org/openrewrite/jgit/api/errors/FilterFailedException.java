@@ -36,11 +36,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Exception thrown when the execution of a filter command failed

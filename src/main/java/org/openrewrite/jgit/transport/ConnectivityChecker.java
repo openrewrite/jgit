@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * Checks that a received pack only depends on objects which are reachable from

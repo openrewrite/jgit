@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
-import org.eclipse.jgit.diff.DiffEntry;
+import org.openrewrite.jgit.diff.DiffEntry;
 
 /**
  * An instance of this class can be used in conjunction with a
- * {@link org.eclipse.jgit.revwalk.FollowFilter}. Whenever a rename has been
+ * {@link org.openrewrite.jgit.revwalk.FollowFilter}. Whenever a rename has been
  * detected during a revision walk, it will be reported here.
  *
  * @see FollowFilter#setRenameCallback(RenameCallback)

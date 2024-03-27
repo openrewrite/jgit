@@ -9,11 +9,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
 
 /**
  * To be used in combination with a DirCacheIterator: includes only tree entries

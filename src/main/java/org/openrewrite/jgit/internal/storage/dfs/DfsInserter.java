@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.eclipse.jgit.internal.storage.pack.PackExt.INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.PACK;
-import static org.eclipse.jgit.lib.Constants.OBJ_OFS_DELTA;
-import static org.eclipse.jgit.lib.Constants.OBJ_REF_DELTA;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
+import static org.openrewrite.jgit.lib.Constants.OBJ_OFS_DELTA;
+import static org.openrewrite.jgit.lib.Constants.OBJ_REF_DELTA;
 
 import java.io.BufferedInputStream;
 import java.io.EOFException;
@@ -35,30 +35,30 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.PackIndex;
-import org.eclipse.jgit.internal.storage.file.PackIndexWriter;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdOwnerMap;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ObjectStream;
-import org.eclipse.jgit.transport.PackedObjectInfo;
-import org.eclipse.jgit.util.BlockList;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.TemporaryBuffer;
-import org.eclipse.jgit.util.io.CountingOutputStream;
-import org.eclipse.jgit.util.sha1.SHA1;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.PackIndex;
+import org.openrewrite.jgit.internal.storage.file.PackIndexWriter;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ObjectStream;
+import org.openrewrite.jgit.transport.PackedObjectInfo;
+import org.openrewrite.jgit.util.BlockList;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.util.io.CountingOutputStream;
+import org.openrewrite.jgit.util.sha1.SHA1;
 
 /**
  * Inserts objects into the DFS.

@@ -8,19 +8,19 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryBuilder;
-import org.eclipse.jgit.lib.RepositoryCache;
-import org.eclipse.jgit.lib.internal.WorkQueue;
-import org.eclipse.jgit.nls.NLS;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.RepositoryBuilder;
+import org.openrewrite.jgit.lib.RepositoryCache;
+import org.openrewrite.jgit.lib.internal.WorkQueue;
+import org.openrewrite.jgit.nls.NLS;
+import org.openrewrite.jgit.util.FS;
 
 /**
  * Offers a "GitPorcelain"-like API to interact with a git repository.
@@ -65,7 +65,7 @@ public class Git implements AutoCloseable {
 	 * @param dir
 	 *            the repository to open. May be either the GIT_DIR, or the
 	 *            working tree directory that contains {@code .git}.
-	 * @return a {@link org.eclipse.jgit.api.Git} object for the existing git
+	 * @return a {@link org.openrewrite.jgit.api.Git} object for the existing git
 	 *         repository
 	 * @throws java.io.IOException
 	 */
@@ -81,7 +81,7 @@ public class Git implements AutoCloseable {
 	 *            working tree directory that contains {@code .git}.
 	 * @param fs
 	 *            filesystem abstraction to use when accessing the repository.
-	 * @return a {@link org.eclipse.jgit.api.Git} object for the existing git
+	 * @return a {@link org.openrewrite.jgit.api.Git} object for the existing git
 	 *         repository. Closing this instance will close the repo.
 	 * @throws java.io.IOException
 	 */
@@ -100,7 +100,7 @@ public class Git implements AutoCloseable {
 	 * @param repo
 	 *            the git repository this class is interacting with;
 	 *            {@code null} is not allowed.
-	 * @return a {@link org.eclipse.jgit.api.Git} object for the existing git
+	 * @return a {@link org.openrewrite.jgit.api.Git} object for the existing git
 	 *         repository. The caller is responsible for closing the repository;
 	 *         {@link #close()} on this instance does not close the repo.
 	 */
@@ -140,7 +140,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-clone.html"
 	 *      >Git documentation about clone</a>
-	 * @return a {@link org.eclipse.jgit.api.CloneCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.CloneCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code clone}
 	 *         command
 	 */
@@ -151,7 +151,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command to list remote branches/tags without a local repository.
 	 *
-	 * @return a {@link org.eclipse.jgit.api.LsRemoteCommand}
+	 * @return a {@link org.openrewrite.jgit.api.LsRemoteCommand}
 	 * @since 3.1
 	 */
 	public static LsRemoteCommand lsRemoteRepository() {
@@ -164,7 +164,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-init.html" >Git
 	 *      documentation about init</a>
-	 * @return a {@link org.eclipse.jgit.api.InitCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.InitCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code init}
 	 *         command
 	 */
@@ -182,7 +182,7 @@ public class Git implements AutoCloseable {
 	}
 
 	/**
-	 * Construct a new {@link org.eclipse.jgit.api.Git} object which can
+	 * Construct a new {@link org.openrewrite.jgit.api.Git} object which can
 	 * interact with the specified git repository.
 	 * <p>
 	 * All command classes returned by methods of this class will always
@@ -210,7 +210,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-commit.html"
 	 *      >Git documentation about Commit</a>
-	 * @return a {@link org.eclipse.jgit.api.CommitCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.CommitCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code Commit}
 	 *         command
 	 */
@@ -224,7 +224,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-log.html" >Git
 	 *      documentation about Log</a>
-	 * @return a {@link org.eclipse.jgit.api.LogCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.LogCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code Log}
 	 *         command
 	 */
@@ -238,7 +238,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-merge.html"
 	 *      >Git documentation about Merge</a>
-	 * @return a {@link org.eclipse.jgit.api.MergeCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.MergeCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code Merge}
 	 *         command
 	 */
@@ -249,7 +249,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object to execute a {@code Pull} command
 	 *
-	 * @return a {@link org.eclipse.jgit.api.PullCommand}
+	 * @return a {@link org.openrewrite.jgit.api.PullCommand}
 	 */
 	public PullCommand pull() {
 		return new PullCommand(repo);
@@ -258,7 +258,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object used to create branches
 	 *
-	 * @return a {@link org.eclipse.jgit.api.CreateBranchCommand}
+	 * @return a {@link org.openrewrite.jgit.api.CreateBranchCommand}
 	 */
 	public CreateBranchCommand branchCreate() {
 		return new CreateBranchCommand(repo);
@@ -267,7 +267,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object used to delete branches
 	 *
-	 * @return a {@link org.eclipse.jgit.api.DeleteBranchCommand}
+	 * @return a {@link org.openrewrite.jgit.api.DeleteBranchCommand}
 	 */
 	public DeleteBranchCommand branchDelete() {
 		return new DeleteBranchCommand(repo);
@@ -276,7 +276,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object used to list branches
 	 *
-	 * @return a {@link org.eclipse.jgit.api.ListBranchCommand}
+	 * @return a {@link org.openrewrite.jgit.api.ListBranchCommand}
 	 */
 	public ListBranchCommand branchList() {
 		return new ListBranchCommand(repo);
@@ -286,7 +286,7 @@ public class Git implements AutoCloseable {
 	 *
 	 * Return a command object used to list tags
 	 *
-	 * @return a {@link org.eclipse.jgit.api.ListTagCommand}
+	 * @return a {@link org.openrewrite.jgit.api.ListTagCommand}
 	 */
 	public ListTagCommand tagList() {
 		return new ListTagCommand(repo);
@@ -295,7 +295,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object used to rename branches
 	 *
-	 * @return a {@link org.eclipse.jgit.api.RenameBranchCommand}
+	 * @return a {@link org.openrewrite.jgit.api.RenameBranchCommand}
 	 */
 	public RenameBranchCommand branchRename() {
 		return new RenameBranchCommand(repo);
@@ -307,7 +307,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-add.html" >Git
 	 *      documentation about Add</a>
-	 * @return a {@link org.eclipse.jgit.api.AddCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.AddCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code Add}
 	 *         command
 	 */
@@ -321,7 +321,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-tag.html" >Git
 	 *      documentation about Tag</a>
-	 * @return a {@link org.eclipse.jgit.api.TagCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.TagCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code Tag}
 	 *         command
 	 */
@@ -335,7 +335,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-fetch.html"
 	 *      >Git documentation about Fetch</a>
-	 * @return a {@link org.eclipse.jgit.api.FetchCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.FetchCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code Fetch}
 	 *         command
 	 */
@@ -349,7 +349,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-push.html" >Git
 	 *      documentation about Push</a>
-	 * @return a {@link org.eclipse.jgit.api.PushCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.PushCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code Push}
 	 *         command
 	 */
@@ -363,7 +363,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-cherry-pick.html"
 	 *      >Git documentation about cherry-pick</a>
-	 * @return a {@link org.eclipse.jgit.api.CherryPickCommand} used to collect
+	 * @return a {@link org.openrewrite.jgit.api.CherryPickCommand} used to collect
 	 *         all optional parameters and to finally execute the
 	 *         {@code cherry-pick} command
 	 */
@@ -377,7 +377,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-revert.html"
 	 *      >Git documentation about reverting changes</a>
-	 * @return a {@link org.eclipse.jgit.api.RevertCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.RevertCommand} used to collect all
 	 *         optional parameters and to finally execute the
 	 *         {@code cherry-pick} command
 	 */
@@ -391,7 +391,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html"
 	 *      >Git documentation about rebase</a>
-	 * @return a {@link org.eclipse.jgit.api.RebaseCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.RebaseCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code rebase}
 	 *         command
 	 */
@@ -405,7 +405,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-rm.html" >Git
 	 *      documentation about rm</a>
-	 * @return a {@link org.eclipse.jgit.api.RmCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.RmCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code rm} command
 	 */
 	public RmCommand rm() {
@@ -418,7 +418,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html"
 	 *      >Git documentation about checkout</a>
-	 * @return a {@link org.eclipse.jgit.api.CheckoutCommand} used to collect
+	 * @return a {@link org.openrewrite.jgit.api.CheckoutCommand} used to collect
 	 *         all optional parameters and to finally execute the
 	 *         {@code checkout} command
 	 */
@@ -432,7 +432,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-reset.html"
 	 *      >Git documentation about reset</a>
-	 * @return a {@link org.eclipse.jgit.api.ResetCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.ResetCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code reset}
 	 *         command
 	 */
@@ -446,7 +446,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-status.html"
 	 *      >Git documentation about status</a>
-	 * @return a {@link org.eclipse.jgit.api.StatusCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.StatusCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code status}
 	 *         command
 	 */
@@ -457,7 +457,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command to create an archive from a tree
 	 *
-	 * @return a {@link org.eclipse.jgit.api.ArchiveCommand}
+	 * @return a {@link org.openrewrite.jgit.api.ArchiveCommand}
 	 * @since 3.1
 	 */
 	public ArchiveCommand archive() {
@@ -467,7 +467,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command to add notes to an object
 	 *
-	 * @return a {@link org.eclipse.jgit.api.AddNoteCommand}
+	 * @return a {@link org.openrewrite.jgit.api.AddNoteCommand}
 	 */
 	public AddNoteCommand notesAdd() {
 		return new AddNoteCommand(repo);
@@ -476,7 +476,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command to remove notes on an object
 	 *
-	 * @return a {@link org.eclipse.jgit.api.RemoveNoteCommand}
+	 * @return a {@link org.openrewrite.jgit.api.RemoveNoteCommand}
 	 */
 	public RemoveNoteCommand notesRemove() {
 		return new RemoveNoteCommand(repo);
@@ -485,7 +485,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command to list all notes
 	 *
-	 * @return a {@link org.eclipse.jgit.api.ListNotesCommand}
+	 * @return a {@link org.openrewrite.jgit.api.ListNotesCommand}
 	 */
 	public ListNotesCommand notesList() {
 		return new ListNotesCommand(repo);
@@ -494,7 +494,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command to show notes on an object
 	 *
-	 * @return a {@link org.eclipse.jgit.api.ShowNoteCommand}
+	 * @return a {@link org.openrewrite.jgit.api.ShowNoteCommand}
 	 */
 	public ShowNoteCommand notesShow() {
 		return new ShowNoteCommand(repo);
@@ -506,7 +506,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-ls-remote.html"
 	 *      >Git documentation about ls-remote</a>
-	 * @return a {@link org.eclipse.jgit.api.LsRemoteCommand} used to collect
+	 * @return a {@link org.openrewrite.jgit.api.LsRemoteCommand} used to collect
 	 *         all optional parameters and to finally execute the {@code status}
 	 *         command
 	 */
@@ -520,7 +520,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-clean.html"
 	 *      >Git documentation about Clean</a>
-	 * @return a {@link org.eclipse.jgit.api.CleanCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.CleanCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code clean}
 	 *         command
 	 */
@@ -534,7 +534,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-blame.html"
 	 *      >Git documentation about Blame</a>
-	 * @return a {@link org.eclipse.jgit.api.BlameCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.BlameCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code blame}
 	 *         command
 	 */
@@ -548,7 +548,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-reflog.html"
 	 *      >Git documentation about reflog</a>
-	 * @return a {@link org.eclipse.jgit.api.ReflogCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.ReflogCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code reflog}
 	 *         command
 	 */
@@ -562,7 +562,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-diff.html" >Git
 	 *      documentation about diff</a>
-	 * @return a {@link org.eclipse.jgit.api.DiffCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.DiffCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code diff}
 	 *         command
 	 */
@@ -573,7 +573,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object used to delete tags
 	 *
-	 * @return a {@link org.eclipse.jgit.api.DeleteTagCommand}
+	 * @return a {@link org.openrewrite.jgit.api.DeleteTagCommand}
 	 */
 	public DeleteTagCommand tagDelete() {
 		return new DeleteTagCommand(repo);
@@ -582,7 +582,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object to execute a {@code submodule add} command
 	 *
-	 * @return a {@link org.eclipse.jgit.api.SubmoduleAddCommand} used to add a
+	 * @return a {@link org.openrewrite.jgit.api.SubmoduleAddCommand} used to add a
 	 *         new submodule to a parent repository
 	 */
 	public SubmoduleAddCommand submoduleAdd() {
@@ -592,7 +592,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object to execute a {@code submodule init} command
 	 *
-	 * @return a {@link org.eclipse.jgit.api.SubmoduleInitCommand} used to
+	 * @return a {@link org.openrewrite.jgit.api.SubmoduleInitCommand} used to
 	 *         initialize the repository's config with settings from the
 	 *         .gitmodules file in the working tree
 	 */
@@ -603,7 +603,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Returns a command object to execute a {@code submodule deinit} command
 	 *
-	 * @return a {@link org.eclipse.jgit.api.SubmoduleDeinitCommand} used to
+	 * @return a {@link org.openrewrite.jgit.api.SubmoduleDeinitCommand} used to
 	 *         remove a submodule's working tree manifestation
 	 * @since 4.10
 	 */
@@ -614,7 +614,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Returns a command object to execute a {@code submodule status} command
 	 *
-	 * @return a {@link org.eclipse.jgit.api.SubmoduleStatusCommand} used to
+	 * @return a {@link org.openrewrite.jgit.api.SubmoduleStatusCommand} used to
 	 *         report the status of a repository's configured submodules
 	 */
 	public SubmoduleStatusCommand submoduleStatus() {
@@ -624,7 +624,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object to execute a {@code submodule sync} command
 	 *
-	 * @return a {@link org.eclipse.jgit.api.SubmoduleSyncCommand} used to
+	 * @return a {@link org.openrewrite.jgit.api.SubmoduleSyncCommand} used to
 	 *         update the URL of a submodule from the parent repository's
 	 *         .gitmodules file
 	 */
@@ -635,7 +635,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object to execute a {@code submodule update} command
 	 *
-	 * @return a {@link org.eclipse.jgit.api.SubmoduleUpdateCommand} used to
+	 * @return a {@link org.openrewrite.jgit.api.SubmoduleUpdateCommand} used to
 	 *         update the submodules in a repository to the configured revision
 	 */
 	public SubmoduleUpdateCommand submoduleUpdate() {
@@ -645,7 +645,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object used to list stashed commits
 	 *
-	 * @return a {@link org.eclipse.jgit.api.StashListCommand}
+	 * @return a {@link org.openrewrite.jgit.api.StashListCommand}
 	 */
 	public StashListCommand stashList() {
 		return new StashListCommand(repo);
@@ -654,7 +654,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object used to create a stashed commit
 	 *
-	 * @return a {@link org.eclipse.jgit.api.StashCreateCommand}
+	 * @return a {@link org.openrewrite.jgit.api.StashCreateCommand}
 	 * @since 2.0
 	 */
 	public StashCreateCommand stashCreate() {
@@ -664,7 +664,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Returs a command object used to apply a stashed commit
 	 *
-	 * @return a {@link org.eclipse.jgit.api.StashApplyCommand}
+	 * @return a {@link org.openrewrite.jgit.api.StashApplyCommand}
 	 * @since 2.0
 	 */
 	public StashApplyCommand stashApply() {
@@ -674,7 +674,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object used to drop a stashed commit
 	 *
-	 * @return a {@link org.eclipse.jgit.api.StashDropCommand}
+	 * @return a {@link org.openrewrite.jgit.api.StashDropCommand}
 	 * @since 2.0
 	 */
 	public StashDropCommand stashDrop() {
@@ -687,7 +687,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-apply.html"
 	 *      >Git documentation about apply</a>
-	 * @return a {@link org.eclipse.jgit.api.ApplyCommand} used to collect all
+	 * @return a {@link org.openrewrite.jgit.api.ApplyCommand} used to collect all
 	 *         optional parameters and to finally execute the {@code apply}
 	 *         command
 	 * @since 2.0
@@ -702,7 +702,7 @@ public class Git implements AutoCloseable {
 	 * @see <a href=
 	 *      "http://www.kernel.org/pub/software/scm/git/docs/git-gc.html" >Git
 	 *      documentation about gc</a>
-	 * @return a {@link org.eclipse.jgit.api.GarbageCollectCommand} used to
+	 * @return a {@link org.openrewrite.jgit.api.GarbageCollectCommand} used to
 	 *         collect all optional parameters and to finally execute the
 	 *         {@code gc} command
 	 * @since 2.2
@@ -714,7 +714,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command object to find human-readable names of revisions.
 	 *
-	 * @return a {@link org.eclipse.jgit.api.NameRevCommand}.
+	 * @return a {@link org.openrewrite.jgit.api.NameRevCommand}.
 	 * @since 3.0
 	 */
 	public NameRevCommand nameRev() {
@@ -725,7 +725,7 @@ public class Git implements AutoCloseable {
 	 * Return a command object to come up with a short name that describes a
 	 * commit in terms of the nearest git tag.
 	 *
-	 * @return a {@link org.eclipse.jgit.api.DescribeCommand}.
+	 * @return a {@link org.openrewrite.jgit.api.DescribeCommand}.
 	 * @since 3.2
 	 */
 	public DescribeCommand describe() {
@@ -735,7 +735,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command used to list the available remotes.
 	 *
-	 * @return a {@link org.eclipse.jgit.api.RemoteListCommand}
+	 * @return a {@link org.openrewrite.jgit.api.RemoteListCommand}
 	 * @since 4.2
 	 */
 	public RemoteListCommand remoteList() {
@@ -745,7 +745,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command used to add a new remote.
 	 *
-	 * @return a {@link org.eclipse.jgit.api.RemoteAddCommand}
+	 * @return a {@link org.openrewrite.jgit.api.RemoteAddCommand}
 	 * @since 4.2
 	 */
 	public RemoteAddCommand remoteAdd() {
@@ -755,7 +755,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command used to remove an existing remote.
 	 *
-	 * @return a {@link org.eclipse.jgit.api.RemoteRemoveCommand}
+	 * @return a {@link org.openrewrite.jgit.api.RemoteRemoveCommand}
 	 * @since 4.2
 	 */
 	public RemoteRemoveCommand remoteRemove() {
@@ -765,7 +765,7 @@ public class Git implements AutoCloseable {
 	/**
 	 * Return a command used to change the URL of an existing remote.
 	 *
-	 * @return a {@link org.eclipse.jgit.api.RemoteSetUrlCommand}
+	 * @return a {@link org.openrewrite.jgit.api.RemoteSetUrlCommand}
 	 * @since 4.2
 	 */
 	public RemoteSetUrlCommand remoteSetUrl() {

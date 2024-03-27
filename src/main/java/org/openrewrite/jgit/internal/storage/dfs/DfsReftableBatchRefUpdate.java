@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
-import org.eclipse.jgit.internal.storage.io.BlockSource;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.internal.storage.reftable.ReftableBatchRefUpdate;
-import org.eclipse.jgit.internal.storage.reftable.ReftableCompactor;
-import org.eclipse.jgit.internal.storage.reftable.ReftableConfig;
-import org.eclipse.jgit.internal.storage.reftable.ReftableReader;
-import org.eclipse.jgit.internal.storage.reftable.ReftableWriter;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.transport.ReceiveCommand;
+import org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
+import org.openrewrite.jgit.internal.storage.io.BlockSource;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableBatchRefUpdate;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableCompactor;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableConfig;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableReader;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableWriter;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.transport.ReceiveCommand;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,11 +29,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.eclipse.jgit.internal.storage.pack.PackExt.REFTABLE;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.REFTABLE;
 
 /**
- * {@link org.eclipse.jgit.lib.BatchRefUpdate} for
- * {@link org.eclipse.jgit.internal.storage.dfs.DfsReftableDatabase}.
+ * {@link org.openrewrite.jgit.lib.BatchRefUpdate} for
+ * {@link org.openrewrite.jgit.internal.storage.dfs.DfsReftableDatabase}.
  */
 public class DfsReftableBatchRefUpdate extends ReftableBatchRefUpdate {
 	private static final int AVG_BYTES = 36;

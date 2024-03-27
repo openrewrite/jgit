@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.PACK;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,29 +30,29 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.pack.ObjectToPack;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectDatabase;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.RepositoryCache;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.pack.ObjectToPack;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectDatabase;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.RepositoryCache;
+import org.openrewrite.jgit.lib.RepositoryCache.FileKey;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
- * Traditional file system based {@link org.eclipse.jgit.lib.ObjectDatabase}.
+ * Traditional file system based {@link org.openrewrite.jgit.lib.ObjectDatabase}.
  * <p>
  * This is the classical object database representation for a Git repository,
  * where objects are stored loose by hashing them into directories by their
- * {@link org.eclipse.jgit.lib.ObjectId}, or are stored in compressed containers
- * known as {@link org.eclipse.jgit.internal.storage.file.Pack}s.
+ * {@link org.openrewrite.jgit.lib.ObjectId}, or are stored in compressed containers
+ * known as {@link org.openrewrite.jgit.internal.storage.file.Pack}s.
  * <p>
  * Optionally an object database can reference one or more alternates; other
  * ObjectDatabase instances that are searched in addition to the current

@@ -10,14 +10,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
-import static org.eclipse.jgit.lib.Constants.HEAD;
-import static org.eclipse.jgit.lib.Constants.LOCK_SUFFIX;
-import static org.eclipse.jgit.lib.Constants.R_HEADS;
-import static org.eclipse.jgit.lib.Constants.R_NOTES;
-import static org.eclipse.jgit.lib.Constants.R_REFS;
-import static org.eclipse.jgit.lib.Constants.R_REMOTES;
+import static org.openrewrite.jgit.lib.Constants.HEAD;
+import static org.openrewrite.jgit.lib.Constants.LOCK_SUFFIX;
+import static org.openrewrite.jgit.lib.Constants.R_HEADS;
+import static org.openrewrite.jgit.lib.Constants.R_NOTES;
+import static org.openrewrite.jgit.lib.Constants.R_REFS;
+import static org.openrewrite.jgit.lib.Constants.R_REMOTES;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,17 +27,17 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.CoreConfig;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
  * Utility for writing reflog entries using the traditional one-file-per-log
@@ -65,7 +65,7 @@ public class ReflogWriter {
 	 * Create writer for ref directory.
 	 *
 	 * @param refdb
-	 *            a {@link org.eclipse.jgit.internal.storage.file.RefDirectory}
+	 *            a {@link org.openrewrite.jgit.internal.storage.file.RefDirectory}
 	 *            object.
 	 */
 	public ReflogWriter(RefDirectory refdb) {
@@ -76,7 +76,7 @@ public class ReflogWriter {
 	 * Create writer for ref directory.
 	 *
 	 * @param refdb
-	 *            a {@link org.eclipse.jgit.internal.storage.file.RefDirectory}
+	 *            a {@link org.openrewrite.jgit.internal.storage.file.RefDirectory}
 	 *            object.
 	 * @param forceWrite
 	 *            true to write to disk all entries logged, false to respect the
@@ -107,7 +107,7 @@ public class ReflogWriter {
 	 * @param refName
 	 *            a {@link java.lang.String} object.
 	 * @param entry
-	 *            a {@link org.eclipse.jgit.lib.ReflogEntry} object.
+	 *            a {@link org.openrewrite.jgit.lib.ReflogEntry} object.
 	 * @return this writer
 	 * @throws java.io.IOException
 	 */
@@ -127,7 +127,7 @@ public class ReflogWriter {
 	 * @param newId
 	 *            new object id
 	 * @param ident
-	 *            a {@link org.eclipse.jgit.lib.PersonIdent}
+	 *            a {@link org.openrewrite.jgit.lib.PersonIdent}
 	 * @param message
 	 *            reflog message
 	 * @return this writer
@@ -143,7 +143,7 @@ public class ReflogWriter {
 	 * Write the given ref update to the ref's log.
 	 *
 	 * @param update
-	 *            a {@link org.eclipse.jgit.lib.RefUpdate}
+	 *            a {@link org.openrewrite.jgit.lib.RefUpdate}
 	 * @param msg
 	 *            reflog message
 	 * @param deref

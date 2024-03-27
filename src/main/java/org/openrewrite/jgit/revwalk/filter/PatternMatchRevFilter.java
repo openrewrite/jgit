@@ -9,18 +9,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk.filter;
+package org.openrewrite.jgit.revwalk.filter;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * Abstract filter that searches text using extended regular expressions.
@@ -37,7 +37,7 @@ public abstract class PatternMatchRevFilter extends RevFilter {
 	 *            original pattern string supplied by the user or the
 	 *            application.
 	 * @return same pattern, but re-encoded to match our funny raw UTF-8
-	 *         character sequence {@link org.eclipse.jgit.util.RawCharSequence}.
+	 *         character sequence {@link org.openrewrite.jgit.util.RawCharSequence}.
 	 */
 	protected static final String forceToRaw(String patternText) {
 		final byte[] b = Constants.encode(patternText);

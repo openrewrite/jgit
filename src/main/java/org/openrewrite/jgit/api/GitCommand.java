@@ -35,27 +35,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.text.MessageFormat;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
- * Common superclass of all commands in the package {@code org.eclipse.jgit.api}
+ * Common superclass of all commands in the package {@code org.openrewrite.jgit.api}
  * <p>
  * This class ensures that all commands fulfill the
  * {@link java.util.concurrent.Callable} interface. It also has a property
  * {@link #repo} holding a reference to the git
- * {@link org.eclipse.jgit.lib.Repository} this command should work with.
+ * {@link org.openrewrite.jgit.lib.Repository} this command should work with.
  * <p>
  * Finally this class stores a state telling whether it is allowed to call
  * {@link #call()} on this instance. Instances of
- * {@link org.eclipse.jgit.api.GitCommand} can only be used for one single
+ * {@link org.openrewrite.jgit.api.GitCommand} can only be used for one single
  * successful call to {@link #call()}. Afterwards this instance may not be used
  * anymore to set/modify any properties or to call {@link #call()} again. This
  * is achieved by setting the {@link #callable} property to false after the
@@ -80,7 +80,7 @@ public abstract class GitCommand<T> implements Callable<T> {
 	 * Creates a new command which interacts with a single repository
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository} this command
+	 *            the {@link org.openrewrite.jgit.lib.Repository} this command
 	 *            should interact with
 	 */
 	protected GitCommand(Repository repo) {
@@ -90,7 +90,7 @@ public abstract class GitCommand<T> implements Callable<T> {
 	/**
 	 * Get repository this command is working on
 	 *
-	 * @return the {@link org.eclipse.jgit.lib.Repository} this command is
+	 * @return the {@link org.openrewrite.jgit.lib.Repository} this command is
 	 *         interacting with
 	 */
 	public Repository getRepository() {

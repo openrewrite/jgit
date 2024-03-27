@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.InvalidObjectIdException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.InvalidObjectIdException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
- * A prefix abbreviation of an {@link org.eclipse.jgit.lib.ObjectId}.
+ * A prefix abbreviation of an {@link org.openrewrite.jgit.lib.ObjectId}.
  * <p>
  * Sometimes Git produces abbreviated SHA-1 strings, using sufficient leading
  * digits from the ObjectId name to still be unique within the repository the
@@ -77,13 +77,13 @@ public final class AbbreviatedObjectId implements Serializable {
 
 	/**
 	 * Convert an AbbreviatedObjectId from an
-	 * {@link org.eclipse.jgit.lib.AnyObjectId}.
+	 * {@link org.openrewrite.jgit.lib.AnyObjectId}.
 	 * <p>
 	 * This method copies over all bits of the Id, and is therefore complete
 	 * (see {@link #isComplete()}).
 	 *
 	 * @param id
-	 *            the {@link org.eclipse.jgit.lib.ObjectId} to convert from.
+	 *            the {@link org.openrewrite.jgit.lib.ObjectId} to convert from.
 	 * @return the converted object id.
 	 */
 	public static final AbbreviatedObjectId fromObjectId(AnyObjectId id) {

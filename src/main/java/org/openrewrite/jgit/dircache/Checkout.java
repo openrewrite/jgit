@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,21 +17,21 @@ import java.nio.file.LinkOption;
 import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.FileModeCache;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
-import org.eclipse.jgit.lib.CoreConfig.SymLinks;
-import org.eclipse.jgit.lib.FileModeCache.CacheItem;
-import org.eclipse.jgit.treewalk.WorkingTreeOptions;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.FileModeCache;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.lib.CoreConfig.SymLinks;
+import org.openrewrite.jgit.lib.FileModeCache.CacheItem;
+import org.openrewrite.jgit.treewalk.WorkingTreeOptions;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * An object that can be used to check out many files.

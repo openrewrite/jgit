@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.eclipse.jgit.internal.storage.pack.PackExt.REFTABLE;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.REFTABLE;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import org.eclipse.jgit.internal.storage.io.BlockSource;
-import org.eclipse.jgit.internal.storage.reftable.ReftableReader;
+import org.openrewrite.jgit.internal.storage.io.BlockSource;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableReader;
 
 /**
- * A reftable stored in {@link org.eclipse.jgit.internal.storage.dfs.DfsBlockCache}.
+ * A reftable stored in {@link org.openrewrite.jgit.internal.storage.dfs.DfsBlockCache}.
  */
 public class DfsReftable extends BlockBasedFile {
 	/**

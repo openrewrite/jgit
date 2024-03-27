@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,31 +24,31 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.errors.RemoteRepositoryException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.PackLock;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevCommitList;
-import org.eclipse.jgit.revwalk.RevFlag;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevSort;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.CommitTimeRevFilter;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.transport.GitProtocolConstants.MultiAck;
-import org.eclipse.jgit.transport.PacketLineIn.AckNackResult;
-import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.errors.RemoteRepositoryException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.PackLock;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevCommitList;
+import org.openrewrite.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevSort;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.filter.CommitTimeRevFilter;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.transport.GitProtocolConstants.MultiAck;
+import org.openrewrite.jgit.transport.PacketLineIn.AckNackResult;
+import org.openrewrite.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.TemporaryBuffer;
 
 /**
  * Fetch implementation using the native Git pack transfer service.
@@ -62,7 +62,7 @@ import org.eclipse.jgit.util.TemporaryBuffer;
  * easily wrapped up into a local process pipe, anonymous TCP socket, or a
  * command executed through an SSH tunnel.
  * <p>
- * If {@link org.eclipse.jgit.transport.BasePackConnection#statelessRPC} is
+ * If {@link org.openrewrite.jgit.transport.BasePackConnection#statelessRPC} is
  * {@code true}, this connection can be tunneled over a request-response style
  * RPC system like HTTP. The RPC call boundary is determined by this class
  * switching from writing to the OutputStream to reading from the InputStream.
@@ -340,7 +340,7 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 	 *
 	 * @param monitor
 	 *            progress monitor to receive status updates. If the monitor is
-	 *            the {@link org.eclipse.jgit.lib.NullProgressMonitor#INSTANCE}, then the no-progress
+	 *            the {@link org.openrewrite.jgit.lib.NullProgressMonitor#INSTANCE}, then the no-progress
 	 *            option enabled.
 	 * @param want
 	 *            the advertised remote references the caller wants to fetch.
@@ -350,7 +350,7 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 	 *            destination repository's references.
 	 * @param outputStream
 	 *            ouputStream to write sideband messages to
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             if any exception occurs.
 	 * @since 3.0
 	 */
@@ -1021,7 +1021,7 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 
 	/**
 	 * Notification event delivered just before the pack is received from the
-	 * network. This event can be used by RPC such as {@link org.eclipse.jgit.transport.TransportHttp} to
+	 * network. This event can be used by RPC such as {@link org.openrewrite.jgit.transport.TransportHttp} to
 	 * disable its request magic and ensure the pack stream is read correctly.
 	 *
 	 * @since 2.0

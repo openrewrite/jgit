@@ -8,19 +8,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
-import static org.eclipse.jgit.lib.RefDatabase.MAX_SYMBOLIC_REF_DEPTH;
+import static org.openrewrite.jgit.lib.RefDatabase.MAX_SYMBOLIC_REF_DEPTH;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.storage.io.BlockSource;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.storage.io.BlockSource;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.SymbolicRef;
 
 /**
  * Abstract table of references.

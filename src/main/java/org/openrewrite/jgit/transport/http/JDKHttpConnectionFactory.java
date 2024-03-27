@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport.http;
+package org.openrewrite.jgit.transport.http;
 
 import java.io.IOException;
 import java.net.Proxy;
@@ -21,13 +21,13 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.transport.http.DelegatingSSLSocketFactory;
-import org.eclipse.jgit.util.HttpSupport;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.transport.http.DelegatingSSLSocketFactory;
+import org.openrewrite.jgit.util.HttpSupport;
 
 /**
  * A factory returning instances of
- * {@link org.eclipse.jgit.transport.http.JDKHttpConnection}
+ * {@link org.openrewrite.jgit.transport.http.JDKHttpConnection}
  *
  * @since 3.3
  */

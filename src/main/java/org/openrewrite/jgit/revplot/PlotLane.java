@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revplot;
+package org.openrewrite.jgit.revplot;
 
 import java.io.Serializable;
 

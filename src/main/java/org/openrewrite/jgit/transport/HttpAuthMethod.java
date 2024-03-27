@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.util.HttpSupport.HDR_AUTHORIZATION;
-import static org.eclipse.jgit.util.HttpSupport.HDR_WWW_AUTHENTICATE;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_AUTHORIZATION;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_WWW_AUTHENTICATE;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,9 +28,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.jgit.transport.http.HttpConnection;
-import org.eclipse.jgit.util.Base64;
-import org.eclipse.jgit.util.GSSManagerFactory;
+import org.openrewrite.jgit.transport.http.HttpConnection;
+import org.openrewrite.jgit.util.Base64;
+import org.openrewrite.jgit.util.GSSManagerFactory;
 import org.ietf.jgss.GSSContext;
 import org.ietf.jgss.GSSException;
 import org.ietf.jgss.GSSManager;

@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 import java.util.Locale;
 
@@ -22,7 +22,7 @@ public class TranslationStringMissingException extends TranslationBundleExceptio
 
 	/**
 	 * Construct a
-	 * {@link org.eclipse.jgit.errors.TranslationStringMissingException} for the
+	 * {@link org.openrewrite.jgit.errors.TranslationStringMissingException} for the
 	 * specified bundle class, locale and translation key
 	 *
 	 * @param bundleClass

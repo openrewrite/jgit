@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk;
+package org.openrewrite.jgit.treewalk;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -19,39 +19,39 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.attributes.Attribute;
-import org.eclipse.jgit.attributes.Attributes;
-import org.eclipse.jgit.attributes.AttributesHandler;
-import org.eclipse.jgit.attributes.AttributesNodeProvider;
-import org.eclipse.jgit.attributes.AttributesProvider;
-import org.eclipse.jgit.attributes.FilterCommandRegistry;
-import org.eclipse.jgit.dircache.DirCacheBuildIterator;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.StopWalkException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.QuotedString;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.io.EolStreamTypeUtil;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.attributes.Attribute;
+import org.openrewrite.jgit.attributes.Attributes;
+import org.openrewrite.jgit.attributes.AttributesHandler;
+import org.openrewrite.jgit.attributes.AttributesNodeProvider;
+import org.openrewrite.jgit.attributes.AttributesProvider;
+import org.openrewrite.jgit.attributes.FilterCommandRegistry;
+import org.openrewrite.jgit.dircache.DirCacheBuildIterator;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.StopWalkException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.util.QuotedString;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.io.EolStreamTypeUtil;
 
 /**
- * Walks one or more {@link org.eclipse.jgit.treewalk.AbstractTreeIterator}s in
+ * Walks one or more {@link org.openrewrite.jgit.treewalk.AbstractTreeIterator}s in
  * parallel.
  * <p>
  * This class can perform n-way differences across as many trees as necessary.
@@ -69,7 +69,7 @@ import org.eclipse.jgit.util.io.EolStreamTypeUtil;
  * synchronization at a higher level.
  * <p>
  * Multiple simultaneous TreeWalk instances per
- * {@link org.eclipse.jgit.lib.Repository} are permitted, even from concurrent
+ * {@link org.openrewrite.jgit.lib.Repository} are permitted, even from concurrent
  * threads.
  */
 public class TreeWalk implements AutoCloseable, AttributesProvider {
@@ -106,7 +106,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 * Set the operation type of this walk
 	 *
 	 * @param operationType
-	 *            a {@link org.eclipse.jgit.treewalk.TreeWalk.OperationType}
+	 *            a {@link org.openrewrite.jgit.treewalk.TreeWalk.OperationType}
 	 *            object.
 	 * @since 4.2
 	 */
@@ -131,12 +131,12 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 *         path was found in any of the trees.
 	 * @throws java.io.IOException
 	 *             reading a pack file or loose object failed.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             an tree object could not be read as its data stream did not
 	 *             appear to be a tree, or could not be inflated.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             an object we expected to be a tree was not a tree.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             a tree object was not found.
 	 */
 	public static TreeWalk forPath(final ObjectReader reader, final String path,
@@ -154,7 +154,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 *
 	 * @param repo
 	 *            repository to read config data and
-	 *            {@link org.eclipse.jgit.attributes.AttributesNodeProvider}
+	 *            {@link org.openrewrite.jgit.attributes.AttributesNodeProvider}
 	 *            from.
 	 * @param reader
 	 *            the reader the walker will obtain tree data from.
@@ -166,12 +166,12 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 *         path was found in any of the trees.
 	 * @throws java.io.IOException
 	 *             reading a pack file or loose object failed.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             an tree object could not be read as its data stream did not
 	 *             appear to be a tree, or could not be inflated.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             an object we expected to be a tree was not a tree.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             a tree object was not found.
 	 * @since 4.3
 	 */
@@ -213,12 +213,12 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 *         path was found in any of the trees.
 	 * @throws java.io.IOException
 	 *             reading a pack file or loose object failed.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             an tree object could not be read as its data stream did not
 	 *             appear to be a tree, or could not be inflated.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             an object we expected to be a tree was not a tree.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             a tree object was not found.
 	 */
 	public static TreeWalk forPath(final Repository db, final String path,
@@ -246,12 +246,12 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 *         path was found in any of the trees.
 	 * @throws java.io.IOException
 	 *             reading a pack file or loose object failed.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             an tree object could not be read as its data stream did not
 	 *             appear to be a tree, or could not be inflated.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             an object we expected to be a tree was not a tree.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             a tree object was not found.
 	 */
 	public static TreeWalk forPath(final Repository db, final String path,
@@ -362,7 +362,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	/**
 	 * Get the operation type
 	 *
-	 * @return the {@link org.eclipse.jgit.treewalk.TreeWalk.OperationType}
+	 * @return the {@link org.openrewrite.jgit.treewalk.TreeWalk.OperationType}
 	 * @since 4.3
 	 */
 	public OperationType getOperationType() {
@@ -407,15 +407,15 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 * TreeWalk instances. Every TreeWalk must be supplied its own unique
 	 * filter, unless the filter implementation specifically states it is (and
 	 * always will be) thread-safe. Callers may use
-	 * {@link org.eclipse.jgit.treewalk.filter.TreeFilter#clone()} to create a
+	 * {@link org.openrewrite.jgit.treewalk.filter.TreeFilter#clone()} to create a
 	 * unique filter tree for this TreeWalk instance.
 	 *
 	 * @param newFilter
 	 *            the new filter. If null the special
-	 *            {@link org.eclipse.jgit.treewalk.filter.TreeFilter#ALL} filter
+	 *            {@link org.openrewrite.jgit.treewalk.filter.TreeFilter#ALL} filter
 	 *            will be used instead, as it matches every entry.
-	 * @see org.eclipse.jgit.treewalk.filter.AndTreeFilter
-	 * @see org.eclipse.jgit.treewalk.filter.OrTreeFilter
+	 * @see org.openrewrite.jgit.treewalk.filter.AndTreeFilter
+	 * @see org.openrewrite.jgit.treewalk.filter.OrTreeFilter
 	 */
 	public void setFilter(TreeFilter newFilter) {
 		filter = newFilter != null ? newFilter : TreeFilter.ALL;
@@ -480,22 +480,22 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	}
 
 	/**
-	 * Sets the {@link org.eclipse.jgit.attributes.AttributesNodeProvider} for
-	 * this {@link org.eclipse.jgit.treewalk.TreeWalk}.
+	 * Sets the {@link org.openrewrite.jgit.attributes.AttributesNodeProvider} for
+	 * this {@link org.openrewrite.jgit.treewalk.TreeWalk}.
 	 * <p>
 	 * This is a requirement for a correct computation of the git attributes. If
-	 * this {@link org.eclipse.jgit.treewalk.TreeWalk} has been built using
+	 * this {@link org.openrewrite.jgit.treewalk.TreeWalk} has been built using
 	 * {@link #TreeWalk(Repository)} constructor, the
-	 * {@link org.eclipse.jgit.attributes.AttributesNodeProvider} has already
-	 * been set. Indeed,the {@link org.eclipse.jgit.lib.Repository} can provide
-	 * an {@link org.eclipse.jgit.attributes.AttributesNodeProvider} using
-	 * {@link org.eclipse.jgit.lib.Repository#createAttributesNodeProvider()}
+	 * {@link org.openrewrite.jgit.attributes.AttributesNodeProvider} has already
+	 * been set. Indeed,the {@link org.openrewrite.jgit.lib.Repository} can provide
+	 * an {@link org.openrewrite.jgit.attributes.AttributesNodeProvider} using
+	 * {@link org.openrewrite.jgit.lib.Repository#createAttributesNodeProvider()}
 	 * method. Otherwise you should provide one.
 	 * </p>
 	 *
 	 * @see Repository#createAttributesNodeProvider()
 	 * @param provider
-	 *            a {@link org.eclipse.jgit.attributes.AttributesNodeProvider}
+	 *            a {@link org.openrewrite.jgit.attributes.AttributesNodeProvider}
 	 *            object.
 	 * @since 4.2
 	 */
@@ -506,8 +506,8 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	/**
 	 * Get the attributes node provider
 	 *
-	 * @return the {@link org.eclipse.jgit.attributes.AttributesNodeProvider}
-	 *         for this {@link org.eclipse.jgit.treewalk.TreeWalk}.
+	 * @return the {@link org.openrewrite.jgit.attributes.AttributesNodeProvider}
+	 *         for this {@link org.openrewrite.jgit.treewalk.TreeWalk}.
 	 * @since 4.3
 	 */
 	public AttributesNodeProvider getAttributesNodeProvider() {
@@ -589,7 +589,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 *            the operationtype (checkin/checkout) which should be used
 	 * @return the EOL stream type of the current entry using the config and
 	 *         {@link #getAttributes()}. Note that this method may return null
-	 *         if the {@link org.eclipse.jgit.treewalk.TreeWalk} is not based on
+	 *         if the {@link org.openrewrite.jgit.treewalk.TreeWalk} is not based on
 	 *         a working tree
 	 * @since 4.10
 	 */
@@ -619,13 +619,13 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 * @param id
 	 *            the tree we need to parse. The walker will execute over this
 	 *            single tree if the reset is successful.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the given tree object does not exist in this repository.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the given object id does not denote a tree, but instead names
 	 *             some other non-tree type of object. Note that commits are not
 	 *             trees, even if they are sometimes called a "tree-ish".
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the object claimed to be a tree, but its contents did not
 	 *             appear to be a tree. The repository may have data corruption.
 	 * @throws java.io.IOException
@@ -660,13 +660,13 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 * @param ids
 	 *            the trees we need to parse. The walker will execute over this
 	 *            many parallel trees if the reset is successful.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the given tree object does not exist in this repository.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the given object id does not denote a tree, but instead names
 	 *             some other non-tree type of object. Note that commits are not
 	 *             trees, even if they are sometimes called a "tree-ish".
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the object claimed to be a tree, but its contents did not
 	 *             appear to be a tree. The repository may have data corruption.
 	 * @throws java.io.IOException
@@ -715,13 +715,13 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 * @param id
 	 *            identity of the tree object the caller wants walked.
 	 * @return position of this tree within the walker.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the given tree object does not exist in this repository.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the given object id does not denote a tree, but instead names
 	 *             some other non-tree type of object. Note that commits are not
 	 *             trees, even if they are sometimes called a "tree-ish".
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the object claimed to be a tree, but its contents did not
 	 *             appear to be a tree. The repository may have data corruption.
 	 * @throws java.io.IOException
@@ -775,16 +775,16 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 *
 	 * @return true if there is an entry available; false if all entries have
 	 *         been walked and the walk of this set of tree iterators is over.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             {@link #isRecursive()} was enabled, a subtree was found, but
 	 *             the subtree object does not exist in this repository. The
 	 *             repository may be missing objects.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             {@link #isRecursive()} was enabled, a subtree was found, and
 	 *             the subtree id does not denote a tree, but instead names some
 	 *             other non-tree type of object. The repository may have data
 	 *             corruption.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the contents of a tree did not appear to be a tree. The
 	 *             repository may have data corruption.
 	 * @throws java.io.IOException
@@ -877,12 +877,12 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	}
 
 	/**
-	 * Obtain the raw {@link org.eclipse.jgit.lib.FileMode} bits for the current
+	 * Obtain the raw {@link org.openrewrite.jgit.lib.FileMode} bits for the current
 	 * entry.
 	 * <p>
 	 * Every added tree supplies mode bits, even if the tree does not contain
 	 * the current entry. In the latter case
-	 * {@link org.eclipse.jgit.lib.FileMode#MISSING}'s mode bits (0) are
+	 * {@link org.openrewrite.jgit.lib.FileMode#MISSING}'s mode bits (0) are
 	 * returned.
 	 *
 	 * @param nth
@@ -896,11 +896,11 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	}
 
 	/**
-	 * Obtain the {@link org.eclipse.jgit.lib.FileMode} for the current entry.
+	 * Obtain the {@link org.openrewrite.jgit.lib.FileMode} for the current entry.
 	 * <p>
 	 * Every added tree supplies a mode, even if the tree does not contain the
 	 * current entry. In the latter case
-	 * {@link org.eclipse.jgit.lib.FileMode#MISSING} is returned.
+	 * {@link org.openrewrite.jgit.lib.FileMode#MISSING} is returned.
 	 *
 	 * @param nth
 	 *            tree to obtain the mode from.
@@ -911,7 +911,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	}
 
 	/**
-	 * Obtain the {@link org.eclipse.jgit.lib.FileMode} for the current entry on
+	 * Obtain the {@link org.openrewrite.jgit.lib.FileMode} for the current entry on
 	 * the currentHead tree
 	 *
 	 * @return mode for the current entry of the currentHead tree.
@@ -931,7 +931,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 * <p>
 	 * Every tree supplies an object id, even if the tree does not contain the
 	 * current entry. In the latter case
-	 * {@link org.eclipse.jgit.lib.ObjectId#zeroId()} is returned.
+	 * {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} is returned.
 	 *
 	 * @param nth
 	 *            tree to obtain the object identifier from.
@@ -952,7 +952,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 * <p>
 	 * Every tree supplies an object id, even if the tree does not contain the
 	 * current entry. In the latter case
-	 * {@link org.eclipse.jgit.lib.ObjectId#zeroId()} is supplied.
+	 * {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} is supplied.
 	 * <p>
 	 * Applications should try to use {@link #idEqual(int, int)} when possible
 	 * as it avoids conversion overheads.
@@ -1240,14 +1240,14 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 * If the current entry is a subtree this method arranges for its children
 	 * to be returned before the next sibling following the subtree is returned.
 	 *
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             a subtree was found, but the subtree object does not exist in
 	 *             this repository. The repository may be missing objects.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             a subtree was found, and the subtree id does not denote a
 	 *             tree, but instead names some other non-tree type of object.
 	 *             The repository may have data corruption.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the contents of a tree did not appear to be a tree. The
 	 *             repository may have data corruption.
 	 * @throws java.io.IOException

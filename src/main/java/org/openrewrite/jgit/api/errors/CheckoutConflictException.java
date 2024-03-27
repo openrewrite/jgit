@@ -35,7 +35,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -54,11 +54,11 @@ public class CheckoutConflictException extends GitAPIException {
 	 * @param conflictingPaths
 	 *            list of conflicting paths
 	 * @param e
-	 *            a {@link org.eclipse.jgit.errors.CheckoutConflictException}
+	 *            a {@link org.openrewrite.jgit.errors.CheckoutConflictException}
 	 *            exception
 	 */
 	public CheckoutConflictException(List<String> conflictingPaths,
-			org.eclipse.jgit.errors.CheckoutConflictException e) {
+			org.openrewrite.jgit.errors.CheckoutConflictException e) {
 		super(e.getMessage(), e);
 		this.conflictingPaths = conflictingPaths;
 	}

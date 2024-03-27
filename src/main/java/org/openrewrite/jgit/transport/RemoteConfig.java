@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.Serializable;
 import java.net.URISyntaxException;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Config;
 
 /**
  * A remembered remote repository, including URLs and RefSpecs.

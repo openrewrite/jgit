@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.ReflogReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.ReflogReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Utility for reading reflog entries
@@ -39,7 +39,7 @@ class ReflogReaderImpl implements ReflogReader {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogReaader#getLastEntry()
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogReaader#getLastEntry()
 	 */
 	/** {@inheritDoc} */
 	@Override
@@ -48,7 +48,7 @@ class ReflogReaderImpl implements ReflogReader {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogReaader#getReverseEntries()
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogReaader#getReverseEntries()
 	 */
 	/** {@inheritDoc} */
 	@Override
@@ -57,7 +57,7 @@ class ReflogReaderImpl implements ReflogReader {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogReaader#getReverseEntry(int)
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogReaader#getReverseEntry(int)
 	 */
 	/** {@inheritDoc} */
 	@Override
@@ -87,7 +87,7 @@ class ReflogReaderImpl implements ReflogReader {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogReaader#getReverseEntries(int)
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogReaader#getReverseEntries(int)
 	 */
 	/** {@inheritDoc} */
 	@Override

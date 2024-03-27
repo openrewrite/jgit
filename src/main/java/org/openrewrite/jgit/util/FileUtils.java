@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -45,9 +45,9 @@ import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.util.FS.Attributes;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.util.FS.Attributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -520,7 +520,7 @@ public class FileUtils {
 	 * current file system.
 	 *
 	 * See also
-	 * {@link org.eclipse.jgit.util.FileUtils#relativizePath(String, String, String, boolean)}.
+	 * {@link org.openrewrite.jgit.util.FileUtils#relativizePath(String, String, String, boolean)}.
 	 *
 	 * @param base
 	 *            Base path
@@ -539,7 +539,7 @@ public class FileUtils {
 	 * internal representation of files (which matches Unix).
 	 *
 	 * See also
-	 * {@link org.eclipse.jgit.util.FileUtils#relativizePath(String, String, String, boolean)}.
+	 * {@link org.openrewrite.jgit.util.FileUtils#relativizePath(String, String, String, boolean)}.
 	 *
 	 * @param base
 	 *            Base path
@@ -869,7 +869,7 @@ public class FileUtils {
 	 * Get file system attributes for the given file.
 	 *
 	 * @param fs
-	 *            a {@link org.eclipse.jgit.util.FS} object.
+	 *            a {@link org.openrewrite.jgit.util.FS} object.
 	 * @param file
 	 *            a {@link java.io.File}.
 	 * @return file system attributes for the given file.

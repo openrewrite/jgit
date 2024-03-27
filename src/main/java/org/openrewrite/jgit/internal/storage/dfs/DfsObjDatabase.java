@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import static java.util.stream.Collectors.joining;
 
@@ -26,15 +26,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectDatabase;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectDatabase;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
 
 /**
  * Manages objects stored in
- * {@link org.eclipse.jgit.internal.storage.dfs.DfsPackFile} on a storage
+ * {@link org.openrewrite.jgit.internal.storage.dfs.DfsPackFile} on a storage
  * system.
  */
 public abstract class DfsObjDatabase extends ObjectDatabase {
@@ -374,7 +374,7 @@ public abstract class DfsObjDatabase extends ObjectDatabase {
 	 * clients can override this method to use the given
 	 * {@code estomatedPackSize} value more efficiently in the process of
 	 * creating a new
-	 * {@link org.eclipse.jgit.internal.storage.dfs.DfsPackDescription} object.
+	 * {@link org.openrewrite.jgit.internal.storage.dfs.DfsPackDescription} object.
 	 *
 	 * @param source
 	 *            where the pack stream is created.

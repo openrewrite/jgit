@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 /**
  * Thrown when an external command failed

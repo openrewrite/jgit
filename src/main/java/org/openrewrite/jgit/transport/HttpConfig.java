@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -20,19 +20,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.SystemReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A representation of the "http.*" config values in a git
- * {@link org.eclipse.jgit.lib.Config}. git provides for setting values for
+ * {@link org.openrewrite.jgit.lib.Config}. git provides for setting values for
  * specific URLs through "http.&lt;url&gt;.*" subsections. git always considers
  * only the initial original URL for such settings, not any redirected URL.
  *
@@ -265,11 +265,11 @@ public class HttpConfig {
 	}
 
 	/**
-	 * Creates a new {@link org.eclipse.jgit.transport.HttpConfig} tailored to
-	 * the given {@link org.eclipse.jgit.transport.URIish}.
+	 * Creates a new {@link org.openrewrite.jgit.transport.HttpConfig} tailored to
+	 * the given {@link org.openrewrite.jgit.transport.URIish}.
 	 *
 	 * @param config
-	 *            to read the {@link org.eclipse.jgit.transport.HttpConfig} from
+	 *            to read the {@link org.openrewrite.jgit.transport.HttpConfig} from
 	 * @param uri
 	 *            to get the configuration values for
 	 */
@@ -278,7 +278,7 @@ public class HttpConfig {
 	}
 
 	/**
-	 * Creates a {@link org.eclipse.jgit.transport.HttpConfig} that reads values
+	 * Creates a {@link org.openrewrite.jgit.transport.HttpConfig} that reads values
 	 * solely from the user config.
 	 *
 	 * @param uri

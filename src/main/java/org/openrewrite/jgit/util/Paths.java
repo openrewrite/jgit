@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
-import static org.eclipse.jgit.lib.FileMode.TYPE_MASK;
-import static org.eclipse.jgit.lib.FileMode.TYPE_TREE;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_MASK;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_TREE;
 
 /**
  * Utility functions for paths inside of a Git repository.

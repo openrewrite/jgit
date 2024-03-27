@@ -7,9 +7,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import static org.eclipse.jgit.treewalk.TreeWalk.OperationType.CHECKOUT_OP;
+import static org.openrewrite.jgit.treewalk.TreeWalk.OperationType.CHECKOUT_OP;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -17,38 +17,38 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.StashApplyFailureException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
-import org.eclipse.jgit.dircache.Checkout;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheBuilder;
-import org.eclipse.jgit.dircache.DirCacheCheckout;
-import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.CheckoutConflictException;
-import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.merge.ContentMergeStrategy;
-import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.merge.Merger;
-import org.eclipse.jgit.merge.ResolveMerger;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRefNameException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.api.errors.StashApplyFailureException;
+import org.openrewrite.jgit.api.errors.WrongRepositoryStateException;
+import org.openrewrite.jgit.dircache.Checkout;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheBuilder;
+import org.openrewrite.jgit.dircache.DirCacheCheckout;
+import org.openrewrite.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.CheckoutConflictException;
+import org.openrewrite.jgit.events.WorkingTreeModifiedEvent;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.RepositoryState;
+import org.openrewrite.jgit.merge.ContentMergeStrategy;
+import org.openrewrite.jgit.merge.MergeStrategy;
+import org.openrewrite.jgit.merge.Merger;
+import org.openrewrite.jgit.merge.ResolveMerger;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
 
 /**
  * Command class to apply a stashed commit.
@@ -80,7 +80,7 @@ public class StashApplyCommand extends GitCommand<ObjectId> {
 	 * Create command to apply the changes of a stashed commit
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository} to apply the stash
+	 *            the {@link org.openrewrite.jgit.lib.Repository} to apply the stash
 	 *            to
 	 */
 	public StashApplyCommand(Repository repo) {

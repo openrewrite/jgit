@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.diff.DiffConfig;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.diff.DiffConfig;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
 
 /**
  * Updates the internal path filter to follow copy/renames.
@@ -27,7 +27,7 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
  * file name as the RevWalk traverses history.
  *
  * The renames found will be reported to a
- * {@link org.eclipse.jgit.revwalk.RenameCallback} if one is set.
+ * {@link org.openrewrite.jgit.revwalk.RenameCallback} if one is set.
  * <p>
  * Results with this filter are unpredictable if the path being followed is a
  * subdirectory.

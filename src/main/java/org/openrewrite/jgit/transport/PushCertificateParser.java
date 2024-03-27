@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.transport.ReceivePack.parseCommand;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_PUSH_CERT;
+import static org.openrewrite.jgit.transport.ReceivePack.parseCommand;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_PUSH_CERT;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -22,11 +22,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.PushCertificate.NonceStatus;
-import org.eclipse.jgit.util.IO;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.PushCertificate.NonceStatus;
+import org.openrewrite.jgit.util.IO;
 
 /**
  * Parser for signed push certificates.
@@ -100,7 +100,7 @@ public class PushCertificateParser {
 	/**
 	 * Parse a push certificate from a reader.
 	 * <p>
-	 * Differences from the {@link org.eclipse.jgit.transport.PacketLineIn}
+	 * Differences from the {@link org.openrewrite.jgit.transport.PacketLineIn}
 	 * receiver methods:
 	 * <ul>
 	 * <li>Does not use pkt-line framing.</li>
@@ -113,7 +113,7 @@ public class PushCertificateParser {
 	 *            input reader; consumed only up until the end of the next
 	 *            signature in the input.
 	 * @return the parsed certificate, or null if the reader was at EOF.
-	 * @throws org.eclipse.jgit.errors.PackProtocolException
+	 * @throws org.openrewrite.jgit.errors.PackProtocolException
 	 *             if the certificate is malformed.
 	 * @throws java.io.IOException
 	 *             if there was an error reading from the input.
@@ -131,7 +131,7 @@ public class PushCertificateParser {
 	 * @param str
 	 *            input string.
 	 * @return the parsed certificate.
-	 * @throws org.eclipse.jgit.errors.PackProtocolException
+	 * @throws org.openrewrite.jgit.errors.PackProtocolException
 	 *             if the certificate is malformed.
 	 * @throws java.io.IOException
 	 *             if there was an error reading from the input.
@@ -210,7 +210,7 @@ public class PushCertificateParser {
 	 *            input reader; consumed only up until the end of the next
 	 *            signature in the input.
 	 * @return the parsed certificate, or null if the reader was at EOF.
-	 * @throws org.eclipse.jgit.errors.PackProtocolException
+	 * @throws org.openrewrite.jgit.errors.PackProtocolException
 	 *             if the certificate is malformed.
 	 * @throws java.io.IOException
 	 *             if there was an error reading from the input.
@@ -434,7 +434,7 @@ public class PushCertificateParser {
 	 * @param line
 	 *            the line read from the wire that produced this
 	 *            command, with optional trailing newline already trimmed.
-	 * @throws org.eclipse.jgit.errors.PackProtocolException
+	 * @throws org.openrewrite.jgit.errors.PackProtocolException
 	 *             if the raw line cannot be parsed to a command.
 	 * @since 4.0
 	 */

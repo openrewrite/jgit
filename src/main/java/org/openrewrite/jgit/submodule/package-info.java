@@ -1,4 +1,4 @@
 /**
  * Git submodule support.
  */
-package org.eclipse.jgit.submodule;
+package org.openrewrite.jgit.submodule;

@@ -9,14 +9,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.DiffInterruptedException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.IntList;
-import org.eclipse.jgit.util.LongList;
+import org.openrewrite.jgit.errors.DiffInterruptedException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.IntList;
+import org.openrewrite.jgit.util.LongList;
 
 /**
  * Diff algorithm, based on "An O(ND) Difference Algorithm and its Variations",

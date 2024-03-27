@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_STRING_LENGTH;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_SYMREF;
-import static org.eclipse.jgit.transport.GitProtocolConstants.REF_ATTR_PEELED;
-import static org.eclipse.jgit.transport.GitProtocolConstants.REF_ATTR_SYMREF_TARGET;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_STRING_LENGTH;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_SYMREF;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.REF_ATTR_PEELED;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.REF_ATTR_SYMREF_TARGET;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -29,16 +29,16 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefComparator;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefComparator;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
- * Support for the start of {@link org.eclipse.jgit.transport.UploadPack} and
- * {@link org.eclipse.jgit.transport.ReceivePack}.
+ * Support for the start of {@link org.openrewrite.jgit.transport.UploadPack} and
+ * {@link org.openrewrite.jgit.transport.ReceivePack}.
  */
 public abstract class RefAdvertiser {
 	/** Advertiser which frames lines in a {@link PacketLineOut} format. */

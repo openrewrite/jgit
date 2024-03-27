@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 /**
- * Wraps two {@link org.eclipse.jgit.diff.Sequence} instances to cache their
+ * Wraps two {@link org.openrewrite.jgit.diff.Sequence} instances to cache their
  * element hash codes.
  * <p>
  * This pair wraps two sequences that contain cached hash codes for the input

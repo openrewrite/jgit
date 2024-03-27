@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -18,14 +18,14 @@ import java.security.DigestOutputStream;
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.transport.PackedObjectInfo;
-import org.eclipse.jgit.util.NB;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.transport.PackedObjectInfo;
+import org.openrewrite.jgit.util.NB;
 
 /**
  * Creates a table of contents to support random access by
- * {@link org.eclipse.jgit.internal.storage.file.Pack}.
+ * {@link org.openrewrite.jgit.internal.storage.file.Pack}.
  * <p>
  * Pack index files (the <code>.idx</code> suffix in a pack file pair) provides
  * random access to any object in the pack by associating an ObjectId to the
@@ -163,7 +163,7 @@ public abstract class PackIndexWriter {
 	 * @param toStore
 	 *            sorted list of objects to store in the index. The caller must
 	 *            have previously sorted the list using
-	 *            {@link org.eclipse.jgit.transport.PackedObjectInfo}'s native
+	 *            {@link org.openrewrite.jgit.transport.PackedObjectInfo}'s native
 	 *            {@link java.lang.Comparable} implementation.
 	 * @param packDataChecksum
 	 *            checksum signature of the entire pack data content. This is
@@ -228,7 +228,7 @@ public abstract class PackIndexWriter {
 	 * <p>
 	 * The fan-out table is 4 KB in size, holding 256 32-bit unsigned integer
 	 * counts. Each count represents the number of objects within this index
-	 * whose {@link org.eclipse.jgit.lib.ObjectId#getFirstByte()} matches the
+	 * whose {@link org.openrewrite.jgit.lib.ObjectId#getFirstByte()} matches the
 	 * count's position in the fan-out table.
 	 *
 	 * @throws java.io.IOException

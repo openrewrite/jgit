@@ -14,9 +14,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
-import static org.eclipse.jgit.treewalk.TreeWalk.OperationType.CHECKOUT_OP;
+import static org.openrewrite.jgit.treewalk.TreeWalk.OperationType.CHECKOUT_OP;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,43 +31,43 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.api.errors.CanceledException;
-import org.eclipse.jgit.api.errors.FilterFailedException;
-import org.eclipse.jgit.attributes.FilterCommand;
-import org.eclipse.jgit.attributes.FilterCommandRegistry;
-import org.eclipse.jgit.errors.CheckoutConflictException;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.IndexWriteException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
-import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectChecker;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.treewalk.EmptyTreeIterator;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.NameConflictTreeWalk;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.WorkingTreeOptions;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FS.ExecutionResult;
-import org.eclipse.jgit.util.IntList;
-import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.jgit.util.io.EolStreamTypeUtil;
+import org.openrewrite.jgit.api.errors.CanceledException;
+import org.openrewrite.jgit.api.errors.FilterFailedException;
+import org.openrewrite.jgit.attributes.FilterCommand;
+import org.openrewrite.jgit.attributes.FilterCommandRegistry;
+import org.openrewrite.jgit.errors.CheckoutConflictException;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.IndexWriteException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.events.WorkingTreeModifiedEvent;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.CoreConfig.AutoCRLF;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.treewalk.EmptyTreeIterator;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.NameConflictTreeWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.treewalk.WorkingTreeOptions;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FS.ExecutionResult;
+import org.openrewrite.jgit.util.IntList;
+import org.openrewrite.jgit.util.SystemReader;
+import org.openrewrite.jgit.util.io.EolStreamTypeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -170,7 +170,7 @@ public class DirCacheCheckout {
 	 *         files should be deleted but the deletion in the filesystem failed
 	 *         (e.g. because a file was locked). To have a consistent state of
 	 *         the working tree these files have to be deleted by the callers of
-	 *         {@link org.eclipse.jgit.dircache.DirCacheCheckout}.
+	 *         {@link org.openrewrite.jgit.dircache.DirCacheCheckout}.
 	 */
 	public List<String> getToBeDeleted() {
 		return toBeDeleted;
@@ -216,7 +216,7 @@ public class DirCacheCheckout {
 	 * Constructs a DirCacheCeckout for merging and checking out two trees (HEAD
 	 * and mergeCommitTree) and the index. As iterator over the working tree
 	 * this constructor creates a standard
-	 * {@link org.eclipse.jgit.treewalk.FileTreeIterator}
+	 * {@link org.openrewrite.jgit.treewalk.FileTreeIterator}
 	 *
 	 * @param repo
 	 *            the repository in which we do the checkout
@@ -256,7 +256,7 @@ public class DirCacheCheckout {
 	/**
 	 * Constructs a DirCacheCeckout for checking out one tree, merging with the
 	 * index. As iterator over the working tree this constructor creates a
-	 * standard {@link org.eclipse.jgit.treewalk.FileTreeIterator}
+	 * standard {@link org.openrewrite.jgit.treewalk.FileTreeIterator}
 	 *
 	 * @param repo
 	 *            the repository in which we do the checkout
@@ -287,7 +287,7 @@ public class DirCacheCheckout {
 	 * Scan head, index and merge tree. Used during normal checkout or merge
 	 * operations.
 	 *
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 * @throws java.io.IOException
 	 */
 	public void preScanTwoTrees() throws CorruptObjectException, IOException {
@@ -324,9 +324,9 @@ public class DirCacheCheckout {
 	 * Scan index and merge tree (no HEAD). Used e.g. for initial checkout when
 	 * there is no head yet.
 	 *
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 * @throws java.io.IOException
 	 */
 	public void prescanOneTree()
@@ -448,7 +448,7 @@ public class DirCacheCheckout {
 
 	/**
 	 * Execute this checkout. A
-	 * {@link org.eclipse.jgit.events.WorkingTreeModifiedEvent} is fired if the
+	 * {@link org.openrewrite.jgit.events.WorkingTreeModifiedEvent} is fired if the
 	 * working tree was modified; even if the checkout fails.
 	 *
 	 * @return <code>false</code> if this method could not delete all the files
@@ -1246,7 +1246,7 @@ public class DirCacheCheckout {
 	/**
 	 * If <code>true</code>, will scan first to see if it's possible to check
 	 * out, otherwise throw
-	 * {@link org.eclipse.jgit.errors.CheckoutConflictException}. If
+	 * {@link org.openrewrite.jgit.errors.CheckoutConflictException}. If
 	 * <code>false</code>, it will silently deal with the problem.
 	 *
 	 * @param failOnConflict

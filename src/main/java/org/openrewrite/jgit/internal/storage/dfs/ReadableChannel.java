@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 import java.nio.channels.ReadableByteChannel;
@@ -61,7 +61,7 @@ public interface ReadableChannel extends ReadableByteChannel {
 	 * <p>
 	 * Channels should not recommend large block sizes. Sizes up to 1-4 MiB may
 	 * be reasonable, but sizes above that may be horribly inefficient. The
-	 * {@link org.eclipse.jgit.internal.storage.dfs.DfsBlockCache} favors the
+	 * {@link org.openrewrite.jgit.internal.storage.dfs.DfsBlockCache} favors the
 	 * alignment suggested by the channel rather than the configured size under
 	 * the assumption that reads are very expensive and the channel knows what
 	 * size is best to access it with.

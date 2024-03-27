@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
-import static org.eclipse.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.PACK;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,32 +29,32 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.PackInvalidException;
-import org.eclipse.jgit.errors.PackMismatchException;
-import org.eclipse.jgit.errors.SearchForReuseTimeout;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.pack.ObjectToPack;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.PackInvalidException;
+import org.openrewrite.jgit.errors.PackMismatchException;
+import org.openrewrite.jgit.errors.SearchForReuseTimeout;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.pack.ObjectToPack;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Traditional file system packed objects directory handler.
  * <p>
- * This is the {@link org.eclipse.jgit.internal.storage.file.Pack}s object
+ * This is the {@link org.openrewrite.jgit.internal.storage.file.Pack}s object
  * representation for a Git object database, where objects are stored in
  * compressed containers known as
- * {@link org.eclipse.jgit.internal.storage.file.Pack}s.
+ * {@link org.openrewrite.jgit.internal.storage.file.Pack}s.
  */
 class PackDirectory {
 	private final static Logger LOG = LoggerFactory
@@ -132,12 +132,12 @@ class PackDirectory {
 	}
 
 	/**
-	 * Get the {@link org.eclipse.jgit.internal.storage.file.Pack} for the
+	 * Get the {@link org.openrewrite.jgit.internal.storage.file.Pack} for the
 	 * specified object if it is stored in this PackDirectory.
 	 *
 	 * @param objectId
 	 *            identity of the object to find the Pack for.
-	 * @return {@link org.eclipse.jgit.internal.storage.file.Pack} which
+	 * @return {@link org.openrewrite.jgit.internal.storage.file.Pack} which
 	 *         contains the specified object or {@code null} if it is not stored
 	 *         in this PackDirectory.
 	 */
@@ -497,14 +497,14 @@ class PackDirectory {
 
 	/**
 	 * Scans the pack directory for
-	 * {@link org.eclipse.jgit.internal.storage.file.PackFile}s and returns them
+	 * {@link org.openrewrite.jgit.internal.storage.file.PackFile}s and returns them
 	 * organized by their extensions and their pack ids
 	 *
 	 * Skips files in the directory that we cannot create a
-	 * {@link org.eclipse.jgit.internal.storage.file.PackFile} for.
+	 * {@link org.openrewrite.jgit.internal.storage.file.PackFile} for.
 	 *
-	 * @return a map of {@link org.eclipse.jgit.internal.storage.file.PackFile}s
-	 *         and {@link org.eclipse.jgit.internal.storage.pack.PackExt}s keyed
+	 * @return a map of {@link org.openrewrite.jgit.internal.storage.file.PackFile}s
+	 *         and {@link org.openrewrite.jgit.internal.storage.pack.PackExt}s keyed
 	 *         by pack ids
 	 */
 	private Map<String, Map<PackExt, PackFile>> getPackFilesByExtById() {

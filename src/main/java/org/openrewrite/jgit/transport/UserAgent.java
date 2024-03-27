@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_AGENT;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_AGENT;
 
 import java.util.Set;
 
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * User agent to be reported by this JGit client and server on the network.

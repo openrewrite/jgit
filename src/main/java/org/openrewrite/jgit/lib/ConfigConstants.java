@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 /**
  * Constants for use with the Configuration classes: section names,

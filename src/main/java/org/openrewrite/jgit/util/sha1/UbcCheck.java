@@ -33,7 +33,7 @@
 * SOFTWARE.
 */
 
-package org.eclipse.jgit.util.sha1;
+package org.openrewrite.jgit.util.sha1;
 
 // Converted by hand by Shawn Pearce (Google), using lib/ubc_check.c from
 // https://github.com/cr-marcstevens/sha1collisiondetection/

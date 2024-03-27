@@ -8,21 +8,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.LinkedList;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Computes the merge base(s) of the starting commits.
  * <p>
  * This generator is selected if the RevFilter is only
- * {@link org.eclipse.jgit.revwalk.filter.RevFilter#MERGE_BASE}.
+ * {@link org.openrewrite.jgit.revwalk.filter.RevFilter#MERGE_BASE}.
  * <p>
  * To compute the merge base we assign a temporary flag to each of the starting
  * commits. The maximum number of starting commits is bounded by the number of

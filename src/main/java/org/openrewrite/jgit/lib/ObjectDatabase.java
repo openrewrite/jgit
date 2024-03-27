@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
 
 /**
  * Abstraction of arbitrary object storage.
  * <p>
  * An object database stores one or more Git objects, indexed by their unique
- * {@link org.eclipse.jgit.lib.ObjectId}.
+ * {@link org.openrewrite.jgit.lib.ObjectId}.
  */
 public abstract class ObjectDatabase {
 	/**
@@ -102,7 +102,7 @@ public abstract class ObjectDatabase {
 	 *
 	 * @param objectId
 	 *            identity of the object to open.
-	 * @return a {@link org.eclipse.jgit.lib.ObjectLoader} for accessing the object.
+	 * @return a {@link org.openrewrite.jgit.lib.ObjectLoader} for accessing the object.
 	 * @throws MissingObjectException
 	 *             the object does not exist.
 	 * @throws java.io.IOException
@@ -123,14 +123,14 @@ public abstract class ObjectDatabase {
 	 *            identity of the object to open.
 	 * @param typeHint
 	 *            hint about the type of object being requested, e.g.
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_BLOB};
-	 *            {@link org.eclipse.jgit.lib.ObjectReader#OBJ_ANY} if the
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_BLOB};
+	 *            {@link org.openrewrite.jgit.lib.ObjectReader#OBJ_ANY} if the
 	 *            object type is not known, or does not matter to the caller.
-	 * @return a {@link org.eclipse.jgit.lib.ObjectLoader} for accessing the
+	 * @return a {@link org.openrewrite.jgit.lib.ObjectLoader} for accessing the
 	 *         object.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object does not exist.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             typeHint was not OBJ_ANY, and the object's actual type does
 	 *             not match typeHint.
 	 * @throws java.io.IOException

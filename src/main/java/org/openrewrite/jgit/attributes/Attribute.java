@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.attributes;
+package org.openrewrite.jgit.attributes;
 
 /**
  * Represents an attribute.
@@ -15,11 +15,11 @@ package org.eclipse.jgit.attributes;
  * According to the man page, an attribute can have the following states:
  * <ul>
  * <li>Set - represented by
- * {@link org.eclipse.jgit.attributes.Attribute.State#SET}</li>
+ * {@link org.openrewrite.jgit.attributes.Attribute.State#SET}</li>
  * <li>Unset - represented by
- * {@link org.eclipse.jgit.attributes.Attribute.State#UNSET}</li>
+ * {@link org.openrewrite.jgit.attributes.Attribute.State#UNSET}</li>
  * <li>Set to a value - represented by
- * {@link org.eclipse.jgit.attributes.Attribute.State#CUSTOM}</li>
+ * {@link org.openrewrite.jgit.attributes.Attribute.State#CUSTOM}</li>
  * <li>Unspecified - used to revert an attribute . This is crucial in order to
  * mark an attribute as unspecified in the attributes map and thus preventing
  * following (with lower priority) nodes from setting the attribute to a value
@@ -63,8 +63,8 @@ public final class Attribute {
 	 *            the attribute key. Should not be <code>null</code>.
 	 * @param state
 	 *            the attribute state. It should be either
-	 *            {@link org.eclipse.jgit.attributes.Attribute.State#SET} or
-	 *            {@link org.eclipse.jgit.attributes.Attribute.State#UNSET}. In
+	 *            {@link org.openrewrite.jgit.attributes.Attribute.State#SET} or
+	 *            {@link org.openrewrite.jgit.attributes.Attribute.State#UNSET}. In
 	 *            order to create a custom value attribute prefer the use of
 	 *            {@link #Attribute(String, String)} constructor.
 	 */

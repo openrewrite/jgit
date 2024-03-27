@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport.resolver;
+package org.openrewrite.jgit.transport.resolver;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,12 +17,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache;
-import org.eclipse.jgit.lib.RepositoryCache.FileKey;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.errors.RepositoryNotFoundException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.RepositoryCache;
+import org.openrewrite.jgit.lib.RepositoryCache.FileKey;
+import org.openrewrite.jgit.util.FS;
 
 /**
  * Default resolver serving from the local filesystem.

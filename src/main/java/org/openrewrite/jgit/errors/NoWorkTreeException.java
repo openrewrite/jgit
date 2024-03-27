@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
- * Indicates a {@link org.eclipse.jgit.lib.Repository} has no working directory,
+ * Indicates a {@link org.openrewrite.jgit.lib.Repository} has no working directory,
  * and is thus bare.
  */
 public class NoWorkTreeException extends IllegalStateException {

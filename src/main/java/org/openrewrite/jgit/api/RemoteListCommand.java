@@ -7,15 +7,15 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.net.URISyntaxException;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.RemoteConfig;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.RemoteConfig;
 
 /**
  * Used to obtain the list of remotes.
@@ -36,7 +36,7 @@ public class RemoteListCommand extends GitCommand<List<RemoteConfig>> {
 	 * </p>
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected RemoteListCommand(Repository repo) {
 		super(repo);

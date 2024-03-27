@@ -8,21 +8,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.notes;
+package org.openrewrite.jgit.notes;
 
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_STRING_LENGTH;
-import static org.eclipse.jgit.lib.FileMode.REGULAR_FILE;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_STRING_LENGTH;
+import static org.openrewrite.jgit.lib.FileMode.REGULAR_FILE;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectInserter.Formatter;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.TreeFormatter;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectInserter.Formatter;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.TreeFormatter;
 
 /**
  * A note tree holding only notes, with no subtrees.

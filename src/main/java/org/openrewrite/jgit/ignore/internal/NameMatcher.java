@@ -7,9 +7,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore.internal;
+package org.openrewrite.jgit.ignore.internal;
 
-import static org.eclipse.jgit.ignore.internal.Strings.getPathSeparator;
+import static org.openrewrite.jgit.ignore.internal.Strings.getPathSeparator;
 
 /**
  * Matcher built from patterns for file names (single path segments). This class

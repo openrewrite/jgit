@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.events;
+package org.openrewrite.jgit.events;
 
 /**
- * Tracks a previously registered {@link org.eclipse.jgit.events.RepositoryListener}.
+ * Tracks a previously registered {@link org.openrewrite.jgit.events.RepositoryListener}.
  */
 public class ListenerHandle {
 	private final ListenerList parent;

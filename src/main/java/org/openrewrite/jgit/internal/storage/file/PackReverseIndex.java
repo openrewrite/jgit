@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.PackIndex.MutableEntry;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.PackIndex.MutableEntry;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * <p>
@@ -141,7 +141,7 @@ public class PackReverseIndex {
 	 *            offset).
 	 * @return offset of the next object in a pack or maxOffset if provided
 	 *         offset was the last one.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             when there is no object with the provided offset.
 	 */
 	public long findNextOffset(long offset, long maxOffset)

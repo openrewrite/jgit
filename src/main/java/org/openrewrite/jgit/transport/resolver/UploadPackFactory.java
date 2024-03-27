@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport.resolver;
+package org.openrewrite.jgit.transport.resolver;
 
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.UploadPack;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.UploadPack;
 
 /**
- * Create and configure {@link org.eclipse.jgit.transport.UploadPack} service
+ * Create and configure {@link org.openrewrite.jgit.transport.UploadPack} service
  * instance.
  *
  * @param <C>

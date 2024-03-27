@@ -7,12 +7,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.gitrepo;
+package org.openrewrite.jgit.gitrepo;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.lib.Constants.DEFAULT_REMOTE_NAME;
-import static org.eclipse.jgit.lib.Constants.R_REMOTES;
-import static org.eclipse.jgit.lib.Constants.R_TAGS;
+import static org.openrewrite.jgit.lib.Constants.DEFAULT_REMOTE_NAME;
+import static org.openrewrite.jgit.lib.Constants.R_REMOTES;
+import static org.openrewrite.jgit.lib.Constants.R_TAGS;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,40 +27,40 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.TreeMap;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.GitCommand;
-import org.eclipse.jgit.api.SubmoduleAddCommand;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheBuilder;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.gitrepo.ManifestParser.IncludedFileReader;
-import org.eclipse.jgit.gitrepo.RepoProject.CopyFile;
-import org.eclipse.jgit.gitrepo.RepoProject.LinkFile;
-import org.eclipse.jgit.gitrepo.internal.RepoText;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.CommitBuilder;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.api.Git;
+import org.openrewrite.jgit.api.GitCommand;
+import org.openrewrite.jgit.api.SubmoduleAddCommand;
+import org.openrewrite.jgit.api.errors.ConcurrentRefUpdateException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRefNameException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheBuilder;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.gitrepo.ManifestParser.IncludedFileReader;
+import org.openrewrite.jgit.gitrepo.RepoProject.CopyFile;
+import org.openrewrite.jgit.gitrepo.RepoProject.LinkFile;
+import org.openrewrite.jgit.gitrepo.internal.RepoText;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.CommitBuilder;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
  * A class used to execute a repo command.
@@ -286,7 +286,7 @@ public class RepoCommand extends GitCommand<RevCommit> {
 	 * Constructor for RepoCommand
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	public RepoCommand(Repository repo) {
 		super(repo);
@@ -459,9 +459,9 @@ public class RepoCommand extends GitCommand<RevCommit> {
 	 * The progress monitor associated with the clone operation. By default,
 	 * this is set to <code>NullProgressMonitor</code>
 	 *
-	 * @see org.eclipse.jgit.lib.NullProgressMonitor
+	 * @see org.openrewrite.jgit.lib.NullProgressMonitor
 	 * @param monitor
-	 *            a {@link org.eclipse.jgit.lib.ProgressMonitor}
+	 *            a {@link org.openrewrite.jgit.lib.ProgressMonitor}
 	 * @return this command
 	 */
 	public RepoCommand setProgressMonitor(ProgressMonitor monitor) {
@@ -496,7 +496,7 @@ public class RepoCommand extends GitCommand<RevCommit> {
 	 * ignored.
 	 *
 	 * @param author
-	 *            the author's {@link org.eclipse.jgit.lib.PersonIdent}
+	 *            the author's {@link org.openrewrite.jgit.lib.PersonIdent}
 	 * @return this command
 	 */
 	public RepoCommand setAuthor(PersonIdent author) {
@@ -510,7 +510,7 @@ public class RepoCommand extends GitCommand<RevCommit> {
 	 * This is only used in bare repositories.
 	 *
 	 * @param callback
-	 *            a {@link org.eclipse.jgit.gitrepo.RepoCommand.RemoteReader}
+	 *            a {@link org.openrewrite.jgit.gitrepo.RepoCommand.RemoteReader}
 	 *            object.
 	 * @return this command
 	 */
@@ -524,7 +524,7 @@ public class RepoCommand extends GitCommand<RevCommit> {
 	 *
 	 * @param reader
 	 *            a
-	 *            {@link org.eclipse.jgit.gitrepo.ManifestParser.IncludedFileReader}
+	 *            {@link org.openrewrite.jgit.gitrepo.ManifestParser.IncludedFileReader}
 	 *            object.
 	 * @return this command
 	 * @since 4.0

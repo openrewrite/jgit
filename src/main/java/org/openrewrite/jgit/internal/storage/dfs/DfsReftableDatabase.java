@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -20,29 +20,29 @@ import java.util.TreeSet;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.storage.reftable.MergedReftable;
-import org.eclipse.jgit.internal.storage.reftable.ReftableConfig;
-import org.eclipse.jgit.internal.storage.reftable.ReftableDatabase;
-import org.eclipse.jgit.lib.BatchRefUpdate;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.ReceiveCommand;
-import org.eclipse.jgit.util.RefList;
-import org.eclipse.jgit.util.RefMap;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.storage.reftable.MergedReftable;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableConfig;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableDatabase;
+import org.openrewrite.jgit.lib.BatchRefUpdate;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.ReceiveCommand;
+import org.openrewrite.jgit.util.RefList;
+import org.openrewrite.jgit.util.RefMap;
 
 /**
- * A {@link org.eclipse.jgit.internal.storage.dfs.DfsRefDatabase} that uses
+ * A {@link org.openrewrite.jgit.internal.storage.dfs.DfsRefDatabase} that uses
  * reftable for storage.
  * <p>
  * A {@code DfsRefDatabase} instance is thread-safe.
  * <p>
  * Implementors may wish to use
- * {@link org.eclipse.jgit.internal.storage.dfs.DfsPackDescription#getMaxUpdateIndex()}
+ * {@link org.openrewrite.jgit.internal.storage.dfs.DfsPackDescription#getMaxUpdateIndex()}
  * as the primary key identifier for a
- * {@link org.eclipse.jgit.internal.storage.pack.PackExt#REFTABLE} only pack
+ * {@link org.openrewrite.jgit.internal.storage.pack.PackExt#REFTABLE} only pack
  * description, ensuring that when there are competing transactions one wins,
  * and one will fail.
  */

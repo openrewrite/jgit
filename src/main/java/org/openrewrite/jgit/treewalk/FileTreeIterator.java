@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk;
+package org.openrewrite.jgit.treewalk;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -22,20 +22,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
 
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FS;
 
 /**
  * Working directory iterator for standard Java IO.
  * <p>
  * This iterator uses the standard <code>java.io</code> package to read the
  * specified working directory as part of a
- * {@link org.eclipse.jgit.treewalk.TreeWalk}.
+ * {@link org.openrewrite.jgit.treewalk.TreeWalk}.
  */
 public class FileTreeIterator extends WorkingTreeIterator {
 

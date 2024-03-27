@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.attributes;
+package org.openrewrite.jgit.attributes;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import java.io.OutputStream;
  * An abstraction for JGit's builtin implementations for hooks and filters.
  * Instead of spawning an external processes to start a filter/hook and to pump
  * data from/to stdin/stdout these builtin commmands may be used. They are
- * constructed by {@link org.eclipse.jgit.attributes.FilterCommandFactory}.
+ * constructed by {@link org.openrewrite.jgit.attributes.FilterCommandFactory}.
  *
  * @since 4.6
  */

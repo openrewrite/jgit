@@ -8,20 +8,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
 
 /**
  * Indicates client requested an object the server does not want to serve.
  * <p>
  * Typically visible only inside of the server implementation; clients are
  * usually looking at the text message from the server in a generic
- * {@link org.eclipse.jgit.errors.PackProtocolException}.
+ * {@link org.openrewrite.jgit.errors.PackProtocolException}.
  *
  * @since 4.3
  */

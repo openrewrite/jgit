@@ -11,14 +11,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.transport.GitProtocolConstants.COMMAND_LS_REFS;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_AGENT;
-import static org.eclipse.jgit.transport.GitProtocolConstants.REF_ATTR_PEELED;
-import static org.eclipse.jgit.transport.GitProtocolConstants.REF_ATTR_SYMREF_TARGET;
-import static org.eclipse.jgit.transport.GitProtocolConstants.VERSION_1;
-import static org.eclipse.jgit.transport.GitProtocolConstants.VERSION_2;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.COMMAND_LS_REFS;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_AGENT;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.REF_ATTR_PEELED;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.REF_ATTR_SYMREF_TARGET;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.VERSION_1;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.VERSION_2;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -36,23 +36,23 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.errors.InvalidObjectIdException;
-import org.eclipse.jgit.errors.NoRemoteRepositoryException;
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.errors.RemoteRepositoryException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.SymbolicRef;
-import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.jgit.util.io.InterruptTimer;
-import org.eclipse.jgit.util.io.TimeoutInputStream;
-import org.eclipse.jgit.util.io.TimeoutOutputStream;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.errors.InvalidObjectIdException;
+import org.openrewrite.jgit.errors.NoRemoteRepositoryException;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.errors.RemoteRepositoryException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.io.InterruptTimer;
+import org.openrewrite.jgit.util.io.TimeoutInputStream;
+import org.openrewrite.jgit.util.io.TimeoutOutputStream;
 
 /**
  * Base helper class for pack-based operations implementations. Provides partial
@@ -166,12 +166,12 @@ abstract class BasePackConnection extends BaseConnection {
 	 * <p>
 	 * If any errors occur, this connection is automatically closed by invoking
 	 * {@link #close()} and the exception is wrapped (if necessary) and thrown
-	 * as a {@link org.eclipse.jgit.errors.TransportException}.
+	 * as a {@link org.openrewrite.jgit.errors.TransportException}.
 	 *
 	 * @return {@code true} if the refs were read; {@code false} otherwise
 	 *         indicating that {@link #lsRefs} must be called
 	 *
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             the reference list could not be scanned.
 	 */
 	protected boolean readAdvertisedRefs() throws TransportException {

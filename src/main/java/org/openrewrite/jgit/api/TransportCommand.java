@@ -7,19 +7,19 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.Transport;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.CredentialsProvider;
+import org.openrewrite.jgit.transport.Transport;
 
 /**
  * Base class for commands that use a
- * {@link org.eclipse.jgit.transport.Transport} during execution.
+ * {@link org.openrewrite.jgit.transport.Transport} during execution.
  * <p>
  * This class provides standard configuration of a transport for options such as
- * a {@link org.eclipse.jgit.transport.CredentialsProvider}, a timeout, and a
- * {@link org.eclipse.jgit.api.TransportConfigCallback}.
+ * a {@link org.openrewrite.jgit.transport.CredentialsProvider}, a timeout, and a
+ * {@link org.openrewrite.jgit.api.TransportConfigCallback}.
  *
  * @param <C>
  * @param <T>
@@ -45,7 +45,7 @@ public abstract class TransportCommand<C extends GitCommand, T> extends
 	/**
 	 * <p>Constructor for TransportCommand.</p>
 	 *
-	 * @param repo a {@link org.eclipse.jgit.lib.Repository} object.
+	 * @param repo a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	protected TransportCommand(Repository repo) {
 		super(repo);
@@ -56,7 +56,7 @@ public abstract class TransportCommand<C extends GitCommand, T> extends
 	 * Set the <code>credentialsProvider</code>.
 	 *
 	 * @param credentialsProvider
-	 *            the {@link org.eclipse.jgit.transport.CredentialsProvider} to
+	 *            the {@link org.openrewrite.jgit.transport.CredentialsProvider} to
 	 *            use
 	 * @return {@code this}
 	 */
@@ -83,11 +83,11 @@ public abstract class TransportCommand<C extends GitCommand, T> extends
 	 *
 	 * @param transportConfigCallback
 	 *            if set, the callback will be invoked after the
-	 *            {@link org.eclipse.jgit.transport.Transport} has created, but
-	 *            before the {@link org.eclipse.jgit.transport.Transport} is
+	 *            {@link org.openrewrite.jgit.transport.Transport} has created, but
+	 *            before the {@link org.openrewrite.jgit.transport.Transport} is
 	 *            used. The callback can use this opportunity to set additional
 	 *            type-specific configuration on the
-	 *            {@link org.eclipse.jgit.transport.Transport} instance.
+	 *            {@link org.openrewrite.jgit.transport.Transport} instance.
 	 * @return {@code this}
 	 */
 	public C setTransportConfigCallback(
@@ -111,7 +111,7 @@ public abstract class TransportCommand<C extends GitCommand, T> extends
 	 * callback
 	 *
 	 * @param transport
-	 *            a {@link org.eclipse.jgit.transport.Transport} object.
+	 *            a {@link org.openrewrite.jgit.transport.Transport} object.
 	 * @return {@code this}
 	 */
 	protected C configure(Transport transport) {
@@ -128,7 +128,7 @@ public abstract class TransportCommand<C extends GitCommand, T> extends
 	 * {@code this} command
 	 *
 	 * @param childCommand
-	 *            a {@link org.eclipse.jgit.api.TransportCommand} object.
+	 *            a {@link org.openrewrite.jgit.api.TransportCommand} object.
 	 * @return {@code this}
 	 */
 	protected C configure(TransportCommand childCommand) {

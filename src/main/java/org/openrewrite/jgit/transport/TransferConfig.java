@@ -8,26 +8,26 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.util.StringUtils.equalsIgnoreCase;
-import static org.eclipse.jgit.util.StringUtils.toLowerCase;
+import static org.openrewrite.jgit.util.StringUtils.equalsIgnoreCase;
+import static org.openrewrite.jgit.util.StringUtils.toLowerCase;
 
 import java.io.File;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.storage.file.LazyObjectIdSetFile;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Config.SectionParser;
-import org.eclipse.jgit.lib.ObjectChecker;
-import org.eclipse.jgit.lib.ObjectIdSet;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.storage.file.LazyObjectIdSetFile;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.lib.ObjectIdSet;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.SystemReader;
 
 /**
  * The standard "transfer", "fetch", "protocol", "receive", and "uploadpack"
@@ -143,7 +143,7 @@ public class TransferConfig {
 
 	/**
 	 * Create a configuration honoring settings in a
-	 * {@link org.eclipse.jgit.lib.Config}.
+	 * {@link org.openrewrite.jgit.lib.Config}.
 	 *
 	 * @param rc
 	 *            the source to read settings from. The source is not retained
@@ -329,10 +329,10 @@ public class TransferConfig {
 	}
 
 	/**
-	 * Get {@link org.eclipse.jgit.transport.RefFilter} respecting configured
+	 * Get {@link org.openrewrite.jgit.transport.RefFilter} respecting configured
 	 * hidden refs.
 	 *
-	 * @return {@link org.eclipse.jgit.transport.RefFilter} respecting
+	 * @return {@link org.openrewrite.jgit.transport.RefFilter} respecting
 	 *         configured hidden refs.
 	 * @since 3.1
 	 */

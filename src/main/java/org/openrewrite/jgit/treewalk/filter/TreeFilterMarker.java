@@ -8,20 +8,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.StopWalkException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.StopWalkException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.treewalk.TreeWalk;
 
 /**
- * For testing an array of {@link org.eclipse.jgit.treewalk.filter.TreeFilter}
- * during a {@link org.eclipse.jgit.treewalk.TreeWalk} for each entry and
+ * For testing an array of {@link org.openrewrite.jgit.treewalk.filter.TreeFilter}
+ * during a {@link org.openrewrite.jgit.treewalk.TreeWalk} for each entry and
  * returning the result as a bitmask.
  *
  * @since 2.3
@@ -54,22 +54,22 @@ public class TreeFilterMarker {
 	/**
 	 * Test the filters against the walk. Returns a bitmask where each bit
 	 * represents the result of a call to
-	 * {@link org.eclipse.jgit.treewalk.filter.TreeFilter#include(TreeWalk)},
+	 * {@link org.openrewrite.jgit.treewalk.filter.TreeFilter#include(TreeWalk)},
 	 * ordered by the index for which the tree filters were passed in the
 	 * constructor.
 	 *
 	 * @param walk
 	 *            the walk from which to test the current entry
 	 * @return the marks bitmask
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             as thrown by
-	 *             {@link org.eclipse.jgit.treewalk.filter.TreeFilter#include(TreeWalk)}
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 *             {@link org.openrewrite.jgit.treewalk.filter.TreeFilter#include(TreeWalk)}
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             as thrown by
-	 *             {@link org.eclipse.jgit.treewalk.filter.TreeFilter#include(TreeWalk)}
+	 *             {@link org.openrewrite.jgit.treewalk.filter.TreeFilter#include(TreeWalk)}
 	 * @throws java.io.IOException
 	 *             as thrown by
-	 *             {@link org.eclipse.jgit.treewalk.filter.TreeFilter#include(TreeWalk)}
+	 *             {@link org.openrewrite.jgit.treewalk.filter.TreeFilter#include(TreeWalk)}
 	 */
 	public int getMarks(TreeWalk walk) throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {

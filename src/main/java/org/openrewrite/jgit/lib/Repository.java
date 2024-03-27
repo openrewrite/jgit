@@ -13,9 +13,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import static org.eclipse.jgit.lib.Constants.LOCK_SUFFIX;
+import static org.openrewrite.jgit.lib.Constants.LOCK_SUFFIX;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.BufferedOutputStream;
@@ -39,34 +39,34 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.attributes.AttributesNodeProvider;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.errors.AmbiguousObjectException;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.NoWorkTreeException;
-import org.eclipse.jgit.errors.RevisionSyntaxException;
-import org.eclipse.jgit.events.IndexChangedEvent;
-import org.eclipse.jgit.events.IndexChangedListener;
-import org.eclipse.jgit.events.ListenerList;
-import org.eclipse.jgit.events.RepositoryEvent;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevBlob;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.attributes.AttributesNodeProvider;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.errors.AmbiguousObjectException;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.NoWorkTreeException;
+import org.openrewrite.jgit.errors.RevisionSyntaxException;
+import org.openrewrite.jgit.events.IndexChangedEvent;
+import org.openrewrite.jgit.events.IndexChangedListener;
+import org.openrewrite.jgit.events.ListenerList;
+import org.openrewrite.jgit.events.RepositoryEvent;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevBlob;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.RefSpec;
+import org.openrewrite.jgit.transport.RemoteConfig;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.SystemReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,7 +76,7 @@ import org.slf4j.LoggerFactory;
  * A repository holds all objects and refs used for managing source code (could
  * be any type of file, but source code is what SCM's are typically used for).
  * <p>
- * The thread-safety of a {@link org.eclipse.jgit.lib.Repository} very much
+ * The thread-safety of a {@link org.openrewrite.jgit.lib.Repository} very much
  * depends on the concrete implementation. Applications working with a generic
  * {@code Repository} type must not assume the instance is thread-safe.
  * <ul>
@@ -263,10 +263,10 @@ public abstract class Repository implements AutoCloseable {
 	public abstract StoredConfig getConfig();
 
 	/**
-	 * Create a new {@link org.eclipse.jgit.attributes.AttributesNodeProvider}.
+	 * Create a new {@link org.openrewrite.jgit.attributes.AttributesNodeProvider}.
 	 *
-	 * @return a new {@link org.eclipse.jgit.attributes.AttributesNodeProvider}.
-	 *         This {@link org.eclipse.jgit.attributes.AttributesNodeProvider}
+	 * @return a new {@link org.openrewrite.jgit.attributes.AttributesNodeProvider}.
+	 *         This {@link org.openrewrite.jgit.attributes.AttributesNodeProvider}
 	 *         is lazy loaded only once. It means that it will not be updated
 	 *         after loading. Prefer creating new instance for each use.
 	 * @since 4.2
@@ -296,7 +296,7 @@ public abstract class Repository implements AutoCloseable {
 	 * shared repositories.
 	 *
 	 * @param objectId
-	 *            a {@link org.eclipse.jgit.lib.AnyObjectId} object.
+	 *            a {@link org.openrewrite.jgit.lib.AnyObjectId} object.
 	 * @return true if the specified object is stored in this repo or any of the
 	 *         known shared repositories.
 	 * @deprecated use {@code getObjectDatabase().has(objectId)}
@@ -318,9 +318,9 @@ public abstract class Repository implements AutoCloseable {
 	 *
 	 * @param objectId
 	 *            identity of the object to open.
-	 * @return a {@link org.eclipse.jgit.lib.ObjectLoader} for accessing the
+	 * @return a {@link org.openrewrite.jgit.lib.ObjectLoader} for accessing the
 	 *         object.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object does not exist.
 	 * @throws java.io.IOException
 	 *             the object store cannot be accessed.
@@ -341,14 +341,14 @@ public abstract class Repository implements AutoCloseable {
 	 *            identity of the object to open.
 	 * @param typeHint
 	 *            hint about the type of object being requested, e.g.
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_BLOB};
-	 *            {@link org.eclipse.jgit.lib.ObjectReader#OBJ_ANY} if the
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_BLOB};
+	 *            {@link org.openrewrite.jgit.lib.ObjectReader#OBJ_ANY} if the
 	 *            object type is not known, or does not matter to the caller.
-	 * @return a {@link org.eclipse.jgit.lib.ObjectLoader} for accessing the
+	 * @return a {@link org.openrewrite.jgit.lib.ObjectLoader} for accessing the
 	 *         object.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object does not exist.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             typeHint was not OBJ_ANY, and the object's actual type does
 	 *             not match typeHint.
 	 * @throws java.io.IOException
@@ -450,14 +450,14 @@ public abstract class Repository implements AutoCloseable {
 	 *            A git object references expression
 	 * @return an ObjectId or {@code null} if revstr can't be resolved to any
 	 *         ObjectId
-	 * @throws org.eclipse.jgit.errors.AmbiguousObjectException
+	 * @throws org.openrewrite.jgit.errors.AmbiguousObjectException
 	 *             {@code revstr} contains an abbreviated ObjectId and this
 	 *             repository contains more than one object which match to the
 	 *             input abbreviation.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the id parsed does not meet the type required to finish
 	 *             applying the operators in the expression.
-	 * @throws org.eclipse.jgit.errors.RevisionSyntaxException
+	 * @throws org.openrewrite.jgit.errors.RevisionSyntaxException
 	 *             the expression is not supported by this implementation, or
 	 *             does not meet the standard syntax.
 	 * @throws java.io.IOException
@@ -487,7 +487,7 @@ public abstract class Repository implements AutoCloseable {
 	 * @param revstr a {@link java.lang.String} object.
 	 * @return object id or ref name from resolved expression or {@code null} if
 	 *         given expression cannot be resolved
-	 * @throws org.eclipse.jgit.errors.AmbiguousObjectException
+	 * @throws org.openrewrite.jgit.errors.AmbiguousObjectException
 	 * @throws java.io.IOException
 	 */
 	@Nullable
@@ -1132,7 +1132,7 @@ public abstract class Repository implements AutoCloseable {
 	 * Peel a possibly unpeeled reference to an annotated tag.
 	 * <p>
 	 * If the ref cannot be peeled (as it does not refer to an annotated tag)
-	 * the peeled id stays null, but {@link org.eclipse.jgit.lib.Ref#isPeeled()}
+	 * the peeled id stays null, but {@link org.openrewrite.jgit.lib.Ref#isPeeled()}
 	 * will be true.
 	 *
 	 * @param ref
@@ -1190,7 +1190,7 @@ public abstract class Repository implements AutoCloseable {
 	 *
 	 * @return the index file location or {@code null} if repository isn't
 	 *         local.
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 */
@@ -1210,9 +1210,9 @@ public abstract class Repository implements AutoCloseable {
 	 * @param id
 	 *            name of the commit object.
 	 * @return reference to the commit object. Never null.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the supplied commit does not exist.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the supplied id is not a commit or an annotated tag.
 	 * @throws java.io.IOException
 	 *             a pack file or loose object could not be read.
@@ -1237,12 +1237,12 @@ public abstract class Repository implements AutoCloseable {
 	 *
 	 * @return a cache representing the contents of the specified index file (if
 	 *         it exists) or an empty cache if the file does not exist.
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 * @throws java.io.IOException
 	 *             the index file is present but could not be read.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the index file is using a format or extension that this
 	 *             library does not support.
 	 */
@@ -1261,13 +1261,13 @@ public abstract class Repository implements AutoCloseable {
 	 *
 	 * @return a cache representing the contents of the specified index file (if
 	 *         it exists) or an empty cache if the file does not exist.
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 * @throws java.io.IOException
 	 *             the index file is present but could not be read, or the lock
 	 *             could not be obtained.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the index file is using a format or extension that this
 	 *             library does not support.
 	 */
@@ -1560,7 +1560,7 @@ public abstract class Repository implements AutoCloseable {
 	 *
 	 * @return the root directory of the working tree, where files are checked
 	 *         out for viewing and editing.
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 */
@@ -1681,7 +1681,7 @@ public abstract class Repository implements AutoCloseable {
 	 *
 	 * @param refName
 	 *            a {@link java.lang.String} object.
-	 * @return a {@link org.eclipse.jgit.lib.ReflogReader} for the supplied
+	 * @return a {@link org.openrewrite.jgit.lib.ReflogReader} for the supplied
 	 *         refname, or {@code null} if the named ref does not exist.
 	 * @throws java.io.IOException
 	 *             the ref could not be accessed.
@@ -1699,7 +1699,7 @@ public abstract class Repository implements AutoCloseable {
 	 * @return a String containing the content of the MERGE_MSG file or
 	 *         {@code null} if this file doesn't exist
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 */
@@ -1732,7 +1732,7 @@ public abstract class Repository implements AutoCloseable {
 	 * @return a String containing the content of the COMMIT_EDITMSG file or
 	 *         {@code null} if this file doesn't exist
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 * @since 4.0
@@ -1767,7 +1767,7 @@ public abstract class Repository implements AutoCloseable {
 	 *         {@code null} if this file doesn't exist. Also if the file exists
 	 *         but is empty {@code null} will be returned
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 */
@@ -1811,7 +1811,7 @@ public abstract class Repository implements AutoCloseable {
 	 *         doesn't exist. Also if the file exists but is empty {@code null}
 	 *         will be returned
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 */
@@ -1835,7 +1835,7 @@ public abstract class Repository implements AutoCloseable {
 	 *         doesn't exist. Also if the file exists but is empty {@code null}
 	 *         will be returned
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 */
@@ -1901,7 +1901,7 @@ public abstract class Repository implements AutoCloseable {
 	 *         doesn't exist. Also if the file exists but is empty {@code null}
 	 *         will be returned
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 *             if this is bare, which implies it has no working directory.
 	 *             See {@link #isBare()}.
 	 */
@@ -2081,7 +2081,7 @@ public abstract class Repository implements AutoCloseable {
 	 * <p>
 	 * Currently this option is supported for repositories of type
 	 * {@code FileRepository} only. See
-	 * {@link org.eclipse.jgit.internal.storage.file.GC#setAuto(boolean)} for
+	 * {@link org.openrewrite.jgit.internal.storage.file.GC#setAuto(boolean)} for
 	 * configuration details.
 	 *
 	 * @param monitor

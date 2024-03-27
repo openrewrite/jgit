@@ -7,16 +7,16 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * Common fields between v0/v1/v2 fetch requests.

@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
 /**
  * The commit to be cherry-pick'ed did not have exactly one parent

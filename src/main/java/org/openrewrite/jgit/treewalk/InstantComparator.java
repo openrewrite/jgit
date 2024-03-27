@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.treewalk;
+package org.openrewrite.jgit.treewalk;
 
 import java.time.Instant;
 import java.util.Comparator;

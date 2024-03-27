@@ -8,9 +8,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.CorruptObjectException;
 
 /**
  * Verifies that a blob object is a valid object.
@@ -52,7 +52,7 @@ public interface BlobObjectChecker {
 	 *
 	 * @param id
 	 *            identity of the object being checked.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if any error was detected.
 	 */
 	void endBlob(AnyObjectId id) throws CorruptObjectException;

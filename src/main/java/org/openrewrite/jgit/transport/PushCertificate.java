@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.transport.PushCertificateParser.NONCE;
-import static org.eclipse.jgit.transport.PushCertificateParser.PUSHEE;
-import static org.eclipse.jgit.transport.PushCertificateParser.PUSHER;
-import static org.eclipse.jgit.transport.PushCertificateParser.VERSION;
+import static org.openrewrite.jgit.transport.PushCertificateParser.NONCE;
+import static org.openrewrite.jgit.transport.PushCertificateParser.PUSHEE;
+import static org.openrewrite.jgit.transport.PushCertificateParser.PUSHER;
+import static org.openrewrite.jgit.transport.PushCertificateParser.VERSION;
 
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Objects;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * The required information to verify the push.
@@ -197,7 +197,7 @@ public class PushCertificate {
 	 *
 	 * @return original text payload plus signature; the final output will be
 	 *         valid as input to
-	 *         {@link org.eclipse.jgit.transport.PushCertificateParser#fromString(String)}.
+	 *         {@link org.openrewrite.jgit.transport.PushCertificateParser#fromString(String)}.
 	 * @since 4.1
 	 */
 	public String toTextWithSignature() {

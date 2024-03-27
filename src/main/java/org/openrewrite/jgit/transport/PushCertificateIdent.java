@@ -8,24 +8,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.util.RawParseUtils.lastIndexOfTrim;
+import static org.openrewrite.jgit.util.RawParseUtils.lastIndexOfTrim;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.util.MutableInteger;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.util.MutableInteger;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Identity in a push certificate.
  * <p>
- * This is similar to a {@link org.eclipse.jgit.lib.PersonIdent} in that it
+ * This is similar to a {@link org.openrewrite.jgit.lib.PersonIdent} in that it
  * contains a name, timestamp, and timezone offset, but differs in the following
  * ways:
  * <ul>
@@ -58,7 +58,7 @@ public class PushCertificateIdent {
 	 *
 	 * @param str
 	 *            string to parse.
-	 * @return a {@link org.eclipse.jgit.transport.PushCertificateIdent} object.
+	 * @return a {@link org.openrewrite.jgit.transport.PushCertificateIdent} object.
 	 */
 	public static PushCertificateIdent parse(String str) {
 		MutableInteger p = new MutableInteger();

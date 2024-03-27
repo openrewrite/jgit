@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.revwalk;
+package org.openrewrite.jgit.internal.revwalk;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
@@ -16,12 +16,12 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.revwalk.ObjectReachabilityChecker;
-import org.eclipse.jgit.revwalk.ObjectWalk;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevSort;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.revwalk.ObjectReachabilityChecker;
+import org.openrewrite.jgit.revwalk.ObjectWalk;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevSort;
 
 /**
  * Checks if all objects are reachable from certain starting points doing a

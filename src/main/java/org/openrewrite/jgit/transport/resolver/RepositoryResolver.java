@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport.resolver;
+package org.openrewrite.jgit.transport.resolver;
 
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.ServiceMayNotContinueException;
+import org.openrewrite.jgit.errors.RepositoryNotFoundException;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.ServiceMayNotContinueException;
 
 /**
- * Locate a Git {@link org.eclipse.jgit.lib.Repository} by name from the URL.
+ * Locate a Git {@link org.openrewrite.jgit.lib.Repository} by name from the URL.
  *
  * @param <C>
  *            type of connection.

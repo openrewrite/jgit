@@ -1,4 +1,4 @@
 /**
  * High-level API commands (the porcelain of JGit).
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;

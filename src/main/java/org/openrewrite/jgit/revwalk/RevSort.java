@@ -9,11 +9,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 /**
- * Sorting strategies supported by {@link org.eclipse.jgit.revwalk.RevWalk} and
- * {@link org.eclipse.jgit.revwalk.ObjectWalk}.
+ * Sorting strategies supported by {@link org.openrewrite.jgit.revwalk.RevWalk} and
+ * {@link org.openrewrite.jgit.revwalk.ObjectWalk}.
  */
 public enum RevSort {
 	/**

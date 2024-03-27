@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.submodule;
+package org.openrewrite.jgit.submodule;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,34 +15,34 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.BaseRepositoryBuilder;
-import org.eclipse.jgit.lib.BlobBasedConfig;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryBuilder;
-import org.eclipse.jgit.lib.RepositoryBuilderFactory;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.storage.file.FileBasedConfig;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.RepositoryNotFoundException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.BaseRepositoryBuilder;
+import org.openrewrite.jgit.lib.BlobBasedConfig;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.RepositoryBuilder;
+import org.openrewrite.jgit.lib.RepositoryBuilderFactory;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.storage.file.FileBasedConfig;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.util.FS;
 
 /**
  * Walker that visits all submodule entries found in a tree
@@ -83,7 +83,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * The {@code .gitmodules} file is read from the index.
 	 *
 	 * @param repository
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @return generator over submodule index entries. The caller is responsible
 	 *         for calling {@link #close()}.
 	 * @throws java.io.IOException
@@ -107,7 +107,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * path
 	 *
 	 * @param repository
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param treeId
 	 *            the root of a tree containing both a submodule at the given
 	 *            path and .gitmodules at the root.
@@ -141,7 +141,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * path
 	 *
 	 * @param repository
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param iterator
 	 *            the root of a tree containing both a submodule at the given
 	 *            path and .gitmodules at the root.
@@ -174,7 +174,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * Get submodule directory
 	 *
 	 * @param parent
-	 *            the {@link org.eclipse.jgit.lib.Repository}.
+	 *            the {@link org.openrewrite.jgit.lib.Repository}.
 	 * @param path
 	 *            submodule path
 	 * @return directory
@@ -188,7 +188,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * Get submodule repository
 	 *
 	 * @param parent
-	 *            the {@link org.eclipse.jgit.lib.Repository}.
+	 *            the {@link org.openrewrite.jgit.lib.Repository}.
 	 * @param path
 	 *            submodule path
 	 * @return repository or null if repository doesn't exist
@@ -367,7 +367,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * Create submodule generator
 	 *
 	 * @param repository
-	 *            the {@link org.eclipse.jgit.lib.Repository}.
+	 *            the {@link org.openrewrite.jgit.lib.Repository}.
 	 * @throws java.io.IOException
 	 */
 	public SubmoduleWalk(Repository repository) throws IOException {
@@ -447,7 +447,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * @return this generator
 	 * @throws java.io.IOException
 	 *             if an error occurred, or if the repository is bare
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 */
 	public SubmoduleWalk loadModulesConfig() throws IOException, ConfigInvalidException {
 		if (rootTree == null) {
@@ -544,7 +544,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * Set tree filter
 	 *
 	 * @param filter
-	 *            a {@link org.eclipse.jgit.treewalk.filter.TreeFilter} object.
+	 *            a {@link org.openrewrite.jgit.treewalk.filter.TreeFilter} object.
 	 * @return this generator
 	 */
 	public SubmoduleWalk setFilter(TreeFilter filter) {
@@ -556,10 +556,10 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * Set the tree iterator used for finding submodule entries
 	 *
 	 * @param iterator
-	 *            an {@link org.eclipse.jgit.treewalk.AbstractTreeIterator}
+	 *            an {@link org.openrewrite.jgit.treewalk.AbstractTreeIterator}
 	 *            object.
 	 * @return this generator
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 */
 	public SubmoduleWalk setTree(AbstractTreeIterator iterator)
 			throws CorruptObjectException {
@@ -571,7 +571,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * Set the tree used for finding submodule entries
 	 *
 	 * @param treeId
-	 *            an {@link org.eclipse.jgit.lib.AnyObjectId} object.
+	 *            an {@link org.openrewrite.jgit.lib.AnyObjectId} object.
 	 * @return this generator
 	 * @throws java.io.IOException
 	 * @throws IncorrectObjectTypeException
@@ -679,7 +679,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * the .gitmodules file in the current repository's working tree.
 	 *
 	 * @return configured path
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 * @throws java.io.IOException
 	 */
 	public String getModulesPath() throws IOException, ConfigInvalidException {
@@ -693,7 +693,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * from the repository's config.
 	 *
 	 * @return configured URL
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 * @throws java.io.IOException
 	 */
 	public String getConfigUrl() throws IOException, ConfigInvalidException {
@@ -706,7 +706,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * from the .gitmodules file in the current repository's working tree.
 	 *
 	 * @return configured URL
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 * @throws java.io.IOException
 	 */
 	public String getModulesUrl() throws IOException, ConfigInvalidException {
@@ -720,7 +720,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * from the repository's config.
 	 *
 	 * @return update value
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 * @throws java.io.IOException
 	 */
 	public String getConfigUpdate() throws IOException, ConfigInvalidException {
@@ -733,7 +733,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * from the .gitmodules file in the current repository's working tree.
 	 *
 	 * @return update value
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 * @throws java.io.IOException
 	 */
 	public String getModulesUpdate() throws IOException, ConfigInvalidException {
@@ -747,7 +747,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 * value from the .gitmodules file in the current repository's working tree.
 	 *
 	 * @return ignore value
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 * @throws java.io.IOException
 	 * @since 3.6
 	 */
@@ -816,7 +816,7 @@ public class SubmoduleWalk implements AutoCloseable {
 	 *
 	 * @return resolved remote URL
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 */
 	public String getRemoteUrl() throws IOException, ConfigInvalidException {
 		String url = getModulesUrl();

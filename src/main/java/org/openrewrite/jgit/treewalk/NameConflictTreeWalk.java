@@ -8,21 +8,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk;
+package org.openrewrite.jgit.treewalk;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Specialized TreeWalk to detect directory-file (D/F) name conflicts.
  * <p>
  * Due to the way a Git tree is organized the standard
- * {@link org.eclipse.jgit.treewalk.TreeWalk} won't easily find a D/F conflict
+ * {@link org.openrewrite.jgit.treewalk.TreeWalk} won't easily find a D/F conflict
  * when merging two or more trees together. In the standard TreeWalk the file
  * will be returned first, and then much later the directory will be returned.
  * This makes it impossible for the application to efficiently detect and handle
@@ -34,12 +34,12 @@ import org.eclipse.jgit.lib.Repository;
  * returned only once, so it does not get returned later in the iteration.
  * <p>
  * When a D/F conflict is detected
- * {@link org.eclipse.jgit.treewalk.TreeWalk#isSubtree()} will return true and
- * {@link org.eclipse.jgit.treewalk.TreeWalk#enterSubtree()} will recurse into
+ * {@link org.openrewrite.jgit.treewalk.TreeWalk#isSubtree()} will return true and
+ * {@link org.openrewrite.jgit.treewalk.TreeWalk#enterSubtree()} will recurse into
  * the subtree, no matter which iterator originally supplied the subtree.
  * <p>
  * Because conflicted directories report early, using this walk implementation
- * to populate a {@link org.eclipse.jgit.dircache.DirCacheBuilder} may cause the
+ * to populate a {@link org.openrewrite.jgit.dircache.DirCacheBuilder} may cause the
  * automatic resorting to run and fix the entry ordering.
  * <p>
  * This walk implementation requires more CPU to implement a look-ahead and a

@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ import java.io.OutputStream;
  * Input stream that copies data read to another output stream.
  *
  * This stream is primarily useful with a
- * {@link org.eclipse.jgit.util.TemporaryBuffer}, where any data read or skipped
+ * {@link org.openrewrite.jgit.util.TemporaryBuffer}, where any data read or skipped
  * by the caller is also duplicated into the temporary buffer. Later the
  * temporary buffer can then be used instead of the original source stream.
  *
@@ -39,7 +39,7 @@ public class TeeInputStream extends InputStream {
 	 *            source stream to consume.
 	 * @param dst
 	 *            destination to copy the source to as it is consumed. Typically
-	 *            this is a {@link org.eclipse.jgit.util.TemporaryBuffer}.
+	 *            this is a {@link org.openrewrite.jgit.util.TemporaryBuffer}.
 	 */
 	public TeeInputStream(InputStream src, OutputStream dst) {
 		this.src = src;

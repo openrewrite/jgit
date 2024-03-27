@@ -10,10 +10,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import org.eclipse.jgit.lib.Config.SectionParser;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.util.SystemReader;
 
 /**
  * The standard "user" configuration parameters.

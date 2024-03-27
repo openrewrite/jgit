@@ -8,9 +8,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * Submodule section of a Git configuration file.

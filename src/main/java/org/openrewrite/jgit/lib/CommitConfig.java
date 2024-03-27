@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,13 +18,13 @@ import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.text.MessageFormat;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Config.SectionParser;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * The standard "commit" configuration parameters.

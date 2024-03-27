@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.notes;
+package org.openrewrite.jgit.notes;
 
 /** A note bucket that has been loaded into the process. */
 abstract class InMemoryNoteBucket extends NoteBucket {

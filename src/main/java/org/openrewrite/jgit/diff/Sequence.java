@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 /**
  * Arbitrary sequence of elements.
@@ -20,11 +20,11 @@ package org.eclipse.jgit.diff;
  * <p>
  * Implementations of Sequence are primarily intended for use in content
  * difference detection algorithms, to produce an
- * {@link org.eclipse.jgit.diff.EditList} of {@link org.eclipse.jgit.diff.Edit}
+ * {@link org.openrewrite.jgit.diff.EditList} of {@link org.openrewrite.jgit.diff.Edit}
  * instances describing how two Sequence instances differ.
  * <p>
  * To be compared against another Sequence of the same type, a supporting
- * {@link org.eclipse.jgit.diff.SequenceComparator} must also be supplied.
+ * {@link org.openrewrite.jgit.diff.SequenceComparator} must also be supplied.
  */
 public abstract class Sequence {
 	/** @return total number of items in the sequence. */

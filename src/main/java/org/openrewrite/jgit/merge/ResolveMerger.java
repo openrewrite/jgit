@@ -11,14 +11,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.time.Instant.EPOCH;
-import static org.eclipse.jgit.diff.DiffAlgorithm.SupportedAlgorithm.HISTOGRAM;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_DIFF_SECTION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_ALGORITHM;
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.diff.DiffAlgorithm.SupportedAlgorithm.HISTOGRAM;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_DIFF_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_ALGORITHM;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -37,49 +37,49 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.attributes.Attributes;
-import org.eclipse.jgit.diff.DiffAlgorithm;
-import org.eclipse.jgit.diff.DiffAlgorithm.SupportedAlgorithm;
-import org.eclipse.jgit.diff.RawText;
-import org.eclipse.jgit.diff.RawTextComparator;
-import org.eclipse.jgit.diff.Sequence;
-import org.eclipse.jgit.dircache.Checkout;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheBuildIterator;
-import org.eclipse.jgit.dircache.DirCacheBuilder;
-import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.errors.BinaryBlobException;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.IndexWriteException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.NoWorkTreeException;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.submodule.SubmoduleConflict;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.treewalk.NameConflictTreeWalk;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.WorkingTreeOptions;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.LfsFactory;
-import org.eclipse.jgit.util.LfsFactory.LfsInputStream;
-import org.eclipse.jgit.util.TemporaryBuffer;
-import org.eclipse.jgit.util.io.EolStreamTypeUtil;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.attributes.Attributes;
+import org.openrewrite.jgit.diff.DiffAlgorithm;
+import org.openrewrite.jgit.diff.DiffAlgorithm.SupportedAlgorithm;
+import org.openrewrite.jgit.diff.RawText;
+import org.openrewrite.jgit.diff.RawTextComparator;
+import org.openrewrite.jgit.diff.Sequence;
+import org.openrewrite.jgit.dircache.Checkout;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheBuildIterator;
+import org.openrewrite.jgit.dircache.DirCacheBuilder;
+import org.openrewrite.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.errors.BinaryBlobException;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.IndexWriteException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.NoWorkTreeException;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.submodule.SubmoduleConflict;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.treewalk.NameConflictTreeWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.treewalk.WorkingTreeOptions;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.util.LfsFactory;
+import org.openrewrite.jgit.util.LfsFactory.LfsInputStream;
+import org.openrewrite.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.util.io.EolStreamTypeUtil;
 
 /**
  * A three-way merger performing a content-merge if necessary
@@ -309,7 +309,7 @@ public class ResolveMerger extends ThreeWayMerger {
 	 * Constructor for ResolveMerger.
 	 *
 	 * @param local
-	 *            the {@link org.eclipse.jgit.lib.Repository}.
+	 *            the {@link org.openrewrite.jgit.lib.Repository}.
 	 * @param inCore
 	 *            a boolean.
 	 */
@@ -335,7 +335,7 @@ public class ResolveMerger extends ThreeWayMerger {
 	 * Constructor for ResolveMerger.
 	 *
 	 * @param local
-	 *            the {@link org.eclipse.jgit.lib.Repository}.
+	 *            the {@link org.openrewrite.jgit.lib.Repository}.
 	 */
 	protected ResolveMerger(Repository local) {
 		this(local, false);
@@ -345,7 +345,7 @@ public class ResolveMerger extends ThreeWayMerger {
 	 * Constructor for ResolveMerger.
 	 *
 	 * @param inserter
-	 *            an {@link org.eclipse.jgit.lib.ObjectInserter} object.
+	 *            an {@link org.openrewrite.jgit.lib.ObjectInserter} object.
 	 * @param config
 	 *            the repository configuration
 	 * @since 4.8
@@ -437,8 +437,8 @@ public class ResolveMerger extends ThreeWayMerger {
 	 * history of modified files.
 	 *
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
-	 * @throws org.eclipse.jgit.errors.NoWorkTreeException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.NoWorkTreeException
 	 * @since 3.4
 	 */
 	protected void cleanUp() throws NoWorkTreeException,
@@ -606,15 +606,15 @@ public class ResolveMerger extends ThreeWayMerger {
 	 *            the file in the working tree
 	 * @param ignoreConflicts
 	 *            see
-	 *            {@link org.eclipse.jgit.merge.ResolveMerger#mergeTrees(AbstractTreeIterator, RevTree, RevTree, boolean)}
+	 *            {@link org.openrewrite.jgit.merge.ResolveMerger#mergeTrees(AbstractTreeIterator, RevTree, RevTree, boolean)}
 	 * @param attributes
 	 *            the attributes defined for this entry
 	 * @return <code>false</code> if the merge will fail because the index entry
 	 *         didn't match ours or the working-dir file was dirty and a
 	 *         conflict occurred
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 * @throws java.io.IOException
 	 * @since 4.9
 	 */
@@ -1277,7 +1277,7 @@ public class ResolveMerger extends ThreeWayMerger {
 	 * not set explicitly and if this merger doesn't work in-core, this merger
 	 * will implicitly get and lock a default DirCache. If the DirCache is
 	 * explicitly set the caller is responsible to lock it in advance. Finally
-	 * the merger will call {@link org.eclipse.jgit.dircache.DirCache#commit()}
+	 * the merger will call {@link org.openrewrite.jgit.dircache.DirCache#commit()}
 	 * which requires that the DirCache is locked. If the {@link #mergeImpl()}
 	 * returns without throwing an exception the lock will be released. In case
 	 * of exceptions the caller is responsible to release the lock.
@@ -1310,12 +1310,12 @@ public class ResolveMerger extends ThreeWayMerger {
 	 * The resolve conflict way of three way merging
 	 *
 	 * @param baseTree
-	 *            a {@link org.eclipse.jgit.treewalk.AbstractTreeIterator}
+	 *            a {@link org.openrewrite.jgit.treewalk.AbstractTreeIterator}
 	 *            object.
 	 * @param headTree
-	 *            a {@link org.eclipse.jgit.revwalk.RevTree} object.
+	 *            a {@link org.openrewrite.jgit.revwalk.RevTree} object.
 	 * @param mergeTree
-	 *            a {@link org.eclipse.jgit.revwalk.RevTree} object.
+	 *            a {@link org.openrewrite.jgit.revwalk.RevTree} object.
 	 * @param ignoreConflicts
 	 *            Controls what to do in case a content-merge is done and a
 	 *            conflict is detected. The default setting for this should be
@@ -1332,7 +1332,7 @@ public class ResolveMerger extends ThreeWayMerger {
 	 *            other stages are filled. Means: there is no conflict on that
 	 *            path but the new content (including conflict markers) is
 	 *            stored as successful merge result. This is needed in the
-	 *            context of {@link org.eclipse.jgit.merge.RecursiveMerger}
+	 *            context of {@link org.openrewrite.jgit.merge.RecursiveMerger}
 	 *            where when determining merge bases we don't want to deal with
 	 *            content-merge conflicts.
 	 * @return whether the trees merged cleanly
@@ -1398,7 +1398,7 @@ public class ResolveMerger extends ThreeWayMerger {
 	 *            The walk to iterate over.
 	 * @param ignoreConflicts
 	 *            see
-	 *            {@link org.eclipse.jgit.merge.ResolveMerger#mergeTrees(AbstractTreeIterator, RevTree, RevTree, boolean)}
+	 *            {@link org.openrewrite.jgit.merge.ResolveMerger#mergeTrees(AbstractTreeIterator, RevTree, RevTree, boolean)}
 	 * @return Whether the trees merged cleanly.
 	 * @throws java.io.IOException
 	 * @since 3.5

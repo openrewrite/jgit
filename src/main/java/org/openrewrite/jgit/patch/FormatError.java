@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.patch;
+package org.openrewrite.jgit.patch;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.util.Locale;
 
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * An error in a patch script

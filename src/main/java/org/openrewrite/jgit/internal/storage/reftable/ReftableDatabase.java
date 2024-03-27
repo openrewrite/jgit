@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,17 +21,17 @@ import java.util.TreeSet;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.lib.ReflogReader;
-import org.eclipse.jgit.transport.ReceiveCommand;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.lib.ReflogReader;
+import org.openrewrite.jgit.transport.ReceiveCommand;
 
 /**
  * Operations on {@link MergedReftable} that is common to various reftable-using
  * subclasses of {@link RefDatabase}. See
- * {@link org.eclipse.jgit.internal.storage.dfs.DfsReftableDatabase} for an
+ * {@link org.openrewrite.jgit.internal.storage.dfs.DfsReftableDatabase} for an
  * example.
  */
 public abstract class ReftableDatabase {

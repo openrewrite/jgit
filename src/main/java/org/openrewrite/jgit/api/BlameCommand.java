@@ -7,25 +7,25 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.blame.BlameGenerator;
-import org.eclipse.jgit.blame.BlameResult;
-import org.eclipse.jgit.diff.DiffAlgorithm;
-import org.eclipse.jgit.diff.RawTextComparator;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.blame.BlameGenerator;
+import org.openrewrite.jgit.blame.BlameResult;
+import org.openrewrite.jgit.diff.DiffAlgorithm;
+import org.openrewrite.jgit.diff.RawTextComparator;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
- * Blame command for building a {@link org.eclipse.jgit.blame.BlameResult} for a
+ * Blame command for building a {@link org.openrewrite.jgit.blame.BlameResult} for a
  * file path.
  */
 public class BlameCommand extends GitCommand<BlameResult> {
@@ -46,7 +46,7 @@ public class BlameCommand extends GitCommand<BlameResult> {
 	 * Constructor for BlameCommand
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	public BlameCommand(Repository repo) {
 		super(repo);
@@ -68,7 +68,7 @@ public class BlameCommand extends GitCommand<BlameResult> {
 	 * Set diff algorithm
 	 *
 	 * @param diffAlgorithm
-	 *            a {@link org.eclipse.jgit.diff.DiffAlgorithm} object.
+	 *            a {@link org.openrewrite.jgit.diff.DiffAlgorithm} object.
 	 * @return this command
 	 */
 	public BlameCommand setDiffAlgorithm(DiffAlgorithm diffAlgorithm) {
@@ -80,7 +80,7 @@ public class BlameCommand extends GitCommand<BlameResult> {
 	 * Set raw text comparator
 	 *
 	 * @param textComparator
-	 *            a {@link org.eclipse.jgit.diff.RawTextComparator}
+	 *            a {@link org.openrewrite.jgit.diff.RawTextComparator}
 	 * @return this command
 	 */
 	public BlameCommand setTextComparator(RawTextComparator textComparator) {

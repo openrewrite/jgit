@@ -8,9 +8,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import org.eclipse.jgit.transport.Transport;
+import org.openrewrite.jgit.transport.Transport;
 
 /**
  * Receives a callback allowing type-specific configuration to be set
@@ -33,7 +33,7 @@ public interface TransportConfigCallback {
 	 * Add any additional transport-specific configuration required.
 	 *
 	 * @param transport
-	 *            a {@link org.eclipse.jgit.transport.Transport} object.
+	 *            a {@link org.openrewrite.jgit.transport.Transport} object.
 	 */
 	void configure(Transport transport);
 }

@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -26,11 +26,11 @@ import java.util.BitSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.References;
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.References;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * This URI like construct used for referencing Git archives over the net, as
@@ -169,7 +169,7 @@ public class URIish implements Serializable {
 	private String host;
 
 	/**
-	 * Parse and construct an {@link org.eclipse.jgit.transport.URIish} from a
+	 * Parse and construct an {@link org.openrewrite.jgit.transport.URIish} from a
 	 * string
 	 *
 	 * @param s

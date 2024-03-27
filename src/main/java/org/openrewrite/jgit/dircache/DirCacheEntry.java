@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -26,21 +26,21 @@ import java.text.MessageFormat;
 import java.time.Instant;
 import java.util.Arrays;
 
-import org.eclipse.jgit.dircache.DirCache.DirCacheVersion;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.MutableInteger;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.dircache.DirCache.DirCacheVersion;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.MutableInteger;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.SystemReader;
 
 /**
  * A single file (or stage of a file) in a
- * {@link org.eclipse.jgit.dircache.DirCache}.
+ * {@link org.openrewrite.jgit.dircache.DirCache}.
  * <p>
  * An entry represents exactly one stage of a file. If a file path is unmerged
  * then multiple DirCacheEntry instances may appear for the same path name.
@@ -461,7 +461,7 @@ public class DirCacheEntry {
 	 * Check whether this entry has been smudged or not
 	 * <p>
 	 * If a blob has length 0 we know its id, see
-	 * {@link org.eclipse.jgit.lib.Constants#EMPTY_BLOB_ID}. If an entry has
+	 * {@link org.openrewrite.jgit.lib.Constants#EMPTY_BLOB_ID}. If an entry has
 	 * length 0 and an ID different from the one for empty blob we know this
 	 * entry was smudged.
 	 *
@@ -588,7 +588,7 @@ public class DirCacheEntry {
 	}
 
 	/**
-	 * Obtain the raw {@link org.eclipse.jgit.lib.FileMode} bits for this entry.
+	 * Obtain the raw {@link org.openrewrite.jgit.lib.FileMode} bits for this entry.
 	 *
 	 * @return mode bits for the entry.
 	 * @see FileMode#fromBits(int)
@@ -598,7 +598,7 @@ public class DirCacheEntry {
 	}
 
 	/**
-	 * Obtain the {@link org.eclipse.jgit.lib.FileMode} for this entry.
+	 * Obtain the {@link org.openrewrite.jgit.lib.FileMode} for this entry.
 	 *
 	 * @return the file mode singleton for this entry.
 	 */
@@ -613,8 +613,8 @@ public class DirCacheEntry {
 	 *            the new mode constant.
 	 * @throws java.lang.IllegalArgumentException
 	 *             If {@code mode} is
-	 *             {@link org.eclipse.jgit.lib.FileMode#MISSING},
-	 *             {@link org.eclipse.jgit.lib.FileMode#TREE}, or any other type
+	 *             {@link org.openrewrite.jgit.lib.FileMode#MISSING},
+	 *             {@link org.openrewrite.jgit.lib.FileMode#TREE}, or any other type
 	 *             code not permitted in a tree object.
 	 */
 	public void setFileMode(FileMode mode) {
@@ -763,7 +763,7 @@ public class DirCacheEntry {
 	 *
 	 * @param id
 	 *            new object identifier for the entry. May be
-	 *            {@link org.eclipse.jgit.lib.ObjectId#zeroId()} to remove the
+	 *            {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} to remove the
 	 *            current identifier.
 	 */
 	public void setObjectId(AnyObjectId id) {

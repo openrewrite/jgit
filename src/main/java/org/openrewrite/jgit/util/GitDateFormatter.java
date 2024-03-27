@@ -8,20 +8,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.eclipse.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.PersonIdent;
 
 /**
  * A utility for formatting dates according to the Git log.date formats plus
  * extensions.
  * <p>
- * The enum {@link org.eclipse.jgit.util.GitDateFormatter.Format} defines the
+ * The enum {@link org.openrewrite.jgit.util.GitDateFormatter.Format} defines the
  * available types.
  */
 public class GitDateFormatter {
@@ -87,7 +87,7 @@ public class GitDateFormatter {
 	 * Create a new Git oriented date formatter
 	 *
 	 * @param format
-	 *            a {@link org.eclipse.jgit.util.GitDateFormatter.Format}
+	 *            a {@link org.openrewrite.jgit.util.GitDateFormatter.Format}
 	 *            object.
 	 */
 	public GitDateFormatter(Format format) {
@@ -129,7 +129,7 @@ public class GitDateFormatter {
 	 * specification.
 	 *
 	 * @param ident
-	 *            a {@link org.eclipse.jgit.lib.PersonIdent} object.
+	 *            a {@link org.openrewrite.jgit.lib.PersonIdent} object.
 	 * @return formatted version of date, time and time zone
 	 */
 	@SuppressWarnings("boxing")

@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk.filter;
+package org.openrewrite.jgit.revwalk.filter;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.StopWalkException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.StopWalkException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * Selects interesting revisions during walking.
@@ -28,7 +28,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
  * <code>OrRevFilter</code> to create complex boolean expressions.
  * <p>
  * Applications should install the filter on a RevWalk by
- * {@link org.eclipse.jgit.revwalk.RevWalk#setRevFilter(RevFilter)} prior to
+ * {@link org.openrewrite.jgit.revwalk.RevWalk#setRevFilter(RevFilter)} prior to
  * starting traversal.
  * <p>
  * Unless specifically noted otherwise a RevFilter implementation is not thread
@@ -42,11 +42,11 @@ import org.eclipse.jgit.revwalk.RevWalk;
  * <b>Message filters:</b>
  * <ul>
  * <li>Author name/email:
- * {@link org.eclipse.jgit.revwalk.filter.AuthorRevFilter}</li>
+ * {@link org.openrewrite.jgit.revwalk.filter.AuthorRevFilter}</li>
  * <li>Committer name/email:
- * {@link org.eclipse.jgit.revwalk.filter.CommitterRevFilter}</li>
+ * {@link org.openrewrite.jgit.revwalk.filter.CommitterRevFilter}</li>
  * <li>Message body:
- * {@link org.eclipse.jgit.revwalk.filter.MessageRevFilter}</li>
+ * {@link org.openrewrite.jgit.revwalk.filter.MessageRevFilter}</li>
  * </ul>
  *
  * <p>
@@ -59,9 +59,9 @@ import org.eclipse.jgit.revwalk.RevWalk;
  * <p>
  * <b>Boolean modifiers:</b>
  * <ul>
- * <li>AND: {@link org.eclipse.jgit.revwalk.filter.AndRevFilter}</li>
- * <li>OR: {@link org.eclipse.jgit.revwalk.filter.OrRevFilter}</li>
- * <li>NOT: {@link org.eclipse.jgit.revwalk.filter.NotRevFilter}</li>
+ * <li>AND: {@link org.openrewrite.jgit.revwalk.filter.AndRevFilter}</li>
+ * <li>OR: {@link org.openrewrite.jgit.revwalk.filter.OrRevFilter}</li>
+ * <li>NOT: {@link org.openrewrite.jgit.revwalk.filter.NotRevFilter}</li>
  * </ul>
  */
 public abstract class RevFilter {
@@ -233,15 +233,15 @@ public abstract class RevFilter {
 	 *            returns true from {@link #requiresCommitBody()}.
 	 * @return true to include this commit in the results; false to have this
 	 *         commit be omitted entirely from the results.
-	 * @throws org.eclipse.jgit.errors.StopWalkException
+	 * @throws org.openrewrite.jgit.errors.StopWalkException
 	 *             the filter knows for certain that no additional commits can
 	 *             ever match, and the current commit doesn't match either. The
 	 *             walk is halted and no more results are provided.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             an object the filter needs to consult to determine its answer
 	 *             does not exist in the Git repository the walker is operating
 	 *             on. Filtering this commit is impossible without the object.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             an object the filter needed to consult was not of the
 	 *             expected object type. This usually indicates a corrupt
 	 *             repository, as an object link is referencing the wrong type.

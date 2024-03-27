@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,17 +28,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.NoRemoteRepositoryException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.QuotedString;
-import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.jgit.util.io.MessageWriter;
-import org.eclipse.jgit.util.io.StreamCopyThread;
+import org.openrewrite.jgit.errors.NoRemoteRepositoryException;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.QuotedString;
+import org.openrewrite.jgit.util.SystemReader;
+import org.openrewrite.jgit.util.io.MessageWriter;
+import org.openrewrite.jgit.util.io.StreamCopyThread;
 
 /**
  * Transport through an SSH tunnel.

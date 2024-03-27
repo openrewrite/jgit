@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -17,14 +17,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Config.ConfigEnum;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config.ConfigEnum;
+import org.openrewrite.jgit.transport.RefSpec;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
- * An {@link org.eclipse.jgit.lib.TypedConfigGetter} that throws
+ * An {@link org.openrewrite.jgit.lib.TypedConfigGetter} that throws
  * {@link java.lang.IllegalArgumentException} on invalid values.
  *
  * @since 4.9

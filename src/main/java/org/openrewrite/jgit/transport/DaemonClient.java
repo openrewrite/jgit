@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -20,11 +20,11 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.jgit.transport.resolver.ServiceNotAuthorizedException;
-import org.eclipse.jgit.transport.resolver.ServiceNotEnabledException;
+import org.openrewrite.jgit.transport.resolver.ServiceNotAuthorizedException;
+import org.openrewrite.jgit.transport.resolver.ServiceNotEnabledException;
 
 /**
- * Active network client of {@link org.eclipse.jgit.transport.Daemon}.
+ * Active network client of {@link org.openrewrite.jgit.transport.Daemon}.
  */
 public class DaemonClient {
 	private final Daemon daemon;

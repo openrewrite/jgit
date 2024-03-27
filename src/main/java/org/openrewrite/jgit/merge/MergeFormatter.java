@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,16 +16,16 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.diff.RawText;
+import org.openrewrite.jgit.diff.RawText;
 
 /**
  * A class to convert merge results into a Git conformant textual presentation
  */
 public class MergeFormatter {
 	/**
-	 * Formats the results of a merge of {@link org.eclipse.jgit.diff.RawText}
+	 * Formats the results of a merge of {@link org.openrewrite.jgit.diff.RawText}
 	 * objects in a Git conformant way. This method also assumes that the
-	 * {@link org.eclipse.jgit.diff.RawText} objects being merged are line
+	 * {@link org.openrewrite.jgit.diff.RawText} objects being merged are line
 	 * oriented files which use LF as delimiter. This method will also use LF to
 	 * separate chunks and conflict metadata, therefore it fits only to texts
 	 * that are LF-separated lines.
@@ -54,9 +54,9 @@ public class MergeFormatter {
 	}
 
 	/**
-	 * Formats the results of a merge of {@link org.eclipse.jgit.diff.RawText}
+	 * Formats the results of a merge of {@link org.openrewrite.jgit.diff.RawText}
 	 * objects in a Git conformant way. This method also assumes that the
-	 * {@link org.eclipse.jgit.diff.RawText} objects being merged are line
+	 * {@link org.openrewrite.jgit.diff.RawText} objects being merged are line
 	 * oriented files which use LF as delimiter. This method will also use LF to
 	 * separate chunks and conflict metadata, therefore it fits only to texts
 	 * that are LF-separated lines.
@@ -82,7 +82,7 @@ public class MergeFormatter {
 
 	/**
 	 * Formats the results of a merge of exactly two
-	 * {@link org.eclipse.jgit.diff.RawText} objects in a Git conformant way.
+	 * {@link org.openrewrite.jgit.diff.RawText} objects in a Git conformant way.
 	 * This convenience method accepts the names for the three sequences (base
 	 * and the two merged sequences) as explicit parameters and doesn't require
 	 * the caller to specify a List
@@ -115,7 +115,7 @@ public class MergeFormatter {
 
 	/**
 	 * Formats the results of a merge of exactly two
-	 * {@link org.eclipse.jgit.diff.RawText} objects in a Git conformant way.
+	 * {@link org.openrewrite.jgit.diff.RawText} objects in a Git conformant way.
 	 * This convenience method accepts the names for the three sequences (base
 	 * and the two merged sequences) as explicit parameters and doesn't require
 	 * the caller to specify a List

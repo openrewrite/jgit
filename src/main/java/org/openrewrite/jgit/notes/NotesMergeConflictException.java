@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.notes;
+package org.openrewrite.jgit.notes;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * This exception will be thrown from the
- * {@link org.eclipse.jgit.notes.NoteMerger} when a conflict on Notes content is
+ * {@link org.openrewrite.jgit.notes.NoteMerger} when a conflict on Notes content is
  * found during merge.
  */
 public class NotesMergeConflictException extends IOException {

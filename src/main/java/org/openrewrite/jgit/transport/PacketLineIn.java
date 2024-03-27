@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -20,11 +20,11 @@ import java.io.UncheckedIOException;
 import java.text.MessageFormat;
 import java.util.Iterator;
 
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

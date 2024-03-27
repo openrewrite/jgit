@@ -7,32 +7,32 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import static org.eclipse.jgit.lib.Constants.HEAD;
+import static org.openrewrite.jgit.lib.Constants.HEAD;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffFormatter;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.io.NullOutputStream;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.diff.DiffEntry;
+import org.openrewrite.jgit.diff.DiffFormatter;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.util.io.NullOutputStream;
 
 /**
  * Show changes between commits, commit and working tree, etc.
@@ -65,7 +65,7 @@ public class DiffCommand extends GitCommand<List<DiffEntry>> {
 	 * Constructor for DiffCommand
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	protected DiffCommand(Repository repo) {
 		super(repo);

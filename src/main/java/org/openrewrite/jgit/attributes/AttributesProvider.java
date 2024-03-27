@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.attributes;
+package org.openrewrite.jgit.attributes;
 
 /**
  * Interface for classes which provide git attributes

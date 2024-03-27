@@ -8,20 +8,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.COMPACT;
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.GC;
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.GC_REST;
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.INSERT;
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.RECEIVE;
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.UNREACHABLE_GARBAGE;
-import static org.eclipse.jgit.internal.storage.dfs.DfsPackCompactor.configureReftable;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.PACK;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.REFTABLE;
-import static org.eclipse.jgit.internal.storage.pack.PackWriter.NONE;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.COMPACT;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.GC;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.GC_REST;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.INSERT;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.RECEIVE;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.UNREACHABLE_GARBAGE;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsPackCompactor.configureReftable;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.REFTABLE;
+import static org.openrewrite.jgit.internal.storage.pack.PackWriter.NONE;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,28 +35,28 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
-import org.eclipse.jgit.internal.storage.file.PackIndex;
-import org.eclipse.jgit.internal.storage.file.PackReverseIndex;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.internal.storage.reftable.ReftableCompactor;
-import org.eclipse.jgit.internal.storage.reftable.ReftableConfig;
-import org.eclipse.jgit.internal.storage.reftable.ReftableWriter;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdSet;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.storage.pack.PackStatistics;
-import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.jgit.util.io.CountingOutputStream;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
+import org.openrewrite.jgit.internal.storage.file.PackIndex;
+import org.openrewrite.jgit.internal.storage.file.PackReverseIndex;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableCompactor;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableConfig;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableWriter;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdSet;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.storage.pack.PackStatistics;
+import org.openrewrite.jgit.util.SystemReader;
+import org.openrewrite.jgit.util.io.CountingOutputStream;
 
 /**
  * Repack and garbage collect a repository.
@@ -183,7 +183,7 @@ public class DfsGarbageCollector {
 	 *
 	 * @param u
 	 *            minUpdateIndex for the initial reftable created by scanning
-	 *            {@link org.eclipse.jgit.internal.storage.dfs.DfsRefDatabase#getRefs(String)}.
+	 *            {@link org.openrewrite.jgit.internal.storage.dfs.DfsRefDatabase#getRefs(String)}.
 	 *            Ignored unless caller has also set
 	 *            {@link #setReftableConfig(ReftableConfig)}. Defaults to
 	 *            {@code 1}. Must be {@code u >= 0}.
@@ -199,7 +199,7 @@ public class DfsGarbageCollector {
 	 *
 	 * @param u
 	 *            maxUpdateIndex for the initial reftable created by scanning
-	 *            {@link org.eclipse.jgit.internal.storage.dfs.DfsRefDatabase#getRefs(String)}.
+	 *            {@link org.openrewrite.jgit.internal.storage.dfs.DfsRefDatabase#getRefs(String)}.
 	 *            Ignored unless caller has also set
 	 *            {@link #setReftableConfig(ReftableConfig)}. Defaults to
 	 *            {@code 1}. Must be {@code u >= 0}.

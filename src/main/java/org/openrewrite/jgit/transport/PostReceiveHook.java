@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Collection;
 
 /**
- * Hook invoked by {@link org.eclipse.jgit.transport.ReceivePack} after all
+ * Hook invoked by {@link org.openrewrite.jgit.transport.ReceivePack} after all
  * updates are executed.
  * <p>
  * The hook is called after all commands have been processed. Only commands with
- * a status of {@link org.eclipse.jgit.transport.ReceiveCommand.Result#OK} are
+ * a status of {@link org.openrewrite.jgit.transport.ReceiveCommand.Result#OK} are
  * passed into the hook. To get all commands within the hook, see
- * {@link org.eclipse.jgit.transport.ReceivePack#getAllCommands()}.
+ * {@link org.openrewrite.jgit.transport.ReceivePack#getAllCommands()}.
  * <p>
  * Any post-receive hook implementation should not update the status of a
  * command, as the command has already completed or failed, and the status has

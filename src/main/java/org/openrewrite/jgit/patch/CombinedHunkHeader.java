@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.patch;
+package org.openrewrite.jgit.patch;
 
-import static org.eclipse.jgit.util.RawParseUtils.nextLF;
-import static org.eclipse.jgit.util.RawParseUtils.parseBase10;
+import static org.openrewrite.jgit.util.RawParseUtils.nextLF;
+import static org.openrewrite.jgit.util.RawParseUtils.parseBase10;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.util.MutableInteger;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.util.MutableInteger;
 
 /**
  * Hunk header for a hunk appearing in a "diff --cc" style patch.

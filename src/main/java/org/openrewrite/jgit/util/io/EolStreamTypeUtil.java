@@ -8,22 +8,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.EnumSet;
 
-import org.eclipse.jgit.attributes.Attributes;
-import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
-import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
-import org.eclipse.jgit.treewalk.WorkingTreeOptions;
-import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.jgit.util.io.AutoLFInputStream.StreamFlag;
+import org.openrewrite.jgit.attributes.Attributes;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
+import org.openrewrite.jgit.treewalk.WorkingTreeOptions;
+import org.openrewrite.jgit.util.SystemReader;
+import org.openrewrite.jgit.util.io.AutoLFInputStream.StreamFlag;
 
 /**
  * Utility used to create input and output stream wrappers for
- * {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType}
+ * {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType}
  *
  * @since 4.3
  */
@@ -44,20 +44,20 @@ public final class EolStreamTypeUtil {
 	 *
 	 * @param op
 	 *            is the
-	 *            {@link org.eclipse.jgit.treewalk.TreeWalk.OperationType} of
+	 *            {@link org.openrewrite.jgit.treewalk.TreeWalk.OperationType} of
 	 *            the current traversal
 	 * @param options
-	 *            are the {@link org.eclipse.jgit.lib.Config} options with key
-	 *            {@link org.eclipse.jgit.treewalk.WorkingTreeOptions#KEY}
+	 *            are the {@link org.openrewrite.jgit.lib.Config} options with key
+	 *            {@link org.openrewrite.jgit.treewalk.WorkingTreeOptions#KEY}
 	 * @param attrs
-	 *            are the {@link org.eclipse.jgit.attributes.Attributes} of the
+	 *            are the {@link org.openrewrite.jgit.attributes.Attributes} of the
 	 *            file for which the
-	 *            {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType} is to be
+	 *            {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType} is to be
 	 *            detected
 	 * @return the stream conversion
-	 *         {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType} to be
+	 *         {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType} to be
 	 *         performed for the selected
-	 *         {@link org.eclipse.jgit.treewalk.TreeWalk.OperationType}
+	 *         {@link org.openrewrite.jgit.treewalk.TreeWalk.OperationType}
 	 */
 	public static EolStreamType detectStreamType(OperationType op,
 			WorkingTreeOptions options, Attributes attrs) {
@@ -73,14 +73,14 @@ public final class EolStreamTypeUtil {
 
 	/**
 	 * Wrap the input stream depending on
-	 * {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType}.
+	 * {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType}.
 	 *
 	 * @param in
 	 *            original stream
 	 * @param conversion
 	 *            to be performed
 	 * @return the converted stream depending on
-	 *         {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType}
+	 *         {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType}
 	 */
 	public static InputStream wrapInputStream(InputStream in,
 			EolStreamType conversion) {
@@ -89,7 +89,7 @@ public final class EolStreamTypeUtil {
 
 	/**
 	 * Wrap the input stream depending on
-	 * {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType}.
+	 * {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType}.
 	 *
 	 * @param in
 	 *            original stream
@@ -98,7 +98,7 @@ public final class EolStreamTypeUtil {
 	 * @param forCheckout
 	 *            whether the stream is for checking out from the repository
 	 * @return the converted stream depending on
-	 *         {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType}
+	 *         {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType}
 	 * @since 5.9
 	 */
 	public static InputStream wrapInputStream(InputStream in,
@@ -123,14 +123,14 @@ public final class EolStreamTypeUtil {
 
 	/**
 	 * Wrap the output stream depending on
-	 * {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType}.
+	 * {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType}.
 	 *
 	 * @param out
 	 *            original stream
 	 * @param conversion
 	 *            to be performed
 	 * @return the converted stream depending on
-	 *         {@link org.eclipse.jgit.lib.CoreConfig.EolStreamType}
+	 *         {@link org.openrewrite.jgit.lib.CoreConfig.EolStreamType}
 	 */
 	public static OutputStream wrapOutputStream(OutputStream out,
 			EolStreamType conversion) {

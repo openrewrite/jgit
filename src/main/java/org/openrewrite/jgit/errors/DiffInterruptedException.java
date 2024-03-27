@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 /**
  * Thrown when a thread executing a diff is interrupted
  *
- * @see org.eclipse.jgit.diff.MyersDiff
+ * @see org.openrewrite.jgit.diff.MyersDiff
  * @since 4.0
  */
 public class DiffInterruptedException extends RuntimeException {

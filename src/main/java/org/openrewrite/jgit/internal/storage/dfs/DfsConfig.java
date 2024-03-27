@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.lib.StoredConfig;
 
 /**
  * Config implementation used by DFS repositories.

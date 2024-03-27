@@ -11,14 +11,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.InvalidObjectIdException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.InvalidObjectIdException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * A mutable SHA-1 abstraction.
@@ -47,16 +47,16 @@ public class MutableObjectId extends AnyObjectId {
 	 * @param index
 	 *            index of the byte to set in the raw form of the ObjectId. Must
 	 *            be in range [0,
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJECT_ID_LENGTH}).
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJECT_ID_LENGTH}).
 	 * @param value
 	 *            the value of the specified byte at {@code index}. Values are
 	 *            unsigned and thus are in the range [0,255] rather than the
 	 *            signed byte range of [-128, 127].
 	 * @throws java.lang.ArrayIndexOutOfBoundsException
 	 *             {@code index} is less than 0, equal to
-	 *             {@link org.eclipse.jgit.lib.Constants#OBJECT_ID_LENGTH}, or
+	 *             {@link org.openrewrite.jgit.lib.Constants#OBJECT_ID_LENGTH}, or
 	 *             greater than
-	 *             {@link org.eclipse.jgit.lib.Constants#OBJECT_ID_LENGTH}.
+	 *             {@link org.openrewrite.jgit.lib.Constants#OBJECT_ID_LENGTH}.
 	 */
 	public void setByte(int index, int value) {
 		switch (index >> 2) {
@@ -98,7 +98,7 @@ public class MutableObjectId extends AnyObjectId {
 	}
 
 	/**
-	 * Make this id match {@link org.eclipse.jgit.lib.ObjectId#zeroId()}.
+	 * Make this id match {@link org.openrewrite.jgit.lib.ObjectId#zeroId()}.
 	 */
 	public void clear() {
 		w1 = 0;

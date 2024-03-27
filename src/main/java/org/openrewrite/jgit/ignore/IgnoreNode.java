@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore;
+package org.openrewrite.jgit.ignore;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.internal.JGitText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

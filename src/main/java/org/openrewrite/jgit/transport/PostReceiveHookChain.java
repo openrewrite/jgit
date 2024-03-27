@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * {@link org.eclipse.jgit.transport.PostReceiveHook} that delegates to a list
+ * {@link org.openrewrite.jgit.transport.PostReceiveHook} that delegates to a list
  * of other hooks.
  * <p>
  * Hooks are run in the order passed to the constructor.

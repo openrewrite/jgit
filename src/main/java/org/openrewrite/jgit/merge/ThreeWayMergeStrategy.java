@@ -8,9 +8,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * A merge strategy to merge 2 trees, using a common base ancestor tree.

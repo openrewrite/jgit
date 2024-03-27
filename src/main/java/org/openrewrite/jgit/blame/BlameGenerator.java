@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.blame;
+package org.openrewrite.jgit.blame;
 
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.FileMode.TYPE_FILE;
-import static org.eclipse.jgit.lib.FileMode.TYPE_MASK;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_FILE;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_MASK;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,42 +22,42 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.blame.Candidate.BlobCandidate;
-import org.eclipse.jgit.blame.Candidate.HeadCandidate;
-import org.eclipse.jgit.blame.Candidate.ReverseCandidate;
-import org.eclipse.jgit.blame.ReverseWalk.ReverseCommit;
-import org.eclipse.jgit.diff.DiffAlgorithm;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.diff.EditList;
-import org.eclipse.jgit.diff.HistogramDiff;
-import org.eclipse.jgit.diff.RawText;
-import org.eclipse.jgit.diff.RawTextComparator;
-import org.eclipse.jgit.diff.RenameDetector;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.NoWorkTreeException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevFlag;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.IO;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.blame.Candidate.BlobCandidate;
+import org.openrewrite.jgit.blame.Candidate.HeadCandidate;
+import org.openrewrite.jgit.blame.Candidate.ReverseCandidate;
+import org.openrewrite.jgit.blame.ReverseWalk.ReverseCommit;
+import org.openrewrite.jgit.diff.DiffAlgorithm;
+import org.openrewrite.jgit.diff.DiffEntry;
+import org.openrewrite.jgit.diff.DiffEntry.ChangeType;
+import org.openrewrite.jgit.diff.EditList;
+import org.openrewrite.jgit.diff.HistogramDiff;
+import org.openrewrite.jgit.diff.RawText;
+import org.openrewrite.jgit.diff.RawTextComparator;
+import org.openrewrite.jgit.diff.RenameDetector;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.NoWorkTreeException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.util.IO;
 
 /**
  * Generate author information for lines based on a provided file.
@@ -69,10 +69,10 @@ import org.eclipse.jgit.util.IO;
  * <p>
  * Applications that want more incremental update behavior may use either the
  * raw {@link #next()} streaming approach supported by this class, or construct
- * a {@link org.eclipse.jgit.blame.BlameResult} using
- * {@link org.eclipse.jgit.blame.BlameResult#create(BlameGenerator)} and
+ * a {@link org.openrewrite.jgit.blame.BlameResult} using
+ * {@link org.openrewrite.jgit.blame.BlameResult#create(BlameGenerator)} and
  * incrementally construct the result with
- * {@link org.eclipse.jgit.blame.BlameResult#computeNext()}.
+ * {@link org.openrewrite.jgit.blame.BlameResult#computeNext()}.
  * <p>
  * This class is not thread-safe.
  * <p>
@@ -191,7 +191,7 @@ public class BlameGenerator implements AutoCloseable {
 	 * Difference algorithm to use when comparing revisions.
 	 *
 	 * @param algorithm
-	 *            a {@link org.eclipse.jgit.diff.DiffAlgorithm}
+	 *            a {@link org.openrewrite.jgit.diff.DiffAlgorithm}
 	 * @return {@code this}
 	 */
 	public BlameGenerator setDiffAlgorithm(DiffAlgorithm algorithm) {
@@ -203,7 +203,7 @@ public class BlameGenerator implements AutoCloseable {
 	 * Text comparator to use when comparing revisions.
 	 *
 	 * @param comparator
-	 *            a {@link org.eclipse.jgit.diff.RawTextComparator}
+	 *            a {@link org.openrewrite.jgit.diff.RawTextComparator}
 	 * @return {@code this}
 	 */
 	public BlameGenerator setTextComparator(RawTextComparator comparator) {
@@ -453,7 +453,7 @@ public class BlameGenerator implements AutoCloseable {
 	 * each of these is a descendant commit that removed the line, typically
 	 * this occurs when the same deletion appears in multiple side branches such
 	 * as due to a cherry-pick. Applications relying on reverse should use
-	 * {@link org.eclipse.jgit.blame.BlameResult} as it filters these duplicate
+	 * {@link org.openrewrite.jgit.blame.BlameResult} as it filters these duplicate
 	 * sources and only remembers the first (oldest) deletion.
 	 *
 	 * @param start
@@ -485,7 +485,7 @@ public class BlameGenerator implements AutoCloseable {
 	 * each of these is a descendant commit that removed the line, typically
 	 * this occurs when the same deletion appears in multiple side branches such
 	 * as due to a cherry-pick. Applications relying on reverse should use
-	 * {@link org.eclipse.jgit.blame.BlameResult} as it filters these duplicate
+	 * {@link org.openrewrite.jgit.blame.BlameResult} as it filters these duplicate
 	 * sources and only remembers the first (oldest) deletion.
 	 *
 	 * @param start

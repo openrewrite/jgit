@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
-import static org.eclipse.jgit.diff.DiffEntry.Side.NEW;
-import static org.eclipse.jgit.diff.DiffEntry.Side.OLD;
-import static org.eclipse.jgit.storage.pack.PackConfig.DEFAULT_BIG_FILE_THRESHOLD;
+import static org.openrewrite.jgit.diff.DiffEntry.Side.NEW;
+import static org.openrewrite.jgit.diff.DiffEntry.Side.OLD;
+import static org.openrewrite.jgit.storage.pack.PackConfig.DEFAULT_BIG_FILE_THRESHOLD;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,16 +23,16 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.diff.SimilarityIndex.TableFullException;
-import org.eclipse.jgit.errors.CancelledException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.diff.DiffEntry.ChangeType;
+import org.openrewrite.jgit.diff.SimilarityIndex.TableFullException;
+import org.openrewrite.jgit.errors.CancelledException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Detect and resolve object renames.
@@ -336,7 +336,7 @@ public class RenameDetector {
 	 * <p>
 	 * This convenience function runs without a progress monitor.
 	 *
-	 * @return an unmodifiable list of {@link org.eclipse.jgit.diff.DiffEntry}s
+	 * @return an unmodifiable list of {@link org.openrewrite.jgit.diff.DiffEntry}s
 	 *         representing all files that have been changed.
 	 * @throws java.io.IOException
 	 *             file contents cannot be read from the repository.
@@ -350,14 +350,14 @@ public class RenameDetector {
 	 *
 	 * @param pm
 	 *            report progress during the detection phases.
-	 * @return an unmodifiable list of {@link org.eclipse.jgit.diff.DiffEntry}s
+	 * @return an unmodifiable list of {@link org.openrewrite.jgit.diff.DiffEntry}s
 	 *         representing all files that have been changed.
 	 * @throws java.io.IOException
 	 *             file contents cannot be read from the repository.
 	 * @throws CancelledException
 	 *             if rename detection was cancelled
 	 */
-	// TODO(ms): use org.eclipse.jgit.api.errors.CanceledException in next major
+	// TODO(ms): use org.openrewrite.jgit.api.errors.CanceledException in next major
 	// version
 	public List<DiffEntry> compute(ProgressMonitor pm)
 			throws IOException, CancelledException {
@@ -378,14 +378,14 @@ public class RenameDetector {
 	 *            reader to obtain objects from the repository with.
 	 * @param pm
 	 *            report progress during the detection phases.
-	 * @return an unmodifiable list of {@link org.eclipse.jgit.diff.DiffEntry}s
+	 * @return an unmodifiable list of {@link org.openrewrite.jgit.diff.DiffEntry}s
 	 *         representing all files that have been changed.
 	 * @throws java.io.IOException
 	 *             file contents cannot be read from the repository.
 	 * @throws CancelledException
 	 *             if rename detection was cancelled
 	 */
-	// TODO(ms): use org.eclipse.jgit.api.errors.CanceledException in next major
+	// TODO(ms): use org.openrewrite.jgit.api.errors.CanceledException in next major
 	// version
 	public List<DiffEntry> compute(ObjectReader reader, ProgressMonitor pm)
 			throws IOException, CancelledException {
@@ -400,14 +400,14 @@ public class RenameDetector {
 	 *            reader to obtain objects from the repository with.
 	 * @param pm
 	 *            report progress during the detection phases.
-	 * @return an unmodifiable list of {@link org.eclipse.jgit.diff.DiffEntry}s
+	 * @return an unmodifiable list of {@link org.openrewrite.jgit.diff.DiffEntry}s
 	 *         representing all files that have been changed.
 	 * @throws java.io.IOException
 	 *             file contents cannot be read from the repository.
 	 * @throws CancelledException
 	 *             if rename detection was cancelled
 	 */
-	// TODO(ms): use org.eclipse.jgit.api.errors.CanceledException in next major
+	// TODO(ms): use org.openrewrite.jgit.api.errors.CanceledException in next major
 	// version
 	public List<DiffEntry> compute(ContentSource.Pair reader, ProgressMonitor pm)
 			throws IOException, CancelledException {

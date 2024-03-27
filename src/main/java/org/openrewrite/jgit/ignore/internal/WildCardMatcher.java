@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore.internal;
+package org.openrewrite.jgit.ignore.internal;
 
-import static org.eclipse.jgit.ignore.internal.Strings.convertGlob;
+import static org.openrewrite.jgit.ignore.internal.Strings.convertGlob;
 
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.errors.InvalidPatternException;
 
 /**
  * Matcher built from path segments containing wildcards. This matcher converts

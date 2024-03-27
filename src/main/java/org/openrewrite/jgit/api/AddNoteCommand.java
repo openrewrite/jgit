@@ -7,25 +7,25 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.lib.CommitBuilder;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.notes.Note;
-import org.eclipse.jgit.notes.NoteMap;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.lib.CommitBuilder;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.notes.Note;
+import org.openrewrite.jgit.notes.NoteMap;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * Add object notes.
@@ -45,7 +45,7 @@ public class AddNoteCommand extends GitCommand<Note> {
 	 * Constructor for AddNoteCommand
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected AddNoteCommand(Repository repo) {
 		super(repo);
@@ -79,7 +79,7 @@ public class AddNoteCommand extends GitCommand<Note> {
 	 * has a note, the existing note will be replaced.
 	 *
 	 * @param id
-	 *            a {@link org.eclipse.jgit.revwalk.RevObject}
+	 *            a {@link org.openrewrite.jgit.revwalk.RevObject}
 	 * @return {@code this}
 	 */
 	public AddNoteCommand setObjectId(RevObject id) {
@@ -131,7 +131,7 @@ public class AddNoteCommand extends GitCommand<Note> {
 	 *
 	 * @param notesRef
 	 *            the ref to read notes from. Note, the default value of
-	 *            {@link org.eclipse.jgit.lib.Constants#R_NOTES_COMMITS} will be
+	 *            {@link org.openrewrite.jgit.lib.Constants#R_NOTES_COMMITS} will be
 	 *            used if nothing is set
 	 * @return {@code this}
 	 * @see Constants#R_NOTES_COMMITS

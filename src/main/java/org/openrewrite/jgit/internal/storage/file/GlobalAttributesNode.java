@@ -8,15 +8,15 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.jgit.attributes.AttributesNode;
-import org.eclipse.jgit.lib.CoreConfig;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.attributes.AttributesNode;
+import org.openrewrite.jgit.lib.CoreConfig;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FS;
 
 /**
  * Attribute node loaded from global system-wide file.
@@ -28,7 +28,7 @@ public class GlobalAttributesNode extends AttributesNode {
 	 * Constructor for GlobalAttributesNode.
 	 *
 	 * @param repository
-	 *            the {@link org.eclipse.jgit.lib.Repository}.
+	 *            the {@link org.openrewrite.jgit.lib.Repository}.
 	 */
 	public GlobalAttributesNode(Repository repository) {
 		this.repository = repository;

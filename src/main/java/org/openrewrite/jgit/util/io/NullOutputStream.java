@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;
 
 import java.io.OutputStream;
 

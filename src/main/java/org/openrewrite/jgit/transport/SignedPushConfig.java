@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Config.SectionParser;
 
 /**
  * Configuration for server-side signed push verification.
@@ -43,7 +43,7 @@ public class SignedPushConfig {
 	 * <p>
 	 * Setting this to a non-null value enables push certificate verification
 	 * using the default
-	 * {@link org.eclipse.jgit.transport.HMACSHA1NonceGenerator} implementation,
+	 * {@link org.openrewrite.jgit.transport.HMACSHA1NonceGenerator} implementation,
 	 * if a different implementation was not set using
 	 * {@link #setNonceGenerator(NonceGenerator)}.
 	 *
@@ -85,12 +85,12 @@ public class SignedPushConfig {
 	}
 
 	/**
-	 * Set the {@link org.eclipse.jgit.transport.NonceGenerator} used for signed
+	 * Set the {@link org.openrewrite.jgit.transport.NonceGenerator} used for signed
 	 * pushes.
 	 * <p>
 	 * Setting this to a non-null value enables push certificate verification.
 	 * If this method is called, this implementation will be used instead of the
-	 * default {@link org.eclipse.jgit.transport.HMACSHA1NonceGenerator} even if
+	 * default {@link org.openrewrite.jgit.transport.HMACSHA1NonceGenerator} even if
 	 * {@link #setCertNonceSeed(String)} was called.
 	 *
 	 * @param generator
@@ -101,13 +101,13 @@ public class SignedPushConfig {
 	}
 
 	/**
-	 * Get the {@link org.eclipse.jgit.transport.NonceGenerator} used for signed
+	 * Get the {@link org.openrewrite.jgit.transport.NonceGenerator} used for signed
 	 * pushes.
 	 * <p>
 	 * If {@link #setNonceGenerator(NonceGenerator)} was used to set a non-null
 	 * implementation, that will be returned. If no custom implementation was
 	 * set but {@link #setCertNonceSeed(String)} was called, returns a
-	 * newly-created {@link org.eclipse.jgit.transport.HMACSHA1NonceGenerator}.
+	 * newly-created {@link org.openrewrite.jgit.transport.HMACSHA1NonceGenerator}.
 	 *
 	 * @return the configured nonce generator.
 	 */

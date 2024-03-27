@@ -9,16 +9,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import static java.util.Objects.requireNonNull;
-import static org.eclipse.jgit.internal.storage.pack.StoredObjectRepresentation.PACK_DELTA;
-import static org.eclipse.jgit.internal.storage.pack.StoredObjectRepresentation.PACK_WHOLE;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.Constants.OBJ_COMMIT;
-import static org.eclipse.jgit.lib.Constants.OBJ_TAG;
-import static org.eclipse.jgit.lib.Constants.OBJ_TREE;
+import static org.openrewrite.jgit.internal.storage.pack.StoredObjectRepresentation.PACK_DELTA;
+import static org.openrewrite.jgit.internal.storage.pack.StoredObjectRepresentation.PACK_WHOLE;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.lib.Constants.OBJ_COMMIT;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TAG;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TREE;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -49,52 +49,52 @@ import java.util.zip.CheckedOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.SearchForReuseTimeout;
-import org.eclipse.jgit.errors.StoredObjectRepresentationNotAvailableException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.PackBitmapIndexBuilder;
-import org.eclipse.jgit.internal.storage.file.PackBitmapIndexWriterV1;
-import org.eclipse.jgit.internal.storage.file.PackIndexWriter;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.AsyncObjectSizeQueue;
-import org.eclipse.jgit.lib.BatchingProgressMonitor;
-import org.eclipse.jgit.lib.BitmapIndex;
-import org.eclipse.jgit.lib.BitmapIndex.BitmapBuilder;
-import org.eclipse.jgit.lib.BitmapObject;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdOwnerMap;
-import org.eclipse.jgit.lib.ObjectIdSet;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.ThreadSafeProgressMonitor;
-import org.eclipse.jgit.revwalk.AsyncRevObjectQueue;
-import org.eclipse.jgit.revwalk.BitmapWalker;
-import org.eclipse.jgit.revwalk.DepthWalk;
-import org.eclipse.jgit.revwalk.ObjectWalk;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevFlag;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevSort;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.storage.pack.PackStatistics;
-import org.eclipse.jgit.transport.FilterSpec;
-import org.eclipse.jgit.transport.ObjectCountCallback;
-import org.eclipse.jgit.transport.PacketLineOut;
-import org.eclipse.jgit.transport.WriteAbortedException;
-import org.eclipse.jgit.util.BlockList;
-import org.eclipse.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.SearchForReuseTimeout;
+import org.openrewrite.jgit.errors.StoredObjectRepresentationNotAvailableException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndexBuilder;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndexWriterV1;
+import org.openrewrite.jgit.internal.storage.file.PackIndexWriter;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.AsyncObjectSizeQueue;
+import org.openrewrite.jgit.lib.BatchingProgressMonitor;
+import org.openrewrite.jgit.lib.BitmapIndex;
+import org.openrewrite.jgit.lib.BitmapIndex.BitmapBuilder;
+import org.openrewrite.jgit.lib.BitmapObject;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
+import org.openrewrite.jgit.lib.ObjectIdSet;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.ThreadSafeProgressMonitor;
+import org.openrewrite.jgit.revwalk.AsyncRevObjectQueue;
+import org.openrewrite.jgit.revwalk.BitmapWalker;
+import org.openrewrite.jgit.revwalk.DepthWalk;
+import org.openrewrite.jgit.revwalk.ObjectWalk;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevSort;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.storage.pack.PackStatistics;
+import org.openrewrite.jgit.transport.FilterSpec;
+import org.openrewrite.jgit.transport.ObjectCountCallback;
+import org.openrewrite.jgit.transport.PacketLineOut;
+import org.openrewrite.jgit.transport.WriteAbortedException;
+import org.openrewrite.jgit.util.BlockList;
+import org.openrewrite.jgit.util.TemporaryBuffer;
 
 /**
  * <p>
@@ -108,7 +108,7 @@ import org.eclipse.jgit.util.TemporaryBuffer;
  * <li>(usually) by providing sets of interesting and uninteresting objects in
  * repository - all interesting objects and their ancestors except uninteresting
  * objects and their ancestors will be included in pack, or</li>
- * <li>by providing iterator of {@link org.eclipse.jgit.revwalk.RevObject}
+ * <li>by providing iterator of {@link org.openrewrite.jgit.revwalk.RevObject}
  * specifying exact list and order of objects in pack</li>
  * </ul>
  * <p>
@@ -123,7 +123,7 @@ import org.eclipse.jgit.util.TemporaryBuffer;
  * </p>
  * <p>
  * Class provide set of configurable options and
- * {@link org.eclipse.jgit.lib.ProgressMonitor} support, as operations may take
+ * {@link org.openrewrite.jgit.lib.ProgressMonitor} support, as operations may take
  * a long time for big repositories. Deltas searching algorithm is <b>NOT
  * IMPLEMENTED</b> yet - this implementation relies only on deltas and objects
  * reuse.
@@ -599,7 +599,7 @@ public class PackWriter implements AutoCloseable {
 	 *
 	 * @return {@code true} to ignore objects that are uninteresting and also
 	 *         not found on local disk; false to throw a
-	 *         {@link org.eclipse.jgit.errors.MissingObjectException} out of
+	 *         {@link org.openrewrite.jgit.errors.MissingObjectException} out of
 	 *         {@link #preparePack(ProgressMonitor, Set, Set)} if an
 	 *         uninteresting object is not in the source repository. By default,
 	 *         true, permitting gracefully ignoring of uninteresting objects.
@@ -615,7 +615,7 @@ public class PackWriter implements AutoCloseable {
 	 *            {@code true} if writer should ignore non existing
 	 *            uninteresting objects during construction set of objects to
 	 *            pack; false otherwise - non existing uninteresting objects may
-	 *            cause {@link org.eclipse.jgit.errors.MissingObjectException}
+	 *            cause {@link org.openrewrite.jgit.errors.MissingObjectException}
 	 */
 	public void setIgnoreMissingUninteresting(boolean ignore) {
 		ignoreMissingUninteresting = ignore;
@@ -781,10 +781,10 @@ public class PackWriter implements AutoCloseable {
 	 *            iterator of object to store in a pack; order of objects within
 	 *            each type is important, ordering by type is not needed;
 	 *            allowed types for objects are
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_COMMIT},
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_TREE},
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_BLOB} and
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_TAG}; objects
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_COMMIT},
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_TREE},
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_BLOB} and
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_TAG}; objects
 	 *            returned by iterator may be later reused by caller as object
 	 *            id and type are internally copied in each iteration.
 	 * @throws java.io.IOException
@@ -816,7 +816,7 @@ public class PackWriter implements AutoCloseable {
 	 * Basing on these 2 sets, another set of objects to put in a pack file is
 	 * created: this set consists of all objects reachable (ancestors) from
 	 * interesting objects, except uninteresting objects and their ancestors.
-	 * This method uses class {@link org.eclipse.jgit.revwalk.ObjectWalk}
+	 * This method uses class {@link org.openrewrite.jgit.revwalk.ObjectWalk}
 	 * extensively to find out that appropriate set of output objects and their
 	 * optimal order in output pack. Order is consistent with general git
 	 * in-pack rules: sort by object type, recency, path and delta-base first.
@@ -962,7 +962,7 @@ public class PackWriter implements AutoCloseable {
 	 * Basing on these 2 sets, another set of objects to put in a pack file is
 	 * created: this set consists of all objects reachable (ancestors) from
 	 * interesting objects, except uninteresting objects and their ancestors.
-	 * This method uses class {@link org.eclipse.jgit.revwalk.ObjectWalk}
+	 * This method uses class {@link org.openrewrite.jgit.revwalk.ObjectWalk}
 	 * extensively to find out that appropriate set of output objects and their
 	 * optimal order in output pack. Order is consistent with general git
 	 * in-pack rules: sort by object type, recency, path and delta-base first.
@@ -1190,7 +1190,7 @@ public class PackWriter implements AutoCloseable {
 	 *             stream.
 	 * @throws WriteAbortedException
 	 *             the write operation is aborted by
-	 *             {@link org.eclipse.jgit.transport.ObjectCountCallback} .
+	 *             {@link org.openrewrite.jgit.transport.ObjectCountCallback} .
 	 */
 	public void writePack(ProgressMonitor compressMonitor,
 			ProgressMonitor writeMonitor, OutputStream packStream)
@@ -2176,7 +2176,7 @@ public class PackWriter implements AutoCloseable {
 	 *
 	 * @param object
 	 *            the object to add.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object is an unsupported type.
 	 */
 	public void addObject(RevObject object)
@@ -2275,7 +2275,7 @@ public class PackWriter implements AutoCloseable {
 	/**
 	 * Select an object representation for this writer.
 	 * <p>
-	 * An {@link org.eclipse.jgit.lib.ObjectReader} implementation should invoke
+	 * An {@link org.openrewrite.jgit.lib.ObjectReader} implementation should invoke
 	 * this method once for each representation available for an object, to
 	 * allow the writer to find the most suitable one for the output.
 	 *

@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.hooks;
+package org.openrewrite.jgit.hooks;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,11 +15,11 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.concurrent.Callable;
 
-import org.eclipse.jgit.api.errors.AbortedByHookException;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.ProcessResult;
-import org.eclipse.jgit.util.io.TeeOutputStream;
+import org.openrewrite.jgit.api.errors.AbortedByHookException;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.ProcessResult;
+import org.openrewrite.jgit.util.io.TeeOutputStream;
 
 /**
  * Git can fire off custom scripts when certain important actions occur. These
@@ -56,7 +56,7 @@ public abstract class GitHook<T> implements Callable<T> {
 	 * </p>
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream the hook must use. {@code null} is allowed,
 	 *            in which case the hook will use {@code System.out}.
@@ -69,7 +69,7 @@ public abstract class GitHook<T> implements Callable<T> {
 	 * Constructor for GitHook
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream the hook must use. {@code null} is allowed,
 	 *            in which case the hook will use {@code System.out}.
@@ -152,7 +152,7 @@ public abstract class GitHook<T> implements Callable<T> {
 	/**
 	 * Runs the hook, without performing any validity checks.
 	 *
-	 * @throws org.eclipse.jgit.api.errors.AbortedByHookException
+	 * @throws org.openrewrite.jgit.api.errors.AbortedByHookException
 	 *             If the underlying hook script exited with non-zero.
 	 * @throws IOException
 	 *             if an IO error occurred

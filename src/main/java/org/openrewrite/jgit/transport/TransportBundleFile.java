@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,11 +22,11 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FS;
 
 class TransportBundleFile extends Transport implements TransportBundle {
 	static final TransportProtocol PROTO_BUNDLE = new TransportProtocol() {
@@ -96,7 +96,7 @@ class TransportBundleFile extends Transport implements TransportBundle {
 	 * Constructor for TransportBundleFile.
 	 *
 	 * @param uri
-	 *            a {@link org.eclipse.jgit.transport.URIish} object.
+	 *            a {@link org.openrewrite.jgit.transport.URIish} object.
 	 * @param bundlePath
 	 *            transport bundle path
 	 */

@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.gitrepo;
+package org.openrewrite.jgit.gitrepo;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,14 +24,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.gitrepo.RepoProject.CopyFile;
-import org.eclipse.jgit.gitrepo.RepoProject.LinkFile;
-import org.eclipse.jgit.gitrepo.RepoProject.ReferenceFile;
-import org.eclipse.jgit.gitrepo.internal.RepoText;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.gitrepo.RepoProject.CopyFile;
+import org.openrewrite.jgit.gitrepo.RepoProject.LinkFile;
+import org.openrewrite.jgit.gitrepo.RepoProject.ReferenceFile;
+import org.openrewrite.jgit.gitrepo.internal.RepoText;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -84,7 +84,7 @@ public class ManifestParser extends DefaultHandler {
 	 *
 	 * @param includedReader
 	 *            a
-	 *            {@link org.eclipse.jgit.gitrepo.ManifestParser.IncludedFileReader}
+	 *            {@link org.openrewrite.jgit.gitrepo.ManifestParser.IncludedFileReader}
 	 *            object.
 	 * @param filename
 	 *            a {@link java.lang.String} object.
@@ -95,7 +95,7 @@ public class ManifestParser extends DefaultHandler {
 	 * @param groups
 	 *            a {@link java.lang.String} object.
 	 * @param rootRepo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	public ManifestParser(IncludedFileReader includedReader, String filename,
 			String defaultBranch, String baseUrl, String groups,

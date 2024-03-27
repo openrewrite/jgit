@@ -9,19 +9,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Interface for revision walkers that perform depth filtering.
@@ -112,7 +112,7 @@ public interface DepthWalk {
 	}
 
 	/** Subclass of RevWalk that performs depth filtering. */
-	public class RevWalk extends org.eclipse.jgit.revwalk.RevWalk implements DepthWalk {
+	public class RevWalk extends org.openrewrite.jgit.revwalk.RevWalk implements DepthWalk {
 		private final int depth;
 
 		private int deepenSince;
@@ -242,7 +242,7 @@ public interface DepthWalk {
 	}
 
 	/** Subclass of ObjectWalk that performs depth filtering. */
-	public class ObjectWalk extends org.eclipse.jgit.revwalk.ObjectWalk implements DepthWalk {
+	public class ObjectWalk extends org.openrewrite.jgit.revwalk.ObjectWalk implements DepthWalk {
 		private final int depth;
 
 		private int deepenSince;

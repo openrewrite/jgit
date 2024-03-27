@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.nls;
+package org.openrewrite.jgit.nls;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.jgit.errors.TranslationBundleLoadingException;
-import org.eclipse.jgit.errors.TranslationStringMissingException;
+import org.openrewrite.jgit.errors.TranslationBundleLoadingException;
+import org.openrewrite.jgit.errors.TranslationStringMissingException;
 
 /**
  * The purpose of this class is to provide NLS (National Language Support)
@@ -81,17 +81,17 @@ public class NLS {
 	 * Returns an instance of the translation bundle of the required type. All
 	 * public String fields of the bundle instance will get their values
 	 * injected as described in the
-	 * {@link org.eclipse.jgit.nls.TranslationBundle}.
+	 * {@link org.openrewrite.jgit.nls.TranslationBundle}.
 	 *
 	 * @param type
 	 *            required bundle type
 	 * @return an instance of the required bundle type
 	 * @exception TranslationBundleLoadingException
 	 *                see
-	 *                {@link org.eclipse.jgit.errors.TranslationBundleLoadingException}
+	 *                {@link org.openrewrite.jgit.errors.TranslationBundleLoadingException}
 	 * @exception TranslationStringMissingException
 	 *                see
-	 *                {@link org.eclipse.jgit.errors.TranslationStringMissingException}
+	 *                {@link org.openrewrite.jgit.errors.TranslationStringMissingException}
 	 */
 	public static <T extends TranslationBundle> T getBundleFor(Class<T> type) {
 		NLS b = local.get();

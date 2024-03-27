@@ -8,36 +8,36 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.PACK;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.CorruptPackIndexException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.fsck.FsckError;
-import org.eclipse.jgit.internal.fsck.FsckError.CorruptIndex;
-import org.eclipse.jgit.internal.fsck.FsckError.CorruptObject;
-import org.eclipse.jgit.internal.fsck.FsckPackParser;
-import org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
-import org.eclipse.jgit.internal.submodule.SubmoduleValidator;
-import org.eclipse.jgit.internal.submodule.SubmoduleValidator.SubmoduleValidationException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.GitmoduleEntry;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectChecker;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.revwalk.ObjectWalk;
-import org.eclipse.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.errors.CorruptPackIndexException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.fsck.FsckError;
+import org.openrewrite.jgit.internal.fsck.FsckError.CorruptIndex;
+import org.openrewrite.jgit.internal.fsck.FsckError.CorruptObject;
+import org.openrewrite.jgit.internal.fsck.FsckPackParser;
+import org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
+import org.openrewrite.jgit.internal.submodule.SubmoduleValidator;
+import org.openrewrite.jgit.internal.submodule.SubmoduleValidator.SubmoduleValidationException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.GitmoduleEntry;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.revwalk.ObjectWalk;
+import org.openrewrite.jgit.revwalk.RevObject;
 
 /**
  * Verify the validity and connectivity of a DFS repository.

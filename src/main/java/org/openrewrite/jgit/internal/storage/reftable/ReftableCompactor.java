@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,9 +16,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.internal.storage.reftable.ReftableWriter.Stats;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableWriter.Stats;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.ReflogEntry;
 
 /**
  * Merges reftables and compacts them into a single output.

@@ -8,24 +8,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
-import static org.eclipse.jgit.lib.Constants.OBJ_TREE;
-import static org.eclipse.jgit.lib.Constants.encode;
-import static org.eclipse.jgit.lib.FileMode.GITLINK;
-import static org.eclipse.jgit.lib.FileMode.REGULAR_FILE;
-import static org.eclipse.jgit.lib.FileMode.TREE;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TREE;
+import static org.openrewrite.jgit.lib.Constants.encode;
+import static org.openrewrite.jgit.lib.FileMode.GITLINK;
+import static org.openrewrite.jgit.lib.FileMode.REGULAR_FILE;
+import static org.openrewrite.jgit.lib.FileMode.TREE;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevBlob;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevBlob;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.util.TemporaryBuffer;
 
 /**
  * Mutable formatter to construct a single tree object.
@@ -81,7 +81,7 @@ public class TreeFormatter {
 	}
 
 	/**
-	 * Add a link to a submodule commit, mode is {@link org.eclipse.jgit.lib.FileMode#GITLINK}.
+	 * Add a link to a submodule commit, mode is {@link org.openrewrite.jgit.lib.FileMode#GITLINK}.
 	 *
 	 * @param name
 	 *            name of the entry.
@@ -93,7 +93,7 @@ public class TreeFormatter {
 	}
 
 	/**
-	 * Add a subtree, mode is {@link org.eclipse.jgit.lib.FileMode#TREE}.
+	 * Add a subtree, mode is {@link org.openrewrite.jgit.lib.FileMode#TREE}.
 	 *
 	 * @param name
 	 *            name of the entry.
@@ -105,7 +105,7 @@ public class TreeFormatter {
 	}
 
 	/**
-	 * Add a regular file, mode is {@link org.eclipse.jgit.lib.FileMode#REGULAR_FILE}.
+	 * Add a regular file, mode is {@link org.openrewrite.jgit.lib.FileMode#REGULAR_FILE}.
 	 *
 	 * @param name
 	 *            name of the entry.
@@ -290,7 +290,7 @@ public class TreeFormatter {
 	/**
 	 * Compute the ObjectId for this tree
 	 *
-	 * @param ins a {@link org.eclipse.jgit.lib.ObjectInserter} object.
+	 * @param ins a {@link org.openrewrite.jgit.lib.ObjectInserter} object.
 	 * @return ObjectId for this tree
 	 */
 	public ObjectId computeId(ObjectInserter ins) {
@@ -312,7 +312,7 @@ public class TreeFormatter {
 	 * This method is not efficient, as it needs to create a copy of the
 	 * internal buffer in order to supply an array of the correct size to the
 	 * caller. If the buffer is just to pass to an ObjectInserter, consider
-	 * using {@link org.eclipse.jgit.lib.ObjectInserter#insert(TreeFormatter)}
+	 * using {@link org.openrewrite.jgit.lib.ObjectInserter#insert(TreeFormatter)}
 	 * instead.
 	 *
 	 * @return a copy of this formatter's buffer.

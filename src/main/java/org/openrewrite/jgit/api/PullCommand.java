@@ -9,46 +9,46 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
-import org.eclipse.jgit.api.MergeCommand.FastForwardMode.Merge;
-import org.eclipse.jgit.api.RebaseCommand.Operation;
-import org.eclipse.jgit.api.errors.CanceledException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidConfigurationException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.RefNotAdvertisedException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
-import org.eclipse.jgit.dircache.DirCacheCheckout;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryState;
-import org.eclipse.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode;
-import org.eclipse.jgit.merge.ContentMergeStrategy;
-import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.FetchResult;
-import org.eclipse.jgit.transport.TagOpt;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.api.MergeCommand.FastForwardMode;
+import org.openrewrite.jgit.api.MergeCommand.FastForwardMode.Merge;
+import org.openrewrite.jgit.api.RebaseCommand.Operation;
+import org.openrewrite.jgit.api.errors.CanceledException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidConfigurationException;
+import org.openrewrite.jgit.api.errors.InvalidRemoteException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.api.errors.RefNotAdvertisedException;
+import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.api.errors.WrongRepositoryStateException;
+import org.openrewrite.jgit.dircache.DirCacheCheckout;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.BranchConfig.BranchRebaseMode;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.RepositoryState;
+import org.openrewrite.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode;
+import org.openrewrite.jgit.merge.ContentMergeStrategy;
+import org.openrewrite.jgit.merge.MergeStrategy;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.FetchResult;
+import org.openrewrite.jgit.transport.TagOpt;
 
 /**
  * The Pull command
@@ -82,7 +82,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 	 * Constructor for PullCommand.
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected PullCommand(Repository repo) {
 		super(repo);
@@ -130,7 +130,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 	}
 
 	/**
-	 * Sets the {@link org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode} to
+	 * Sets the {@link org.openrewrite.jgit.lib.BranchConfig.BranchRebaseMode} to
 	 * use after fetching.
 	 *
 	 * <dl>
@@ -158,7 +158,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 	 * {@code pull.rebase}.
 	 *
 	 * @param rebaseMode
-	 *            the {@link org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode}
+	 *            the {@link org.openrewrite.jgit.lib.BranchConfig.BranchRebaseMode}
 	 *            to use
 	 * @return {@code this}
 	 * @since 4.5
@@ -183,7 +183,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 			WrongRepositoryStateException, InvalidConfigurationException,
 			InvalidRemoteException, CanceledException,
 			RefNotFoundException, RefNotAdvertisedException, NoHeadException,
-			org.eclipse.jgit.api.errors.TransportException {
+			org.openrewrite.jgit.api.errors.TransportException {
 		checkCallable();
 
 		monitor.beginTask(JGitText.get().pullTaskName, 2);
@@ -467,7 +467,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 	 * Set the specification of annotated tag behavior during fetch
 	 *
 	 * @param tagOpt
-	 *            the {@link org.eclipse.jgit.transport.TagOpt}
+	 *            the {@link org.openrewrite.jgit.transport.TagOpt}
 	 * @return {@code this}
 	 * @since 4.7
 	 */
@@ -503,7 +503,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 	 *
 	 * @param recurse
 	 *            the
-	 *            {@link org.eclipse.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode}
+	 *            {@link org.openrewrite.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode}
 	 *            to be used for recursing into submodules
 	 * @return {@code this}
 	 * @since 4.7
@@ -520,13 +520,13 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 	 * configuration. This is the value defined for the configurations
 	 * {@code branch.[branchName].rebase}, or,if not set, {@code pull.rebase}.
 	 * If neither is set, yields
-	 * {@link org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode#NONE}.
+	 * {@link org.openrewrite.jgit.lib.BranchConfig.BranchRebaseMode#NONE}.
 	 *
 	 * @param branchName
 	 *            name of the local branch
 	 * @param config
-	 *            the {@link org.eclipse.jgit.lib.Config} to read the value from
-	 * @return the {@link org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode}
+	 *            the {@link org.openrewrite.jgit.lib.Config} to read the value from
+	 * @return the {@link org.openrewrite.jgit.lib.BranchConfig.BranchRebaseMode}
 	 * @since 4.5
 	 */
 	public static BranchRebaseMode getRebaseMode(String branchName,

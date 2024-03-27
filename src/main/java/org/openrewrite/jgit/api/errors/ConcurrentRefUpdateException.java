@@ -35,19 +35,19 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
 
 /**
  * Exception thrown when a command wants to update a ref but failed because
  * another process is accessing (or even also updating) the ref.
  *
- * @see org.eclipse.jgit.lib.RefUpdate.Result#LOCK_FAILURE
+ * @see org.openrewrite.jgit.lib.RefUpdate.Result#LOCK_FAILURE
  */
 public class ConcurrentRefUpdateException extends GitAPIException {
 	private static final long serialVersionUID = 1L;
@@ -60,9 +60,9 @@ public class ConcurrentRefUpdateException extends GitAPIException {
 	 * @param message
 	 *            error message
 	 * @param ref
-	 *            a {@link org.eclipse.jgit.lib.Ref}
+	 *            a {@link org.openrewrite.jgit.lib.Ref}
 	 * @param rc
-	 *            a {@link org.eclipse.jgit.lib.RefUpdate.Result}
+	 *            a {@link org.openrewrite.jgit.lib.RefUpdate.Result}
 	 * @param cause
 	 *            a {@link java.lang.Throwable}
 	 */
@@ -80,9 +80,9 @@ public class ConcurrentRefUpdateException extends GitAPIException {
 	 * @param message
 	 *            error message
 	 * @param ref
-	 *            a {@link org.eclipse.jgit.lib.Ref}
+	 *            a {@link org.openrewrite.jgit.lib.Ref}
 	 * @param rc
-	 *            a {@link org.eclipse.jgit.lib.RefUpdate.Result}
+	 *            a {@link org.openrewrite.jgit.lib.RefUpdate.Result}
 	 */
 	public ConcurrentRefUpdateException(String message, Ref ref,
 			RefUpdate.Result rc) {
@@ -95,7 +95,7 @@ public class ConcurrentRefUpdateException extends GitAPIException {
 	/**
 	 * Get <code>Ref</code>
 	 *
-	 * @return the {@link org.eclipse.jgit.lib.Ref} which was tried to by
+	 * @return the {@link org.openrewrite.jgit.lib.Ref} which was tried to by
 	 *         updated
 	 */
 	public Ref getRef() {
@@ -106,7 +106,7 @@ public class ConcurrentRefUpdateException extends GitAPIException {
 	 * Get result
 	 *
 	 * @return the result which was returned by
-	 *         {@link org.eclipse.jgit.lib.RefUpdate#update()} and which caused
+	 *         {@link org.openrewrite.jgit.lib.RefUpdate#update()} and which caused
 	 *         this error
 	 */
 	public RefUpdate.Result getResult() {

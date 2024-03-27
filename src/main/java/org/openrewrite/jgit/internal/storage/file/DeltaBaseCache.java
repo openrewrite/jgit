@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.lang.ref.SoftReference;
 
-import org.eclipse.jgit.storage.file.WindowCacheConfig;
+import org.openrewrite.jgit.storage.file.WindowCacheConfig;
 
 class DeltaBaseCache {
 	private static final int CACHE_SZ = 1024;

@@ -8,17 +8,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
- * Keeps track of a {@link org.eclipse.jgit.internal.storage.file.Pack}'s
+ * Keeps track of a {@link org.openrewrite.jgit.internal.storage.file.Pack}'s
  * associated <code>.keep</code> file.
  */
 public class PackLock {

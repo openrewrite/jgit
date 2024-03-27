@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,17 +22,17 @@ import java.net.SocketException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Collection;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.transport.resolver.ReceivePackFactory;
-import org.eclipse.jgit.transport.resolver.RepositoryResolver;
-import org.eclipse.jgit.transport.resolver.ServiceNotAuthorizedException;
-import org.eclipse.jgit.transport.resolver.ServiceNotEnabledException;
-import org.eclipse.jgit.transport.resolver.UploadPackFactory;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.RepositoryNotFoundException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.transport.resolver.ReceivePackFactory;
+import org.openrewrite.jgit.transport.resolver.RepositoryResolver;
+import org.openrewrite.jgit.transport.resolver.ServiceNotAuthorizedException;
+import org.openrewrite.jgit.transport.resolver.ServiceNotEnabledException;
+import org.openrewrite.jgit.transport.resolver.UploadPackFactory;
 
 /**
  * Basic daemon for the anonymous <code>git://</code> transport protocol.

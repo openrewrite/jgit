@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.PackInvalidException;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.errors.PackInvalidException;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
 
 /** Block based file stored in {@link DfsBlockCache}. */
 abstract class BlockBasedFile {

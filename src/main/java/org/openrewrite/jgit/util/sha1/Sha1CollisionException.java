@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util.sha1;
+package org.openrewrite.jgit.util.sha1;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
- * Thrown by {@link org.eclipse.jgit.util.sha1.SHA1} if it detects a likely hash
+ * Thrown by {@link org.openrewrite.jgit.util.sha1.SHA1} if it detects a likely hash
  * collision.
  *
  * @since 4.7

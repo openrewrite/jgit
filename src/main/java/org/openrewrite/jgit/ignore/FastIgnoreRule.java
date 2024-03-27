@@ -7,18 +7,18 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore;
+package org.openrewrite.jgit.ignore;
 
-import static org.eclipse.jgit.ignore.IMatcher.NO_MATCH;
-import static org.eclipse.jgit.ignore.internal.Strings.isDirectoryPattern;
-import static org.eclipse.jgit.ignore.internal.Strings.stripTrailing;
-import static org.eclipse.jgit.ignore.internal.Strings.stripTrailingWhitespace;
+import static org.openrewrite.jgit.ignore.IMatcher.NO_MATCH;
+import static org.openrewrite.jgit.ignore.internal.Strings.isDirectoryPattern;
+import static org.openrewrite.jgit.ignore.internal.Strings.stripTrailing;
+import static org.openrewrite.jgit.ignore.internal.Strings.stripTrailingWhitespace;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.ignore.internal.PathMatcher;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.ignore.internal.PathMatcher;
+import org.openrewrite.jgit.internal.JGitText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

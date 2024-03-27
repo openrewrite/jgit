@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.events;
+package org.openrewrite.jgit.events;
 
 import java.util.List;
 import java.util.Map;
@@ -16,13 +16,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Manages a thread-safe list of {@link org.eclipse.jgit.events.RepositoryListener}s.
+ * Manages a thread-safe list of {@link org.openrewrite.jgit.events.RepositoryListener}s.
  */
 public class ListenerList {
 	private final Map<Class<? extends RepositoryListener>, CopyOnWriteArrayList<ListenerHandle>> lists = new ConcurrentHashMap<>();
 
 	/**
-	 * Register a {@link org.eclipse.jgit.events.WorkingTreeModifiedListener}.
+	 * Register a {@link org.openrewrite.jgit.events.WorkingTreeModifiedListener}.
 	 *
 	 * @param listener
 	 *            the listener implementation.

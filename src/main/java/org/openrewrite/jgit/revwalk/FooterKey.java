@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.util.Locale;
 
-import org.eclipse.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Constants;
 
 /**
- * Case insensitive key for a {@link org.eclipse.jgit.revwalk.FooterLine}.
+ * Case insensitive key for a {@link org.openrewrite.jgit.revwalk.FooterLine}.
  */
 public final class FooterKey {
 	/** Standard {@code Signed-off-by} */

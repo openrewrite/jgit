@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import org.eclipse.jgit.events.RepositoryListener;
+import org.openrewrite.jgit.events.RepositoryListener;
 
 /**
- * Receives {@link org.eclipse.jgit.internal.storage.dfs.DfsPacksChangedEvent}s.
+ * Receives {@link org.openrewrite.jgit.internal.storage.dfs.DfsPacksChangedEvent}s.
  */
 public interface DfsPacksChangedListener extends RepositoryListener {
 	/**

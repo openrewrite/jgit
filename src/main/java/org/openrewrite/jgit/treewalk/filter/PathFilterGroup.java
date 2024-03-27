@@ -9,20 +9,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
 import java.util.Collection;
 
-import org.eclipse.jgit.errors.StopWalkException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.ByteArraySet.Hasher;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.StopWalkException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.ByteArraySet.Hasher;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Includes tree entries only if they match one or more configured paths.
  * <p>
- * Operates like {@link org.eclipse.jgit.treewalk.filter.PathFilter} but causes
+ * Operates like {@link org.openrewrite.jgit.treewalk.filter.PathFilter} but causes
  * the walk to abort as soon as the tree can no longer match any of the paths
  * within the group. This may bypass the boolean logic of a higher level AND or
  * OR group, but does improve performance for the common case of examining one

@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 /**
- * IO statistics for a {@link org.eclipse.jgit.internal.storage.dfs.DfsReader}.
+ * IO statistics for a {@link org.openrewrite.jgit.internal.storage.dfs.DfsReader}.
  */
 public class DfsReaderIoStats {
 	/** POJO to accumulate IO statistics. */

@@ -8,19 +8,19 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.treewalk;
+package org.openrewrite.jgit.treewalk;
 
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Config.SectionParser;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.CoreConfig.AutoCRLF;
-import org.eclipse.jgit.lib.CoreConfig.CheckStat;
-import org.eclipse.jgit.lib.CoreConfig.EOL;
-import org.eclipse.jgit.lib.CoreConfig.HideDotFiles;
-import org.eclipse.jgit.lib.CoreConfig.SymLinks;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.CoreConfig.AutoCRLF;
+import org.openrewrite.jgit.lib.CoreConfig.CheckStat;
+import org.openrewrite.jgit.lib.CoreConfig.EOL;
+import org.openrewrite.jgit.lib.CoreConfig.HideDotFiles;
+import org.openrewrite.jgit.lib.CoreConfig.SymLinks;
 
 /**
- * Options used by the {@link org.eclipse.jgit.treewalk.WorkingTreeIterator}.
+ * Options used by the {@link org.openrewrite.jgit.treewalk.WorkingTreeIterator}.
  */
 public class WorkingTreeOptions {
 	/** Key for {@link Config#get(SectionParser)}. */

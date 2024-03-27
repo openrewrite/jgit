@@ -9,16 +9,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.transport.PackedObjectInfo;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.transport.PackedObjectInfo;
 
 /**
  * Per-object state used by
- * {@link org.eclipse.jgit.internal.storage.pack.PackWriter}.
+ * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter}.
  * <p>
  * {@code PackWriter} uses this class to track the things it needs to include in
  * the newly generated pack file, and how to efficiently obtain the raw data for
@@ -346,7 +346,7 @@ public class ObjectToPack extends PackedObjectInfo {
 	 * <p>
 	 * Implementers should remember the representation chosen, so it can be
 	 * reused at a later time.
-	 * {@link org.eclipse.jgit.internal.storage.pack.PackWriter} may invoke this
+	 * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter} may invoke this
 	 * method multiple times for the same object, each time saving the current
 	 * best representation found.
 	 *

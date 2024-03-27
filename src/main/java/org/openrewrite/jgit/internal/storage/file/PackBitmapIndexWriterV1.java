@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutput;
@@ -17,9 +17,9 @@ import java.io.OutputStream;
 import java.security.DigestOutputStream;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.PackBitmapIndexBuilder.StoredEntry;
-import org.eclipse.jgit.lib.Constants;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndexBuilder.StoredEntry;
+import org.openrewrite.jgit.lib.Constants;
 
 import com.googlecode.javaewah.EWAHCompressedBitmap;
 

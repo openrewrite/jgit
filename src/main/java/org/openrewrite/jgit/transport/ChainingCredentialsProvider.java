@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.jgit.errors.UnsupportedCredentialItem;
+import org.openrewrite.jgit.errors.UnsupportedCredentialItem;
 
 /**
  * A credentials provider chaining multiple credentials providers
@@ -63,7 +63,7 @@ public class ChainingCredentialsProvider extends CredentialsProvider {
 	 * Populates the credential items with the credentials provided by the first
 	 * credential provider in the list which populates them with non-null values
 	 *
-	 * @see org.eclipse.jgit.transport.CredentialsProvider#supports(org.eclipse.jgit.transport.CredentialItem[])
+	 * @see org.openrewrite.jgit.transport.CredentialsProvider#supports(org.openrewrite.jgit.transport.CredentialItem[])
 	 */
 	@Override
 	public boolean get(URIish uri, CredentialItem... items)

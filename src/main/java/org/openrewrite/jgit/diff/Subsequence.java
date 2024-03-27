@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 /**
- * Wraps a {@link org.eclipse.jgit.diff.Sequence} to have a narrower range of
+ * Wraps a {@link org.openrewrite.jgit.diff.Sequence} to have a narrower range of
  * elements.
  * <p>
  * This sequence acts as a proxy for the real sequence, translating element
  * indexes on the fly by adding {@code begin} to them. Sequences of this type
- * must be used with a {@link org.eclipse.jgit.diff.SubsequenceComparator}.
+ * must be used with a {@link org.openrewrite.jgit.diff.SubsequenceComparator}.
  *
  * @param <S>
  *            the base sequence type.

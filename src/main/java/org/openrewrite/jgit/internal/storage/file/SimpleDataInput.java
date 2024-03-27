@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.DataInput;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.NB;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.NB;
 
 /**
  * An implementation of DataInput that only handles readInt() and readLong()

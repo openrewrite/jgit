@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.internal.storage.pack.StoredObjectRepresentation;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.internal.storage.pack.StoredObjectRepresentation;
+import org.openrewrite.jgit.lib.ObjectId;
 
 class LocalObjectRepresentation extends StoredObjectRepresentation {
 	static LocalObjectRepresentation newWhole(Pack pack, long offset, long length) {

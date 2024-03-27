@@ -9,20 +9,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Config.SectionParser;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.resolver.ServiceNotAuthorizedException;
-import org.eclipse.jgit.transport.resolver.ServiceNotEnabledException;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.resolver.ServiceNotAuthorizedException;
+import org.openrewrite.jgit.transport.resolver.ServiceNotEnabledException;
 
 /**
- * A service exposed by {@link org.eclipse.jgit.transport.Daemon} over anonymous
+ * A service exposed by {@link org.openrewrite.jgit.transport.Daemon} over anonymous
  * <code>git://</code>.
  */
 public abstract class DaemonService {

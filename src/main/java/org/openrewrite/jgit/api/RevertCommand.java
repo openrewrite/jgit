@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -15,34 +15,34 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.api.MergeResult.MergeStatus;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.MultipleParentsNotAllowedException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.NoMessageException;
-import org.eclipse.jgit.api.errors.UnmergedPathsException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
-import org.eclipse.jgit.dircache.DirCacheCheckout;
-import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Ref.Storage;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.merge.MergeMessageFormatter;
-import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.merge.ResolveMerger;
-import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.api.MergeResult.MergeStatus;
+import org.openrewrite.jgit.api.errors.ConcurrentRefUpdateException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.MultipleParentsNotAllowedException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.api.errors.NoMessageException;
+import org.openrewrite.jgit.api.errors.UnmergedPathsException;
+import org.openrewrite.jgit.api.errors.WrongRepositoryStateException;
+import org.openrewrite.jgit.dircache.DirCacheCheckout;
+import org.openrewrite.jgit.events.WorkingTreeModifiedEvent;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref.Storage;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.merge.MergeMessageFormatter;
+import org.openrewrite.jgit.merge.MergeStrategy;
+import org.openrewrite.jgit.merge.ResolveMerger;
+import org.openrewrite.jgit.merge.ResolveMerger.MergeFailureReason;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
 
 /**
  * A class used to execute a {@code revert} command. It has setters for all
@@ -75,7 +75,7 @@ public class RevertCommand extends GitCommand<RevCommit> {
 	 * </p>
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected RevertCommand(Repository repo) {
 		super(repo);
@@ -261,10 +261,10 @@ public class RevertCommand extends GitCommand<RevCommit> {
 	}
 
 	/**
-	 * Get the list of successfully reverted {@link org.eclipse.jgit.lib.Ref}'s.
+	 * Get the list of successfully reverted {@link org.openrewrite.jgit.lib.Ref}'s.
 	 *
 	 * @return the list of successfully reverted
-	 *         {@link org.eclipse.jgit.lib.Ref}'s. Never <code>null</code> but
+	 *         {@link org.openrewrite.jgit.lib.Ref}'s. Never <code>null</code> but
 	 *         maybe an empty list if no commit was successfully cherry-picked
 	 */
 	public List<Ref> getRevertedRefs() {
@@ -309,7 +309,7 @@ public class RevertCommand extends GitCommand<RevCommit> {
 	 *
 	 * @see NullProgressMonitor
 	 * @param monitor
-	 *            a {@link org.eclipse.jgit.lib.ProgressMonitor}
+	 *            a {@link org.openrewrite.jgit.lib.ProgressMonitor}
 	 * @return {@code this}
 	 * @since 4.11
 	 */

@@ -9,14 +9,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.transport.PackedObjectInfo;
-import org.eclipse.jgit.util.NB;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.transport.PackedObjectInfo;
+import org.openrewrite.jgit.util.NB;
 
 /**
  * Creates the version 1 (old style) pack table of contents files.

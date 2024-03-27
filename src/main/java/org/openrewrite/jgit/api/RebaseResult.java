@@ -7,16 +7,16 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
-import org.eclipse.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.merge.ResolveMerger.MergeFailureReason;
+import org.openrewrite.jgit.revwalk.RevCommit;
 
 /**
- * The result of a {@link org.eclipse.jgit.api.RebaseCommand} execution
+ * The result of a {@link org.openrewrite.jgit.api.RebaseCommand} execution
  */
 public class RebaseResult {
 	/**
@@ -255,11 +255,11 @@ public class RebaseResult {
 
 	/**
 	 * Get the current commit if status is
-	 * {@link org.eclipse.jgit.api.RebaseResult.Status#STOPPED}, otherwise
+	 * {@link org.openrewrite.jgit.api.RebaseResult.Status#STOPPED}, otherwise
 	 * <code>null</code>
 	 *
 	 * @return the current commit if status is
-	 *         {@link org.eclipse.jgit.api.RebaseResult.Status#STOPPED},
+	 *         {@link org.openrewrite.jgit.api.RebaseResult.Status#STOPPED},
 	 *         otherwise <code>null</code>
 	 */
 	public RevCommit getCurrentCommit() {
@@ -270,9 +270,9 @@ public class RebaseResult {
 	 * Get the list of paths causing this rebase to fail
 	 *
 	 * @return the list of paths causing this rebase to fail (see
-	 *         {@link org.eclipse.jgit.merge.ResolveMerger#getFailingPaths()}
+	 *         {@link org.openrewrite.jgit.merge.ResolveMerger#getFailingPaths()}
 	 *         for details) if status is
-	 *         {@link org.eclipse.jgit.api.RebaseResult.Status#FAILED},
+	 *         {@link org.openrewrite.jgit.api.RebaseResult.Status#FAILED},
 	 *         otherwise <code>null</code>
 	 */
 	public Map<String, MergeFailureReason> getFailingPaths() {
@@ -283,7 +283,7 @@ public class RebaseResult {
 	 * Get the list of conflicts
 	 *
 	 * @return the list of conflicts if status is
-	 *         {@link org.eclipse.jgit.api.RebaseResult.Status#CONFLICTS}
+	 *         {@link org.openrewrite.jgit.api.RebaseResult.Status#CONFLICTS}
 	 */
 	public List<String> getConflicts() {
 		return conflicts;
@@ -293,7 +293,7 @@ public class RebaseResult {
 	 * <p>Getter for the field <code>uncommittedChanges</code>.</p>
 	 *
 	 * @return the list of uncommitted changes if status is
-	 *         {@link org.eclipse.jgit.api.RebaseResult.Status#UNCOMMITTED_CHANGES}
+	 *         {@link org.openrewrite.jgit.api.RebaseResult.Status#UNCOMMITTED_CHANGES}
 	 * @since 3.2
 	 */
 	public List<String> getUncommittedChanges() {

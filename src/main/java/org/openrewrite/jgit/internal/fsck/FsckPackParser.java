@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.fsck;
+package org.openrewrite.jgit.internal.fsck;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -19,20 +19,20 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.CRC32;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.CorruptPackIndexException;
-import org.eclipse.jgit.errors.CorruptPackIndexException.ErrorType;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.fsck.FsckError.CorruptObject;
-import org.eclipse.jgit.internal.storage.dfs.ReadableChannel;
-import org.eclipse.jgit.internal.storage.file.PackIndex;
-import org.eclipse.jgit.internal.storage.file.PackIndex.MutableEntry;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectDatabase;
-import org.eclipse.jgit.lib.ObjectIdOwnerMap;
-import org.eclipse.jgit.transport.PackParser;
-import org.eclipse.jgit.transport.PackedObjectInfo;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.CorruptPackIndexException;
+import org.openrewrite.jgit.errors.CorruptPackIndexException.ErrorType;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.fsck.FsckError.CorruptObject;
+import org.openrewrite.jgit.internal.storage.dfs.ReadableChannel;
+import org.openrewrite.jgit.internal.storage.file.PackIndex;
+import org.openrewrite.jgit.internal.storage.file.PackIndex.MutableEntry;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectDatabase;
+import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
+import org.openrewrite.jgit.transport.PackParser;
+import org.openrewrite.jgit.transport.PackedObjectInfo;
 
 /**
  * A read-only pack parser for object validity checking.
@@ -244,10 +244,10 @@ public class FsckPackParser extends PackParser {
 
 	/**
 	 * Get corrupt objects reported by
-	 * {@link org.eclipse.jgit.lib.ObjectChecker}
+	 * {@link org.openrewrite.jgit.lib.ObjectChecker}
 	 *
 	 * @return corrupt objects that are reported by
-	 *         {@link org.eclipse.jgit.lib.ObjectChecker}.
+	 *         {@link org.openrewrite.jgit.lib.ObjectChecker}.
 	 */
 	public Set<CorruptObject> getCorruptObjects() {
 		return corruptObjects;
@@ -258,7 +258,7 @@ public class FsckPackParser extends PackParser {
 	 *
 	 * @param idx
 	 *            index file associate with the pack
-	 * @throws org.eclipse.jgit.errors.CorruptPackIndexException
+	 * @throws org.openrewrite.jgit.errors.CorruptPackIndexException
 	 *             when the index file is corrupt.
 	 */
 	public void verifyIndex(PackIndex idx)

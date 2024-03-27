@@ -40,7 +40,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 /**
  * Hook to allow callers to take over advertising refs to the client.
@@ -72,9 +72,9 @@ public interface AdvertiseRefsHook {
 	 *
 	 * @param uploadPack
 	 *            instance on which to call
-	 *            {@link org.eclipse.jgit.transport.UploadPack#setAdvertisedRefs(java.util.Map)}
+	 *            {@link org.openrewrite.jgit.transport.UploadPack#setAdvertisedRefs(java.util.Map)}
 	 *            if necessary.
-	 * @throws org.eclipse.jgit.transport.ServiceMayNotContinueException
+	 * @throws org.openrewrite.jgit.transport.ServiceMayNotContinueException
 	 *             abort; the message will be sent to the user.
 	 */
 	void advertiseRefs(UploadPack uploadPack)
@@ -85,9 +85,9 @@ public interface AdvertiseRefsHook {
 	 *
 	 * @param receivePack
 	 *            instance on which to call
-	 *            {@link org.eclipse.jgit.transport.ReceivePack#setAdvertisedRefs(java.util.Map,java.util.Set)}
+	 *            {@link org.openrewrite.jgit.transport.ReceivePack#setAdvertisedRefs(java.util.Map,java.util.Set)}
 	 *            if necessary.
-	 * @throws org.eclipse.jgit.transport.ServiceMayNotContinueException
+	 * @throws org.openrewrite.jgit.transport.ServiceMayNotContinueException
 	 *             abort; the message will be sent to the user.
 	 * @since 5.6
 	 */

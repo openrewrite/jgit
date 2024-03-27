@@ -9,22 +9,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk.filter;
+package org.openrewrite.jgit.revwalk.filter;
 
 import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * Includes a commit if any subfilters include the same commit.
  * <p>
  * Classic shortcut behavior is used, so evaluation of the
- * {@link org.eclipse.jgit.revwalk.filter.RevFilter#include(RevWalk, RevCommit)}
+ * {@link org.openrewrite.jgit.revwalk.filter.RevFilter#include(RevWalk, RevCommit)}
  * method stops as soon as a true result is obtained. Applications can improve
  * filtering performance by placing faster filters that are more likely to
  * accept a result earlier in the list.

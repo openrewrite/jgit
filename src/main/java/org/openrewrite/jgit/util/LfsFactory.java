@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,17 +15,17 @@ import java.io.PrintStream;
 import java.text.MessageFormat;
 import java.util.concurrent.Callable;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.attributes.Attribute;
-import org.eclipse.jgit.attributes.Attributes;
-import org.eclipse.jgit.hooks.PrePushHook;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.attributes.Attribute;
+import org.openrewrite.jgit.attributes.Attributes;
+import org.openrewrite.jgit.hooks.PrePushHook;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
 
 /**
  * Represents an optionally present LFS support implementation

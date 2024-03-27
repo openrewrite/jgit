@@ -7,21 +7,21 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.CommandFailedException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.RemoteSession;
-import org.eclipse.jgit.transport.SshSessionFactory;
-import org.eclipse.jgit.transport.URIish;
-import org.eclipse.jgit.util.io.MessageWriter;
-import org.eclipse.jgit.util.io.StreamCopyThread;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.CommandFailedException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.transport.CredentialsProvider;
+import org.openrewrite.jgit.transport.RemoteSession;
+import org.openrewrite.jgit.transport.SshSessionFactory;
+import org.openrewrite.jgit.transport.URIish;
+import org.openrewrite.jgit.util.io.MessageWriter;
+import org.openrewrite.jgit.util.io.StreamCopyThread;
 
 /**
  * Extra utilities to support usage of SSH.

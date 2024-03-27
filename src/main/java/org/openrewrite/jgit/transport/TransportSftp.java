@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.lib.Constants.INFO_ALTERNATES;
-import static org.eclipse.jgit.lib.Constants.LOCK_SUFFIX;
-import static org.eclipse.jgit.lib.Constants.OBJECTS;
+import static org.openrewrite.jgit.lib.Constants.INFO_ALTERNATES;
+import static org.openrewrite.jgit.lib.Constants.LOCK_SUFFIX;
+import static org.openrewrite.jgit.lib.Constants.OBJECTS;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -31,17 +31,17 @@ import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Ref.Storage;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref.Storage;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.SymbolicRef;
 
 /**
  * Transport over the non-Git aware SFTP (SSH based FTP) protocol.
@@ -53,7 +53,7 @@ import org.eclipse.jgit.lib.SymbolicRef;
  * Git installed.
  * <p>
  * Unlike the HTTP variant (see
- * {@link org.eclipse.jgit.transport.TransportHttp}) we rely upon being able to
+ * {@link org.openrewrite.jgit.transport.TransportHttp}) we rely upon being able to
  * list files in directories, as the SFTP protocol supports this function. By
  * listing files through SFTP we can avoid needing to have current
  * <code>objects/info/packs</code> or <code>info/refs</code> files on the remote

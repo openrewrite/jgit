@@ -8,23 +8,23 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectStream;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectStream;
 
 /**
  * Index structure of lines/blocks in one file.
  * <p>
  * This structure can be used to compute an approximation of the similarity
  * between two files. The index is used by
- * {@link org.eclipse.jgit.diff.SimilarityRenameDetector} to compute scores
+ * {@link org.openrewrite.jgit.diff.SimilarityRenameDetector} to compute scores
  * between files.
  * <p>
  * To save space in memory, this index uses a space efficient encoding which
@@ -84,7 +84,7 @@ public class SimilarityIndex {
 	 * @return similarity index for this object
 	 * @throws java.io.IOException
 	 *             file contents cannot be read from the repository.
-	 * @throws org.eclipse.jgit.diff.SimilarityIndex.TableFullException
+	 * @throws org.openrewrite.jgit.diff.SimilarityIndex.TableFullException
 	 *             object hashing overflowed the storage capacity of the
 	 *             SimilarityIndex.
 	 */

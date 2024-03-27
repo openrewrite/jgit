@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.Hex;
-import org.eclipse.jgit.util.HttpSupport;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.Hex;
+import org.openrewrite.jgit.util.HttpSupport;
 
 /**
  * Utility class for signing requests to AWS service endpoints using the V4

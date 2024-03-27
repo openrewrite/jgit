@@ -9,29 +9,29 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk;
+package org.openrewrite.jgit.treewalk;
 
-import static org.eclipse.jgit.lib.Constants.DOT_GIT_ATTRIBUTES;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.Constants.OBJ_TREE;
-import static org.eclipse.jgit.lib.Constants.TYPE_TREE;
-import static org.eclipse.jgit.lib.Constants.encode;
+import static org.openrewrite.jgit.lib.Constants.DOT_GIT_ATTRIBUTES;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TREE;
+import static org.openrewrite.jgit.lib.Constants.TYPE_TREE;
+import static org.openrewrite.jgit.lib.Constants.encode;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.eclipse.jgit.attributes.AttributesNode;
-import org.eclipse.jgit.attributes.AttributesRule;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.attributes.AttributesNode;
+import org.openrewrite.jgit.attributes.AttributesRule;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
 
 /**
  * Parses raw Git trees from the canonical semi-text/semi-binary format.
@@ -73,7 +73,7 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 	 *            messages if data corruption is found.
 	 * @throws MissingObjectException
 	 *             the object supplied is not available from the repository.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object supplied as an argument is not actually a tree and
 	 *             cannot be parsed as though it were a tree.
 	 * @throws java.io.IOException
@@ -129,7 +129,7 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 	 * @return the root level parser.
 	 * @throws MissingObjectException
 	 *             the object supplied is not available from the repository.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object supplied as an argument is not actually a tree and
 	 *             cannot be parsed as though it were a tree.
 	 * @throws java.io.IOException
@@ -180,7 +180,7 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 	 *            messages if data corruption is found.
 	 * @throws MissingObjectException
 	 *             the object supplied is not available from the repository.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object supplied as an argument is not actually a tree and
 	 *             cannot be parsed as though it were a tree.
 	 * @throws java.io.IOException
@@ -367,13 +367,13 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 	}
 
 	/**
-	 * Retrieve the {@link org.eclipse.jgit.attributes.AttributesNode} for the
+	 * Retrieve the {@link org.openrewrite.jgit.attributes.AttributesNode} for the
 	 * current entry.
 	 *
 	 * @param reader
-	 *            {@link org.eclipse.jgit.lib.ObjectReader} used to parse the
+	 *            {@link org.openrewrite.jgit.lib.ObjectReader} used to parse the
 	 *            .gitattributes entry.
-	 * @return {@link org.eclipse.jgit.attributes.AttributesNode} for the
+	 * @return {@link org.openrewrite.jgit.attributes.AttributesNode} for the
 	 *         current entry.
 	 * @throws java.io.IOException
 	 * @since 4.2

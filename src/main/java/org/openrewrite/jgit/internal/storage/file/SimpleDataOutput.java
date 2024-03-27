@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.DataOutput;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.eclipse.jgit.util.NB;
+import org.openrewrite.jgit.util.NB;
 
 /**
  * An implementation of {@link DataOutput} that only handles

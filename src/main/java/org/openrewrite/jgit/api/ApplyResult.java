@@ -7,14 +7,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Encapsulates the result of a {@link org.eclipse.jgit.api.ApplyCommand}
+ * Encapsulates the result of a {@link org.openrewrite.jgit.api.ApplyCommand}
  *
  * @since 2.0
  */

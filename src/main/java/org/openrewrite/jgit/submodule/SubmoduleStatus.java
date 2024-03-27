@@ -7,9 +7,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.submodule;
+package org.openrewrite.jgit.submodule;
 
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * Status class containing the type, path, and commit id of the submodule.
@@ -28,12 +28,12 @@ public class SubmoduleStatus {
 	 * Create submodule status
 	 *
 	 * @param type
-	 *            a {@link org.eclipse.jgit.submodule.SubmoduleStatusType}
+	 *            a {@link org.openrewrite.jgit.submodule.SubmoduleStatusType}
 	 *            object.
 	 * @param path
 	 *            submodule path
 	 * @param indexId
-	 *            an {@link org.eclipse.jgit.lib.ObjectId} object.
+	 *            an {@link org.openrewrite.jgit.lib.ObjectId} object.
 	 */
 	public SubmoduleStatus(final SubmoduleStatusType type, final String path,
 			final ObjectId indexId) {
@@ -44,7 +44,7 @@ public class SubmoduleStatus {
 	 * Create submodule status
 	 *
 	 * @param type
-	 *            a {@link org.eclipse.jgit.submodule.SubmoduleStatusType}
+	 *            a {@link org.openrewrite.jgit.submodule.SubmoduleStatusType}
 	 *            object.
 	 * @param path
 	 *            submodule path

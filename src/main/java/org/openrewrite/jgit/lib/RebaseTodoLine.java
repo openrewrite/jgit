@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.IllegalTodoFileModification;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.errors.IllegalTodoFileModification;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Describes a single line in a file formatted like the git-rebase-todo file.
@@ -109,9 +109,9 @@ public class RebaseTodoLine {
 	 * Create a new non-comment line
 	 *
 	 * @param action
-	 *            a {@link org.eclipse.jgit.lib.RebaseTodoLine.Action} object.
+	 *            a {@link org.openrewrite.jgit.lib.RebaseTodoLine.Action} object.
 	 * @param commit
-	 *            a {@link org.eclipse.jgit.lib.AbbreviatedObjectId} object.
+	 *            a {@link org.openrewrite.jgit.lib.AbbreviatedObjectId} object.
 	 * @param shortMessage
 	 *            a {@link java.lang.String} object.
 	 */
@@ -139,8 +139,8 @@ public class RebaseTodoLine {
 	 * non-comment.
 	 *
 	 * @param newAction
-	 *            a {@link org.eclipse.jgit.lib.RebaseTodoLine.Action} object.
-	 * @throws org.eclipse.jgit.errors.IllegalTodoFileModification
+	 *            a {@link org.openrewrite.jgit.lib.RebaseTodoLine.Action} object.
+	 * @throws org.openrewrite.jgit.errors.IllegalTodoFileModification
 	 *             on attempt to set a non-comment action on a line which was a
 	 *             comment line before.
 	 */
@@ -166,7 +166,7 @@ public class RebaseTodoLine {
 	/**
 	 * <p>
 	 * Set a comment for this line that is used if this line's
-	 * {@link org.eclipse.jgit.lib.RebaseTodoLine#action} is a {@link org.eclipse.jgit.lib.RebaseTodoLine.Action#COMMENT}
+	 * {@link org.openrewrite.jgit.lib.RebaseTodoLine#action} is a {@link org.openrewrite.jgit.lib.RebaseTodoLine.Action#COMMENT}
 	 * </p>
 	 * It's allowed to unset the comment by calling
 	 * <code>setComment(null)</code> <br>

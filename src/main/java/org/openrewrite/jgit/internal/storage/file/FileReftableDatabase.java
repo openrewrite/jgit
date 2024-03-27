@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
-import static org.eclipse.jgit.lib.Ref.UNDEFINED_UPDATE_INDEX;
-import static org.eclipse.jgit.lib.Ref.Storage.NEW;
-import static org.eclipse.jgit.lib.Ref.Storage.PACKED;
+import static org.openrewrite.jgit.lib.Ref.UNDEFINED_UPDATE_INDEX;
+import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
+import static org.openrewrite.jgit.lib.Ref.Storage.PACKED;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,33 +27,33 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.events.RefsChangedEvent;
-import org.eclipse.jgit.internal.storage.reftable.MergedReftable;
-import org.eclipse.jgit.internal.storage.reftable.ReftableBatchRefUpdate;
-import org.eclipse.jgit.internal.storage.reftable.ReftableDatabase;
-import org.eclipse.jgit.internal.storage.reftable.ReftableWriter;
-import org.eclipse.jgit.lib.BatchRefUpdate;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.lib.RefRename;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.ReflogReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.SymbolicRef;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.ReceiveCommand;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.RefList;
-import org.eclipse.jgit.util.RefMap;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.events.RefsChangedEvent;
+import org.openrewrite.jgit.internal.storage.reftable.MergedReftable;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableBatchRefUpdate;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableDatabase;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableWriter;
+import org.openrewrite.jgit.lib.BatchRefUpdate;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.lib.RefRename;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.ReflogReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.ReceiveCommand;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.RefList;
+import org.openrewrite.jgit.util.RefMap;
 
 /**
  * Implements RefDatabase using reftable for storage.

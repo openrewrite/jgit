@@ -7,21 +7,21 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.submodule.SubmoduleWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.submodule.SubmoduleWalk;
+import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
 
 /**
  * A class used to execute a submodule init command.
@@ -42,7 +42,7 @@ public class SubmoduleInitCommand extends GitCommand<Collection<String>> {
 	 * Constructor for SubmoduleInitCommand.
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	public SubmoduleInitCommand(Repository repo) {
 		super(repo);

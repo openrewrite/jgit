@@ -9,14 +9,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Trivial merge strategy to make the resulting tree exactly match an input.

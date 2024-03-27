@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * Multiple application level mark bits for
- * {@link org.eclipse.jgit.revwalk.RevObject}s.
+ * {@link org.openrewrite.jgit.revwalk.RevObject}s.
  *
  * @see RevFlag
  */

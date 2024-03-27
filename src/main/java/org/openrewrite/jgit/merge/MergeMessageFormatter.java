@@ -7,17 +7,17 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.ChangeIdUtil;
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.ChangeIdUtil;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * Formatter for constructing the commit message for a merge commit.

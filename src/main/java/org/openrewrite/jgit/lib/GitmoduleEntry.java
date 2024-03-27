@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 /**
  * A .gitmodules file found in the pack. Store the blob of the file itself (e.g.

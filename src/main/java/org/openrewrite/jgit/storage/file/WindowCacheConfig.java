@@ -8,20 +8,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.storage.file;
+package org.openrewrite.jgit.storage.file;
 
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_BASE_CACHE_LIMIT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_LIMIT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_MMAP;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_OPENFILES;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_WINDOWSIZE;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_FILE_TRESHOLD;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_USE_STRONGREFS;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_BASE_CACHE_LIMIT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_LIMIT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_MMAP;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_OPENFILES;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_WINDOWSIZE;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_FILE_TRESHOLD;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_USE_STRONGREFS;
 
-import org.eclipse.jgit.internal.storage.file.WindowCache;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.internal.storage.file.WindowCache;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.storage.pack.PackConfig;
 
 /**
  * Configuration parameters for JVM-wide buffer cache used by JGit.
@@ -216,7 +216,7 @@ public class WindowCacheConfig {
 	 *            new byte limit for objects that must be streamed. Objects
 	 *            smaller than this size can be obtained as a contiguous byte
 	 *            array, while objects bigger than this size require using an
-	 *            {@link org.eclipse.jgit.lib.ObjectStream}.
+	 *            {@link org.openrewrite.jgit.lib.ObjectStream}.
 	 */
 	public void setStreamFileThreshold(int newLimit) {
 		streamFileThreshold = newLimit;

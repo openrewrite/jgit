@@ -9,12 +9,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.net.URISyntaxException;
 
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.transport.RemoteConfig;
+import org.openrewrite.jgit.transport.RefSpec;
+import org.openrewrite.jgit.transport.RemoteConfig;
 
 /**
  * Branch section of a Git configuration file.
@@ -162,7 +162,7 @@ public class BranchConfig {
 	/**
 	 * Retrieves the config value of branch.[name].rebase.
 	 *
-	 * @return the {@link org.eclipse.jgit.lib.BranchConfig.BranchRebaseMode}
+	 * @return the {@link org.openrewrite.jgit.lib.BranchConfig.BranchRebaseMode}
 	 * @since 4.5
 	 */
 	public BranchRebaseMode getRebaseMode() {

@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 /**
  * How to handle content conflicts.

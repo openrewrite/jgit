@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_DFS_SECTION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_BASE_CACHE_LIMIT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_BUFFER;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_FILE_TRESHOLD;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_DFS_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_BASE_CACHE_LIMIT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_BUFFER;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_FILE_TRESHOLD;
 
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.storage.pack.PackConfig;
 
 /**
  * Options controlling how objects are read from a DFS stored repository.
@@ -79,7 +79,7 @@ public class DfsReaderOptions {
 	 *            new byte limit for objects that must be streamed. Objects
 	 *            smaller than this size can be obtained as a contiguous byte
 	 *            array, while objects bigger than this size require using an
-	 *            {@link org.eclipse.jgit.lib.ObjectStream}.
+	 *            {@link org.openrewrite.jgit.lib.ObjectStream}.
 	 * @return {@code this}
 	 */
 	public DfsReaderOptions setStreamFileThreshold(int newLimit) {

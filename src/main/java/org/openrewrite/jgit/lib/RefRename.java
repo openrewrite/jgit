@@ -11,11 +11,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
 
 /**
  * A RefUpdate combination for renaming a reference.

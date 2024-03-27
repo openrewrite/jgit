@@ -7,12 +7,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport.http;
+package org.openrewrite.jgit.transport.http;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import org.eclipse.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.NonNull;
 
 /**
  * A {@link HttpConnectionFactory} that supports client-side sessions that can
@@ -33,7 +33,7 @@ public interface HttpConnectionFactory2 extends HttpConnectionFactory {
 
 	/**
 	 * A {@code GitSession} groups the multiple HTTP connections
-	 * {@link org.eclipse.jgit.transport.TransportHttp TransportHttp} uses for
+	 * {@link org.openrewrite.jgit.transport.TransportHttp TransportHttp} uses for
 	 * the requests it makes during a git fetch or push. A {@code GitSession}
 	 * can maintain client-side HTTPS state and can configure individual
 	 * connections.

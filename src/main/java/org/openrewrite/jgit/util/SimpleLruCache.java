@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -20,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Simple limited size cache based on ConcurrentHashMap purging entries in LRU

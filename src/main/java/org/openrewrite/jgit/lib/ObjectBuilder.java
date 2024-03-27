@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -19,10 +19,10 @@ import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.References;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.References;
 
 /**
  * Common base class for {@link CommitBuilder} and {@link TagBuilder}.

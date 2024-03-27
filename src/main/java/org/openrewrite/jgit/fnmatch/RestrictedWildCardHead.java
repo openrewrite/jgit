@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.fnmatch;
+package org.openrewrite.jgit.fnmatch;
 
 final class RestrictedWildCardHead extends AbstractHead {
 	private final char excludedCharacter;

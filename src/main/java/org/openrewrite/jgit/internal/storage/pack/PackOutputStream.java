@@ -9,24 +9,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
-import static org.eclipse.jgit.lib.Constants.OBJ_OFS_DELTA;
-import static org.eclipse.jgit.lib.Constants.OBJ_REF_DELTA;
-import static org.eclipse.jgit.lib.Constants.PACK_SIGNATURE;
+import static org.openrewrite.jgit.lib.Constants.OBJ_OFS_DELTA;
+import static org.openrewrite.jgit.lib.Constants.OBJ_REF_DELTA;
+import static org.openrewrite.jgit.lib.Constants.PACK_SIGNATURE;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.MessageDigest;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.util.NB;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.util.NB;
 
 /**
  * Custom output stream to support
- * {@link org.eclipse.jgit.internal.storage.pack.PackWriter}.
+ * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter}.
  */
 public final class PackOutputStream extends OutputStream {
 	private static final int BYTES_TO_WRITE_BEFORE_CANCEL_CHECK = 128 * 1024;
@@ -54,7 +54,7 @@ public final class PackOutputStream extends OutputStream {
 	 * <p>
 	 * This constructor is exposed to support debugging the JGit library only.
 	 * Application or storage level code should not create a PackOutputStream,
-	 * instead use {@link org.eclipse.jgit.internal.storage.pack.PackWriter},
+	 * instead use {@link org.openrewrite.jgit.internal.storage.pack.PackWriter},
 	 * and let the writer create the stream.
 	 *
 	 * @param writeMonitor

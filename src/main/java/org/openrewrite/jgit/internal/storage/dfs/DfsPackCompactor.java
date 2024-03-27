@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.COMPACT;
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.GC;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.PACK;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.REFTABLE;
-import static org.eclipse.jgit.internal.storage.pack.StoredObjectRepresentation.PACK_DELTA;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.COMPACT;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.GC;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.REFTABLE;
+import static org.openrewrite.jgit.internal.storage.pack.StoredObjectRepresentation.PACK_DELTA;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,25 +27,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.PackIndex;
-import org.eclipse.jgit.internal.storage.file.PackReverseIndex;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.internal.storage.reftable.ReftableCompactor;
-import org.eclipse.jgit.internal.storage.reftable.ReftableConfig;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdSet;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.revwalk.RevFlag;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.storage.pack.PackStatistics;
-import org.eclipse.jgit.util.BlockList;
-import org.eclipse.jgit.util.io.CountingOutputStream;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.PackIndex;
+import org.openrewrite.jgit.internal.storage.file.PackReverseIndex;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableCompactor;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableConfig;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdSet;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.storage.pack.PackStatistics;
+import org.openrewrite.jgit.util.BlockList;
+import org.openrewrite.jgit.util.io.CountingOutputStream;
 
 /**
  * Combine several pack files into one pack.

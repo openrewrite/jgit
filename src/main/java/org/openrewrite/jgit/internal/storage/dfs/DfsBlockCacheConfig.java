@@ -8,24 +8,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_DFS_SECTION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BLOCK_LIMIT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BLOCK_SIZE;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_CONCURRENCY_LEVEL;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_RATIO;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_DFS_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BLOCK_LIMIT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BLOCK_SIZE;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_CONCURRENCY_LEVEL;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_RATIO;
 
 import java.text.MessageFormat;
 import java.util.function.Consumer;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Config;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config;
 
 /**
  * Configuration parameters for
- * {@link org.eclipse.jgit.internal.storage.dfs.DfsBlockCache}.
+ * {@link org.openrewrite.jgit.internal.storage.dfs.DfsBlockCache}.
  */
 public class DfsBlockCacheConfig {
 	/** 1024 (number of bytes in one kibibyte/kilobyte) */

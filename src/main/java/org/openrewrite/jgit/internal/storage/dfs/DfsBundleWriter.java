@@ -7,16 +7,16 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.internal.storage.pack.CachedPack;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.transport.BundleWriter;
+import org.openrewrite.jgit.internal.storage.pack.CachedPack;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.transport.BundleWriter;
 
 /** Writes {@link DfsRepository} to a Git bundle. */
 public class DfsBundleWriter {

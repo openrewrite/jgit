@@ -1,4 +1,4 @@
 /**
  * File based repository storage.
  */
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;

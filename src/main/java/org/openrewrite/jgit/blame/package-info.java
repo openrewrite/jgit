@@ -1,4 +1,4 @@
 /**
  * Computing blame/annotate information of files.
  */
-package org.eclipse.jgit.blame;
+package org.openrewrite.jgit.blame;

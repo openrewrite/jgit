@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdOwnerMap;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
 
 /**
  * Base object type accessed during revision walking.
@@ -38,7 +38,7 @@ public abstract class RevObject extends ObjectIdOwnerMap.Entry {
 			IncorrectObjectTypeException, IOException;
 
 	/**
-	 * Get Git object type. See {@link org.eclipse.jgit.lib.Constants}.
+	 * Get Git object type. See {@link org.openrewrite.jgit.lib.Constants}.
 	 *
 	 * @return object type
 	 */

@@ -7,14 +7,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.hooks;
+package org.openrewrite.jgit.hooks;
 
 import java.io.PrintStream;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.LfsFactory;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.LfsFactory;
 
 /**
  * Factory class for instantiating supported hooks.
@@ -28,7 +28,7 @@ public class Hooks {
 	 * stream
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream, or {@code null} to use {@code System.out}
 	 * @return The pre-commit hook for the given repository.
@@ -42,7 +42,7 @@ public class Hooks {
 	 * Create pre-commit hook for the given repository
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream, or {@code null} to use {@code System.out}
 	 * @param errorStream
@@ -60,7 +60,7 @@ public class Hooks {
 	 * stream
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream, or {@code null} to use {@code System.out}
 	 * @return The post-commit hook for the given repository.
@@ -75,7 +75,7 @@ public class Hooks {
 	 * Create post-commit hook for the given repository
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream, or {@code null} to use {@code System.out}
 	 * @param errorStream
@@ -93,7 +93,7 @@ public class Hooks {
 	 * stream
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream, or {@code null} to use {@code System.out}
 	 * @return The commit-msg hook for the given repository.
@@ -107,7 +107,7 @@ public class Hooks {
 	 * Create commit-msg hook for the given repository
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream, or {@code null} to use {@code System.out}
 	 * @param errorStream
@@ -125,7 +125,7 @@ public class Hooks {
 	 * stream
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream, or {@code null} to use {@code System.out}
 	 * @return The pre-push hook for the given repository.
@@ -154,7 +154,7 @@ public class Hooks {
 	 * Create pre-push hook for the given repository
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param outputStream
 	 *            The output stream, or {@code null} to use {@code System.out}
 	 * @param errorStream

@@ -8,12 +8,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
-import static org.eclipse.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.INDEX;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.PACK;
-import static org.eclipse.jgit.internal.storage.pack.PackExt.KEEP;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.KEEP;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,46 +52,46 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.CancelledException;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.NoWorkTreeException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdSet;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Ref.Storage;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.ReflogReader;
-import org.eclipse.jgit.lib.internal.WorkQueue;
-import org.eclipse.jgit.revwalk.ObjectWalk;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.GitDateParser;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.CancelledException;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.NoWorkTreeException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdSet;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref.Storage;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.ReflogReader;
+import org.openrewrite.jgit.lib.internal.WorkQueue;
+import org.openrewrite.jgit.revwalk.ObjectWalk;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.GitDateParser;
+import org.openrewrite.jgit.util.SystemReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A garbage collector for git
- * {@link org.eclipse.jgit.internal.storage.file.FileRepository}. Instances of
+ * {@link org.openrewrite.jgit.internal.storage.file.FileRepository}. Instances of
  * this class are not thread-safe. Don't use the same instance from multiple
  * threads.
  *
@@ -189,7 +189,7 @@ public class GC {
 
 	/**
 	 * Runs a garbage collector on a
-	 * {@link org.eclipse.jgit.internal.storage.file.FileRepository}. It will
+	 * {@link org.openrewrite.jgit.internal.storage.file.FileRepository}. It will
 	 * <ul>
 	 * <li>pack loose references into packed-refs</li>
 	 * <li>repack all reachable objects into new pack files and delete the old
@@ -207,7 +207,7 @@ public class GC {
 	 * gc.log.
 	 *
 	 * @return the collection of
-	 *         {@link org.eclipse.jgit.internal.storage.file.Pack}'s which
+	 *         {@link org.openrewrite.jgit.internal.storage.file.Pack}'s which
 	 *         are newly created
 	 * @throws java.io.IOException
 	 * @throws java.text.ParseException
@@ -1387,7 +1387,7 @@ public class GC {
 	/**
 	 * Set the progress monitor used for garbage collection methods.
 	 *
-	 * @param pm a {@link org.eclipse.jgit.lib.ProgressMonitor} object.
+	 * @param pm a {@link org.openrewrite.jgit.lib.ProgressMonitor} object.
 	 * @return this
 	 */
 	public GC setProgressMonitor(ProgressMonitor pm) {
@@ -1429,7 +1429,7 @@ public class GC {
 	 * "git gc --aggressive"
 	 *
 	 * @param pconfig
-	 *            the {@link org.eclipse.jgit.storage.pack.PackConfig} used when
+	 *            the {@link org.openrewrite.jgit.storage.pack.PackConfig} used when
 	 *            writing packs
 	 */
 	public void setPackConfig(@NonNull PackConfig pconfig) {

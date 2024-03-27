@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
-import static org.eclipse.jgit.internal.storage.file.PackBitmapIndex.FLAG_REUSE;
-import static org.eclipse.jgit.revwalk.RevFlag.SEEN;
+import static org.openrewrite.jgit.internal.storage.file.PackBitmapIndex.FLAG_REUSE;
+import static org.openrewrite.jgit.revwalk.RevFlag.SEEN;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,30 +23,30 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.revwalk.AddUnseenToBitmapFilter;
-import org.eclipse.jgit.internal.storage.file.BitmapIndexImpl;
-import org.eclipse.jgit.internal.storage.file.BitmapIndexImpl.CompressedBitmap;
-import org.eclipse.jgit.internal.storage.file.PackBitmapIndex;
-import org.eclipse.jgit.internal.storage.file.PackBitmapIndexBuilder;
-import org.eclipse.jgit.internal.storage.file.PackBitmapIndexRemapper;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.BitmapIndex.BitmapBuilder;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.revwalk.BitmapWalker;
-import org.eclipse.jgit.revwalk.ObjectWalk;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.util.BlockList;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.revwalk.AddUnseenToBitmapFilter;
+import org.openrewrite.jgit.internal.storage.file.BitmapIndexImpl;
+import org.openrewrite.jgit.internal.storage.file.BitmapIndexImpl.CompressedBitmap;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndex;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndexBuilder;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndexRemapper;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.BitmapIndex.BitmapBuilder;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.revwalk.BitmapWalker;
+import org.openrewrite.jgit.revwalk.ObjectWalk;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.util.BlockList;
+import org.openrewrite.jgit.util.SystemReader;
 
 import com.googlecode.javaewah.EWAHCompressedBitmap;
 

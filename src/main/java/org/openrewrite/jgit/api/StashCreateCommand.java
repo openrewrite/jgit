@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,41 +16,41 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.api.ResetCommand.ResetType;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.UnmergedPathsException;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheBuilder;
-import org.eclipse.jgit.dircache.DirCacheEditor;
-import org.eclipse.jgit.dircache.DirCacheEditor.DeletePath;
-import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.UnmergedPathException;
-import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.CommitBuilder;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.IndexDiffFilter;
-import org.eclipse.jgit.treewalk.filter.SkipWorkTreeFilter;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.api.ResetCommand.ResetType;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.api.errors.UnmergedPathsException;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheBuilder;
+import org.openrewrite.jgit.dircache.DirCacheEditor;
+import org.openrewrite.jgit.dircache.DirCacheEditor.DeletePath;
+import org.openrewrite.jgit.dircache.DirCacheEditor.PathEdit;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.UnmergedPathException;
+import org.openrewrite.jgit.events.WorkingTreeModifiedEvent;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.CommitBuilder;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.treewalk.filter.AndTreeFilter;
+import org.openrewrite.jgit.treewalk.filter.IndexDiffFilter;
+import org.openrewrite.jgit.treewalk.filter.SkipWorkTreeFilter;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
  * Command class to stash changes in the working directory and index in a
@@ -82,7 +82,7 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 	 * Create a command to stash changes in the working directory and index
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	public StashCreateCommand(Repository repo) {
 		super(repo);
@@ -123,7 +123,7 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 	 * Set the person to use as the author and committer in the commits made
 	 *
 	 * @param person
-	 *            the {@link org.eclipse.jgit.lib.PersonIdent} of the person who
+	 *            the {@link org.openrewrite.jgit.lib.PersonIdent} of the person who
 	 *            creates the stash.
 	 * @return {@code this}
 	 */
@@ -136,7 +136,7 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 	 * Set the reference to update with the stashed commit id If null, no
 	 * reference is updated
 	 * <p>
-	 * This value defaults to {@link org.eclipse.jgit.lib.Constants#R_STASH}
+	 * This value defaults to {@link org.openrewrite.jgit.lib.Constants#R_STASH}
 	 *
 	 * @param ref
 	 *            the name of the {@code Ref} to update

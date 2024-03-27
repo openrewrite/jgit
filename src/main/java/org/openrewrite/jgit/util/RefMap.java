@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.util.AbstractMap;
 import java.util.AbstractSet;
@@ -20,18 +20,18 @@ import java.util.function.BinaryOperator;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefComparator;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefComparator;
 
 /**
  * Specialized Map to present a {@code RefDatabase} namespace.
  * <p>
  * Although not declared as a {@link java.util.SortedMap}, iterators from this
  * map's projections always return references in
- * {@link org.eclipse.jgit.lib.RefComparator} ordering. The map's internal
- * representation is a sorted array of {@link org.eclipse.jgit.lib.Ref} objects,
+ * {@link org.openrewrite.jgit.lib.RefComparator} ordering. The map's internal
+ * representation is a sorted array of {@link org.openrewrite.jgit.lib.Ref} objects,
  * which means lookup and replacement is O(log N), while insertion and removal
  * can be as expensive as O(N + log N) while the list expands or contracts.
  * Since this is not a general map implementation, all entries must be keyed by
@@ -39,7 +39,7 @@ import org.eclipse.jgit.lib.RefComparator;
  * <p>
  * This class is really intended as a helper for {@code RefDatabase}, which
  * needs to perform a merge-join of three sorted
- * {@link org.eclipse.jgit.util.RefList}s in order to present the unified
+ * {@link org.openrewrite.jgit.util.RefList}s in order to present the unified
  * namespace of the packed-refs file, the loose refs/ directory tree, and the
  * resolved form of any symbolic references.
  */

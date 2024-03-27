@@ -9,10 +9,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.UNREACHABLE_GARBAGE;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource.UNREACHABLE_GARBAGE;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,37 +27,37 @@ import java.util.Set;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.StoredObjectRepresentationNotAvailableException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.dfs.DfsObjDatabase.PackList;
-import org.eclipse.jgit.internal.storage.file.BitmapIndexImpl;
-import org.eclipse.jgit.internal.storage.file.PackBitmapIndex;
-import org.eclipse.jgit.internal.storage.file.PackIndex;
-import org.eclipse.jgit.internal.storage.file.PackReverseIndex;
-import org.eclipse.jgit.internal.storage.pack.CachedPack;
-import org.eclipse.jgit.internal.storage.pack.ObjectReuseAsIs;
-import org.eclipse.jgit.internal.storage.pack.ObjectToPack;
-import org.eclipse.jgit.internal.storage.pack.PackOutputStream;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.AsyncObjectLoaderQueue;
-import org.eclipse.jgit.lib.AsyncObjectSizeQueue;
-import org.eclipse.jgit.lib.BitmapIndex;
-import org.eclipse.jgit.lib.BitmapIndex.BitmapBuilder;
-import org.eclipse.jgit.lib.InflaterCache;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.util.BlockList;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.StoredObjectRepresentationNotAvailableException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackList;
+import org.openrewrite.jgit.internal.storage.file.BitmapIndexImpl;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndex;
+import org.openrewrite.jgit.internal.storage.file.PackIndex;
+import org.openrewrite.jgit.internal.storage.file.PackReverseIndex;
+import org.openrewrite.jgit.internal.storage.pack.CachedPack;
+import org.openrewrite.jgit.internal.storage.pack.ObjectReuseAsIs;
+import org.openrewrite.jgit.internal.storage.pack.ObjectToPack;
+import org.openrewrite.jgit.internal.storage.pack.PackOutputStream;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.AsyncObjectLoaderQueue;
+import org.openrewrite.jgit.lib.AsyncObjectSizeQueue;
+import org.openrewrite.jgit.lib.BitmapIndex;
+import org.openrewrite.jgit.lib.BitmapIndex.BitmapBuilder;
+import org.openrewrite.jgit.lib.InflaterCache;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.util.BlockList;
 
 /**
  * Reader to access repository content through.
  * <p>
- * See the base {@link org.eclipse.jgit.lib.ObjectReader} documentation for
+ * See the base {@link org.openrewrite.jgit.lib.ObjectReader} documentation for
  * details. Notably, a reader is not thread safe.
  */
 public class DfsReader extends ObjectReader implements ObjectReuseAsIs {

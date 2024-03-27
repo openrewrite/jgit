@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore.internal;
+package org.openrewrite.jgit.ignore.internal;
 
 /**
  * Wildmatch matcher for "double star" (<code>**</code>) pattern only. This

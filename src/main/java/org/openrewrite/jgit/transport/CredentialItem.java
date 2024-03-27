@@ -8,25 +8,25 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Arrays;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * A credential requested from a
- * {@link org.eclipse.jgit.transport.CredentialsProvider}.
+ * {@link org.openrewrite.jgit.transport.CredentialsProvider}.
  *
  * Most users should work with the specialized subclasses:
  * <ul>
- * <li>{@link org.eclipse.jgit.transport.CredentialItem.Username} for
+ * <li>{@link org.openrewrite.jgit.transport.CredentialItem.Username} for
  * usernames</li>
- * <li>{@link org.eclipse.jgit.transport.CredentialItem.Password} for
+ * <li>{@link org.openrewrite.jgit.transport.CredentialItem.Password} for
  * passwords</li>
- * <li>{@link org.eclipse.jgit.transport.CredentialItem.StringType} for other
+ * <li>{@link org.openrewrite.jgit.transport.CredentialItem.StringType} for other
  * general string information</li>
- * <li>{@link org.eclipse.jgit.transport.CredentialItem.CharArrayType} for other
+ * <li>{@link org.openrewrite.jgit.transport.CredentialItem.CharArrayType} for other
  * general secret information</li>
  * </ul>
  *

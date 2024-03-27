@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,25 +21,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TooLargeObjectInPackException;
-import org.eclipse.jgit.errors.TooLargePackException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.PushResult;
-import org.eclipse.jgit.transport.RefLeaseSpec;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.transport.RemoteConfig;
-import org.eclipse.jgit.transport.RemoteRefUpdate;
-import org.eclipse.jgit.transport.Transport;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRemoteException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TooLargeObjectInPackException;
+import org.openrewrite.jgit.errors.TooLargePackException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.PushResult;
+import org.openrewrite.jgit.transport.RefLeaseSpec;
+import org.openrewrite.jgit.transport.RefSpec;
+import org.openrewrite.jgit.transport.RemoteConfig;
+import org.openrewrite.jgit.transport.RemoteRefUpdate;
+import org.openrewrite.jgit.transport.Transport;
 
 /**
  * A class used to execute a {@code Push} command. It has setters for all
@@ -77,7 +77,7 @@ public class PushCommand extends
 	 * </p>
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected PushCommand(Repository repo) {
 		super(repo);
@@ -96,7 +96,7 @@ public class PushCommand extends
 	@Override
 	public Iterable<PushResult> call() throws GitAPIException,
 			InvalidRemoteException,
-			org.eclipse.jgit.api.errors.TransportException {
+			org.openrewrite.jgit.api.errors.TransportException {
 		checkCallable();
 
 		ArrayList<PushResult> pushResults = new ArrayList<>(3);
@@ -138,13 +138,13 @@ public class PushCommand extends
 					pushResults.add(result);
 
 				} catch (TooLargePackException e) {
-					throw new org.eclipse.jgit.api.errors.TooLargePackException(
+					throw new org.openrewrite.jgit.api.errors.TooLargePackException(
 							e.getMessage(), e);
 				} catch (TooLargeObjectInPackException e) {
-					throw new org.eclipse.jgit.api.errors.TooLargeObjectInPackException(
+					throw new org.openrewrite.jgit.api.errors.TooLargeObjectInPackException(
 							e.getMessage(), e);
 				} catch (TransportException e) {
-					throw new org.eclipse.jgit.api.errors.TransportException(
+					throw new org.openrewrite.jgit.api.errors.TransportException(
 							e.getMessage(), e);
 				} finally {
 					transport.close();
@@ -156,7 +156,7 @@ public class PushCommand extends
 					MessageFormat.format(JGitText.get().invalidRemote, remote),
 					e);
 		} catch (TransportException e) {
-			throw new org.eclipse.jgit.api.errors.TransportException(
+			throw new org.openrewrite.jgit.api.errors.TransportException(
 					e.getMessage(), e);
 		} catch (NotSupportedException e) {
 			throw new JGitInternalException(
@@ -246,7 +246,7 @@ public class PushCommand extends
 	 *
 	 * @see NullProgressMonitor
 	 * @param monitor
-	 *            a {@link org.eclipse.jgit.lib.ProgressMonitor}
+	 *            a {@link org.openrewrite.jgit.lib.ProgressMonitor}
 	 * @return {@code this}
 	 */
 	public PushCommand setProgressMonitor(ProgressMonitor monitor) {
@@ -273,7 +273,7 @@ public class PushCommand extends
 	 * force-with-lease push operation.
 	 *
 	 * @param specs
-	 *            a {@link org.eclipse.jgit.transport.RefLeaseSpec} object.
+	 *            a {@link org.openrewrite.jgit.transport.RefLeaseSpec} object.
 	 * @return {@code this}
 	 * @since 4.7
 	 */
@@ -311,7 +311,7 @@ public class PushCommand extends
 	/**
 	 * The ref specs to be used in the push operation
 	 *
-	 * @param specs a {@link org.eclipse.jgit.transport.RefSpec} object.
+	 * @param specs a {@link org.openrewrite.jgit.transport.RefSpec} object.
 	 * @return {@code this}
 	 */
 	public PushCommand setRefSpecs(RefSpec... specs) {
@@ -325,7 +325,7 @@ public class PushCommand extends
 	 * The ref specs to be used in the push operation
 	 *
 	 * @param specs
-	 *            list of {@link org.eclipse.jgit.transport.RefSpec}s
+	 *            list of {@link org.openrewrite.jgit.transport.RefSpec}s
 	 * @return {@code this}
 	 */
 	public PushCommand setRefSpecs(List<RefSpec> specs) {

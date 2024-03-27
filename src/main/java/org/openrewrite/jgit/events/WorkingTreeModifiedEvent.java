@@ -7,17 +7,17 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.events;
+package org.openrewrite.jgit.events;
 
 import java.util.Collection;
 import java.util.Collections;
 
-import org.eclipse.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.NonNull;
 
 /**
- * A {@link org.eclipse.jgit.events.RepositoryEvent} describing changes to the
+ * A {@link org.openrewrite.jgit.events.RepositoryEvent} describing changes to the
  * working tree. It is fired whenever a
- * {@link org.eclipse.jgit.dircache.DirCacheCheckout} modifies
+ * {@link org.openrewrite.jgit.dircache.DirCacheCheckout} modifies
  * (adds/deletes/updates) files in the working tree.
  *
  * @since 4.9
@@ -30,7 +30,7 @@ public class WorkingTreeModifiedEvent
 	private Collection<String> deleted;
 
 	/**
-	 * Creates a new {@link org.eclipse.jgit.events.WorkingTreeModifiedEvent}
+	 * Creates a new {@link org.openrewrite.jgit.events.WorkingTreeModifiedEvent}
 	 * with the given collections.
 	 *
 	 * @param modified

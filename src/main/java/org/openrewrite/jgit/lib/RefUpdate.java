@@ -9,18 +9,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.PushCertificate;
-import org.eclipse.jgit.util.References;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.PushCertificate;
+import org.openrewrite.jgit.util.References;
 
 /**
  * Creates, updates or deletes any reference.
@@ -242,7 +242,7 @@ public abstract class RefUpdate {
 	 * Do update
 	 *
 	 * @param desiredResult
-	 *            a {@link org.eclipse.jgit.lib.RefUpdate.Result} object.
+	 *            a {@link org.openrewrite.jgit.lib.RefUpdate.Result} object.
 	 * @return {@code result}
 	 * @throws java.io.IOException
 	 */
@@ -252,7 +252,7 @@ public abstract class RefUpdate {
 	 * Do delete
 	 *
 	 * @param desiredResult
-	 *            a {@link org.eclipse.jgit.lib.RefUpdate.Result} object.
+	 *            a {@link org.openrewrite.jgit.lib.RefUpdate.Result} object.
 	 * @return {@code result}
 	 * @throws java.io.IOException
 	 */
@@ -263,7 +263,7 @@ public abstract class RefUpdate {
 	 *
 	 * @param target
 	 *            a {@link java.lang.String} object.
-	 * @return {@link org.eclipse.jgit.lib.RefUpdate.Result#NEW} on success.
+	 * @return {@link org.openrewrite.jgit.lib.RefUpdate.Result#NEW} on success.
 	 * @throws java.io.IOException
 	 */
 	protected abstract Result doLink(String target) throws IOException;
@@ -328,7 +328,7 @@ public abstract class RefUpdate {
 	 *
 	 * @return the expected value of the ref after the lock is taken, but before
 	 *         update occurs. Null to avoid the compare and swap test. Use
-	 *         {@link org.eclipse.jgit.lib.ObjectId#zeroId()} to indicate
+	 *         {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} to indicate
 	 *         expectation of a non-existant ref.
 	 */
 	public ObjectId getExpectedOldObjectId() {
@@ -342,7 +342,7 @@ public abstract class RefUpdate {
 	 * @param id
 	 *            the expected value of the ref after the lock is taken, but
 	 *            before update occurs. Null to avoid the compare and swap test.
-	 *            Use {@link org.eclipse.jgit.lib.ObjectId#zeroId()} to indicate
+	 *            Use {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} to indicate
 	 *            expectation of a non-existant ref.
 	 */
 	public void setExpectedOldObjectId(AnyObjectId id) {
@@ -665,8 +665,8 @@ public abstract class RefUpdate {
 	 * @param target
 	 *            name of the new target for this reference. The new target name
 	 *            must be absolute, so it must begin with {@code refs/}.
-	 * @return {@link org.eclipse.jgit.lib.RefUpdate.Result#NEW} or
-	 *         {@link org.eclipse.jgit.lib.RefUpdate.Result#FORCED} on success.
+	 * @return {@link org.openrewrite.jgit.lib.RefUpdate.Result#NEW} or
+	 *         {@link org.openrewrite.jgit.lib.RefUpdate.Result#FORCED} on success.
 	 * @throws java.io.IOException
 	 */
 	public Result link(String target) throws IOException {

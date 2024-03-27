@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.fnmatch;
+package org.openrewrite.jgit.fnmatch;
 
 import java.util.List;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 abstract class AbstractHead implements Head {
 	private List<Head> newHeads = null;
@@ -33,10 +33,10 @@ abstract class AbstractHead implements Head {
 	}
 
 	/**
-	 * Set {@link org.eclipse.jgit.fnmatch.Head}s which will not be modified.
+	 * Set {@link org.openrewrite.jgit.fnmatch.Head}s which will not be modified.
 	 *
 	 * @param newHeads
-	 *            a list of {@link org.eclipse.jgit.fnmatch.Head}s which will
+	 *            a list of {@link org.openrewrite.jgit.fnmatch.Head}s which will
 	 *            not be modified.
 	 */
 	public final void setNewHeads(List<Head> newHeads) {

@@ -8,35 +8,35 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Objects.requireNonNull;
-import static org.eclipse.jgit.lib.Constants.R_TAGS;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_REF_IN_WANT;
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_SERVER_OPTION;
-import static org.eclipse.jgit.transport.GitProtocolConstants.COMMAND_FETCH;
-import static org.eclipse.jgit.transport.GitProtocolConstants.COMMAND_LS_REFS;
-import static org.eclipse.jgit.transport.GitProtocolConstants.COMMAND_OBJECT_INFO;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_AGENT;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_ALLOW_REACHABLE_SHA1_IN_WANT;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_ALLOW_TIP_SHA1_IN_WANT;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_DEEPEN_RELATIVE;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_FILTER;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_INCLUDE_TAG;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_MULTI_ACK;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_MULTI_ACK_DETAILED;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_NO_DONE;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_NO_PROGRESS;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_OFS_DELTA;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_SHALLOW;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_SIDEBAND_ALL;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_SIDE_BAND;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_SIDE_BAND_64K;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_THIN_PACK;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_WAIT_FOR_DONE;
-import static org.eclipse.jgit.transport.GitProtocolConstants.VERSION_2_REQUEST;
-import static org.eclipse.jgit.util.RefMap.toRefMap;
+import static org.openrewrite.jgit.lib.Constants.R_TAGS;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_REF_IN_WANT;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_SERVER_OPTION;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.COMMAND_FETCH;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.COMMAND_LS_REFS;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.COMMAND_OBJECT_INFO;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_AGENT;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_ALLOW_REACHABLE_SHA1_IN_WANT;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_ALLOW_TIP_SHA1_IN_WANT;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_DEEPEN_RELATIVE;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_FILTER;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_INCLUDE_TAG;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_MULTI_ACK;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_MULTI_ACK_DETAILED;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_NO_DONE;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_NO_PROGRESS;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_OFS_DELTA;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_SHALLOW;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_SIDEBAND_ALL;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_SIDE_BAND;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_SIDE_BAND_64K;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_THIN_PACK;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_WAIT_FOR_DONE;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.VERSION_2_REQUEST;
+import static org.openrewrite.jgit.util.RefMap.toRefMap;
 
 import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
@@ -61,45 +61,45 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.pack.CachedPackUriProvider;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.internal.transport.parser.FirstWant;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.AsyncRevObjectQueue;
-import org.eclipse.jgit.revwalk.DepthWalk;
-import org.eclipse.jgit.revwalk.ObjectReachabilityChecker;
-import org.eclipse.jgit.revwalk.ObjectWalk;
-import org.eclipse.jgit.revwalk.ReachabilityChecker;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevFlag;
-import org.eclipse.jgit.revwalk.RevFlagSet;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.CommitTimeRevFilter;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.storage.pack.PackStatistics;
-import org.eclipse.jgit.transport.GitProtocolConstants.MultiAck;
-import org.eclipse.jgit.transport.RefAdvertiser.PacketLineOutRefAdvertiser;
-import org.eclipse.jgit.transport.TransferConfig.ProtocolVersion;
-import org.eclipse.jgit.util.io.InterruptTimer;
-import org.eclipse.jgit.util.io.NullOutputStream;
-import org.eclipse.jgit.util.io.TimeoutInputStream;
-import org.eclipse.jgit.util.io.TimeoutOutputStream;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.pack.CachedPackUriProvider;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.internal.transport.parser.FirstWant;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.AsyncRevObjectQueue;
+import org.openrewrite.jgit.revwalk.DepthWalk;
+import org.openrewrite.jgit.revwalk.ObjectReachabilityChecker;
+import org.openrewrite.jgit.revwalk.ObjectWalk;
+import org.openrewrite.jgit.revwalk.ReachabilityChecker;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.revwalk.RevFlagSet;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.filter.CommitTimeRevFilter;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.storage.pack.PackStatistics;
+import org.openrewrite.jgit.transport.GitProtocolConstants.MultiAck;
+import org.openrewrite.jgit.transport.RefAdvertiser.PacketLineOutRefAdvertiser;
+import org.openrewrite.jgit.transport.TransferConfig.ProtocolVersion;
+import org.openrewrite.jgit.util.io.InterruptTimer;
+import org.openrewrite.jgit.util.io.NullOutputStream;
+import org.openrewrite.jgit.util.io.TimeoutInputStream;
+import org.openrewrite.jgit.util.io.TimeoutOutputStream;
 
 /**
  * Implements the server side of a fetch connection, transmitting objects.
@@ -396,7 +396,7 @@ public class UploadPack {
 	 * Set the refs advertised by this UploadPack.
 	 * <p>
 	 * Intended to be called from a
-	 * {@link org.eclipse.jgit.transport.PreUploadHook}.
+	 * {@link org.openrewrite.jgit.transport.PreUploadHook}.
 	 *
 	 * @param allRefs
 	 *            explicit set of references to claim as advertised by this
@@ -490,16 +490,16 @@ public class UploadPack {
 	 * @param policy
 	 *            the policy used to enforce validation of a client's want list.
 	 *            By default the policy is
-	 *            {@link org.eclipse.jgit.transport.UploadPack.RequestPolicy#ADVERTISED},
+	 *            {@link org.openrewrite.jgit.transport.UploadPack.RequestPolicy#ADVERTISED},
 	 *            which is the Git default requiring clients to only ask for an
 	 *            object that a reference directly points to. This may be
 	 *            relaxed to
-	 *            {@link org.eclipse.jgit.transport.UploadPack.RequestPolicy#REACHABLE_COMMIT}
+	 *            {@link org.openrewrite.jgit.transport.UploadPack.RequestPolicy#REACHABLE_COMMIT}
 	 *            or
-	 *            {@link org.eclipse.jgit.transport.UploadPack.RequestPolicy#REACHABLE_COMMIT_TIP}
+	 *            {@link org.openrewrite.jgit.transport.UploadPack.RequestPolicy#REACHABLE_COMMIT_TIP}
 	 *            when callers have {@link #setBiDirectionalPipe(boolean)} set
 	 *            to false. Overrides any policy specified in a
-	 *            {@link org.eclipse.jgit.transport.TransferConfig}.
+	 *            {@link org.openrewrite.jgit.transport.TransferConfig}.
 	 */
 	public void setRequestPolicy(RequestPolicy policy) {
 		switch (policy) {
@@ -555,9 +555,9 @@ public class UploadPack {
 	/**
 	 * Set the hook used while advertising the refs to the client.
 	 * <p>
-	 * If the {@link org.eclipse.jgit.transport.AdvertiseRefsHook} chooses to
+	 * If the {@link org.openrewrite.jgit.transport.AdvertiseRefsHook} chooses to
 	 * call {@link #setAdvertisedRefs(Map)}, only refs set by this hook
-	 * <em>and</em> selected by the {@link org.eclipse.jgit.transport.RefFilter}
+	 * <em>and</em> selected by the {@link org.openrewrite.jgit.transport.RefFilter}
 	 * will be shown to the client.
 	 *
 	 * @param advertiseRefsHook
@@ -597,9 +597,9 @@ public class UploadPack {
 	 * <p>
 	 * Only refs allowed by this filter will be sent to the client. The filter
 	 * is run against the refs specified by the
-	 * {@link org.eclipse.jgit.transport.AdvertiseRefsHook} (if applicable). If
+	 * {@link org.openrewrite.jgit.transport.AdvertiseRefsHook} (if applicable). If
 	 * null or not set, uses the filter implied by the
-	 * {@link org.eclipse.jgit.transport.TransferConfig}.
+	 * {@link org.openrewrite.jgit.transport.TransferConfig}.
 	 *
 	 * @param refFilter
 	 *            the filter; may be null to show all refs.
@@ -683,7 +683,7 @@ public class UploadPack {
 	 *
 	 * @return true if the client has advertised a side-band capability, false
 	 *     otherwise.
-	 * @throws org.eclipse.jgit.transport.RequestNotYetReadException
+	 * @throws org.openrewrite.jgit.transport.RequestNotYetReadException
 	 *             if the client's request has not yet been read from the wire, so
 	 *             we do not know if they expect side-band. Note that the client
 	 *             may have already written the request, it just has not been
@@ -1498,7 +1498,7 @@ public class UploadPack {
 	 *            the advertisement formatter.
 	 * @throws java.io.IOException
 	 *            the formatter failed to write an advertisement.
-	 * @throws org.eclipse.jgit.transport.ServiceMayNotContinueException
+	 * @throws org.openrewrite.jgit.transport.ServiceMayNotContinueException
 	 *            the hook denied advertisement.
 	 */
 	public void sendAdvertisedRefs(RefAdvertiser adv) throws IOException,
@@ -1518,7 +1518,7 @@ public class UploadPack {
 	 *            Documentation/technical/http-protocol.txt.
 	 * @throws java.io.IOException
 	 *            the formatter failed to write an advertisement.
-	 * @throws org.eclipse.jgit.transport.ServiceMayNotContinueException
+	 * @throws org.openrewrite.jgit.transport.ServiceMayNotContinueException
 	 *            the hook denied advertisement.
 	 * @since 5.0
 	 */

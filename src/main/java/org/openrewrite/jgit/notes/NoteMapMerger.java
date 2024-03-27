@@ -8,28 +8,28 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.notes;
+package org.openrewrite.jgit.notes;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.merge.Merger;
-import org.eclipse.jgit.merge.ThreeWayMerger;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.merge.MergeStrategy;
+import org.openrewrite.jgit.merge.Merger;
+import org.openrewrite.jgit.merge.ThreeWayMerger;
 
 /**
  * Three-way note tree merge.
  * <p>
  * Direct implementation of NoteMap merger without using
- * {@link org.eclipse.jgit.treewalk.TreeWalk} and
- * {@link org.eclipse.jgit.treewalk.AbstractTreeIterator}
+ * {@link org.openrewrite.jgit.treewalk.TreeWalk} and
+ * {@link org.openrewrite.jgit.treewalk.AbstractTreeIterator}
  */
 public class NoteMapMerger {
 	private static final FanoutBucket EMPTY_FANOUT = new FanoutBucket(0);
@@ -50,8 +50,8 @@ public class NoteMapMerger {
 
 	/**
 	 * Constructs a NoteMapMerger with custom
-	 * {@link org.eclipse.jgit.notes.NoteMerger} and custom
-	 * {@link org.eclipse.jgit.merge.MergeStrategy}.
+	 * {@link org.openrewrite.jgit.notes.NoteMerger} and custom
+	 * {@link org.openrewrite.jgit.merge.MergeStrategy}.
 	 *
 	 * @param db
 	 *            Git repository
@@ -72,8 +72,8 @@ public class NoteMapMerger {
 
 	/**
 	 * Constructs a NoteMapMerger with
-	 * {@link org.eclipse.jgit.notes.DefaultNoteMerger} as the merger for notes
-	 * and the {@link org.eclipse.jgit.merge.MergeStrategy#RESOLVE} as the
+	 * {@link org.openrewrite.jgit.notes.DefaultNoteMerger} as the merger for notes
+	 * and the {@link org.openrewrite.jgit.merge.MergeStrategy#RESOLVE} as the
 	 * strategy for resolving conflicts on non-notes
 	 *
 	 * @param db

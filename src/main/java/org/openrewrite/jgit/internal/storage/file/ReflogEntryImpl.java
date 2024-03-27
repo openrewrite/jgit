@@ -9,17 +9,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.Serializable;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.CheckoutEntry;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.CheckoutEntry;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Parsed reflog entry
@@ -58,7 +58,7 @@ public class ReflogEntryImpl implements Serializable, ReflogEntry {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogEntry#getOldId()
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogEntry#getOldId()
 	 */
 	/** {@inheritDoc} */
 	@Override
@@ -67,7 +67,7 @@ public class ReflogEntryImpl implements Serializable, ReflogEntry {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogEntry#getNewId()
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogEntry#getNewId()
 	 */
 	/** {@inheritDoc} */
 	@Override
@@ -76,7 +76,7 @@ public class ReflogEntryImpl implements Serializable, ReflogEntry {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogEntry#getWho()
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogEntry#getWho()
 	 */
 	/** {@inheritDoc} */
 	@Override
@@ -85,7 +85,7 @@ public class ReflogEntryImpl implements Serializable, ReflogEntry {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogEntry#getComment()
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogEntry#getComment()
 	 */
 	/** {@inheritDoc} */
 	@Override
@@ -102,7 +102,7 @@ public class ReflogEntryImpl implements Serializable, ReflogEntry {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.eclipse.jgit.internal.storage.file.ReflogEntry#parseCheckout()
+	 * @see org.openrewrite.jgit.internal.storage.file.ReflogEntry#parseCheckout()
 	 */
 	/** {@inheritDoc} */
 	@Override

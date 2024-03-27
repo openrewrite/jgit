@@ -1,4 +1,4 @@
 /**
  * Transport (fetch/push) for different protocols.
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;

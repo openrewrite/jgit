@@ -12,7 +12,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -25,18 +25,18 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.NoRemoteRepositoryException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryBuilder;
-import org.eclipse.jgit.lib.RepositoryCache;
-import org.eclipse.jgit.transport.resolver.ReceivePackFactory;
-import org.eclipse.jgit.transport.resolver.UploadPackFactory;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.io.MessageWriter;
-import org.eclipse.jgit.util.io.StreamCopyThread;
+import org.openrewrite.jgit.errors.NoRemoteRepositoryException;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.RepositoryBuilder;
+import org.openrewrite.jgit.lib.RepositoryCache;
+import org.openrewrite.jgit.transport.resolver.ReceivePackFactory;
+import org.openrewrite.jgit.transport.resolver.UploadPackFactory;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.io.MessageWriter;
+import org.openrewrite.jgit.util.io.StreamCopyThread;
 
 /**
  * Transport to access a local directory as though it were a remote peer.
@@ -195,7 +195,7 @@ class TransportLocal extends Transport implements PackTransport {
 	 * @param cmd
 	 *            command
 	 * @return a {@link java.lang.Process} object.
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             if any.
 	 */
 	protected Process spawn(String cmd)
@@ -211,7 +211,7 @@ class TransportLocal extends Transport implements PackTransport {
 	 * @param protocolVersion
 	 *            to use
 	 * @return a {@link java.lang.Process} object.
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             if any.
 	 */
 	private Process spawn(String cmd,

@@ -40,12 +40,12 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.storage.pack.PackStatistics;
+import org.openrewrite.jgit.storage.pack.PackStatistics;
 
 /**
- * Hook invoked by {@link org.eclipse.jgit.transport.UploadPack} after the pack
+ * Hook invoked by {@link org.openrewrite.jgit.transport.UploadPack} after the pack
  * has been uploaded.
  * <p>
  * Implementors of the interface are responsible for associating the current
@@ -66,7 +66,7 @@ public interface PostUploadHook {
 	 *
 	 * @param stats
 	 *            the statistics gathered by
-	 *            {@link org.eclipse.jgit.internal.storage.pack.PackWriter} for
+	 *            {@link org.openrewrite.jgit.internal.storage.pack.PackWriter} for
 	 *            the uploaded pack
 	 */
 	void onPostUpload(PackStatistics stats);

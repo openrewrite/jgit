@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * Push section of a Git configuration file.

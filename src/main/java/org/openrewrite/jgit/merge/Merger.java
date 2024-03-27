@@ -9,34 +9,34 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.NoMergeBaseException;
-import org.eclipse.jgit.errors.NoMergeBaseException.MergeBaseFailureReason;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.NoMergeBaseException;
+import org.openrewrite.jgit.errors.NoMergeBaseException.MergeBaseFailureReason;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
 
 /**
- * Instance of a specific {@link org.eclipse.jgit.merge.MergeStrategy} for a
- * single {@link org.eclipse.jgit.lib.Repository}.
+ * Instance of a specific {@link org.openrewrite.jgit.merge.MergeStrategy} for a
+ * single {@link org.openrewrite.jgit.lib.Repository}.
  */
 public abstract class Merger {
 	/**
@@ -258,7 +258,7 @@ public abstract class Merger {
 	 * @param b
 	 *            the second commit in {@link #sourceObjects}.
 	 * @return the merge base of two commits
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             one of the input objects is not a commit.
 	 * @throws java.io.IOException
 	 *             objects are missing or multiple merge bases were found.
@@ -290,7 +290,7 @@ public abstract class Merger {
 	 * @param treeId
 	 *            the tree to scan; must be a tree (not a treeish).
 	 * @return an iterator for the tree.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the input object is not a tree.
 	 * @throws java.io.IOException
 	 *             the tree object is not found or cannot be read.

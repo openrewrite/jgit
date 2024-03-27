@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -21,18 +21,18 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import org.eclipse.jgit.util.References;
+import org.openrewrite.jgit.util.References;
 
 /**
  * Mutable builder to construct a commit recording the state of a project.
  *
  * Applications should use this object when they need to manually construct a
  * commit and want precise control over its fields. For a higher level interface
- * see {@link org.eclipse.jgit.api.CommitCommand}.
+ * see {@link org.openrewrite.jgit.api.CommitCommand}.
  *
- * To read a commit object, construct a {@link org.eclipse.jgit.revwalk.RevWalk}
- * and obtain a {@link org.eclipse.jgit.revwalk.RevCommit} instance by calling
- * {@link org.eclipse.jgit.revwalk.RevWalk#parseCommit(AnyObjectId)}.
+ * To read a commit object, construct a {@link org.openrewrite.jgit.revwalk.RevWalk}
+ * and obtain a {@link org.openrewrite.jgit.revwalk.RevCommit} instance by calling
+ * {@link org.openrewrite.jgit.revwalk.RevWalk#parseCommit(AnyObjectId)}.
  */
 public class CommitBuilder extends ObjectBuilder {
 	private static final ObjectId[] EMPTY_OBJECTID_LIST = new ObjectId[0];

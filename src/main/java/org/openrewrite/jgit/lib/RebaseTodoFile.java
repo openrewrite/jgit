@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -20,9 +20,9 @@ import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.jgit.lib.RebaseTodoLine.Action;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.lib.RebaseTodoLine.Action;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Offers methods to read and write files formatted like the git-rebase-todo
@@ -37,7 +37,7 @@ public class RebaseTodoFile {
 	 * Constructor for RebaseTodoFile.
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	public RebaseTodoFile(Repository repo) {
 		this.repo = repo;

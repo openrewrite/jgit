@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
-import static org.eclipse.jgit.diff.DiffEntry.Side.NEW;
-import static org.eclipse.jgit.diff.DiffEntry.Side.OLD;
-import static org.eclipse.jgit.storage.pack.PackConfig.DEFAULT_BIG_FILE_THRESHOLD;
+import static org.openrewrite.jgit.diff.DiffEntry.Side.NEW;
+import static org.openrewrite.jgit.diff.DiffEntry.Side.OLD;
+import static org.openrewrite.jgit.storage.pack.PackConfig.DEFAULT_BIG_FILE_THRESHOLD;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,14 +20,14 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.diff.SimilarityIndex.TableFullException;
-import org.eclipse.jgit.errors.CancelledException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.diff.DiffEntry.ChangeType;
+import org.openrewrite.jgit.diff.SimilarityIndex.TableFullException;
+import org.openrewrite.jgit.errors.CancelledException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
 
 class SimilarityRenameDetector {
 	/**
@@ -130,7 +130,7 @@ class SimilarityRenameDetector {
 		//
 		for (--mNext; mNext >= 0; mNext--) {
 			if (pm.isCancelled()) {
-				// TODO(ms): use org.eclipse.jgit.api.errors.CanceledException
+				// TODO(ms): use org.openrewrite.jgit.api.errors.CanceledException
 				// in next major version
 				throw new CancelledException(JGitText.get().renameCancelled);
 			}
@@ -229,7 +229,7 @@ class SimilarityRenameDetector {
 			for (int dstIdx = 0; dstIdx < dsts.size(); dstIdx++) {
 				if (pm.isCancelled()) {
 					// TODO(ms): use
-					// org.eclipse.jgit.api.errors.CanceledException in next
+					// org.openrewrite.jgit.api.errors.CanceledException in next
 					// major version
 					throw new CancelledException(
 							JGitText.get().renameCancelled);

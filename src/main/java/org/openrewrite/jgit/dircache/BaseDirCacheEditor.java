@@ -9,14 +9,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
-import static org.eclipse.jgit.lib.FileMode.TYPE_TREE;
-import static org.eclipse.jgit.util.Paths.compareSameName;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_TREE;
+import static org.openrewrite.jgit.util.Paths.compareSameName;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.DirCacheNameConflictException;
+import org.openrewrite.jgit.errors.DirCacheNameConflictException;
 
 /**
  * Generic update/editing support for {@link DirCache}.
@@ -122,7 +122,7 @@ abstract class BaseDirCacheEditor {
 
 	/**
 	 * Finish this builder and update the destination
-	 * {@link org.eclipse.jgit.dircache.DirCache}.
+	 * {@link org.openrewrite.jgit.dircache.DirCache}.
 	 * <p>
 	 * When this method completes this builder instance is no longer usable by
 	 * the calling application. A new builder must be created to make additional

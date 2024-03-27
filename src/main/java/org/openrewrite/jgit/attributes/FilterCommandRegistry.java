@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.attributes;
+package org.openrewrite.jgit.attributes;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Registry for built-in filters
@@ -27,19 +27,19 @@ public class FilterCommandRegistry {
 	private static Map<String, FilterCommandFactory> filterCommandRegistry = new ConcurrentHashMap<>();
 
 	/**
-	 * Register a {@link org.eclipse.jgit.attributes.FilterCommandFactory}
+	 * Register a {@link org.openrewrite.jgit.attributes.FilterCommandFactory}
 	 * responsible for creating
-	 * {@link org.eclipse.jgit.attributes.FilterCommand}s for a certain command
+	 * {@link org.openrewrite.jgit.attributes.FilterCommand}s for a certain command
 	 * name. If the factory f1 is registered for the name "jgit://builtin/x"
 	 * then a call to <code>getCommand("jgit://builtin/x", ...)</code> will call
 	 * <code>f1(...)</code> to create a new instance of
-	 * {@link org.eclipse.jgit.attributes.FilterCommand}
+	 * {@link org.openrewrite.jgit.attributes.FilterCommand}
 	 *
 	 * @param filterCommandName
 	 *            the command name for which this factory is registered
 	 * @param factory
 	 *            the factory responsible for creating
-	 *            {@link org.eclipse.jgit.attributes.FilterCommand}s for the
+	 *            {@link org.openrewrite.jgit.attributes.FilterCommand}s for the
 	 *            specified name
 	 * @return the previous factory associated with <tt>commandName</tt>, or
 	 *         <tt>null</tt> if there was no mapping for <tt>commandName</tt>
@@ -50,7 +50,7 @@ public class FilterCommandRegistry {
 	}
 
 	/**
-	 * Unregister the {@link org.eclipse.jgit.attributes.FilterCommandFactory}
+	 * Unregister the {@link org.openrewrite.jgit.attributes.FilterCommandFactory}
 	 * registered for the given command name
 	 *
 	 * @param filterCommandName
@@ -64,7 +64,7 @@ public class FilterCommandRegistry {
 
 	/**
 	 * Check whether any
-	 * {@link org.eclipse.jgit.attributes.FilterCommandFactory} is registered
+	 * {@link org.openrewrite.jgit.attributes.FilterCommandFactory} is registered
 	 * for a given command name
 	 *
 	 * @param filterCommandName
@@ -79,7 +79,7 @@ public class FilterCommandRegistry {
 	 * Get registered filter commands
 	 *
 	 * @return Set of commandNames for which a
-	 *         {@link org.eclipse.jgit.attributes.FilterCommandFactory} is
+	 *         {@link org.openrewrite.jgit.attributes.FilterCommandFactory} is
 	 *         registered
 	 */
 	public static Set<String> getRegisteredFilterCommands() {
@@ -87,22 +87,22 @@ public class FilterCommandRegistry {
 	}
 
 	/**
-	 * Create a new {@link org.eclipse.jgit.attributes.FilterCommand} for the
+	 * Create a new {@link org.openrewrite.jgit.attributes.FilterCommand} for the
 	 * given name. A factory must be registered for the name in advance.
 	 *
 	 * @param filterCommandName
 	 *            The name for which a new
-	 *            {@link org.eclipse.jgit.attributes.FilterCommand} should be
+	 *            {@link org.openrewrite.jgit.attributes.FilterCommand} should be
 	 *            created
 	 * @param db
 	 *            the repository this command should work on
 	 * @param in
 	 *            the {@link java.io.InputStream} this
-	 *            {@link org.eclipse.jgit.attributes.FilterCommand} should read
+	 *            {@link org.openrewrite.jgit.attributes.FilterCommand} should read
 	 *            from
 	 * @param out
 	 *            the {@link java.io.OutputStream} this
-	 *            {@link org.eclipse.jgit.attributes.FilterCommand} should write
+	 *            {@link org.openrewrite.jgit.attributes.FilterCommand} should write
 	 *            to
 	 * @return the command if a command could be created or <code>null</code> if
 	 *         there was no factory registered for that name

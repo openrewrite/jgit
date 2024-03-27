@@ -1,4 +1,4 @@
 /**
  * Internal classes.
  */
-package org.eclipse.jgit.internal;
+package org.openrewrite.jgit.internal;

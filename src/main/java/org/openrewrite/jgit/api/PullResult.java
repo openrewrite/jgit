@@ -7,12 +7,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import org.eclipse.jgit.transport.FetchResult;
+import org.openrewrite.jgit.transport.FetchResult;
 
 /**
- * Encapsulates the result of a {@link org.eclipse.jgit.api.PullCommand}
+ * Encapsulates the result of a {@link org.openrewrite.jgit.api.PullCommand}
  */
 public class PullResult {
 	private final FetchResult fetchResult;

@@ -7,17 +7,17 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
-import org.eclipse.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.merge.ResolveMerger.MergeFailureReason;
+import org.openrewrite.jgit.revwalk.RevCommit;
 
 /**
- * Encapsulates the result of a {@link org.eclipse.jgit.api.CherryPickCommand}.
+ * Encapsulates the result of a {@link org.openrewrite.jgit.api.CherryPickCommand}.
  */
 public class CherryPickResult {
 
@@ -76,7 +76,7 @@ public class CherryPickResult {
 	 *
 	 * @param failingPaths
 	 *            list of paths causing this cherry-pick to fail (see
-	 *            {@link org.eclipse.jgit.merge.ResolveMerger#getFailingPaths()}
+	 *            {@link org.openrewrite.jgit.merge.ResolveMerger#getFailingPaths()}
 	 *            for details)
 	 */
 	public CherryPickResult(Map<String, MergeFailureReason> failingPaths) {
@@ -114,7 +114,7 @@ public class CherryPickResult {
 	 *
 	 * @return the commit the head points at after this cherry-pick,
 	 *         <code>null</code> if {@link #getStatus} is not
-	 *         {@link org.eclipse.jgit.api.CherryPickResult.CherryPickStatus#OK}
+	 *         {@link org.openrewrite.jgit.api.CherryPickResult.CherryPickStatus#OK}
 	 */
 	public RevCommit getNewHead() {
 		return newHead;
@@ -125,7 +125,7 @@ public class CherryPickResult {
 	 *
 	 * @return the list of successfully cherry-picked <code>Ref</code>'s,
 	 *         <code>null</code> if {@link #getStatus} is not
-	 *         {@link org.eclipse.jgit.api.CherryPickResult.CherryPickStatus#OK}
+	 *         {@link org.openrewrite.jgit.api.CherryPickResult.CherryPickStatus#OK}
 	 */
 	public List<Ref> getCherryPickedRefs() {
 		return cherryPickedRefs;
@@ -135,9 +135,9 @@ public class CherryPickResult {
 	 * Get the list of paths causing this cherry-pick to fail
 	 *
 	 * @return the list of paths causing this cherry-pick to fail (see
-	 *         {@link org.eclipse.jgit.merge.ResolveMerger#getFailingPaths()}
+	 *         {@link org.openrewrite.jgit.merge.ResolveMerger#getFailingPaths()}
 	 *         for details), <code>null</code> if {@link #getStatus} is not
-	 *         {@link org.eclipse.jgit.api.CherryPickResult.CherryPickStatus#FAILED}
+	 *         {@link org.openrewrite.jgit.api.CherryPickResult.CherryPickStatus#FAILED}
 	 */
 	public Map<String, MergeFailureReason> getFailingPaths() {
 		return failingPaths;

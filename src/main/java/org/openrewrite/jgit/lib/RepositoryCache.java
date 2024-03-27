@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,18 +20,18 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.internal.WorkQueue;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.errors.RepositoryNotFoundException;
+import org.openrewrite.jgit.internal.storage.file.FileRepository;
+import org.openrewrite.jgit.lib.internal.WorkQueue;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Cache of active {@link org.eclipse.jgit.lib.Repository} instances.
+ * Cache of active {@link org.openrewrite.jgit.lib.Repository} instances.
  */
 public class RepositoryCache {
 	private static final Logger LOG = LoggerFactory
@@ -43,17 +43,17 @@ public class RepositoryCache {
 	 * Open an existing repository, reusing a cached instance if possible.
 	 * <p>
 	 * When done with the repository, the caller must call
-	 * {@link org.eclipse.jgit.lib.Repository#close()} to decrement the
+	 * {@link org.openrewrite.jgit.lib.Repository#close()} to decrement the
 	 * repository's usage counter.
 	 *
 	 * @param location
 	 *            where the local repository is. Typically a
-	 *            {@link org.eclipse.jgit.lib.RepositoryCache.FileKey}.
+	 *            {@link org.openrewrite.jgit.lib.RepositoryCache.FileKey}.
 	 * @return the repository instance requested; caller must close when done.
 	 * @throws java.io.IOException
 	 *             the repository could not be read (likely its core.version
 	 *             property is not supported).
-	 * @throws org.eclipse.jgit.errors.RepositoryNotFoundException
+	 * @throws org.openrewrite.jgit.errors.RepositoryNotFoundException
 	 *             there is no repository at the given location.
 	 */
 	public static Repository open(Key location) throws IOException,
@@ -65,12 +65,12 @@ public class RepositoryCache {
 	 * Open a repository, reusing a cached instance if possible.
 	 * <p>
 	 * When done with the repository, the caller must call
-	 * {@link org.eclipse.jgit.lib.Repository#close()} to decrement the
+	 * {@link org.openrewrite.jgit.lib.Repository#close()} to decrement the
 	 * repository's usage counter.
 	 *
 	 * @param location
 	 *            where the local repository is. Typically a
-	 *            {@link org.eclipse.jgit.lib.RepositoryCache.FileKey}.
+	 *            {@link org.openrewrite.jgit.lib.RepositoryCache.FileKey}.
 	 * @param mustExist
 	 *            If true, and the repository is not found, throws {@code
 	 *            RepositoryNotFoundException}. If false, a repository instance
@@ -93,8 +93,8 @@ public class RepositoryCache {
 	 * <p>
 	 * During registration the cache automatically increments the usage counter,
 	 * permitting it to retain the reference. A
-	 * {@link org.eclipse.jgit.lib.RepositoryCache.FileKey} for the repository's
-	 * {@link org.eclipse.jgit.lib.Repository#getDirectory()} is used to index
+	 * {@link org.openrewrite.jgit.lib.RepositoryCache.FileKey} for the repository's
+	 * {@link org.openrewrite.jgit.lib.Repository#getDirectory()} is used to index
 	 * the repository in the cache.
 	 * <p>
 	 * If another repository already is registered in the cache at this
@@ -131,7 +131,7 @@ public class RepositoryCache {
 	 * <p>
 	 * Removes a repository from the cache, if it is still registered here. This
 	 * method will not close the repository, only remove it from the cache. See
-	 * {@link org.eclipse.jgit.lib.RepositoryCache#close(Repository)} to remove
+	 * {@link org.openrewrite.jgit.lib.RepositoryCache#close(Repository)} to remove
 	 * and close the repository.
 	 *
 	 * @param db
@@ -149,7 +149,7 @@ public class RepositoryCache {
 	 * <p>
 	 * Removes a repository from the cache, if it is still registered here. This
 	 * method will not close the repository, only remove it from the cache. See
-	 * {@link org.eclipse.jgit.lib.RepositoryCache#close(Repository)} to remove
+	 * {@link org.openrewrite.jgit.lib.RepositoryCache#close(Repository)} to remove
 	 * and close the repository.
 	 *
 	 * @param location

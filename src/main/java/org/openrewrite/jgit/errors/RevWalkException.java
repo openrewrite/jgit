@@ -9,13 +9,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Indicates a checked exception was thrown inside of
- * {@link org.eclipse.jgit.revwalk.RevWalk}.
+ * {@link org.openrewrite.jgit.revwalk.RevWalk}.
  * <p>
  * Usually this exception is thrown from the Iterator created around a RevWalk
  * instance, as the Iterator API does not allow checked exceptions to be thrown

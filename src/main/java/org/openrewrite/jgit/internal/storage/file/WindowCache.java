@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.IOException;
 import java.lang.ref.ReferenceQueue;
@@ -26,14 +26,14 @@ import java.util.concurrent.atomic.LongAdder;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.storage.file.WindowCacheConfig;
-import org.eclipse.jgit.storage.file.WindowCacheStats;
-import org.eclipse.jgit.util.Monitoring;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.storage.file.WindowCacheConfig;
+import org.openrewrite.jgit.storage.file.WindowCacheStats;
+import org.openrewrite.jgit.util.Monitoring;
 
 /**
- * Caches slices of a {@link org.eclipse.jgit.internal.storage.file.Pack} in
+ * Caches slices of a {@link org.openrewrite.jgit.internal.storage.file.Pack} in
  * memory for faster read access.
  * <p>
  * The WindowCache serves as a Java based "buffer cache", loading segments of a
@@ -96,7 +96,7 @@ import org.eclipse.jgit.util.Monitoring;
  * decrements during {@link #clear(PageRef)}. Implementors may need to override
  * {@link #createRef(Pack, long, ByteWindow)} in order to embed additional
  * accounting information into an implementation specific
- * {@link org.eclipse.jgit.internal.storage.file.WindowCache.PageRef} subclass, as
+ * {@link org.openrewrite.jgit.internal.storage.file.WindowCache.PageRef} subclass, as
  * the cached entity may have already been evicted by the JRE's garbage
  * collector.
  * <p>
@@ -798,20 +798,20 @@ public class WindowCache {
 		boolean kill();
 
 		/**
-		 * Get the {@link org.eclipse.jgit.internal.storage.file.Pack} the
+		 * Get the {@link org.openrewrite.jgit.internal.storage.file.Pack} the
 		 * referenced cache page is allocated for
 		 *
-		 * @return the {@link org.eclipse.jgit.internal.storage.file.Pack} the
+		 * @return the {@link org.openrewrite.jgit.internal.storage.file.Pack} the
 		 *         referenced cache page is allocated for
 		 */
 		Pack getPack();
 
 		/**
 		 * Get the position of the referenced cache page in the
-		 * {@link org.eclipse.jgit.internal.storage.file.Pack}
+		 * {@link org.openrewrite.jgit.internal.storage.file.Pack}
 		 *
 		 * @return the position of the referenced cache page in the
-		 *         {@link org.eclipse.jgit.internal.storage.file.Pack}
+		 *         {@link org.openrewrite.jgit.internal.storage.file.Pack}
 		 */
 		long getPosition();
 

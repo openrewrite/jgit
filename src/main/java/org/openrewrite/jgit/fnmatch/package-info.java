@@ -1,4 +1,4 @@
 /**
  * File name matcher.
  */
-package org.eclipse.jgit.fnmatch;
+package org.openrewrite.jgit.fnmatch;

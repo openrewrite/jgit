@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.events;
+package org.openrewrite.jgit.events;
 
 /**
- * Receives {@link org.eclipse.jgit.events.IndexChangedEvent}s.
+ * Receives {@link org.openrewrite.jgit.events.IndexChangedEvent}s.
  */
 public interface IndexChangedListener extends RepositoryListener {
 	/**

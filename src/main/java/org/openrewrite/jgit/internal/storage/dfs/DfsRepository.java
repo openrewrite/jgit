@@ -8,22 +8,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Collections;
 
-import org.eclipse.jgit.attributes.AttributesNode;
-import org.eclipse.jgit.attributes.AttributesNodeProvider;
-import org.eclipse.jgit.attributes.AttributesRule;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.ReflogReader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.attributes.AttributesNode;
+import org.openrewrite.jgit.attributes.AttributesNodeProvider;
+import org.openrewrite.jgit.attributes.AttributesRule;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.ReflogReader;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
 
 /**
  * A Git repository on a DFS.

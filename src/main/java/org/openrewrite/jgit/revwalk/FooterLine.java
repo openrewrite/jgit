@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.nio.charset.Charset;
 
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Single line at the end of a message, such as a "Signed-off-by: someone".

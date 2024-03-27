@@ -1,4 +1,4 @@
 /**
  * Walking revision graphs (commit history).
  */
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;

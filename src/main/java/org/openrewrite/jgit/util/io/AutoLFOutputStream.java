@@ -9,12 +9,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.eclipse.jgit.diff.RawText;
+import org.openrewrite.jgit.diff.RawText;
 
 /**
  * An OutputStream that reduces CRLF to LF.

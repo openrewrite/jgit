@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.util.Arrays;
 
-import org.eclipse.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Constants;
 
 /**
  * Utility functions related to quoted string handling.

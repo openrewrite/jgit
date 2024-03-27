@@ -10,15 +10,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * A method of combining two or more trees together to form an output tree.

@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
 
 /**
  * Queue to examine object sizes asynchronously.
@@ -31,7 +31,7 @@ public interface AsyncObjectSizeQueue<T extends ObjectId> extends
 	 *
 	 * @return true if there is a result available; false if the queue has
 	 *         finished its input iteration.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object does not exist. If the implementation is retaining
 	 *             the application's objects {@link #getCurrent()} will be the
 	 *             current object that is missing. There may be more results

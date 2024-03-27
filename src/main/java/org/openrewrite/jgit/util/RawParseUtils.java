@@ -9,14 +9,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.lib.ObjectChecker.author;
-import static org.eclipse.jgit.lib.ObjectChecker.committer;
-import static org.eclipse.jgit.lib.ObjectChecker.encoding;
-import static org.eclipse.jgit.lib.ObjectChecker.tagger;
+import static org.openrewrite.jgit.lib.ObjectChecker.author;
+import static org.openrewrite.jgit.lib.ObjectChecker.committer;
+import static org.openrewrite.jgit.lib.ObjectChecker.encoding;
+import static org.openrewrite.jgit.lib.ObjectChecker.tagger;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
@@ -29,10 +29,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.BinaryBlobException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.BinaryBlobException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.PersonIdent;
 
 /**
  * Handy utility functions to parse raw object contents.

@@ -9,17 +9,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.SystemReader;
 
 /**
  * Creates and destroys SSH connections to a remote system.
@@ -104,7 +104,7 @@ public abstract class SshSessionFactory {
 	 *            connection timeout for creating the session, in milliseconds
 	 * @return a connected and authenticated session for communicating with the
 	 *         remote host given by the {@code uri}
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             if the session could not be created
 	 */
 	public abstract RemoteSession getSession(URIish uri,

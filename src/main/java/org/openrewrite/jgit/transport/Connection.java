@@ -10,12 +10,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Collection;
 import java.util.Map;
 
-import org.eclipse.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref;
 
 /**
  * Represent connection for operation on a remote repository.

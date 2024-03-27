@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import org.eclipse.jgit.events.RepositoryEvent;
+import org.openrewrite.jgit.events.RepositoryEvent;
 
 /**
- * Describes the {@link org.eclipse.jgit.internal.storage.dfs.DfsPackFile} just
+ * Describes the {@link org.openrewrite.jgit.internal.storage.dfs.DfsPackFile} just
  * before its index is loaded. Currently, DfsPackFile directly dispatches the
- * event on {@link org.eclipse.jgit.lib.Repository#getGlobalListenerList}. Which
+ * event on {@link org.openrewrite.jgit.lib.Repository#getGlobalListenerList}. Which
  * means the call to {@link #getRepository} will always return null.
  */
 public class BeforeDfsPackIndexLoadedEvent

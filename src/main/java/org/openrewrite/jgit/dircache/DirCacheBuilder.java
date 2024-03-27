@@ -9,23 +9,23 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
-import static org.eclipse.jgit.lib.FileMode.TYPE_MASK;
-import static org.eclipse.jgit.lib.FileMode.TYPE_TREE;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_MASK;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_TREE;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
 
 /**
- * Updates a {@link org.eclipse.jgit.dircache.DirCache} by adding individual
- * {@link org.eclipse.jgit.dircache.DirCacheEntry}s.
+ * Updates a {@link org.openrewrite.jgit.dircache.DirCache} by adding individual
+ * {@link org.openrewrite.jgit.dircache.DirCacheEntry}s.
  * <p>
  * A builder always starts from a clean slate and appends in every single
  * <code>DirCacheEntry</code> which the final updated index must have to reflect

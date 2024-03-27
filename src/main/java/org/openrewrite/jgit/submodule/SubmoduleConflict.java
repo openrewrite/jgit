@@ -40,10 +40,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.eclipse.jgit.submodule;
+package org.openrewrite.jgit.submodule;
 
-import org.eclipse.jgit.diff.Sequence;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.diff.Sequence;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * Merges expect that conflicts will consist of Sequences, but that doesn't

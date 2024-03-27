@@ -8,27 +8,27 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.internal.storage.reftable.BlockWriter.compare;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_LEN;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.INDEX_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.LOG_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.LOG_DATA;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.LOG_NONE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.OBJ_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.REF_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.VALUE_1ID;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.VALUE_2ID;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.VALUE_NONE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.VALUE_SYMREF;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.VALUE_TYPE_MASK;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.reverseUpdateIndex;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
-import static org.eclipse.jgit.lib.Ref.Storage.NEW;
-import static org.eclipse.jgit.lib.Ref.Storage.PACKED;
+import static org.openrewrite.jgit.internal.storage.reftable.BlockWriter.compare;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_LEN;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.INDEX_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.LOG_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.LOG_DATA;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.LOG_NONE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.OBJ_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.REF_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.VALUE_1ID;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.VALUE_2ID;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.VALUE_NONE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.VALUE_SYMREF;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.VALUE_TYPE_MASK;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.reverseUpdateIndex;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
+import static org.openrewrite.jgit.lib.Ref.Storage.PACKED;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -36,20 +36,20 @@ import java.util.Arrays;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.io.BlockSource;
-import org.eclipse.jgit.lib.CheckoutEntry;
-import org.eclipse.jgit.lib.InflaterCache;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.SymbolicRef;
-import org.eclipse.jgit.util.LongList;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.io.BlockSource;
+import org.openrewrite.jgit.lib.CheckoutEntry;
+import org.openrewrite.jgit.lib.InflaterCache;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.util.LongList;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Reads a single block for {@link ReftableReader}. Instances are tied to a

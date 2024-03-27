@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
- * An {@link org.eclipse.jgit.lib.AbbreviatedObjectId} cannot be extended.
+ * An {@link org.openrewrite.jgit.lib.AbbreviatedObjectId} cannot be extended.
  */
 public class AmbiguousObjectException extends IOException {
 	private static final long serialVersionUID = 1L;

@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.events;
+package org.openrewrite.jgit.events;
 
 /**
  * A listener can register for event delivery.

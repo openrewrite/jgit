@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.File;
 import java.nio.file.InvalidPathException;
@@ -16,9 +16,9 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.transport.RefSpec;
+import org.openrewrite.jgit.util.FS;
 
 /**
  * Something that knows how to convert plain strings from a git {@link Config}
@@ -182,7 +182,7 @@ public interface TypedConfigGetter {
 	 * @param name
 	 *            the key name.
 	 * @return a possibly empty list of
-	 *         {@link org.eclipse.jgit.transport.RefSpec}s
+	 *         {@link org.openrewrite.jgit.transport.RefSpec}s
 	 */
 	@NonNull
 	List<RefSpec> getRefSpecs(Config config, String section, String subsection,

@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 /**
  * Wrap another comparator for use with
- * {@link org.eclipse.jgit.diff.Subsequence}.
+ * {@link org.openrewrite.jgit.diff.Subsequence}.
  * <p>
  * This comparator acts as a proxy for the real comparator, translating element
  * indexes on the fly by adding the subsequence's begin offset to them.
  * Comparators of this type must be used with a
- * {@link org.eclipse.jgit.diff.Subsequence}.
+ * {@link org.openrewrite.jgit.diff.Subsequence}.
  *
  * @param <S>
  *            the base sequence type.

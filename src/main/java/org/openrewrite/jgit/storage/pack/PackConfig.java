@@ -9,42 +9,42 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.storage.pack;
+package org.openrewrite.jgit.storage.pack;
 
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BIGFILE_THRESHOLD;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_CONTIGUOUS_COMMIT_COUNT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_DISTANT_COMMIT_SPAN;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_EXCESSIVE_BRANCH_COUNT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_INACTIVE_BRANCH_AGE_INDAYS;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_RECENT_COMMIT_COUNT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_BUILD_BITMAPS;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_COMPRESSION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_CUT_DELTACHAINS;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_CACHE_LIMIT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_CACHE_SIZE;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_COMPRESSION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_DEPTH;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_INDEXVERSION;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_MIN_SIZE_PREVENT_RACYPACK;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REUSE_DELTAS;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_REUSE_OBJECTS;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_SEARCH_FOR_REUSE_TIMEOUT;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_SINGLE_PACK;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_THREADS;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_WAIT_PREVENT_RACYPACK;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_WINDOW;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_WINDOW_MEMORY;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_PACK_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_CORE_SECTION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BIGFILE_THRESHOLD;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_CONTIGUOUS_COMMIT_COUNT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_DISTANT_COMMIT_SPAN;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_EXCESSIVE_BRANCH_COUNT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_INACTIVE_BRANCH_AGE_INDAYS;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BITMAP_RECENT_COMMIT_COUNT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_BUILD_BITMAPS;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_COMPRESSION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_CUT_DELTACHAINS;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_CACHE_LIMIT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_CACHE_SIZE;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_COMPRESSION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_DEPTH;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_INDEXVERSION;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_MIN_SIZE_PREVENT_RACYPACK;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_REUSE_DELTAS;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_REUSE_OBJECTS;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_SEARCH_FOR_REUSE_TIMEOUT;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_SINGLE_PACK;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_THREADS;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_WAIT_PREVENT_RACYPACK;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_WINDOW;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_WINDOW_MEMORY;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_PACK_SECTION;
 
 import java.time.Duration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.Deflater;
 
-import org.eclipse.jgit.internal.storage.file.PackIndexWriter;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.internal.storage.file.PackIndexWriter;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Configuration used by a pack writer when constructing the stream.
@@ -312,7 +312,7 @@ public class PackConfig {
 
 	/**
 	 * Create a configuration honoring settings in a
-	 * {@link org.eclipse.jgit.lib.Config}.
+	 * {@link org.openrewrite.jgit.lib.Config}.
 	 *
 	 * @param cfg
 	 *            the source to read settings from. The source is not retained

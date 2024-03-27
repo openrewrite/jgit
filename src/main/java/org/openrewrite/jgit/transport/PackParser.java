@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -25,43 +25,43 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.TooLargeObjectInPackException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.PackLock;
-import org.eclipse.jgit.internal.storage.pack.BinaryDelta;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.BatchingProgressMonitor;
-import org.eclipse.jgit.lib.BlobObjectChecker;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.InflaterCache;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectChecker;
-import org.eclipse.jgit.lib.ObjectDatabase;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdOwnerMap;
-import org.eclipse.jgit.lib.ObjectIdSubclassMap;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ObjectStream;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.util.BlockList;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.LongMap;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.sha1.SHA1;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.TooLargeObjectInPackException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.PackLock;
+import org.openrewrite.jgit.internal.storage.pack.BinaryDelta;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.BatchingProgressMonitor;
+import org.openrewrite.jgit.lib.BlobObjectChecker;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.InflaterCache;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.lib.ObjectDatabase;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
+import org.openrewrite.jgit.lib.ObjectIdSubclassMap;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ObjectStream;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.util.BlockList;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.LongMap;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.sha1.SHA1;
 
 /**
  * Parses a pack stream and imports it for an
- * {@link org.eclipse.jgit.lib.ObjectInserter}.
+ * {@link org.openrewrite.jgit.lib.ObjectInserter}.
  * <p>
  * Applications can acquire an instance of a parser from ObjectInserter's
- * {@link org.eclipse.jgit.lib.ObjectInserter#newPackParser(InputStream)}
+ * {@link org.openrewrite.jgit.lib.ObjectInserter#newPackParser(InputStream)}
  * method.
  * <p>
- * Implementations of {@link org.eclipse.jgit.lib.ObjectInserter} should
+ * Implementations of {@link org.openrewrite.jgit.lib.ObjectInserter} should
  * subclass this type and provide their own logic for the various {@code on*()}
  * event methods declared to be abstract.
  */
@@ -473,7 +473,7 @@ public abstract class PackParser {
 	 * <p>
 	 * This should only be called after pack parsing is finished.
 	 *
-	 * @return {@link org.eclipse.jgit.transport.ReceivedPackStatistics}
+	 * @return {@link org.openrewrite.jgit.transport.ReceivedPackStatistics}
 	 * @since 4.6
 	 */
 	public ReceivedPackStatistics getReceivedPackStatistics() {
@@ -485,7 +485,7 @@ public abstract class PackParser {
 	 *
 	 * @param progress
 	 *            callback to provide progress feedback during parsing. If null,
-	 *            {@link org.eclipse.jgit.lib.NullProgressMonitor} will be used.
+	 *            {@link org.openrewrite.jgit.lib.NullProgressMonitor} will be used.
 	 * @return the pack lock, if one was requested by setting
 	 *         {@link #setLockMessage(String)}.
 	 * @throws java.io.IOException
@@ -502,7 +502,7 @@ public abstract class PackParser {
 	 * @param receiving
 	 *            receives progress feedback during the initial receiving
 	 *            objects phase. If null,
-	 *            {@link org.eclipse.jgit.lib.NullProgressMonitor} will be used.
+	 *            {@link org.openrewrite.jgit.lib.NullProgressMonitor} will be used.
 	 * @param resolving
 	 *            receives progress feedback during the resolving objects phase.
 	 * @return the pack lock, if one was requested by setting
@@ -1098,7 +1098,7 @@ public abstract class PackParser {
 	 *            the type of the object.
 	 * @param data
 	 *            raw content of the object.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 * @since 4.9
 	 */
 	protected void verifySafeObject(final AnyObjectId id, final int type,
@@ -1530,10 +1530,10 @@ public abstract class PackParser {
 	 *            position of this object in the incoming stream.
 	 * @param type
 	 *            type of the object; one of
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_COMMIT},
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_TREE},
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_BLOB}, or
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_TAG}.
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_COMMIT},
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_TREE},
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_BLOB}, or
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_TAG}.
 	 * @param inflatedSize
 	 *            size of the object when fully inflated. The size stored within
 	 *            the pack may be larger or smaller, and is not yet known.

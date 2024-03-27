@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,9 +18,9 @@ import java.util.NoSuchElementException;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collector;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefComparator;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefComparator;
 
 /**
  * Specialized variant of an ArrayList to support a {@code RefDatabase}.

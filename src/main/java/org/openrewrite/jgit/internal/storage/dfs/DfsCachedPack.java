@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.internal.storage.pack.CachedPack;
-import org.eclipse.jgit.internal.storage.pack.ObjectToPack;
-import org.eclipse.jgit.internal.storage.pack.PackOutputStream;
-import org.eclipse.jgit.internal.storage.pack.StoredObjectRepresentation;
+import org.openrewrite.jgit.internal.storage.pack.CachedPack;
+import org.openrewrite.jgit.internal.storage.pack.ObjectToPack;
+import org.openrewrite.jgit.internal.storage.pack.PackOutputStream;
+import org.openrewrite.jgit.internal.storage.pack.StoredObjectRepresentation;
 
 /**
  * A DfsPackFile available for reuse as-is.

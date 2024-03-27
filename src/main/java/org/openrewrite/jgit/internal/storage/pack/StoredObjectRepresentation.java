@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * An object representation
- * {@link org.eclipse.jgit.internal.storage.pack.PackWriter} can consider for
+ * {@link org.openrewrite.jgit.internal.storage.pack.PackWriter} can consider for
  * packing.
  */
 public class StoredObjectRepresentation {

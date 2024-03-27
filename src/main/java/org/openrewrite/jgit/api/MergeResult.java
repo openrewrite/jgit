@@ -8,22 +8,22 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.merge.MergeChunk;
-import org.eclipse.jgit.merge.MergeChunk.ConflictState;
-import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.merge.MergeChunk;
+import org.openrewrite.jgit.merge.MergeChunk.ConflictState;
+import org.openrewrite.jgit.merge.MergeStrategy;
+import org.openrewrite.jgit.merge.ResolveMerger.MergeFailureReason;
 
 /**
- * Encapsulates the result of a {@link org.eclipse.jgit.api.MergeCommand}.
+ * Encapsulates the result of a {@link org.openrewrite.jgit.api.MergeCommand}.
  */
 public class MergeResult {
 
@@ -228,16 +228,16 @@ public class MergeResult {
 	 * @param mergeStatus
 	 *            the status the merge resulted in
 	 * @param mergeStrategy
-	 *            the used {@link org.eclipse.jgit.merge.MergeStrategy}
+	 *            the used {@link org.openrewrite.jgit.merge.MergeStrategy}
 	 * @param lowLevelResults
 	 *            merge results as returned by
-	 *            {@link org.eclipse.jgit.merge.ResolveMerger#getMergeResults()}
+	 *            {@link org.openrewrite.jgit.merge.ResolveMerger#getMergeResults()}
 	 * @since 2.0
 	 */
 	public MergeResult(ObjectId newHead, ObjectId base,
 			ObjectId[] mergedCommits, MergeStatus mergeStatus,
 			MergeStrategy mergeStrategy,
-			Map<String, org.eclipse.jgit.merge.MergeResult<?>> lowLevelResults) {
+			Map<String, org.openrewrite.jgit.merge.MergeResult<?>> lowLevelResults) {
 		this(newHead, base, mergedCommits, mergeStatus, mergeStrategy,
 				lowLevelResults, null);
 	}
@@ -256,17 +256,17 @@ public class MergeResult {
 	 * @param mergeStatus
 	 *            the status the merge resulted in
 	 * @param mergeStrategy
-	 *            the used {@link org.eclipse.jgit.merge.MergeStrategy}
+	 *            the used {@link org.openrewrite.jgit.merge.MergeStrategy}
 	 * @param lowLevelResults
 	 *            merge results as returned by
-	 *            {@link org.eclipse.jgit.merge.ResolveMerger#getMergeResults()}
+	 *            {@link org.openrewrite.jgit.merge.ResolveMerger#getMergeResults()}
 	 * @param description
 	 *            a user friendly description of the merge result
 	 */
 	public MergeResult(ObjectId newHead, ObjectId base,
 			ObjectId[] mergedCommits, MergeStatus mergeStatus,
 			MergeStrategy mergeStrategy,
-			Map<String, org.eclipse.jgit.merge.MergeResult<?>> lowLevelResults,
+			Map<String, org.openrewrite.jgit.merge.MergeResult<?>> lowLevelResults,
 			String description) {
 		this(newHead, base, mergedCommits, mergeStatus, mergeStrategy,
 				lowLevelResults, null, description);
@@ -286,20 +286,20 @@ public class MergeResult {
 	 * @param mergeStatus
 	 *            the status the merge resulted in
 	 * @param mergeStrategy
-	 *            the used {@link org.eclipse.jgit.merge.MergeStrategy}
+	 *            the used {@link org.openrewrite.jgit.merge.MergeStrategy}
 	 * @param lowLevelResults
 	 *            merge results as returned by
-	 *            {@link org.eclipse.jgit.merge.ResolveMerger#getMergeResults()}
+	 *            {@link org.openrewrite.jgit.merge.ResolveMerger#getMergeResults()}
 	 * @param failingPaths
 	 *            list of paths causing this merge to fail as returned by
-	 *            {@link org.eclipse.jgit.merge.ResolveMerger#getFailingPaths()}
+	 *            {@link org.openrewrite.jgit.merge.ResolveMerger#getFailingPaths()}
 	 * @param description
 	 *            a user friendly description of the merge result
 	 */
 	public MergeResult(ObjectId newHead, ObjectId base,
 			ObjectId[] mergedCommits, MergeStatus mergeStatus,
 			MergeStrategy mergeStrategy,
-			Map<String, org.eclipse.jgit.merge.MergeResult<?>> lowLevelResults,
+			Map<String, org.openrewrite.jgit.merge.MergeResult<?>> lowLevelResults,
 			Map<String, MergeFailureReason> failingPaths, String description) {
 		this.newHead = newHead;
 		this.mergedCommits = mergedCommits;
@@ -309,7 +309,7 @@ public class MergeResult {
 		this.description = description;
 		this.failingPaths = failingPaths;
 		if (lowLevelResults != null)
-			for (Map.Entry<String, org.eclipse.jgit.merge.MergeResult<?>> result : lowLevelResults
+			for (Map.Entry<String, org.openrewrite.jgit.merge.MergeResult<?>> result : lowLevelResults
 					.entrySet())
 				addConflict(result.getKey(), result.getValue());
 	}
@@ -413,9 +413,9 @@ public class MergeResult {
 	 * @param path
 	 *            path of the file to add a conflict for
 	 * @param lowLevelResult
-	 *            a {@link org.eclipse.jgit.merge.MergeResult}
+	 *            a {@link org.openrewrite.jgit.merge.MergeResult}
 	 */
-	public void addConflict(String path, org.eclipse.jgit.merge.MergeResult<?> lowLevelResult) {
+	public void addConflict(String path, org.openrewrite.jgit.merge.MergeResult<?> lowLevelResult) {
 		if (!lowLevelResult.containsConflicts())
 			return;
 		if (conflicts == null)
@@ -453,7 +453,7 @@ public class MergeResult {
 
 	/**
 	 * Returns information about the conflicts which occurred during a
-	 * {@link org.eclipse.jgit.api.MergeCommand}. The returned value maps the
+	 * {@link org.openrewrite.jgit.api.MergeCommand}. The returned value maps the
 	 * path of a conflicting file to a two-dimensional int-array of line-numbers
 	 * telling where in the file conflict markers for which merged commit can be
 	 * found.
@@ -497,7 +497,7 @@ public class MergeResult {
 
 	/**
 	 * Returns a list of paths causing this merge to fail as returned by
-	 * {@link org.eclipse.jgit.merge.ResolveMerger#getFailingPaths()}
+	 * {@link org.openrewrite.jgit.merge.ResolveMerger#getFailingPaths()}
 	 *
 	 * @return the list of paths causing this merge to fail or <code>null</code>
 	 *         if no failure occurred

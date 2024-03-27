@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util.time;
+package org.openrewrite.jgit.util.time;
 
 import static java.util.concurrent.TimeUnit.MICROSECONDS;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * A {@link org.eclipse.jgit.util.time.MonotonicClock} based on
+ * A {@link org.openrewrite.jgit.util.time.MonotonicClock} based on
  * {@code System.currentTimeMillis}.
  *
  * @since 4.6

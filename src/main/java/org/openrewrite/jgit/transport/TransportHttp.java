@@ -11,27 +11,27 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.lib.Constants.HEAD;
-import static org.eclipse.jgit.lib.Constants.INFO_ALTERNATES;
-import static org.eclipse.jgit.lib.Constants.INFO_HTTP_ALTERNATES;
-import static org.eclipse.jgit.util.HttpSupport.ENCODING_GZIP;
-import static org.eclipse.jgit.util.HttpSupport.ENCODING_X_GZIP;
-import static org.eclipse.jgit.util.HttpSupport.HDR_ACCEPT;
-import static org.eclipse.jgit.util.HttpSupport.HDR_ACCEPT_ENCODING;
-import static org.eclipse.jgit.util.HttpSupport.HDR_CONTENT_ENCODING;
-import static org.eclipse.jgit.util.HttpSupport.HDR_CONTENT_TYPE;
-import static org.eclipse.jgit.util.HttpSupport.HDR_COOKIE;
-import static org.eclipse.jgit.util.HttpSupport.HDR_LOCATION;
-import static org.eclipse.jgit.util.HttpSupport.HDR_PRAGMA;
-import static org.eclipse.jgit.util.HttpSupport.HDR_SET_COOKIE;
-import static org.eclipse.jgit.util.HttpSupport.HDR_SET_COOKIE2;
-import static org.eclipse.jgit.util.HttpSupport.HDR_USER_AGENT;
-import static org.eclipse.jgit.util.HttpSupport.HDR_WWW_AUTHENTICATE;
-import static org.eclipse.jgit.util.HttpSupport.METHOD_GET;
-import static org.eclipse.jgit.util.HttpSupport.METHOD_POST;
+import static org.openrewrite.jgit.lib.Constants.HEAD;
+import static org.openrewrite.jgit.lib.Constants.INFO_ALTERNATES;
+import static org.openrewrite.jgit.lib.Constants.INFO_HTTP_ALTERNATES;
+import static org.openrewrite.jgit.util.HttpSupport.ENCODING_GZIP;
+import static org.openrewrite.jgit.util.HttpSupport.ENCODING_X_GZIP;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_ACCEPT;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_ACCEPT_ENCODING;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_CONTENT_ENCODING;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_CONTENT_TYPE;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_COOKIE;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_LOCATION;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_PRAGMA;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_SET_COOKIE;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_SET_COOKIE2;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_USER_AGENT;
+import static org.openrewrite.jgit.util.HttpSupport.HDR_WWW_AUTHENTICATE;
+import static org.openrewrite.jgit.util.HttpSupport.METHOD_GET;
+import static org.openrewrite.jgit.util.HttpSupport.METHOD_POST;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -77,38 +77,38 @@ import java.util.zip.GZIPOutputStream;
 
 import javax.net.ssl.SSLHandshakeException;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.NoRemoteRepositoryException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.RefDirectory;
-import org.eclipse.jgit.internal.transport.http.NetscapeCookieFile;
-import org.eclipse.jgit.internal.transport.http.NetscapeCookieFileCache;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.lib.SymbolicRef;
-import org.eclipse.jgit.transport.HttpAuthMethod.Type;
-import org.eclipse.jgit.transport.HttpConfig.HttpRedirectMode;
-import org.eclipse.jgit.transport.http.HttpConnection;
-import org.eclipse.jgit.transport.http.HttpConnectionFactory;
-import org.eclipse.jgit.transport.http.HttpConnectionFactory2;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.HttpSupport;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.jgit.util.SystemReader;
-import org.eclipse.jgit.util.TemporaryBuffer;
-import org.eclipse.jgit.util.io.DisabledOutputStream;
-import org.eclipse.jgit.util.io.UnionInputStream;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.NoRemoteRepositoryException;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.RefDirectory;
+import org.openrewrite.jgit.internal.transport.http.NetscapeCookieFile;
+import org.openrewrite.jgit.internal.transport.http.NetscapeCookieFileCache;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.transport.HttpAuthMethod.Type;
+import org.openrewrite.jgit.transport.HttpConfig.HttpRedirectMode;
+import org.openrewrite.jgit.transport.http.HttpConnection;
+import org.openrewrite.jgit.transport.http.HttpConnectionFactory;
+import org.openrewrite.jgit.transport.http.HttpConnectionFactory2;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.HttpSupport;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.SystemReader;
+import org.openrewrite.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.util.io.DisabledOutputStream;
+import org.openrewrite.jgit.util.io.UnionInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -306,11 +306,11 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 	}
 
 	/**
-	 * Set uri a {@link org.eclipse.jgit.transport.URIish} object.
+	 * Set uri a {@link org.openrewrite.jgit.transport.URIish} object.
 	 *
 	 * @param uri
-	 *            a {@link org.eclipse.jgit.transport.URIish} object.
-	 * @throws org.eclipse.jgit.errors.NotSupportedException
+	 *            a {@link org.openrewrite.jgit.transport.URIish} object.
+	 * @throws org.openrewrite.jgit.errors.NotSupportedException
 	 * @since 4.9
 	 */
 	protected void setURI(URIish uri) throws NotSupportedException {

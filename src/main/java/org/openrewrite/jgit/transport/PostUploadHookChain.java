@@ -40,16 +40,16 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.eclipse.jgit.storage.pack.PackStatistics;
+import org.openrewrite.jgit.storage.pack.PackStatistics;
 
 /**
- * {@link org.eclipse.jgit.transport.PostUploadHook} that delegates to a list of
+ * {@link org.openrewrite.jgit.transport.PostUploadHook} that delegates to a list of
  * other hooks.
  * <p>
  * Hooks are run in the order passed to the constructor.

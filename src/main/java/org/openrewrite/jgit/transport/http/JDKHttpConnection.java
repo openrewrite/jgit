@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport.http;
+package org.openrewrite.jgit.transport.http;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,11 +31,11 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManager;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.internal.transport.http.DelegatingSSLSocketFactory;
-import org.eclipse.jgit.util.HttpSupport;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.internal.transport.http.DelegatingSSLSocketFactory;
+import org.openrewrite.jgit.util.HttpSupport;
 /**
- * A {@link org.eclipse.jgit.transport.http.HttpConnection} which simply
+ * A {@link org.openrewrite.jgit.transport.http.HttpConnection} which simply
  * delegates every call to a {@link java.net.HttpURLConnection}. This is the
  * default implementation used by JGit
  *

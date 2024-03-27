@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.IOException;
 import java.util.List;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.transport.ReceiveCommand.Result;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.transport.ReceiveCommand.Result;
 
 /**
  * Exception handler for processing {@link ReceiveCommand}.

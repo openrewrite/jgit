@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revplot;
+package org.openrewrite.jgit.revplot;
 
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.revwalk.RevFlag;
 
 /**
  * Basic commit graph renderer for graphical user interfaces.

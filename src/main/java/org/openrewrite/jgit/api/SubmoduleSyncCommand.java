@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,16 +15,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.submodule.SubmoduleWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.submodule.SubmoduleWalk;
+import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
 
 /**
  * A class used to execute a submodule sync command.
@@ -44,7 +44,7 @@ public class SubmoduleSyncCommand extends GitCommand<Map<String, String>> {
 	 * Constructor for SubmoduleSyncCommand.
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	public SubmoduleSyncCommand(Repository repo) {
 		super(repo);
@@ -67,7 +67,7 @@ public class SubmoduleSyncCommand extends GitCommand<Map<String, String>> {
 	 * Get branch that HEAD currently points to
 	 *
 	 * @param subRepo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @return shortened branch name, null on failures
 	 * @throws java.io.IOException
 	 */

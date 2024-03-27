@@ -9,9 +9,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.events;
+package org.openrewrite.jgit.events;
 
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Describes a modification made to a repository.
@@ -27,7 +27,7 @@ public abstract class RepositoryEvent<T extends RepositoryListener> {
 	 * <p>
 	 * This method should only be invoked once on each event object, and is
 	 * automatically set by
-	 * {@link org.eclipse.jgit.lib.Repository#fireEvent(RepositoryEvent)}.
+	 * {@link org.openrewrite.jgit.lib.Repository#fireEvent(RepositoryEvent)}.
 	 *
 	 * @param r
 	 *            the repository.

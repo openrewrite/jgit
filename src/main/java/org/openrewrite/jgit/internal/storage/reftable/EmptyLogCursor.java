@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.ReflogEntry;
 
 /** Empty {@link LogCursor} with no results. */
 class EmptyLogCursor extends LogCursor {

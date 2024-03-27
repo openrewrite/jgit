@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport.http;
+package org.openrewrite.jgit.transport.http;
 
 import java.io.IOException;
 import java.net.Proxy;
@@ -15,7 +15,7 @@ import java.net.URL;
 
 /**
  * The interface of a factory returning
- * {@link org.eclipse.jgit.transport.http.HttpConnection}
+ * {@link org.openrewrite.jgit.transport.http.HttpConnection}
  *
  * @since 3.3
  */
@@ -26,7 +26,7 @@ public interface HttpConnectionFactory {
 	 *
 	 * @param url
 	 *            a {@link java.net.URL} object.
-	 * @return a {@link org.eclipse.jgit.transport.http.HttpConnection}
+	 * @return a {@link org.openrewrite.jgit.transport.http.HttpConnection}
 	 * @throws java.io.IOException
 	 */
 	HttpConnection create(URL url) throws IOException;
@@ -39,7 +39,7 @@ public interface HttpConnectionFactory {
 	 *            a {@link java.net.URL} object.
 	 * @param proxy
 	 *            the proxy to be used
-	 * @return a {@link org.eclipse.jgit.transport.http.HttpConnection}
+	 * @return a {@link org.openrewrite.jgit.transport.http.HttpConnection}
 	 * @throws java.io.IOException
 	 */
 	HttpConnection create(URL url, Proxy proxy)

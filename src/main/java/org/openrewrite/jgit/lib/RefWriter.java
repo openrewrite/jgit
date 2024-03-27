@@ -11,20 +11,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Map;
 
-import org.eclipse.jgit.internal.storage.file.RefDirectory;
-import org.eclipse.jgit.util.RefList;
-import org.eclipse.jgit.util.RefMap;
+import org.openrewrite.jgit.internal.storage.file.RefDirectory;
+import org.openrewrite.jgit.util.RefList;
+import org.openrewrite.jgit.util.RefMap;
 
 /**
- * Writes out refs to the {@link org.eclipse.jgit.lib.Constants#INFO_REFS} and
- * {@link org.eclipse.jgit.lib.Constants#PACKED_REFS} files.
+ * Writes out refs to the {@link org.openrewrite.jgit.lib.Constants#INFO_REFS} and
+ * {@link org.openrewrite.jgit.lib.Constants#PACKED_REFS} files.
  *
  * This class is abstract as the writing of the files must be handled by the
  * caller. This is because it is used by transport classes as well.
@@ -70,10 +70,10 @@ public abstract class RefWriter {
 	}
 
 	/**
-	 * Rebuild the {@link org.eclipse.jgit.lib.Constants#INFO_REFS}.
+	 * Rebuild the {@link org.openrewrite.jgit.lib.Constants#INFO_REFS}.
 	 * <p>
 	 * This method rebuilds the contents of the
-	 * {@link org.eclipse.jgit.lib.Constants#INFO_REFS} file to match the passed
+	 * {@link org.openrewrite.jgit.lib.Constants#INFO_REFS} file to match the passed
 	 * list of references.
 	 *
 	 * @throws java.io.IOException
@@ -115,12 +115,12 @@ public abstract class RefWriter {
 	}
 
 	/**
-	 * Rebuild the {@link org.eclipse.jgit.lib.Constants#PACKED_REFS} file.
+	 * Rebuild the {@link org.openrewrite.jgit.lib.Constants#PACKED_REFS} file.
 	 * <p>
 	 * This method rebuilds the contents of the
-	 * {@link org.eclipse.jgit.lib.Constants#PACKED_REFS} file to match the
+	 * {@link org.openrewrite.jgit.lib.Constants#PACKED_REFS} file to match the
 	 * passed list of references, including only those refs that have a storage
-	 * type of {@link org.eclipse.jgit.lib.Ref.Storage#PACKED}.
+	 * type of {@link org.openrewrite.jgit.lib.Ref.Storage#PACKED}.
 	 *
 	 * @throws java.io.IOException
 	 *             writing is not supported, or attempting to write the file

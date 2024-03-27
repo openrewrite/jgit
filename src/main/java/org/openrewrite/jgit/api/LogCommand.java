@@ -7,34 +7,34 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.AndRevFilter;
-import org.eclipse.jgit.revwalk.filter.MaxCountRevFilter;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.revwalk.filter.SkipRevFilter;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.filter.AndRevFilter;
+import org.openrewrite.jgit.revwalk.filter.MaxCountRevFilter;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.revwalk.filter.SkipRevFilter;
+import org.openrewrite.jgit.treewalk.filter.AndTreeFilter;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
 
 /**
  * A class used to execute a {@code Log} command. It has setters for all
@@ -42,7 +42,7 @@ import org.eclipse.jgit.treewalk.filter.TreeFilter;
  * to finally execute the command. Each instance of this class should only be
  * used for one invocation of the command (means: one call to {@link #call()})
  * <p>
- * Examples (<code>git</code> is a {@link org.eclipse.jgit.api.Git} instance):
+ * Examples (<code>git</code> is a {@link org.openrewrite.jgit.api.Git} instance):
  * <p>
  * Get newest 10 commits, starting from the current branch:
  *
@@ -82,7 +82,7 @@ public class LogCommand extends GitCommand<Iterable<RevCommit>> {
 	 * Constructor for LogCommand.
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected LogCommand(Repository repo) {
 		super(repo);
@@ -155,24 +155,24 @@ public class LogCommand extends GitCommand<Iterable<RevCommit>> {
 	 * @param start
 	 *            the id of the commit to start from
 	 * @return {@code this}
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the commit supplied is not available from the object
 	 *             database. This usually indicates the supplied commit is
 	 *             invalid, but the reference was constructed during an earlier
 	 *             invocation to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object was not parsed yet and it was discovered during
 	 *             parsing that it is not actually a commit. This usually
 	 *             indicates the caller supplied a non-commit SHA-1 to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
 	 * @throws JGitInternalException
 	 *             a low-level exception of JGit has occurred. The original
 	 *             exception can be retrieved by calling
 	 *             {@link java.lang.Exception#getCause()}. Expect only
 	 *             {@code IOException's} to be wrapped. Subclasses of
 	 *             {@link java.io.IOException} (e.g.
-	 *             {@link org.eclipse.jgit.errors.MissingObjectException}) are
+	 *             {@link org.openrewrite.jgit.errors.MissingObjectException}) are
 	 *             typically not wrapped here but thrown as original exception
 	 */
 	public LogCommand add(AnyObjectId start) throws MissingObjectException,
@@ -184,26 +184,26 @@ public class LogCommand extends GitCommand<Iterable<RevCommit>> {
 	 * Same as {@code --not start}, or {@code ^start}
 	 *
 	 * @param start
-	 *            a {@link org.eclipse.jgit.lib.AnyObjectId}
+	 *            a {@link org.openrewrite.jgit.lib.AnyObjectId}
 	 * @return {@code this}
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the commit supplied is not available from the object
 	 *             database. This usually indicates the supplied commit is
 	 *             invalid, but the reference was constructed during an earlier
 	 *             invocation to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object was not parsed yet and it was discovered during
 	 *             parsing that it is not actually a commit. This usually
 	 *             indicates the caller supplied a non-commit SHA-1 to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
 	 * @throws JGitInternalException
 	 *             a low-level exception of JGit has occurred. The original
 	 *             exception can be retrieved by calling
 	 *             {@link java.lang.Exception#getCause()}. Expect only
 	 *             {@code IOException's} to be wrapped. Subclasses of
 	 *             {@link java.io.IOException} (e.g.
-	 *             {@link org.eclipse.jgit.errors.MissingObjectException}) are
+	 *             {@link org.openrewrite.jgit.errors.MissingObjectException}) are
 	 *             typically not wrapped here but thrown as original exception
 	 */
 	public LogCommand not(AnyObjectId start) throws MissingObjectException,
@@ -215,28 +215,28 @@ public class LogCommand extends GitCommand<Iterable<RevCommit>> {
 	 * Adds the range {@code since..until}
 	 *
 	 * @param since
-	 *            a {@link org.eclipse.jgit.lib.AnyObjectId} object.
+	 *            a {@link org.openrewrite.jgit.lib.AnyObjectId} object.
 	 * @param until
-	 *            a {@link org.eclipse.jgit.lib.AnyObjectId} object.
+	 *            a {@link org.openrewrite.jgit.lib.AnyObjectId} object.
 	 * @return {@code this}
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the commit supplied is not available from the object
 	 *             database. This usually indicates the supplied commit is
 	 *             invalid, but the reference was constructed during an earlier
 	 *             invocation to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object was not parsed yet and it was discovered during
 	 *             parsing that it is not actually a commit. This usually
 	 *             indicates the caller supplied a non-commit SHA-1 to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupCommit(AnyObjectId)}.
 	 * @throws JGitInternalException
 	 *             a low-level exception of JGit has occurred. The original
 	 *             exception can be retrieved by calling
 	 *             {@link java.lang.Exception#getCause()}. Expect only
 	 *             {@code IOException's} to be wrapped. Subclasses of
 	 *             {@link java.io.IOException} (e.g.
-	 *             {@link org.eclipse.jgit.errors.MissingObjectException}) are
+	 *             {@link org.openrewrite.jgit.errors.MissingObjectException}) are
 	 *             typically not wrapped here but thrown as original exception
 	 */
 	public LogCommand addRange(AnyObjectId since, AnyObjectId until)

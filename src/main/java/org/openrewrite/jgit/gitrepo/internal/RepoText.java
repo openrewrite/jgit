@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.gitrepo.internal;
+package org.openrewrite.jgit.gitrepo.internal;
 
-import org.eclipse.jgit.nls.NLS;
-import org.eclipse.jgit.nls.TranslationBundle;
+import org.openrewrite.jgit.nls.NLS;
+import org.openrewrite.jgit.nls.TranslationBundle;
 
 /**
  * Translation bundle for repo command

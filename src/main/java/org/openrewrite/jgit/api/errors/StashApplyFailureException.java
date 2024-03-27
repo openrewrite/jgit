@@ -1,4 +1,4 @@
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
 /**
  * Thrown from StashApplyCommand when stash apply fails

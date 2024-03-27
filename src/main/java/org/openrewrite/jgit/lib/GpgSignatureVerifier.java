@@ -7,15 +7,15 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 import java.util.Date;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.revwalk.RevObject;
 
 /**
  * A {@code GpgVerifier} can verify GPG signatures on git commits and tags.
@@ -35,7 +35,7 @@ public interface GpgSignatureVerifier {
 	 *         verification, or {@code null} if the object was not signed
 	 * @throws IOException
 	 *             if an error occurs getting a public key
-	 * @throws org.eclipse.jgit.api.errors.JGitInternalException
+	 * @throws org.openrewrite.jgit.api.errors.JGitInternalException
 	 *             if signature verification fails
 	 */
 	@Nullable

@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Final status after a successful fetch from a remote repository.
  *
- * @see Transport#fetch(org.eclipse.jgit.lib.ProgressMonitor, Collection)
+ * @see Transport#fetch(org.openrewrite.jgit.lib.ProgressMonitor, Collection)
  */
 public class FetchResult extends OperationResult {
 	private final List<FetchHeadRecord> forMerge;

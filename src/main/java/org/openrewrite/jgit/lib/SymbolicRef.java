@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
 
 /**
  * A reference that indirectly points at another
- * {@link org.eclipse.jgit.lib.Ref}.
+ * {@link org.openrewrite.jgit.lib.Ref}.
  * <p>
  * A symbolic reference always derives its current value from the target
  * reference.

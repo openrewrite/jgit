@@ -8,24 +8,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.revwalk.AddToBitmapFilter;
-import org.eclipse.jgit.internal.revwalk.AddToBitmapWithCacheFilter;
-import org.eclipse.jgit.internal.revwalk.AddUnseenToBitmapFilter;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.BitmapIndex;
-import org.eclipse.jgit.lib.BitmapIndex.Bitmap;
-import org.eclipse.jgit.lib.BitmapIndex.BitmapBuilder;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.revwalk.filter.ObjectFilter;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.revwalk.AddToBitmapFilter;
+import org.openrewrite.jgit.internal.revwalk.AddToBitmapWithCacheFilter;
+import org.openrewrite.jgit.internal.revwalk.AddUnseenToBitmapFilter;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.BitmapIndex;
+import org.openrewrite.jgit.lib.BitmapIndex.Bitmap;
+import org.openrewrite.jgit.lib.BitmapIndex.BitmapBuilder;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.revwalk.filter.ObjectFilter;
 
 /**
  * Helper class to do ObjectWalks with pack index bitmaps.
@@ -104,18 +104,18 @@ public final class BitmapWalker {
 	 * @param ignoreMissing
 	 *            true to ignore missing objects, false otherwise.
 	 * @return as a bitmap, the objects reachable from the objects in start.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object supplied is not available from the object
 	 *             database. This usually indicates the supplied object is
 	 *             invalid, but the reference was constructed during an earlier
 	 *             invocation to
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}.
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             the object was not parsed yet and it was discovered during
 	 *             parsing that it is not actually the type of the instance
 	 *             passed in. This usually indicates the caller used the wrong
 	 *             type in a
-	 *             {@link org.eclipse.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}
+	 *             {@link org.openrewrite.jgit.revwalk.RevWalk#lookupAny(AnyObjectId, int)}
 	 *             call.
 	 * @throws java.io.IOException
 	 *             a pack file or loose object could not be read.

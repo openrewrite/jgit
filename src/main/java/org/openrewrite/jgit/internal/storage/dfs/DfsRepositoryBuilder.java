@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.BaseRepositoryBuilder;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.BaseRepositoryBuilder;
 
 /**
- * Constructs a {@link org.eclipse.jgit.internal.storage.dfs.DfsRepository}.
+ * Constructs a {@link org.openrewrite.jgit.internal.storage.dfs.DfsRepository}.
  *
  * @param <B>
  *            type of the builder class.

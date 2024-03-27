@@ -8,24 +8,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.util.io.SilentFileInputStream;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.util.io.SilentFileInputStream;
 
 import com.googlecode.javaewah.EWAHCompressedBitmap;
 
 /**
  * Logical representation of the bitmap data stored in the pack index.
- * {@link org.eclipse.jgit.lib.ObjectId}s are encoded as a single integer in the
+ * {@link org.openrewrite.jgit.lib.ObjectId}s are encoded as a single integer in the
  * range [0, {@link #getObjectCount()}). Compressed bitmaps are available at
  * certain {@code ObjectId}s, which represent all of the objects reachable from
  * that {@code ObjectId} (include the {@code ObjectId} itself). The meaning of

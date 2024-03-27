@@ -10,9 +10,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * The base class for transports based on TCP sockets. This class

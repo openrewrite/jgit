@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.notes;
+package org.openrewrite.jgit.notes;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
 
 /**
  * Three-way note merge operation.
@@ -39,7 +39,7 @@ public interface NoteMerger {
 	 * @param inserter
 	 *            the object inserter that must be used to insert Git objects
 	 * @return the merge result
-	 * @throws org.eclipse.jgit.notes.NotesMergeConflictException
+	 * @throws org.openrewrite.jgit.notes.NotesMergeConflictException
 	 *             in case there was a merge conflict which this note merger
 	 *             couldn't resolve
 	 * @throws java.io.IOException

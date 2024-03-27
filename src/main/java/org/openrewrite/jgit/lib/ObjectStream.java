@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Stream of data coming from an object loaded by {@link org.eclipse.jgit.lib.ObjectLoader}.
+ * Stream of data coming from an object loaded by {@link org.openrewrite.jgit.lib.ObjectLoader}.
  */
 public abstract class ObjectStream extends InputStream {
 	/**

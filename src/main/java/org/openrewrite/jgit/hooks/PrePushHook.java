@@ -7,16 +7,16 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.hooks;
+package org.openrewrite.jgit.hooks;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Collection;
 
-import org.eclipse.jgit.api.errors.AbortedByHookException;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.transport.RemoteRefUpdate;
+import org.openrewrite.jgit.api.errors.AbortedByHookException;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.transport.RemoteRefUpdate;
 
 /**
  * The <code>pre-push</code> hook implementation. The pre-push hook runs during

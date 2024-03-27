@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
 
 /**
- * An ordered list of {@link org.eclipse.jgit.revwalk.RevCommit} subclasses.
+ * An ordered list of {@link org.openrewrite.jgit.revwalk.RevCommit} subclasses.
  *
  * @param <E>
  *            type of subclass of RevCommit the list is storing.
@@ -49,11 +49,11 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 	 *             revision filter needed to read additional objects, but an
 	 *             error occurred while reading the pack files or loose objects
 	 *             of the repository.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             revision filter needed to read additional objects, but an
 	 *             object was not of the correct type. Repository corruption may
 	 *             have occurred.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             revision filter needed to read additional objects, but an
 	 *             object that should be present was not found. Repository
 	 *             corruption may have occurred.
@@ -89,11 +89,11 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 	 *             revision filter needed to read additional objects, but an
 	 *             error occurred while reading the pack files or loose objects
 	 *             of the repository.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             revision filter needed to read additional objects, but an
 	 *             object was not of the correct type. Repository corruption may
 	 *             have occurred.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             revision filter needed to read additional objects, but an
 	 *             object that should be present was not found. Repository
 	 *             corruption may have occurred.
@@ -259,11 +259,11 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 	 *            number of commits the caller wants this list to contain when
 	 *            the fill operation is complete.
 	 * @throws java.io.IOException
-	 *             see {@link org.eclipse.jgit.revwalk.RevWalk#next()}
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
-	 *             see {@link org.eclipse.jgit.revwalk.RevWalk#next()}
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
-	 *             see {@link org.eclipse.jgit.revwalk.RevWalk#next()}
+	 *             see {@link org.openrewrite.jgit.revwalk.RevWalk#next()}
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
+	 *             see {@link org.openrewrite.jgit.revwalk.RevWalk#next()}
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
+	 *             see {@link org.openrewrite.jgit.revwalk.RevWalk#next()}
 	 */
 	@SuppressWarnings("unchecked")
 	public void fillTo(int highMark) throws MissingObjectException,
@@ -324,11 +324,11 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 	 *            the walk is pumped until the specified commit or the end of
 	 *            the walk is reached.
 	 * @throws java.io.IOException
-	 *             see {@link org.eclipse.jgit.revwalk.RevWalk#next()}
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
-	 *             see {@link org.eclipse.jgit.revwalk.RevWalk#next()}
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
-	 *             see {@link org.eclipse.jgit.revwalk.RevWalk#next()}
+	 *             see {@link org.openrewrite.jgit.revwalk.RevWalk#next()}
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
+	 *             see {@link org.openrewrite.jgit.revwalk.RevWalk#next()}
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
+	 *             see {@link org.openrewrite.jgit.revwalk.RevWalk#next()}
 	 */
 	@SuppressWarnings("unchecked")
 	public void fillTo(RevCommit commitToLoad, int highMark)

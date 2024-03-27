@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 /**
  * Base object type accessed during bitmap expansion.
@@ -17,7 +17,7 @@ package org.eclipse.jgit.lib;
  */
 public abstract class BitmapObject {
 	/**
-	 * Get Git object type. See {@link org.eclipse.jgit.lib.Constants}.
+	 * Get Git object type. See {@link org.openrewrite.jgit.lib.Constants}.
 	 *
 	 * @return object type
 	 */

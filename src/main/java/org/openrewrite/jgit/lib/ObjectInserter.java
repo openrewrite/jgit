@@ -11,16 +11,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.transport.PackParser;
-import org.eclipse.jgit.util.sha1.SHA1;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.transport.PackParser;
+import org.openrewrite.jgit.util.sha1.SHA1;
 
 /**
  * Inserts objects into an existing {@code ObjectDatabase}.
@@ -268,7 +268,7 @@ public abstract class ObjectInserter implements AutoCloseable {
 	 * Compute the ObjectId for the given tree without inserting it.
 	 *
 	 * @param formatter
-	 *            a {@link org.eclipse.jgit.lib.TreeFormatter} object.
+	 *            a {@link org.openrewrite.jgit.lib.TreeFormatter} object.
 	 * @return the computed ObjectId
 	 */
 	public ObjectId idFor(TreeFormatter formatter) {

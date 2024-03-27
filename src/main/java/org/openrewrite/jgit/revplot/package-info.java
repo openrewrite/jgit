@@ -1,4 +1,4 @@
 /**
  * Building/rendering revision graphs.
  */
-package org.eclipse.jgit.revplot;
+package org.openrewrite.jgit.revplot;

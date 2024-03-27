@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.util.Iterator;
 
-import org.eclipse.jgit.internal.storage.file.PackBitmapIndex;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndex;
 
 import com.googlecode.javaewah.EWAHCompressedBitmap;
 

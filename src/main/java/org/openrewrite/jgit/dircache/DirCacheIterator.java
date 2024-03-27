@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -17,20 +17,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
-import org.eclipse.jgit.attributes.AttributesNode;
-import org.eclipse.jgit.attributes.AttributesRule;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.EmptyTreeIterator;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.attributes.AttributesNode;
+import org.openrewrite.jgit.attributes.AttributesRule;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.EmptyTreeIterator;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
- * Iterate a {@link org.eclipse.jgit.dircache.DirCache} as part of a
+ * Iterate a {@link org.openrewrite.jgit.dircache.DirCache} as part of a
  * <code>TreeWalk</code>.
  * <p>
  * This is an iterator to adapt a loaded <code>DirCache</code> instance (such as
@@ -39,7 +39,7 @@ import org.eclipse.jgit.util.RawParseUtils;
  * over any combination of tree objects already in the object database, index
  * files, or working directories.
  *
- * @see org.eclipse.jgit.treewalk.TreeWalk
+ * @see org.openrewrite.jgit.treewalk.TreeWalk
  */
 public class DirCacheIterator extends AbstractTreeIterator {
 	/** Byte array holding ".gitattributes" string */
@@ -262,13 +262,13 @@ public class DirCacheIterator extends AbstractTreeIterator {
 	}
 
 	/**
-	 * Retrieves the {@link org.eclipse.jgit.attributes.AttributesNode} for the
+	 * Retrieves the {@link org.openrewrite.jgit.attributes.AttributesNode} for the
 	 * current entry.
 	 *
 	 * @param reader
-	 *            {@link org.eclipse.jgit.lib.ObjectReader} used to parse the
+	 *            {@link org.openrewrite.jgit.lib.ObjectReader} used to parse the
 	 *            .gitattributes entry.
-	 * @return {@link org.eclipse.jgit.attributes.AttributesNode} for the
+	 * @return {@link org.openrewrite.jgit.attributes.AttributesNode} for the
 	 *         current entry.
 	 * @throws java.io.IOException
 	 * @since 3.7

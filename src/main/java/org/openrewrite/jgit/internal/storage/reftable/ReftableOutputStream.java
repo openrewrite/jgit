@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_LEN;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.INDEX_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.LOG_BLOCK_TYPE;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_LEN;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.INDEX_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.LOG_BLOCK_TYPE;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -22,10 +22,10 @@ import java.util.Arrays;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.io.CountingOutputStream;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.io.CountingOutputStream;
 
 /**
  * Wrapper to assist formatting a reftable to an {@link OutputStream}.

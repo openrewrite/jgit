@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -18,15 +18,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Configuration file based on the blobs stored in the repository.
@@ -42,7 +42,7 @@ public class BlobBasedConfig extends Config {
 	 *            the base configuration file
 	 * @param blob
 	 *            the byte array, should be UTF-8 encoded text.
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 *             the byte array is not a valid configuration format.
 	 */
 	public BlobBasedConfig(Config base, byte[] blob)
@@ -68,7 +68,7 @@ public class BlobBasedConfig extends Config {
 	 *            the object identifier
 	 * @throws java.io.IOException
 	 *             the blob cannot be read from the repository.
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 *             the blob is not a valid configuration format.
 	 */
 	public BlobBasedConfig(Config base, Repository db, AnyObjectId objectId)
@@ -106,7 +106,7 @@ public class BlobBasedConfig extends Config {
 	 *             the path does not exist in the commit's tree.
 	 * @throws java.io.IOException
 	 *             the tree and/or blob cannot be accessed.
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 *             the blob is not a valid configuration format.
 	 */
 	public BlobBasedConfig(Config base, Repository db, AnyObjectId treeish,

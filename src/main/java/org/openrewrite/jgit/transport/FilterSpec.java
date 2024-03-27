@@ -8,22 +8,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.math.BigInteger.ZERO;
 import static java.util.Objects.requireNonNull;
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.Constants.OBJ_COMMIT;
-import static org.eclipse.jgit.lib.Constants.OBJ_TAG;
-import static org.eclipse.jgit.lib.Constants.OBJ_TREE;
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_FILTER;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.lib.Constants.OBJ_COMMIT;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TAG;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TREE;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_FILTER;
 
 import java.math.BigInteger;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Represents either a filter specified in a protocol "filter" line, or a
@@ -183,7 +183,7 @@ public final class FilterSpec {
 	/**
 	 * @param type
 	 *            a Git object type, such as
-	 *            {@link org.eclipse.jgit.lib.Constants#OBJ_BLOB}
+	 *            {@link org.openrewrite.jgit.lib.Constants#OBJ_BLOB}
 	 * @return whether this filter allows objects of the specified type
 	 *
 	 * @since 5.9

@@ -9,17 +9,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.treewalk.TreeWalk;
 
 /**
  * Includes tree entries only if they match the configured path.
  * <p>
  * Applications should use
- * {@link org.eclipse.jgit.treewalk.filter.PathFilterGroup} to connect these
+ * {@link org.openrewrite.jgit.treewalk.filter.PathFilterGroup} to connect these
  * into a tree filter graph, as the group supports breaking out of traversal
  * once it is known the path can never match.
  */

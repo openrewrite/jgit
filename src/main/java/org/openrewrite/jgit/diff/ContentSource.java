@@ -8,27 +8,27 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ObjectStream;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ObjectStream;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
 
 /**
  * Supplies the content of a file for
- * {@link org.eclipse.jgit.diff.DiffFormatter}.
+ * {@link org.openrewrite.jgit.diff.DiffFormatter}.
  * <p>
  * A content source is not thread-safe. Sources may contain state, including
  * information about the last ObjectLoader they returned. Callers must be
@@ -50,7 +50,7 @@ public abstract class ContentSource {
 	/**
 	 * Construct a content source for a working directory.
 	 *
-	 * If the iterator is a {@link org.eclipse.jgit.treewalk.FileTreeIterator}
+	 * If the iterator is a {@link org.openrewrite.jgit.treewalk.FileTreeIterator}
 	 * an optimized version is used that doesn't require seeking through a
 	 * TreeWalk.
 	 *

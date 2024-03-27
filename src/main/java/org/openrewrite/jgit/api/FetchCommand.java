@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import static java.util.stream.Collectors.toList;
 
@@ -18,30 +18,30 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidConfigurationException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.NoRemoteRepositoryException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.submodule.SubmoduleWalk;
-import org.eclipse.jgit.transport.FetchResult;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.transport.TagOpt;
-import org.eclipse.jgit.transport.Transport;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidConfigurationException;
+import org.openrewrite.jgit.api.errors.InvalidRemoteException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.NoRemoteRepositoryException;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.lib.SubmoduleConfig.FetchRecurseSubmodulesMode;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.submodule.SubmoduleWalk;
+import org.openrewrite.jgit.transport.FetchResult;
+import org.openrewrite.jgit.transport.RefSpec;
+import org.openrewrite.jgit.transport.TagOpt;
+import org.openrewrite.jgit.transport.Transport;
 
 /**
  * A class used to execute a {@code Fetch} command. It has setters for all
@@ -96,7 +96,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	 * Constructor for FetchCommand.
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	protected FetchCommand(Repository repo) {
 		super(repo);
@@ -131,7 +131,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	}
 
 	private void fetchSubmodules(FetchResult results)
-			throws org.eclipse.jgit.api.errors.TransportException,
+			throws org.openrewrite.jgit.api.errors.TransportException,
 			GitAPIException, InvalidConfigurationException {
 		try (SubmoduleWalk walk = new SubmoduleWalk(repo);
 				RevWalk revWalk = new RevWalk(repo)) {
@@ -199,7 +199,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	 */
 	@Override
 	public FetchResult call() throws GitAPIException, InvalidRemoteException,
-			org.eclipse.jgit.api.errors.TransportException {
+			org.openrewrite.jgit.api.errors.TransportException {
 		checkCallable();
 
 		try (Transport transport = Transport.open(repo, remote)) {
@@ -221,7 +221,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 			throw new InvalidRemoteException(MessageFormat.format(
 					JGitText.get().invalidRemote, remote), e);
 		} catch (TransportException e) {
-			throw new org.eclipse.jgit.api.errors.TransportException(
+			throw new org.openrewrite.jgit.api.errors.TransportException(
 					e.getMessage(), e);
 		} catch (URISyntaxException e) {
 			throw new InvalidRemoteException(MessageFormat.format(
@@ -371,7 +371,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	 *
 	 * @see NullProgressMonitor
 	 * @param monitor
-	 *            a {@link org.eclipse.jgit.lib.ProgressMonitor}
+	 *            a {@link org.openrewrite.jgit.lib.ProgressMonitor}
 	 * @return {@code this}
 	 */
 	public FetchCommand setProgressMonitor(ProgressMonitor monitor) {
@@ -409,7 +409,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	 * The ref specs to be used in the fetch operation
 	 *
 	 * @param specs
-	 *            one or multiple {@link org.eclipse.jgit.transport.RefSpec}s
+	 *            one or multiple {@link org.openrewrite.jgit.transport.RefSpec}s
 	 * @return {@code this}
 	 */
 	public FetchCommand setRefSpecs(RefSpec... specs) {
@@ -420,7 +420,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	 * The ref specs to be used in the fetch operation
 	 *
 	 * @param specs
-	 *            list of {@link org.eclipse.jgit.transport.RefSpec}s
+	 *            list of {@link org.openrewrite.jgit.transport.RefSpec}s
 	 * @return {@code this}
 	 */
 	public FetchCommand setRefSpecs(List<RefSpec> specs) {
@@ -480,7 +480,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	 * Sets the specification of annotated tag behavior during fetch
 	 *
 	 * @param tagOpt
-	 *            the {@link org.eclipse.jgit.transport.TagOpt}
+	 *            the {@link org.openrewrite.jgit.transport.TagOpt}
 	 * @return {@code this}
 	 */
 	public FetchCommand setTagOpt(TagOpt tagOpt) {

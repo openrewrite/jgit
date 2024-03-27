@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.NonNull;
 
 /**
  * An abstraction for a SSH config storage, like the OpenSSH ~/.ssh/config file.

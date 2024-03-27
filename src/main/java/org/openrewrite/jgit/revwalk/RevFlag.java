@@ -8,17 +8,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
- * Application level mark bit for {@link org.eclipse.jgit.revwalk.RevObject}s.
+ * Application level mark bit for {@link org.openrewrite.jgit.revwalk.RevObject}s.
  * <p>
  * To create a flag use
- * {@link org.eclipse.jgit.revwalk.RevWalk#newFlag(String)}.
+ * {@link org.openrewrite.jgit.revwalk.RevWalk#newFlag(String)}.
  */
 public class RevFlag {
 	/**

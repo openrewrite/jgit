@@ -1,4 +1,4 @@
 /**
  * Utility classes.
  */
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;

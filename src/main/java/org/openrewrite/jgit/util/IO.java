@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.io.EOFException;
 import java.io.File;
@@ -24,8 +24,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.io.SilentFileInputStream;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.io.SilentFileInputStream;
 
 /**
  * Input/Output utilities

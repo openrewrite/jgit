@@ -1,4 +1,4 @@
 /**
  * Filters for use in revision walking.
  */
-package org.eclipse.jgit.revwalk.filter;
+package org.openrewrite.jgit.revwalk.filter;

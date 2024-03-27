@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 import java.io.EOFException;
 import java.io.File;
@@ -18,12 +18,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
-import org.eclipse.jgit.errors.BinaryBlobException;
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.IntList;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.BinaryBlobException;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.IntList;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * A Sequence supporting UNIX formatted text in byte[] format.
@@ -396,7 +396,7 @@ public class RawText extends Sequence {
 	 *            be binary.
 	 * @since 4.10
 	 * @return the RawText representing the blob.
-	 * @throws org.eclipse.jgit.errors.BinaryBlobException
+	 * @throws org.openrewrite.jgit.errors.BinaryBlobException
 	 *             if the blob contains binary data.
 	 * @throws java.io.IOException
 	 *             if the input could not be read.

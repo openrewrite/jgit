@@ -9,9 +9,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.transport.GitProtocolConstants.CAPABILITY_ATOMIC;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_ATOMIC;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,18 +23,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.NoRemoteRepositoryException;
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.errors.TooLargeObjectInPackException;
-import org.eclipse.jgit.errors.TooLargePackException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.pack.PackWriter;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
+import org.openrewrite.jgit.errors.NoRemoteRepositoryException;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.errors.TooLargeObjectInPackException;
+import org.openrewrite.jgit.errors.TooLargePackException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.pack.PackWriter;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.transport.RemoteRefUpdate.Status;
 
 /**
  * Push implementation using the native Git pack transfer service.
@@ -49,7 +49,7 @@ import org.eclipse.jgit.transport.RemoteRefUpdate.Status;
  * command executed through an SSH tunnel.
  * <p>
  * This implementation honors
- * {@link org.eclipse.jgit.transport.Transport#isPushThin()} option.
+ * {@link org.openrewrite.jgit.transport.Transport#isPushThin()} option.
  * <p>
  * Concrete implementations should just call
  * {@link #init(java.io.InputStream, java.io.OutputStream)} and
@@ -170,7 +170,7 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 	 *            update commands to be applied to the remote repository.
 	 * @param outputStream
 	 *            output stream to write sideband messages to
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             if any exception occurs.
 	 * @since 3.0
 	 */

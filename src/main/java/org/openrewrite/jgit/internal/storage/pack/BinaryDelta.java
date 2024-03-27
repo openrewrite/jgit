@@ -9,11 +9,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.QuotedString;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.QuotedString;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Recreate a stream from a base stream and a GIT pack delta.

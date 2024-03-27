@@ -8,22 +8,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import static java.lang.Math.log;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.internal.storage.reftable.BlockWriter.padBetweenBlocks;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_FOOTER_LEN;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_LEN;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_MAGIC;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.INDEX_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.LOG_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.MAX_BLOCK_SIZE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.MAX_RESTARTS;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.OBJ_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.REF_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.VERSION_1;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.internal.storage.reftable.BlockWriter.padBetweenBlocks;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_FOOTER_LEN;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_LEN;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_MAGIC;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.INDEX_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.LOG_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.MAX_BLOCK_SIZE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.MAX_RESTARTS;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.OBJ_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.REF_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.VERSION_1;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -37,30 +37,30 @@ import java.util.List;
 import java.util.Set;
 import java.util.zip.CRC32;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.reftable.BlockWriter.DeleteLogEntry;
-import org.eclipse.jgit.internal.storage.reftable.BlockWriter.Entry;
-import org.eclipse.jgit.internal.storage.reftable.BlockWriter.IndexEntry;
-import org.eclipse.jgit.internal.storage.reftable.BlockWriter.LogEntry;
-import org.eclipse.jgit.internal.storage.reftable.BlockWriter.ObjEntry;
-import org.eclipse.jgit.internal.storage.reftable.BlockWriter.RefEntry;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdOwnerMap;
-import org.eclipse.jgit.lib.ObjectIdSubclassMap;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.util.LongList;
-import org.eclipse.jgit.util.NB;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.reftable.BlockWriter.DeleteLogEntry;
+import org.openrewrite.jgit.internal.storage.reftable.BlockWriter.Entry;
+import org.openrewrite.jgit.internal.storage.reftable.BlockWriter.IndexEntry;
+import org.openrewrite.jgit.internal.storage.reftable.BlockWriter.LogEntry;
+import org.openrewrite.jgit.internal.storage.reftable.BlockWriter.ObjEntry;
+import org.openrewrite.jgit.internal.storage.reftable.BlockWriter.RefEntry;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
+import org.openrewrite.jgit.lib.ObjectIdSubclassMap;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.util.LongList;
+import org.openrewrite.jgit.util.NB;
 
 /**
  * Writes a reftable formatted file.
  * <p>
  * A reftable can be written in a streaming fashion, provided the caller sorts
  * all references. A
- * {@link org.eclipse.jgit.internal.storage.reftable.ReftableWriter} is
+ * {@link org.openrewrite.jgit.internal.storage.reftable.ReftableWriter} is
  * single-use, and not thread-safe.
  */
 public class ReftableWriter {
@@ -307,10 +307,10 @@ public class ReftableWriter {
 	 * @param who
 	 *            committer of the reflog entry.
 	 * @param oldId
-	 *            prior id; pass {@link org.eclipse.jgit.lib.ObjectId#zeroId()}
+	 *            prior id; pass {@link org.openrewrite.jgit.lib.ObjectId#zeroId()}
 	 *            for creations.
 	 * @param newId
-	 *            new id; pass {@link org.eclipse.jgit.lib.ObjectId#zeroId()}
+	 *            new id; pass {@link org.openrewrite.jgit.lib.ObjectId#zeroId()}
 	 *            for deletions.
 	 * @param message
 	 *            optional message (may be null).
@@ -368,9 +368,9 @@ public class ReftableWriter {
 	 *
 	 * @return an estimate of the current size in bytes of the reftable, if it
 	 *         was finished right now. Estimate is only accurate if
-	 *         {@link org.eclipse.jgit.internal.storage.reftable.ReftableConfig#setIndexObjects(boolean)}
+	 *         {@link org.openrewrite.jgit.internal.storage.reftable.ReftableConfig#setIndexObjects(boolean)}
 	 *         is {@code false} and
-	 *         {@link org.eclipse.jgit.internal.storage.reftable.ReftableConfig#setMaxIndexLevels(int)}
+	 *         {@link org.openrewrite.jgit.internal.storage.reftable.ReftableConfig#setMaxIndexLevels(int)}
 	 *         is {@code 1}.
 	 */
 	public long estimateTotalBytes() {

@@ -11,17 +11,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.storage.file.PackLock;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.storage.file.PackLock;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
 
 /**
  * Lists known refs from the remote and copies objects of selected refs.
@@ -32,7 +32,7 @@ import org.eclipse.jgit.lib.Ref;
  * into this local repository.
  * <p>
  * Instances of a FetchConnection must be created by a
- * {@link org.eclipse.jgit.transport.Transport} that implements a specific
+ * {@link org.openrewrite.jgit.transport.Transport} that implements a specific
  * object transfer protocol that both sides of the connection understand.
  * <p>
  * FetchConnection instances are not thread safe and may be accessed by only one
@@ -45,7 +45,7 @@ public interface FetchConnection extends Connection {
 	 * Fetch objects we don't have but that are reachable from advertised refs.
 	 * <p>
 	 * Only one call per connection is allowed. Subsequent calls will result in
-	 * {@link org.eclipse.jgit.errors.TransportException}.
+	 * {@link org.openrewrite.jgit.errors.TransportException}.
 	 * </p>
 	 * <p>
 	 * Implementations are free to use network connections as necessary to
@@ -54,7 +54,7 @@ public interface FetchConnection extends Connection {
 	 * avoid replacing/overwriting/duplicating an object already available in
 	 * the local destination repository. Locally available objects and packs
 	 * should always be preferred over remotely available objects and packs.
-	 * {@link org.eclipse.jgit.transport.Transport#isFetchThin()} should be
+	 * {@link org.openrewrite.jgit.transport.Transport#isFetchThin()} should be
 	 * honored if applicable.
 	 * </p>
 	 *
@@ -71,7 +71,7 @@ public interface FetchConnection extends Connection {
 	 *            repository, especially if they aren't yet reachable by the ref
 	 *            database. Connections should take this set as an addition to
 	 *            what is reachable through all Refs, not in replace of it.
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             objects could not be copied due to a network failure,
 	 *             protocol error, or error on remote side, or connection was
 	 *             already used for fetch.
@@ -84,7 +84,7 @@ public interface FetchConnection extends Connection {
 	 * Fetch objects we don't have but that are reachable from advertised refs.
 	 * <p>
 	 * Only one call per connection is allowed. Subsequent calls will result in
-	 * {@link org.eclipse.jgit.errors.TransportException}.
+	 * {@link org.openrewrite.jgit.errors.TransportException}.
 	 * </p>
 	 * <p>
 	 * Implementations are free to use network connections as necessary to
@@ -93,7 +93,7 @@ public interface FetchConnection extends Connection {
 	 * avoid replacing/overwriting/duplicating an object already available in
 	 * the local destination repository. Locally available objects and packs
 	 * should always be preferred over remotely available objects and packs.
-	 * {@link org.eclipse.jgit.transport.Transport#isFetchThin()} should be
+	 * {@link org.openrewrite.jgit.transport.Transport#isFetchThin()} should be
 	 * honored if applicable.
 	 * </p>
 	 *
@@ -112,7 +112,7 @@ public interface FetchConnection extends Connection {
 	 *            what is reachable through all Refs, not in replace of it.
 	 * @param out
 	 *            OutputStream to write sideband messages to
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             objects could not be copied due to a network failure,
 	 *             protocol error, or error on remote side, or connection was
 	 *             already used for fetch.
@@ -126,8 +126,8 @@ public interface FetchConnection extends Connection {
 	 * Did the last {@link #fetch(ProgressMonitor, Collection, Set)} get tags?
 	 * <p>
 	 * Some Git aware transports are able to implicitly grab an annotated tag if
-	 * {@link org.eclipse.jgit.transport.TagOpt#AUTO_FOLLOW} or
-	 * {@link org.eclipse.jgit.transport.TagOpt#FETCH_TAGS} was selected and the
+	 * {@link org.openrewrite.jgit.transport.TagOpt#AUTO_FOLLOW} or
+	 * {@link org.openrewrite.jgit.transport.TagOpt#FETCH_TAGS} was selected and the
 	 * object the tag peels to (references) was transferred as part of the last
 	 * {@link #fetch(ProgressMonitor, Collection, Set)} call. If it is possible
 	 * for such tags to have been included in the transfer this method returns

@@ -7,23 +7,23 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.NoWorkTreeException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.IndexDiff;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.NoWorkTreeException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.IndexDiff;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
 
 /**
  * A class used to execute a {@code Status} command. It has setters for all
@@ -46,7 +46,7 @@ public class StatusCommand extends GitCommand<Status> {
 	 * Constructor for StatusCommand.
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	protected StatusCommand(Repository repo) {
 		super(repo);
@@ -57,7 +57,7 @@ public class StatusCommand extends GitCommand<Status> {
 	 *
 	 * @param mode
 	 *            the
-	 *            {@link org.eclipse.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode}
+	 *            {@link org.openrewrite.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode}
 	 * @return {@code this}
 	 * @since 3.6
 	 */
@@ -130,9 +130,9 @@ public class StatusCommand extends GitCommand<Status> {
 	}
 
 	/**
-	 * To set the {@link org.eclipse.jgit.treewalk.WorkingTreeIterator} which
+	 * To set the {@link org.openrewrite.jgit.treewalk.WorkingTreeIterator} which
 	 * should be used. If this method is not called a standard
-	 * {@link org.eclipse.jgit.treewalk.FileTreeIterator} is used.
+	 * {@link org.openrewrite.jgit.treewalk.FileTreeIterator} is used.
 	 *
 	 * @param workingTreeIt
 	 *            a working tree iterator
@@ -144,11 +144,11 @@ public class StatusCommand extends GitCommand<Status> {
 	}
 
 	/**
-	 * To set the {@link org.eclipse.jgit.lib.ProgressMonitor} which contains
+	 * To set the {@link org.openrewrite.jgit.lib.ProgressMonitor} which contains
 	 * callback methods to inform you about the progress of this command.
 	 *
 	 * @param progressMonitor
-	 *            a {@link org.eclipse.jgit.lib.ProgressMonitor} object.
+	 *            a {@link org.openrewrite.jgit.lib.ProgressMonitor} object.
 	 * @return {@code this}
 	 * @since 3.1
 	 */

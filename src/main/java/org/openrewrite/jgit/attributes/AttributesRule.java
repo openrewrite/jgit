@@ -7,24 +7,24 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.attributes;
+package org.openrewrite.jgit.attributes;
 
-import static org.eclipse.jgit.ignore.IMatcher.NO_MATCH;
+import static org.openrewrite.jgit.ignore.IMatcher.NO_MATCH;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.attributes.Attribute.State;
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.ignore.FastIgnoreRule;
-import org.eclipse.jgit.ignore.IMatcher;
-import org.eclipse.jgit.ignore.internal.PathMatcher;
+import org.openrewrite.jgit.attributes.Attribute.State;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.ignore.FastIgnoreRule;
+import org.openrewrite.jgit.ignore.IMatcher;
+import org.openrewrite.jgit.ignore.internal.PathMatcher;
 
 /**
  * A single attributes rule corresponding to one line in a .gitattributes file.
  *
- * Inspiration from: {@link org.eclipse.jgit.ignore.FastIgnoreRule}
+ * Inspiration from: {@link org.openrewrite.jgit.ignore.FastIgnoreRule}
  *
  * @since 3.7
  */

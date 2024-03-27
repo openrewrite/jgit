@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 /**
  * One chunk from a merge result. Each chunk contains a range from a
@@ -54,7 +54,7 @@ public class MergeChunk {
 	 *
 	 * @param sequenceIndex
 	 *            determines to which sequence this chunks belongs to. Same as
-	 *            in {@link org.eclipse.jgit.merge.MergeResult#add}
+	 *            in {@link org.openrewrite.jgit.merge.MergeResult#add}
 	 * @param begin
 	 *            the first element from the specified sequence which should be
 	 *            included in the merge result. Indexes start with 0.
@@ -65,7 +65,7 @@ public class MergeChunk {
 	 *            this element are added.
 	 * @param conflictState
 	 *            the state of this chunk. See
-	 *            {@link org.eclipse.jgit.merge.MergeChunk.ConflictState}
+	 *            {@link org.openrewrite.jgit.merge.MergeChunk.ConflictState}
 	 */
 	protected MergeChunk(int sequenceIndex, int begin, int end,
 			ConflictState conflictState) {
@@ -79,7 +79,7 @@ public class MergeChunk {
 	 * Get the index of the sequence to which this sequence chunks belongs to.
 	 *
 	 * @return the index of the sequence to which this sequence chunks belongs
-	 *         to. Same as in {@link org.eclipse.jgit.merge.MergeResult#add}
+	 *         to. Same as in {@link org.openrewrite.jgit.merge.MergeResult#add}
 	 */
 	public int getSequenceIndex() {
 		return sequenceIndex;
@@ -112,7 +112,7 @@ public class MergeChunk {
 	 * Get the state of this chunk.
 	 *
 	 * @return the state of this chunk. See
-	 *         {@link org.eclipse.jgit.merge.MergeChunk.ConflictState}
+	 *         {@link org.openrewrite.jgit.merge.MergeChunk.ConflictState}
 	 */
 	public ConflictState getConflictState() {
 		return conflictState;

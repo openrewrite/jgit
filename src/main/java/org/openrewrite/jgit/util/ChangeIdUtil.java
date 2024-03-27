@@ -7,14 +7,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.PersonIdent;
 
 /**
  * Utilities for creating and working with Change-Id's, like the one used by
@@ -49,10 +49,10 @@ public class ChangeIdUtil {
 	 * @param firstParentId
 	 *            parent id of previous commit or null
 	 * @param author
-	 *            the {@link org.eclipse.jgit.lib.PersonIdent} for the presumed
+	 *            the {@link org.openrewrite.jgit.lib.PersonIdent} for the presumed
 	 *            author and time
 	 * @param committer
-	 *            the {@link org.eclipse.jgit.lib.PersonIdent} for the presumed
+	 *            the {@link org.openrewrite.jgit.lib.PersonIdent} for the presumed
 	 *            committer and time
 	 * @param message
 	 *            The commit message

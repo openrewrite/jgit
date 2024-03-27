@@ -8,13 +8,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
-import org.eclipse.jgit.transport.URIish;
+import org.openrewrite.jgit.transport.URIish;
 
 /**
- * An exception thrown when a {@link org.eclipse.jgit.transport.CredentialItem}
- * is requested from a {@link org.eclipse.jgit.transport.CredentialsProvider}
+ * An exception thrown when a {@link org.openrewrite.jgit.transport.CredentialItem}
+ * is requested from a {@link org.openrewrite.jgit.transport.CredentialsProvider}
  * which is not supported by this provider.
  */
 public class UnsupportedCredentialItem extends RuntimeException {

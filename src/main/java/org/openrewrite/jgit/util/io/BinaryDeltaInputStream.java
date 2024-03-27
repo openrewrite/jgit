@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.io.StreamCorruptedException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * An {@link InputStream} that applies a binary delta to a base on the fly.

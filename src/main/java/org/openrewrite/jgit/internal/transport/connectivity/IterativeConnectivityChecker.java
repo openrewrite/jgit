@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.transport.connectivity;
+package org.openrewrite.jgit.internal.transport.connectivity;
 
 import static java.util.stream.Collectors.toList;
 
@@ -22,14 +22,14 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.ConnectivityChecker;
-import org.eclipse.jgit.transport.ReceiveCommand;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.ConnectivityChecker;
+import org.openrewrite.jgit.transport.ReceiveCommand;
 
 /**
  * Implementation of connectivity checker which tries to do check with smaller

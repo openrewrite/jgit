@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
-import org.eclipse.jgit.internal.storage.pack.ObjectToPack;
-import org.eclipse.jgit.internal.storage.pack.StoredObjectRepresentation;
-import org.eclipse.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.internal.storage.pack.ObjectToPack;
+import org.openrewrite.jgit.internal.storage.pack.StoredObjectRepresentation;
+import org.openrewrite.jgit.lib.AnyObjectId;
 
 /** {@link ObjectToPack} for {@link DfsObjDatabase}. */
 class DfsObjectToPack extends ObjectToPack {

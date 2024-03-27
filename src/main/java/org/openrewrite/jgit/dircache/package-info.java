@@ -1,4 +1,4 @@
 /**
  * Reading and editing the directory cache (index).
  */
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;

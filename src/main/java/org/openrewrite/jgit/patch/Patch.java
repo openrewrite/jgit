@@ -8,25 +8,25 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.patch;
+package org.openrewrite.jgit.patch;
 
-import static org.eclipse.jgit.lib.Constants.encodeASCII;
-import static org.eclipse.jgit.patch.FileHeader.NEW_NAME;
-import static org.eclipse.jgit.patch.FileHeader.OLD_NAME;
-import static org.eclipse.jgit.patch.FileHeader.isHunkHdr;
-import static org.eclipse.jgit.util.RawParseUtils.match;
-import static org.eclipse.jgit.util.RawParseUtils.nextLF;
+import static org.openrewrite.jgit.lib.Constants.encodeASCII;
+import static org.openrewrite.jgit.patch.FileHeader.NEW_NAME;
+import static org.openrewrite.jgit.patch.FileHeader.OLD_NAME;
+import static org.openrewrite.jgit.patch.FileHeader.isHunkHdr;
+import static org.openrewrite.jgit.util.RawParseUtils.match;
+import static org.openrewrite.jgit.util.RawParseUtils.nextLF;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.TemporaryBuffer;
 
 /**
- * A parsed collection of {@link org.eclipse.jgit.patch.FileHeader}s from a
+ * A parsed collection of {@link org.openrewrite.jgit.patch.FileHeader}s from a
  * unified diff patch file
  */
 public class Patch {

@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.storage.file;
+package org.openrewrite.jgit.storage.file;
 
 import java.util.Map;
 
 import javax.management.MXBean;
 
-import org.eclipse.jgit.internal.storage.file.WindowCache;
+import org.openrewrite.jgit.internal.storage.file.WindowCache;
 
 /**
  * Cache statistics for {@link WindowCache}.

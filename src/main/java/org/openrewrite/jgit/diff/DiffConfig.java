@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Config.SectionParser;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * Keeps track of diff related configuration options.

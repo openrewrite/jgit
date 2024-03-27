@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -20,11 +20,11 @@ import java.nio.file.attribute.FileTime;
 import java.text.ParseException;
 import java.time.Instant;
 
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.GitDateParser;
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.GitDateParser;
+import org.openrewrite.jgit.util.SystemReader;
 
 /**
  * This class manages the gc.log file for a {@link FileRepository}.

@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jgit.lib.internal.WorkQueue;
+import org.openrewrite.jgit.lib.internal.WorkQueue;
 
 /**
  * ProgressMonitor that batches update events.

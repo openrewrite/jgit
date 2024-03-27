@@ -7,17 +7,17 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.transport.parser;
+package org.openrewrite.jgit.internal.transport.parser;
 
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_AGENT;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_AGENT;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * In the pack negotiation phase (protocol v0/v1), the client sends a list of

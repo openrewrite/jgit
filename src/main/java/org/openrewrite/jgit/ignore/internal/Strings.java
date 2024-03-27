@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore.internal;
+package org.openrewrite.jgit.ignore.internal;
 
 import static java.lang.Character.isLetter;
 
@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.ignore.FastIgnoreRule;
-import org.eclipse.jgit.internal.JGitText;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.ignore.FastIgnoreRule;
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Various {@link java.lang.String} related utility methods, written mostly to
@@ -210,7 +210,7 @@ public class Strings {
 			"word" //$NON-NLS-1$
 	// [:word:] XXX I don't see it in
 	// http://man7.org/linux/man-pages/man7/glob.7.html
-	// but this was in org.eclipse.jgit.fnmatch.GroupHead.java ???
+	// but this was in org.openrewrite.jgit.fnmatch.GroupHead.java ???
 			);
 
 	private static final String DL = "\\p{javaDigit}\\p{javaLetter}"; //$NON-NLS-1$
@@ -234,7 +234,7 @@ public class Strings {
 	/**
 	 * Conversion from glob to Java regex following two sources: <li>
 	 * http://man7.org/linux/man-pages/man7/glob.7.html <li>
-	 * org.eclipse.jgit.fnmatch.FileNameMatcher.java Seems that there are
+	 * org.openrewrite.jgit.fnmatch.FileNameMatcher.java Seems that there are
 	 * various ways to define what "glob" can be.
 	 *
 	 * @param pattern

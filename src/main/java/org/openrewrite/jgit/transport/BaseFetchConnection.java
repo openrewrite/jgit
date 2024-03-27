@@ -10,16 +10,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
 
 /**
  * Base helper class for fetch connection implementations. Provides some common
@@ -69,7 +69,7 @@ abstract class BaseFetchConnection extends BaseConnection implements
 	 *            as in {@link #fetch(ProgressMonitor, Collection, Set)}
 	 * @param have
 	 *            as in {@link #fetch(ProgressMonitor, Collection, Set)}
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             as in {@link #fetch(ProgressMonitor, Collection, Set)}, but
 	 *             implementation doesn't have to care about multiple
 	 *             {@link #fetch(ProgressMonitor, Collection, Set)} calls, as it

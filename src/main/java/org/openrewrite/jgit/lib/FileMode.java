@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -174,7 +174,7 @@ public abstract class FileMode {
 
 	/**
 	 * Test a file mode for equality with this
-	 * {@link org.eclipse.jgit.lib.FileMode} object.
+	 * {@link org.openrewrite.jgit.lib.FileMode} object.
 	 *
 	 * @param modebits
 	 *            a int.
@@ -230,7 +230,7 @@ public abstract class FileMode {
 	/**
 	 * Get the object type that should appear for this type of mode.
 	 * <p>
-	 * See the object type constants in {@link org.eclipse.jgit.lib.Constants}.
+	 * See the object type constants in {@link org.openrewrite.jgit.lib.Constants}.
 	 *
 	 * @return one of the well known object type constants.
 	 */

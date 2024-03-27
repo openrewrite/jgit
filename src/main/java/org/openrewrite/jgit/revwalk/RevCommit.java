@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk;
+package org.openrewrite.jgit.revwalk;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -22,17 +22,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * A commit reference to a commit in the DAG.
@@ -50,7 +50,7 @@ public class RevCommit extends RevObject {
 	 *
 	 * Applications are discouraged from using this API. Callers usually need
 	 * more than one commit. Use
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#parseCommit(AnyObjectId)} to
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#parseCommit(AnyObjectId)} to
 	 * obtain a RevCommit from an existing repository.
 	 *
 	 * @param raw
@@ -371,7 +371,7 @@ public class RevCommit extends RevObject {
 	 * necessary to use all information from it.
 	 * <p>
 	 * RevFilter implementations should try to use
-	 * {@link org.eclipse.jgit.util.RawParseUtils} to scan the
+	 * {@link org.openrewrite.jgit.util.RawParseUtils} to scan the
 	 * {@link #getRawBuffer()} instead, as this will allow faster evaluation of
 	 * commits.
 	 *
@@ -401,7 +401,7 @@ public class RevCommit extends RevObject {
 	 * information from it.
 	 * <p>
 	 * RevFilter implementations should try to use
-	 * {@link org.eclipse.jgit.util.RawParseUtils} to scan the
+	 * {@link org.openrewrite.jgit.util.RawParseUtils} to scan the
 	 * {@link #getRawBuffer()} instead, as this will allow faster evaluation of
 	 * commits.
 	 *
@@ -428,7 +428,7 @@ public class RevCommit extends RevObject {
 	 * information from it.
 	 * <p>
 	 * RevFilter implementations should try to use
-	 * {@link org.eclipse.jgit.util.RawParseUtils} to scan the
+	 * {@link org.openrewrite.jgit.util.RawParseUtils} to scan the
 	 * {@link #getRawBuffer()} instead, as this will allow faster evaluation of
 	 * commits.
 	 *
@@ -662,7 +662,7 @@ public class RevCommit extends RevObject {
 	 * time in {@link #getCommitTime()}. Accessing other properties such as
 	 * {@link #getAuthorIdent()}, {@link #getCommitterIdent()} or either message
 	 * function requires reloading the buffer by invoking
-	 * {@link org.eclipse.jgit.revwalk.RevWalk#parseBody(RevObject)}.
+	 * {@link org.openrewrite.jgit.revwalk.RevWalk#parseBody(RevObject)}.
 	 *
 	 * @since 4.0
 	 */

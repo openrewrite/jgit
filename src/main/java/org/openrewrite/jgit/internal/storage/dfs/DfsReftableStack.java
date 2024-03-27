@@ -8,18 +8,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.internal.storage.reftable.ReftableReader;
+import org.openrewrite.jgit.internal.storage.reftable.ReftableReader;
 
 /**
  * Tracks multiple open
- * {@link org.eclipse.jgit.internal.storage.reftable.ReftableReader} instances.
+ * {@link org.openrewrite.jgit.internal.storage.reftable.ReftableReader} instances.
  */
 public class DfsReftableStack implements AutoCloseable {
 	/**

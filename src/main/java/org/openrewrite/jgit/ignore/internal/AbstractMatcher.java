@@ -7,9 +7,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.ignore.internal;
+package org.openrewrite.jgit.ignore.internal;
 
-import org.eclipse.jgit.ignore.IMatcher;
+import org.openrewrite.jgit.ignore.IMatcher;
 
 /**
  * Base class for default methods as {@link #toString()} and such.

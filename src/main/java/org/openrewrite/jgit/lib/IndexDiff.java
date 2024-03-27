@@ -12,7 +12,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,27 +28,27 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.StopWalkException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.submodule.SubmoduleWalk;
-import org.eclipse.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.EmptyTreeIterator;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.TreeWalk.OperationType;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.IndexDiffFilter;
-import org.eclipse.jgit.treewalk.filter.SkipWorkTreeFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.StopWalkException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.submodule.SubmoduleWalk;
+import org.openrewrite.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.EmptyTreeIterator;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.treewalk.filter.AndTreeFilter;
+import org.openrewrite.jgit.treewalk.filter.IndexDiffFilter;
+import org.openrewrite.jgit.treewalk.filter.SkipWorkTreeFilter;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
 
 /**
  * Compares the index, a tree, and the working directory Ignored files are not
@@ -258,7 +258,7 @@ public class IndexDiff {
 	 * Construct an IndexDiff
 	 *
 	 * @param repository
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param revstr
 	 *            symbolic name e.g. HEAD An EmptyTreeIterator is used if
 	 *            <code>revstr</code> cannot be resolved.
@@ -275,7 +275,7 @@ public class IndexDiff {
 	 * Construct an Indexdiff
 	 *
 	 * @param repository
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param objectId
 	 *            tree id. If null, an EmptyTreeIterator is used.
 	 * @param workingTreeIterator
@@ -336,7 +336,7 @@ public class IndexDiff {
 	 * files.
 	 *
 	 * @param filter
-	 *            a {@link org.eclipse.jgit.treewalk.filter.TreeFilter} object.
+	 *            a {@link org.openrewrite.jgit.treewalk.filter.TreeFilter} object.
 	 */
 	public void setFilter(TreeFilter filter) {
 		this.filter = filter;
@@ -756,10 +756,10 @@ public class IndexDiff {
 
 	/**
 	 * Get the map from each path of {@link #getConflicting()} to its
-	 * corresponding {@link org.eclipse.jgit.lib.IndexDiff.StageState}
+	 * corresponding {@link org.openrewrite.jgit.lib.IndexDiff.StageState}
 	 *
 	 * @return the map from each path of {@link #getConflicting()} to its
-	 *         corresponding {@link org.eclipse.jgit.lib.IndexDiff.StageState}
+	 *         corresponding {@link org.openrewrite.jgit.lib.IndexDiff.StageState}
 	 * @since 3.0
 	 */
 	public Map<String, StageState> getConflictingStageStates() {
@@ -820,7 +820,7 @@ public class IndexDiff {
 	 * Get the list of paths that IndexDiff has detected to differ and have the
 	 * given file mode
 	 *
-	 * @param mode a {@link org.eclipse.jgit.lib.FileMode} object.
+	 * @param mode a {@link org.openrewrite.jgit.lib.FileMode} object.
 	 * @return the list of paths that IndexDiff has detected to differ and have
 	 *         the given file mode
 	 * @since 3.6

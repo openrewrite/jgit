@@ -8,9 +8,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import static org.eclipse.jgit.lib.Constants.DOT_GIT;
+import static org.openrewrite.jgit.lib.Constants.DOT_GIT;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,13 +18,13 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.NoWorkTreeException;
-import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.NoWorkTreeException;
+import org.openrewrite.jgit.events.WorkingTreeModifiedEvent;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
  * Remove untracked files from the working tree
@@ -49,7 +49,7 @@ public class CleanCommand extends GitCommand<Set<String>> {
 	 * Constructor for CleanCommand
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected CleanCommand(Repository repo) {
 		super(repo);

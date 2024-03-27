@@ -7,22 +7,22 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.submodule;
+package org.openrewrite.jgit.internal.submodule;
 
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_PATH;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_KEY_URL;
-import static org.eclipse.jgit.lib.ConfigConstants.CONFIG_SUBMODULE_SECTION;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.GITMODULES_NAME;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.GITMODULES_PARSE;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.GITMODULES_PATH;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.GITMODULES_URL;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PATH;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_URL;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_SUBMODULE_SECTION;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.GITMODULES_NAME;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.GITMODULES_PARSE;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.GITMODULES_PATH;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.GITMODULES_URL;
 
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ObjectChecker;
 
 /**
  * Validations for the git submodule fields (name, path, uri).

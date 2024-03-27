@@ -7,15 +7,15 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *******************************************************************************/
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.api.MergeCommand.FastForwardMode;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Config.SectionParser;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.api.MergeCommand.FastForwardMode;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Holds configuration for merging into a given branch
@@ -28,7 +28,7 @@ public class MergeConfig {
 	 * Get merge configuration for the current branch of the repository
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @return merge configuration for the current branch of the repository
 	 */
 	public static MergeConfig getConfigForCurrentBranch(Repository repo) {
@@ -45,13 +45,13 @@ public class MergeConfig {
 
 	/**
 	 * Get a parser for use with
-	 * {@link org.eclipse.jgit.lib.Config#get(SectionParser)}
+	 * {@link org.openrewrite.jgit.lib.Config#get(SectionParser)}
 	 *
 	 * @param branch
 	 *            short branch name to get the configuration for, as returned
-	 *            e.g. by {@link org.eclipse.jgit.lib.Repository#getBranch()}
+	 *            e.g. by {@link org.openrewrite.jgit.lib.Repository#getBranch()}
 	 * @return a parser for use with
-	 *         {@link org.eclipse.jgit.lib.Config#get(SectionParser)}
+	 *         {@link org.openrewrite.jgit.lib.Config#get(SectionParser)}
 	 */
 	public static final SectionParser<MergeConfig> getParser(
 			final String branch) {

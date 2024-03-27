@@ -9,9 +9,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
-import static org.eclipse.jgit.lib.Constants.LOCK_SUFFIX;
+import static org.openrewrite.jgit.lib.Constants.LOCK_SUFFIX;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,12 +30,12 @@ import java.text.MessageFormat;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.FS.LockToken;
-import org.eclipse.jgit.util.FileUtils;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.FS.LockToken;
+import org.openrewrite.jgit.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +56,7 @@ public class LockFile {
 	 * Unlock the given file.
 	 * <p>
 	 * This method can be used for recovering from a thrown
-	 * {@link org.eclipse.jgit.errors.LockFailedException} . This method does
+	 * {@link org.openrewrite.jgit.errors.LockFailedException} . This method does
 	 * not validate that the lock is or is not currently held before attempting
 	 * to unlock it.
 	 *
@@ -395,7 +395,7 @@ public class LockFile {
 
 	/**
 	 * Request that {@link #commit()} remember the
-	 * {@link org.eclipse.jgit.internal.storage.file.FileSnapshot}.
+	 * {@link org.openrewrite.jgit.internal.storage.file.FileSnapshot}.
 	 *
 	 * @param on
 	 *            true if the commit method must remember the FileSnapshot.
@@ -406,7 +406,7 @@ public class LockFile {
 
 	/**
 	 * Request that {@link #commit()} remember the
-	 * {@link org.eclipse.jgit.internal.storage.file.FileSnapshot} without using
+	 * {@link org.openrewrite.jgit.internal.storage.file.FileSnapshot} without using
 	 * config file to get filesystem timestamp resolution.
 	 * This method should be invoked before the file is accessed.
 	 * It is used by FileBasedConfig to avoid endless recursion.

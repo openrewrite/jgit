@@ -8,26 +8,26 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.BatchRefUpdate;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefDatabase;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.SymbolicRef;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.ReceiveCommand;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.BatchRefUpdate;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefDatabase;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.ReceiveCommand;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,19 +40,19 @@ import java.util.TreeSet;
 import java.util.concurrent.locks.Lock;
 import java.util.stream.Collectors;
 
-import static org.eclipse.jgit.lib.Ref.Storage.NEW;
-import static org.eclipse.jgit.lib.Ref.Storage.PACKED;
+import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
+import static org.openrewrite.jgit.lib.Ref.Storage.PACKED;
 
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.LOCK_FAILURE;
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.NOT_ATTEMPTED;
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.OK;
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.REJECTED_MISSING_OBJECT;
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.REJECTED_NONFASTFORWARD;
-import static org.eclipse.jgit.transport.ReceiveCommand.Type.DELETE;
-import static org.eclipse.jgit.transport.ReceiveCommand.Type.UPDATE_NONFASTFORWARD;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.LOCK_FAILURE;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.NOT_ATTEMPTED;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.OK;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.REJECTED_MISSING_OBJECT;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.REJECTED_NONFASTFORWARD;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Type.DELETE;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Type.UPDATE_NONFASTFORWARD;
 
 /**
- * {@link org.eclipse.jgit.lib.BatchRefUpdate} for Reftable based RefDatabase.
+ * {@link org.openrewrite.jgit.lib.BatchRefUpdate} for Reftable based RefDatabase.
  */
 public abstract class ReftableBatchRefUpdate extends BatchRefUpdate {
 	private final Lock lock;

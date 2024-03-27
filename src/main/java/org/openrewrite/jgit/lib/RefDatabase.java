@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
@@ -24,17 +24,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
 
 /**
- * Abstraction of name to {@link org.eclipse.jgit.lib.ObjectId} mapping.
+ * Abstraction of name to {@link org.openrewrite.jgit.lib.ObjectId} mapping.
  * <p>
  * A reference database stores a mapping of reference names to
- * {@link org.eclipse.jgit.lib.ObjectId}. Every
- * {@link org.eclipse.jgit.lib.Repository} has a single reference database,
+ * {@link org.openrewrite.jgit.lib.ObjectId}. Every
+ * {@link org.openrewrite.jgit.lib.Repository} has a single reference database,
  * mapping names to the tips of the object graph contained by the
- * {@link org.eclipse.jgit.lib.ObjectDatabase}.
+ * {@link org.openrewrite.jgit.lib.ObjectDatabase}.
  */
 public abstract class RefDatabase {
 	/**
@@ -160,11 +160,11 @@ public abstract class RefDatabase {
 	 *            the name of the reference.
 	 * @param detach
 	 *            if {@code true} and {@code name} is currently a
-	 *            {@link org.eclipse.jgit.lib.SymbolicRef}, the update will
-	 *            replace it with an {@link org.eclipse.jgit.lib.ObjectIdRef}.
+	 *            {@link org.openrewrite.jgit.lib.SymbolicRef}, the update will
+	 *            replace it with an {@link org.openrewrite.jgit.lib.ObjectIdRef}.
 	 *            Otherwise, the update will recursively traverse
-	 *            {@link org.eclipse.jgit.lib.SymbolicRef}s and operate on the
-	 *            leaf {@link org.eclipse.jgit.lib.ObjectIdRef}.
+	 *            {@link org.openrewrite.jgit.lib.SymbolicRef}s and operate on the
+	 *            leaf {@link org.openrewrite.jgit.lib.ObjectIdRef}.
 	 * @return a new update for the requested name; never null.
 	 * @throws java.io.IOException
 	 *             the reference space cannot be accessed.
@@ -204,18 +204,18 @@ public abstract class RefDatabase {
 	 * Whether the database is capable of performing batch updates as atomic
 	 * transactions.
 	 * <p>
-	 * If true, by default {@link org.eclipse.jgit.lib.BatchRefUpdate} instances
+	 * If true, by default {@link org.openrewrite.jgit.lib.BatchRefUpdate} instances
 	 * will perform updates atomically, meaning either all updates will succeed,
 	 * or all updates will fail. It is still possible to turn off this behavior
 	 * on a per-batch basis by calling {@code update.setAtomic(false)}.
 	 * <p>
-	 * If false, {@link org.eclipse.jgit.lib.BatchRefUpdate} instances will
+	 * If false, {@link org.openrewrite.jgit.lib.BatchRefUpdate} instances will
 	 * never perform updates atomically, and calling
 	 * {@code update.setAtomic(true)} will cause the entire batch to fail with
 	 * {@code REJECTED_OTHER_REASON}.
 	 * <p>
 	 * This definition of atomicity is stronger than what is provided by
-	 * {@link org.eclipse.jgit.transport.ReceivePack}. {@code ReceivePack} will
+	 * {@link org.openrewrite.jgit.transport.ReceivePack}. {@code ReceivePack} will
 	 * attempt to reject all commands if it knows in advance some commands may
 	 * fail, even if the storage layer does not support atomic transactions.
 	 * Here, atomicity applies even in the case of unforeseeable errors.
@@ -543,9 +543,9 @@ public abstract class RefDatabase {
 	 * <p>
 	 * If the reference cannot be peeled (as it does not refer to an annotated
 	 * tag) the peeled id stays null, but
-	 * {@link org.eclipse.jgit.lib.Ref#isPeeled()} will be true.
+	 * {@link org.openrewrite.jgit.lib.Ref#isPeeled()} will be true.
 	 * <p>
-	 * Implementors should check {@link org.eclipse.jgit.lib.Ref#isPeeled()}
+	 * Implementors should check {@link org.openrewrite.jgit.lib.Ref#isPeeled()}
 	 * before performing any additional work effort.
 	 *
 	 * @param ref

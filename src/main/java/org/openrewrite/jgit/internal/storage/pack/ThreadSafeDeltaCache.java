@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.eclipse.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.storage.pack.PackConfig;
 
 class ThreadSafeDeltaCache extends DeltaCache {
 	private final ReentrantLock lock;

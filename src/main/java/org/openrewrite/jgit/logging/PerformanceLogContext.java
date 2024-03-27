@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.logging;
+package org.openrewrite.jgit.logging;
 
 import java.util.ArrayList;
 import java.util.Collections;

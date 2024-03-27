@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.RefRename;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.RefRename;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
 
 final class DfsRefRename extends RefRename {
 	DfsRefRename(RefUpdate src, RefUpdate dst) {

@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,26 +25,26 @@ import java.util.List;
 import java.util.zip.CRC32;
 import java.util.zip.Deflater;
 
-import org.eclipse.jgit.errors.LockFailedException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.transport.PackParser;
-import org.eclipse.jgit.transport.PackedObjectInfo;
-import org.eclipse.jgit.util.FileUtils;
-import org.eclipse.jgit.util.NB;
+import org.openrewrite.jgit.errors.LockFailedException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.CoreConfig;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.transport.PackParser;
+import org.openrewrite.jgit.transport.PackedObjectInfo;
+import org.openrewrite.jgit.util.FileUtils;
+import org.openrewrite.jgit.util.NB;
 
 /**
  * Consumes a pack stream and stores as a pack file in
- * {@link org.eclipse.jgit.internal.storage.file.ObjectDirectory}.
+ * {@link org.openrewrite.jgit.internal.storage.file.ObjectDirectory}.
  * <p>
  * To obtain an instance of a parser, applications should use
- * {@link org.eclipse.jgit.lib.ObjectInserter#newPackParser(InputStream)}.
+ * {@link org.openrewrite.jgit.lib.ObjectInserter#newPackParser(InputStream)}.
  */
 public class ObjectDirectoryPackParser extends PackParser {
 	private final FileObjectDatabase db;
@@ -130,7 +130,7 @@ public class ObjectDirectoryPackParser extends PackParser {
 	}
 
 	/**
-	 * Get the imported {@link org.eclipse.jgit.internal.storage.file.Pack}.
+	 * Get the imported {@link org.openrewrite.jgit.internal.storage.file.Pack}.
 	 * <p>
 	 * This method is supplied only to support testing; applications shouldn't
 	 * be using it directly to access the imported data.

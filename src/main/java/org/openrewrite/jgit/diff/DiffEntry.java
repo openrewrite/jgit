@@ -8,24 +8,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.jgit.attributes.Attribute;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilterMarker;
+import org.openrewrite.jgit.attributes.Attribute;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.treewalk.filter.TreeFilterMarker;
 
 /**
  * A value class representing a change to a file
@@ -429,8 +429,8 @@ public class DiffEntry {
 	 *
 	 * @return similarity score between {@link #getOldPath()} and
 	 *         {@link #getNewPath()} if {@link #getChangeType()} is
-	 *         {@link org.eclipse.jgit.diff.DiffEntry.ChangeType#COPY} or
-	 *         {@link org.eclipse.jgit.diff.DiffEntry.ChangeType#RENAME}.
+	 *         {@link org.openrewrite.jgit.diff.DiffEntry.ChangeType#COPY} or
+	 *         {@link org.openrewrite.jgit.diff.DiffEntry.ChangeType#RENAME}.
 	 */
 	public int getScore() {
 		return score;

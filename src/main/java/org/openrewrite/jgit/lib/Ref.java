@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
 
 /**
- * Pairing of a name and the {@link org.eclipse.jgit.lib.ObjectId} it currently
+ * Pairing of a name and the {@link org.openrewrite.jgit.lib.ObjectId} it currently
  * has.
  * <p>
  * A ref in Git is (more or less) a variable that holds a single object
@@ -111,7 +111,7 @@ public interface Ref {
 	 * Test if this reference is a symbolic reference.
 	 * <p>
 	 * A symbolic reference does not have its own
-	 * {@link org.eclipse.jgit.lib.ObjectId} value, but instead points to
+	 * {@link org.openrewrite.jgit.lib.ObjectId} value, but instead points to
 	 * another {@code Ref} in the same database and always uses that other
 	 * reference's value as its own.
 	 *

@@ -9,11 +9,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.lib.FileMode.TREE;
-import static org.eclipse.jgit.lib.TreeFormatter.entrySize;
+import static org.openrewrite.jgit.lib.FileMode.TREE;
+import static org.openrewrite.jgit.lib.TreeFormatter.entrySize;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,20 +21,20 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.eclipse.jgit.errors.UnmergedPathException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.TreeFormatter;
-import org.eclipse.jgit.util.MutableInteger;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.errors.UnmergedPathException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.TreeFormatter;
+import org.openrewrite.jgit.util.MutableInteger;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
- * Single tree record from the 'TREE' {@link org.eclipse.jgit.dircache.DirCache}
+ * Single tree record from the 'TREE' {@link org.openrewrite.jgit.dircache.DirCache}
  * extension.
  * <p>
  * A valid cache tree record contains the object id of a tree object and the
- * total number of {@link org.eclipse.jgit.dircache.DirCacheEntry} instances
+ * total number of {@link org.openrewrite.jgit.dircache.DirCacheEntry} instances
  * (counted recursively) from the DirCache contained within the tree. This
  * information facilitates faster traversal of the index and quicker generation
  * of tree objects prior to creating a new commit.
@@ -176,8 +176,8 @@ public class DirCacheTree {
 	 * Determine if this cache is currently valid.
 	 * <p>
 	 * A valid cache tree knows how many
-	 * {@link org.eclipse.jgit.dircache.DirCacheEntry} instances from the parent
-	 * {@link org.eclipse.jgit.dircache.DirCache} reside within this tree
+	 * {@link org.openrewrite.jgit.dircache.DirCacheEntry} instances from the parent
+	 * {@link org.openrewrite.jgit.dircache.DirCache} reside within this tree
 	 * (recursively enumerated). It also knows the object id of the tree, as the
 	 * tree should be readily available from the repository's object database.
 	 *

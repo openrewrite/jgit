@@ -7,10 +7,10 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import static org.eclipse.jgit.lib.Constants.R_REFS;
-import static org.eclipse.jgit.lib.Constants.R_TAGS;
+import static org.openrewrite.jgit.lib.Constants.R_REFS;
+import static org.openrewrite.jgit.lib.Constants.R_TAGS;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -25,23 +25,23 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.fnmatch.FileNameMatcher;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevFlag;
-import org.eclipse.jgit.revwalk.RevFlagSet;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.fnmatch.FileNameMatcher;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.revwalk.RevFlagSet;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * Given a commit, show the most recent tag that is reachable from a commit.
@@ -92,7 +92,7 @@ public class DescribeCommand extends GitCommand<String> {
 	 * Constructor for DescribeCommand.
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected DescribeCommand(Repository repo) {
 		super(repo);
@@ -123,12 +123,12 @@ public class DescribeCommand extends GitCommand<String> {
 	 *
 	 * @param rev
 	 *            Commit ID, tag, branch, ref, etc. See
-	 *            {@link org.eclipse.jgit.lib.Repository#resolve(String)} for
+	 *            {@link org.openrewrite.jgit.lib.Repository#resolve(String)} for
 	 *            allowed syntax.
 	 * @return {@code this}
 	 * @throws IncorrectObjectTypeException
 	 *             the supplied id is not a commit or an annotated tag.
-	 * @throws org.eclipse.jgit.api.errors.RefNotFoundException
+	 * @throws org.openrewrite.jgit.api.errors.RefNotFoundException
 	 *             the given rev didn't resolve to any object.
 	 * @throws java.io.IOException
 	 *             a pack file or loose object could not be read.
@@ -221,7 +221,7 @@ public class DescribeCommand extends GitCommand<String> {
 	 * @param patterns
 	 *            the {@code glob(7)} pattern or patterns
 	 * @return {@code this}
-	 * @throws org.eclipse.jgit.errors.InvalidPatternException
+	 * @throws org.openrewrite.jgit.errors.InvalidPatternException
 	 *             if the pattern passed in was invalid.
 	 * @see <a href=
 	 *      "https://www.kernel.org/pub/software/scm/git/docs/git-describe.html"
@@ -444,7 +444,7 @@ public class DescribeCommand extends GitCommand<String> {
 	 * @param ref
 	 *            reference under inspection
 	 * @return true if it should be used for describe or not regarding
-	 *         {@link org.eclipse.jgit.api.DescribeCommand#useTags}
+	 *         {@link org.openrewrite.jgit.api.DescribeCommand#useTags}
 	 */
 	@SuppressWarnings("null")
 	private boolean filterLightweightTags(Ref ref) {

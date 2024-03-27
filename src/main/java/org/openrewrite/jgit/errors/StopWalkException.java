@@ -9,12 +9,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 /**
  * Stops the driver loop of walker and finish with current results.
  *
- * @see org.eclipse.jgit.revwalk.filter.RevFilter
+ * @see org.openrewrite.jgit.revwalk.filter.RevFilter
  */
 public class StopWalkException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

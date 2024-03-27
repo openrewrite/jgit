@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -20,10 +20,10 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.util.References;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.util.References;
 
 /**
  * Mutable builder to construct an annotated tag recording a project state.
@@ -31,9 +31,9 @@ import org.eclipse.jgit.util.References;
  * Applications should use this object when they need to manually construct a
  * tag and want precise control over its fields.
  *
- * To read a tag object, construct a {@link org.eclipse.jgit.revwalk.RevWalk}
- * and obtain a {@link org.eclipse.jgit.revwalk.RevTag} instance by calling
- * {@link org.eclipse.jgit.revwalk.RevWalk#parseTag(AnyObjectId)}.
+ * To read a tag object, construct a {@link org.openrewrite.jgit.revwalk.RevWalk}
+ * and obtain a {@link org.openrewrite.jgit.revwalk.RevTag} instance by calling
+ * {@link org.openrewrite.jgit.revwalk.RevWalk#parseTag(AnyObjectId)}.
  */
 public class TagBuilder extends ObjectBuilder {
 

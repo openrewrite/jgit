@@ -8,9 +8,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import static org.eclipse.jgit.treewalk.TreeWalk.OperationType.CHECKOUT_OP;
+import static org.openrewrite.jgit.treewalk.TreeWalk.OperationType.CHECKOUT_OP;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -21,47 +21,47 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jgit.api.CheckoutResult.Status;
-import org.eclipse.jgit.api.errors.CheckoutConflictException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.RefAlreadyExistsException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.dircache.Checkout;
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.dircache.DirCacheCheckout;
-import org.eclipse.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
-import org.eclipse.jgit.dircache.DirCacheEditor;
-import org.eclipse.jgit.dircache.DirCacheEditor.PathEdit;
-import org.eclipse.jgit.dircache.DirCacheEntry;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.AmbiguousObjectException;
-import org.eclipse.jgit.errors.UnmergedPathException;
-import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig.EolStreamType;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.PathFilterGroup;
+import org.openrewrite.jgit.api.CheckoutResult.Status;
+import org.openrewrite.jgit.api.errors.CheckoutConflictException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidRefNameException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.RefAlreadyExistsException;
+import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.dircache.Checkout;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.dircache.DirCacheCheckout;
+import org.openrewrite.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
+import org.openrewrite.jgit.dircache.DirCacheEditor;
+import org.openrewrite.jgit.dircache.DirCacheEditor.PathEdit;
+import org.openrewrite.jgit.dircache.DirCacheEntry;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.AmbiguousObjectException;
+import org.openrewrite.jgit.errors.UnmergedPathException;
+import org.openrewrite.jgit.events.WorkingTreeModifiedEvent;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
 
 /**
  * Checkout a branch to the working tree.
  * <p>
- * Examples (<code>git</code> is a {@link org.eclipse.jgit.api.Git} instance):
+ * Examples (<code>git</code> is a {@link org.openrewrite.jgit.api.Git} instance):
  * <p>
  * Check out an existing branch:
  *
@@ -160,7 +160,7 @@ public class CheckoutCommand extends GitCommand<Ref> {
 	 * Constructor for CheckoutCommand
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected CheckoutCommand(Repository repo) {
 		super(repo);
@@ -247,7 +247,7 @@ public class CheckoutCommand extends GitCommand<Ref> {
 				dco.setProgressMonitor(monitor);
 				try {
 					dco.checkout();
-				} catch (org.eclipse.jgit.errors.CheckoutConflictException e) {
+				} catch (org.openrewrite.jgit.errors.CheckoutConflictException e) {
 					status = new CheckoutResult(Status.CONFLICTS,
 							dco.getConflicts());
 					throw new CheckoutConflictException(dco.getConflicts(), e);
@@ -402,12 +402,12 @@ public class CheckoutCommand extends GitCommand<Ref> {
 
 	/**
 	 * Checkout paths into index and working directory, firing a
-	 * {@link org.eclipse.jgit.events.WorkingTreeModifiedEvent} if the working
+	 * {@link org.openrewrite.jgit.events.WorkingTreeModifiedEvent} if the working
 	 * tree was modified.
 	 *
 	 * @return this instance
 	 * @throws java.io.IOException
-	 * @throws org.eclipse.jgit.api.errors.RefNotFoundException
+	 * @throws org.openrewrite.jgit.api.errors.RefNotFoundException
 	 */
 	protected CheckoutCommand checkoutPaths() throws IOException,
 			RefNotFoundException {

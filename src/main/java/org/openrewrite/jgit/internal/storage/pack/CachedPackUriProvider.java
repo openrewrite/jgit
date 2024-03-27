@@ -7,11 +7,11 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.io.IOException;
 import java.util.Collection;
-import org.eclipse.jgit.annotations.Nullable;
+import org.openrewrite.jgit.annotations.Nullable;
 
 /**
  * Provider of URIs corresponding to cached packs. For use with the

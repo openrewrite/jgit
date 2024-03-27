@@ -7,21 +7,21 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.notes.Note;
-import org.eclipse.jgit.notes.NoteMap;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.notes.Note;
+import org.openrewrite.jgit.notes.NoteMap;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * Remove object notes.
@@ -41,7 +41,7 @@ public class RemoveNoteCommand extends GitCommand<Note> {
 	 * </p>
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected RemoveNoteCommand(Repository repo) {
 		super(repo);
@@ -75,7 +75,7 @@ public class RemoveNoteCommand extends GitCommand<Note> {
 	 * Sets the object id of object you want to remove a note
 	 *
 	 * @param id
-	 *            the {@link org.eclipse.jgit.revwalk.RevObject} to remove a
+	 *            the {@link org.openrewrite.jgit.revwalk.RevObject} to remove a
 	 *            note from.
 	 * @return {@code this}
 	 */
@@ -90,7 +90,7 @@ public class RemoveNoteCommand extends GitCommand<Note> {
 	 *
 	 * @param notesRef
 	 *            the {@code Ref} to read notes from. Note, the default value of
-	 *            {@link org.eclipse.jgit.lib.Constants#R_NOTES_COMMITS} will be
+	 *            {@link org.openrewrite.jgit.lib.Constants#R_NOTES_COMMITS} will be
 	 *            used if nothing is set
 	 * @return {@code this}
 	 * @see Constants#R_NOTES_COMMITS

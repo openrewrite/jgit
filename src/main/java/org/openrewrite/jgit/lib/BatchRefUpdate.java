@@ -9,10 +9,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.NOT_ATTEMPTED;
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.REJECTED_OTHER_REASON;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.NOT_ATTEMPTED;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.REJECTED_OTHER_REASON;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -25,13 +25,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.transport.PushCertificate;
-import org.eclipse.jgit.transport.ReceiveCommand;
-import org.eclipse.jgit.util.time.ProposedTimestamp;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.transport.PushCertificate;
+import org.openrewrite.jgit.transport.ReceiveCommand;
+import org.openrewrite.jgit.util.time.ProposedTimestamp;
 
 /**
  * Batch of reference updates to be applied to a repository.
@@ -167,7 +167,7 @@ public class BatchRefUpdate {
 	 * <p>
 	 * Describes the default for commands in this batch that do not override it
 	 * with
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand#setRefLogMessage(String, boolean)}.
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand#setRefLogMessage(String, boolean)}.
 	 *
 	 * @return true if the message should include the result.
 	 */
@@ -186,7 +186,7 @@ public class BatchRefUpdate {
 	 * <p>
 	 * Describes the default for commands in this batch that do not override it
 	 * with
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand#setRefLogMessage(String, boolean)}.
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand#setRefLogMessage(String, boolean)}.
 	 *
 	 * @param msg
 	 *            the message to describe this change. If null and appendStatus
@@ -263,7 +263,7 @@ public class BatchRefUpdate {
 	 * <p>
 	 * This method only works if the underlying ref database supports atomic
 	 * transactions, i.e.
-	 * {@link org.eclipse.jgit.lib.RefDatabase#performsAtomicTransactions()}
+	 * {@link org.openrewrite.jgit.lib.RefDatabase#performsAtomicTransactions()}
 	 * returns true. Calling this method with true if the underlying ref
 	 * database does not support atomic transactions will cause all commands to
 	 * fail with {@code
@@ -402,7 +402,7 @@ public class BatchRefUpdate {
 	 * Request the batch to wait for the affected timestamps to resolve.
 	 *
 	 * @param ts
-	 *            a {@link org.eclipse.jgit.util.time.ProposedTimestamp} object.
+	 *            a {@link org.openrewrite.jgit.util.time.ProposedTimestamp} object.
 	 * @return {@code this}.
 	 * @since 4.6
 	 */
@@ -422,7 +422,7 @@ public class BatchRefUpdate {
 	 * <p>
 	 * Implementations must respect the atomicity requirements of the underlying
 	 * database as described in {@link #setAtomic(boolean)} and
-	 * {@link org.eclipse.jgit.lib.RefDatabase#performsAtomicTransactions()}.
+	 * {@link org.openrewrite.jgit.lib.RefDatabase#performsAtomicTransactions()}.
 	 *
 	 * @param walk
 	 *            a RevWalk to parse tags in case the storage system wants to

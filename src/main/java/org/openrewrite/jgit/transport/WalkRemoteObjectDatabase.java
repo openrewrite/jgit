@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -24,15 +24,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.file.RefDirectory;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.util.IO;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.file.RefDirectory;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.util.IO;
 
 /**
  * Transfers object data through a dumb transport.
@@ -71,8 +71,8 @@ abstract class WalkRemoteObjectDatabase {
 	 * Obtain alternate connections to alternate object databases (if any).
 	 * <p>
          * Alternates are typically read from the file
-         * {@link org.eclipse.jgit.lib.Constants#INFO_ALTERNATES} or
-         * {@link org.eclipse.jgit.lib.Constants#INFO_HTTP_ALTERNATES}.
+         * {@link org.openrewrite.jgit.lib.Constants#INFO_ALTERNATES} or
+         * {@link org.openrewrite.jgit.lib.Constants#INFO_HTTP_ALTERNATES}.
          * The content of each line must be resolved
 	 * by the implementation and a new database reference should be returned to
 	 * represent the additional location.
@@ -378,7 +378,7 @@ abstract class WalkRemoteObjectDatabase {
 	 * @param avail
 	 *            return collection of references. Any existing entries will be
 	 *            replaced if they are found in the packed-refs file.
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             an error occurred reading from the packed refs file.
 	 */
 	protected void readPackedRefs(Map<String, Ref> avail)

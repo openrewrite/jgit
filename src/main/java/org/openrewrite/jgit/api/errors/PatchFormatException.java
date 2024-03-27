@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.patch.FormatError;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.patch.FormatError;
 
 /**
  * Exception thrown when applying a patch fails due to an invalid format

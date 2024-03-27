@@ -8,24 +8,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.diff.DiffAlgorithm;
-import org.eclipse.jgit.diff.Edit;
-import org.eclipse.jgit.diff.EditList;
-import org.eclipse.jgit.diff.HistogramDiff;
-import org.eclipse.jgit.diff.Sequence;
-import org.eclipse.jgit.diff.SequenceComparator;
-import org.eclipse.jgit.merge.MergeChunk.ConflictState;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.diff.DiffAlgorithm;
+import org.openrewrite.jgit.diff.Edit;
+import org.openrewrite.jgit.diff.EditList;
+import org.openrewrite.jgit.diff.HistogramDiff;
+import org.openrewrite.jgit.diff.Sequence;
+import org.openrewrite.jgit.diff.SequenceComparator;
+import org.openrewrite.jgit.merge.MergeChunk.ConflictState;
 
 /**
  * Provides the merge algorithm which does a three-way merge on content provided
- * as RawText. By default {@link org.eclipse.jgit.diff.HistogramDiff} is used as
+ * as RawText. By default {@link org.openrewrite.jgit.diff.HistogramDiff} is used as
  * diff algorithm.
  */
 public final class MergeAlgorithm {
@@ -37,7 +37,7 @@ public final class MergeAlgorithm {
 
 	/**
 	 * Creates a new MergeAlgorithm which uses
-	 * {@link org.eclipse.jgit.diff.HistogramDiff} as diff algorithm
+	 * {@link org.openrewrite.jgit.diff.HistogramDiff} as diff algorithm
 	 */
 	public MergeAlgorithm() {
 		this(new HistogramDiff());

@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import java.io.IOException;
 
 /**
- * Thrown if {@link org.eclipse.jgit.internal.storage.reftable.ReftableWriter}
+ * Thrown if {@link org.openrewrite.jgit.internal.storage.reftable.ReftableWriter}
  * cannot fit a reference.
  */
 public class BlockSizeTooSmallException extends IOException {

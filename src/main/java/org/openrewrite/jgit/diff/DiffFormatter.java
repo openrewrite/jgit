@@ -9,18 +9,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
-import static org.eclipse.jgit.diff.DiffEntry.ChangeType.ADD;
-import static org.eclipse.jgit.diff.DiffEntry.ChangeType.COPY;
-import static org.eclipse.jgit.diff.DiffEntry.ChangeType.DELETE;
-import static org.eclipse.jgit.diff.DiffEntry.ChangeType.MODIFY;
-import static org.eclipse.jgit.diff.DiffEntry.ChangeType.RENAME;
-import static org.eclipse.jgit.diff.DiffEntry.Side.NEW;
-import static org.eclipse.jgit.diff.DiffEntry.Side.OLD;
-import static org.eclipse.jgit.lib.Constants.encode;
-import static org.eclipse.jgit.lib.Constants.encodeASCII;
-import static org.eclipse.jgit.lib.FileMode.GITLINK;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.ADD;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.COPY;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.DELETE;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.MODIFY;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.RENAME;
+import static org.openrewrite.jgit.diff.DiffEntry.Side.NEW;
+import static org.openrewrite.jgit.diff.DiffEntry.Side.OLD;
+import static org.openrewrite.jgit.lib.Constants.encode;
+import static org.openrewrite.jgit.lib.Constants.encodeASCII;
+import static org.openrewrite.jgit.lib.FileMode.GITLINK;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,45 +29,45 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jgit.diff.DiffAlgorithm.SupportedAlgorithm;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.AmbiguousObjectException;
-import org.eclipse.jgit.errors.BinaryBlobException;
-import org.eclipse.jgit.errors.CancelledException;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.FileMode;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.patch.FileHeader;
-import org.eclipse.jgit.patch.FileHeader.PatchType;
-import org.eclipse.jgit.revwalk.FollowFilter;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.pack.PackConfig;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
-import org.eclipse.jgit.treewalk.EmptyTreeIterator;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
-import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
-import org.eclipse.jgit.treewalk.filter.IndexDiffFilter;
-import org.eclipse.jgit.treewalk.filter.NotIgnoredFilter;
-import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
-import org.eclipse.jgit.util.LfsFactory;
-import org.eclipse.jgit.util.QuotedString;
+import org.openrewrite.jgit.diff.DiffAlgorithm.SupportedAlgorithm;
+import org.openrewrite.jgit.diff.DiffEntry.ChangeType;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.AmbiguousObjectException;
+import org.openrewrite.jgit.errors.BinaryBlobException;
+import org.openrewrite.jgit.errors.CancelledException;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.FileMode;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectLoader;
+import org.openrewrite.jgit.lib.ObjectReader;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.patch.FileHeader;
+import org.openrewrite.jgit.patch.FileHeader.PatchType;
+import org.openrewrite.jgit.revwalk.FollowFilter;
+import org.openrewrite.jgit.revwalk.RevTree;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.CanonicalTreeParser;
+import org.openrewrite.jgit.treewalk.EmptyTreeIterator;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.treewalk.filter.AndTreeFilter;
+import org.openrewrite.jgit.treewalk.filter.IndexDiffFilter;
+import org.openrewrite.jgit.treewalk.filter.NotIgnoredFilter;
+import org.openrewrite.jgit.treewalk.filter.PathFilter;
+import org.openrewrite.jgit.treewalk.filter.TreeFilter;
+import org.openrewrite.jgit.util.LfsFactory;
+import org.openrewrite.jgit.util.QuotedString;
 
 /**
  * Format a Git style patch script.
@@ -371,7 +371,7 @@ public class DiffFormatter implements AutoCloseable {
 	 * Set the filter to produce only specific paths.
 	 *
 	 * If the filter is an instance of
-	 * {@link org.eclipse.jgit.revwalk.FollowFilter}, the filter path will be
+	 * {@link org.openrewrite.jgit.revwalk.FollowFilter}, the filter path will be
 	 * updated during successive scan or format invocations. The updated path
 	 * can be obtained from {@link #getPathFilter()}.
 	 *
@@ -420,7 +420,7 @@ public class DiffFormatter implements AutoCloseable {
 	 *
 	 * No output is created, instead only the file paths that are different are
 	 * returned. Callers may choose to format these paths themselves, or convert
-	 * them into {@link org.eclipse.jgit.patch.FileHeader} instances with a
+	 * them into {@link org.openrewrite.jgit.patch.FileHeader} instances with a
 	 * complete edit list by calling {@link #toFileHeader(DiffEntry)}.
 	 * <p>
 	 * Either side may be null to indicate that the tree has beed added or
@@ -450,7 +450,7 @@ public class DiffFormatter implements AutoCloseable {
 	 *
 	 * No output is created, instead only the file paths that are different are
 	 * returned. Callers may choose to format these paths themselves, or convert
-	 * them into {@link org.eclipse.jgit.patch.FileHeader} instances with a
+	 * them into {@link org.openrewrite.jgit.patch.FileHeader} instances with a
 	 * complete edit list by calling {@link #toFileHeader(DiffEntry)}.
 	 * <p>
 	 * Either side may be null to indicate that the tree has beed added or
@@ -487,7 +487,7 @@ public class DiffFormatter implements AutoCloseable {
 	 *
 	 * No output is created, instead only the file paths that are different are
 	 * returned. Callers may choose to format these paths themselves, or convert
-	 * them into {@link org.eclipse.jgit.patch.FileHeader} instances with a
+	 * them into {@link org.openrewrite.jgit.patch.FileHeader} instances with a
 	 * complete edit list by calling {@link #toFileHeader(DiffEntry)}.
 	 *
 	 * @param a
@@ -743,11 +743,11 @@ public class DiffFormatter implements AutoCloseable {
 	 * @param a
 	 *            text source for the pre-image version of the content. This
 	 *            must match the content of
-	 *            {@link org.eclipse.jgit.patch.FileHeader#getOldId()}.
+	 *            {@link org.openrewrite.jgit.patch.FileHeader#getOldId()}.
 	 * @param b
 	 *            text source for the post-image version of the content. This
 	 *            must match the content of
-	 *            {@link org.eclipse.jgit.patch.FileHeader#getNewId()}.
+	 *            {@link org.openrewrite.jgit.patch.FileHeader#getNewId()}.
 	 * @throws java.io.IOException
 	 *             writing to the supplied stream failed.
 	 */
@@ -937,26 +937,26 @@ public class DiffFormatter implements AutoCloseable {
 	}
 
 	/**
-	 * Creates a {@link org.eclipse.jgit.patch.FileHeader} representing the
-	 * given {@link org.eclipse.jgit.diff.DiffEntry}
+	 * Creates a {@link org.openrewrite.jgit.patch.FileHeader} representing the
+	 * given {@link org.openrewrite.jgit.diff.DiffEntry}
 	 * <p>
 	 * This method does not use the OutputStream associated with this
 	 * DiffFormatter instance. It is therefore safe to instantiate this
 	 * DiffFormatter instance with a
-	 * {@link org.eclipse.jgit.util.io.DisabledOutputStream} if this method is
+	 * {@link org.openrewrite.jgit.util.io.DisabledOutputStream} if this method is
 	 * the only one that will be used.
 	 *
 	 * @param ent
 	 *            the DiffEntry to create the FileHeader for
 	 * @return a FileHeader representing the DiffEntry. The FileHeader's buffer
 	 *         will contain only the header of the diff output. It will also
-	 *         contain one {@link org.eclipse.jgit.patch.HunkHeader}.
+	 *         contain one {@link org.openrewrite.jgit.patch.HunkHeader}.
 	 * @throws java.io.IOException
 	 *             the stream threw an exception while writing to it, or one of
 	 *             the blobs referenced by the DiffEntry could not be read.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             one of the blobs referenced by the DiffEntry is corrupt.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             one of the blobs referenced by the DiffEntry is missing.
 	 */
 	public FileHeader toFileHeader(DiffEntry ent) throws IOException,
@@ -1081,7 +1081,7 @@ public class DiffFormatter implements AutoCloseable {
 	 * @param o
 	 *            The stream the formatter will write the first header line to
 	 * @param type
-	 *            The {@link org.eclipse.jgit.diff.DiffEntry.ChangeType}
+	 *            The {@link org.openrewrite.jgit.diff.DiffEntry.ChangeType}
 	 * @param oldPath
 	 *            old path to the file
 	 * @param newPath

@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 /**
  * Simple set of ObjectIds.
  * <p>
  * Usually backed by a read-only data structure such as
- * {@link org.eclipse.jgit.internal.storage.file.PackIndex}. Mutable types like
- * {@link org.eclipse.jgit.lib.ObjectIdOwnerMap} also implement the interface by
+ * {@link org.openrewrite.jgit.internal.storage.file.PackIndex}. Mutable types like
+ * {@link org.openrewrite.jgit.lib.ObjectIdOwnerMap} also implement the interface by
  * checking keys.
  *
  * @since 4.2

@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -19,9 +19,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Ref;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Ref;
 
 /**
  * Base helper class for implementing operations connections.
@@ -107,7 +107,7 @@ public abstract class BaseConnection implements Connection {
 	 * Helper method for ensuring one-operation per connection. Check whether
 	 * operation was already marked as started, and mark it as started.
 	 *
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             if operation was already marked as started.
 	 */
 	protected void markStartedOperation() throws TransportException {

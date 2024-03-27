@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 
-import org.eclipse.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.storage.pack.PackConfig;
 
 class DeltaCache {
 	private final long size;

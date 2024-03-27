@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * Describes a way to connect to another Git repository.
@@ -39,7 +39,7 @@ import org.eclipse.jgit.lib.Repository;
  *
  * <p>
  * Applications may register additional protocols for use by JGit by calling
- * {@link org.eclipse.jgit.transport.Transport#register(TransportProtocol)}.
+ * {@link org.openrewrite.jgit.transport.Transport#register(TransportProtocol)}.
  * Because that API holds onto the protocol object by a WeakReference,
  * applications must ensure their own ClassLoader retains the TransportProtocol
  * for the life of the application. Using a static singleton pattern as above
@@ -48,7 +48,7 @@ import org.eclipse.jgit.lib.Repository;
  * <p>
  * Applications may automatically register additional protocols by filling in
  * the names of their TransportProtocol defining classes using the services file
- * {@code META-INF/services/org.eclipse.jgit.transport.Transport}. For each
+ * {@code META-INF/services/org.openrewrite.jgit.transport.Transport}. For each
  * class name listed in the services file, any static fields of type
  * {@code TransportProtocol} will be automatically registered. For the above
  * example the string {@code com.example.my_transport.MyTransport} should be
@@ -234,9 +234,9 @@ public abstract class TransportProtocol {
 	 *            name of the remote, if the remote as configured in
 	 *            {@code local}; otherwise null.
 	 * @return the transport.
-	 * @throws org.eclipse.jgit.errors.NotSupportedException
+	 * @throws org.openrewrite.jgit.errors.NotSupportedException
 	 *             this protocol does not support the URI.
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             the transport cannot open this URI.
 	 */
 	public abstract Transport open(URIish uri, Repository local,
@@ -248,10 +248,10 @@ public abstract class TransportProtocol {
 	 * configuration instead of reading from configuration files.
 	 *
 	 * @param uri
-	 *            a {@link org.eclipse.jgit.transport.URIish} object.
+	 *            a {@link org.openrewrite.jgit.transport.URIish} object.
 	 * @return new Transport
-	 * @throws org.eclipse.jgit.errors.NotSupportedException
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.NotSupportedException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 */
 	public Transport open(URIish uri)
 			throws NotSupportedException, TransportException {

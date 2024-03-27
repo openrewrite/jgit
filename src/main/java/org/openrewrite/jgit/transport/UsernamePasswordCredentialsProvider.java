@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Arrays;
 
-import org.eclipse.jgit.errors.UnsupportedCredentialItem;
+import org.openrewrite.jgit.errors.UnsupportedCredentialItem;
 
 /**
- * Simple {@link org.eclipse.jgit.transport.CredentialsProvider} that always
+ * Simple {@link org.openrewrite.jgit.transport.CredentialsProvider} that always
  * uses the same information.
  */
 public class UsernamePasswordCredentialsProvider extends CredentialsProvider {

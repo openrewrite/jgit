@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.io.IOException;
 
 /**
  * Describes a pack file
- * {@link org.eclipse.jgit.internal.storage.pack.ObjectReuseAsIs} can append
+ * {@link org.openrewrite.jgit.internal.storage.pack.ObjectReuseAsIs} can append
  * onto a stream.
  */
 public abstract class CachedPack {
@@ -59,7 +59,7 @@ public abstract class CachedPack {
 	 * only and using its internal state to decide if this object is within this
 	 * pack. Implementors should ensure a representation from this cached pack
 	 * is tested as part of
-	 * {@link org.eclipse.jgit.internal.storage.pack.ObjectReuseAsIs#selectObjectRepresentation(PackWriter, org.eclipse.jgit.lib.ProgressMonitor, Iterable)}
+	 * {@link org.openrewrite.jgit.internal.storage.pack.ObjectReuseAsIs#selectObjectRepresentation(PackWriter, org.openrewrite.jgit.lib.ProgressMonitor, Iterable)}
 	 * , ensuring this method would eventually return true if the object would
 	 * be included by this cached pack.
 	 *
@@ -67,7 +67,7 @@ public abstract class CachedPack {
 	 *            the object being packed. Can be used as an ObjectId.
 	 * @param rep
 	 *            representation from the
-	 *            {@link org.eclipse.jgit.internal.storage.pack.ObjectReuseAsIs}
+	 *            {@link org.openrewrite.jgit.internal.storage.pack.ObjectReuseAsIs}
 	 *            instance that originally supplied this CachedPack.
 	 * @return true if this pack contains this object.
 	 */

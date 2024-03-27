@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.fnmatch;
+package org.openrewrite.jgit.fnmatch;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,8 +17,8 @@ import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jgit.errors.InvalidPatternException;
-import org.eclipse.jgit.errors.NoClosingBracketException;
+import org.openrewrite.jgit.errors.InvalidPatternException;
+import org.openrewrite.jgit.errors.NoClosingBracketException;
 
 /**
  * This class can be used to match filenames against fnmatch like patterns. It
@@ -99,7 +99,7 @@ public class FileNameMatcher {
 	 * @param invalidWildgetCharacter
 	 *            if this parameter isn't null then this character will not
 	 *            match at wildcards(* and ? are wildcards).
-	 * @throws org.eclipse.jgit.errors.InvalidPatternException
+	 * @throws org.openrewrite.jgit.errors.InvalidPatternException
 	 *             if the patternString contains a invalid fnmatch pattern.
 	 */
 	public FileNameMatcher(final String patternString,
@@ -110,11 +110,11 @@ public class FileNameMatcher {
 
 	/**
 	 * A Copy Constructor which creates a new
-	 * {@link org.eclipse.jgit.fnmatch.FileNameMatcher} with the same state and
+	 * {@link org.openrewrite.jgit.fnmatch.FileNameMatcher} with the same state and
 	 * reset point like <code>other</code>.
 	 *
 	 * @param other
-	 *            another {@link org.eclipse.jgit.fnmatch.FileNameMatcher}
+	 *            another {@link org.openrewrite.jgit.fnmatch.FileNameMatcher}
 	 *            instance.
 	 */
 	public FileNameMatcher(FileNameMatcher other) {
@@ -340,11 +340,11 @@ public class FileNameMatcher {
 	}
 
 	/**
-	 * Create a {@link org.eclipse.jgit.fnmatch.FileNameMatcher} instance which
+	 * Create a {@link org.openrewrite.jgit.fnmatch.FileNameMatcher} instance which
 	 * uses the same pattern like this matcher, but has the current state of
 	 * this matcher as reset and start point
 	 *
-	 * @return a {@link org.eclipse.jgit.fnmatch.FileNameMatcher} instance which
+	 * @return a {@link org.openrewrite.jgit.fnmatch.FileNameMatcher} instance which
 	 *         uses the same pattern like this matcher, but has the current
 	 *         state of this matcher as reset and start point.
 	 */

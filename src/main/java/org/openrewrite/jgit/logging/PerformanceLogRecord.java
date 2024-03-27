@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.logging;
+package org.openrewrite.jgit.logging;
 
 /**
  * Class to register a performance log record.

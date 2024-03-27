@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 /**
  * Typed access to GPG related configuration options.
@@ -107,7 +107,7 @@ public class GpgConfig {
 	/**
 	 * Retrieves the config value of gpg.format.
 	 *
-	 * @return the {@link org.eclipse.jgit.lib.GpgConfig.GpgFormat}
+	 * @return the {@link org.openrewrite.jgit.lib.GpgConfig.GpgFormat}
 	 */
 	public GpgFormat getKeyFormat() {
 		return keyFormat;

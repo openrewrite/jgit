@@ -1,4 +1,4 @@
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 /**
  * Parsed information about a checkout.

@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.NOT_ATTEMPTED;
-import static org.eclipse.jgit.transport.ReceiveCommand.Result.REJECTED_OTHER_REASON;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.NOT_ATTEMPTED;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.REJECTED_OTHER_REASON;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -19,23 +19,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * A command being processed by
- * {@link org.eclipse.jgit.transport.ReceivePack}.
+ * {@link org.openrewrite.jgit.transport.ReceivePack}.
  * <p>
  * This command instance roughly translates to the server side representation of
- * the {@link org.eclipse.jgit.transport.RemoteRefUpdate} created by the client.
+ * the {@link org.openrewrite.jgit.transport.RemoteRefUpdate} created by the client.
  */
 public class ReceiveCommand {
 	/** Type of operation requested. */
@@ -145,9 +145,9 @@ public class ReceiveCommand {
 	 * Set unprocessed commands as failed due to transaction aborted.
 	 * <p>
 	 * If a command is still
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand.Result#NOT_ATTEMPTED} it
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand.Result#NOT_ATTEMPTED} it
 	 * will be set to
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand.Result#REJECTED_OTHER_REASON}.
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand.Result#REJECTED_OTHER_REASON}.
 	 *
 	 * @param commands
 	 *            commands to mark as failed.
@@ -257,15 +257,15 @@ public class ReceiveCommand {
 
 	/**
 	 * Create a new command for
-	 * {@link org.eclipse.jgit.transport.ReceivePack}.
+	 * {@link org.openrewrite.jgit.transport.ReceivePack}.
 	 *
 	 * @param oldId
 	 *            the expected old object id; must not be null. Use
-	 *            {@link org.eclipse.jgit.lib.ObjectId#zeroId()} to indicate a
+	 *            {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} to indicate a
 	 *            ref creation.
 	 * @param newId
 	 *            the new object id; must not be null. Use
-	 *            {@link org.eclipse.jgit.lib.ObjectId#zeroId()} to indicate a
+	 *            {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} to indicate a
 	 *            ref deletion.
 	 * @param name
 	 *            name of the ref being affected.
@@ -301,24 +301,24 @@ public class ReceiveCommand {
 
 	/**
 	 * Create a new command for
-	 * {@link org.eclipse.jgit.transport.ReceivePack}.
+	 * {@link org.openrewrite.jgit.transport.ReceivePack}.
 	 *
 	 * @param oldId
 	 *            the old object id; must not be null. Use
-	 *            {@link org.eclipse.jgit.lib.ObjectId#zeroId()} to indicate a
+	 *            {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} to indicate a
 	 *            ref creation.
 	 * @param newId
 	 *            the new object id; must not be null. Use
-	 *            {@link org.eclipse.jgit.lib.ObjectId#zeroId()} to indicate a
+	 *            {@link org.openrewrite.jgit.lib.ObjectId#zeroId()} to indicate a
 	 *            ref deletion.
 	 * @param name
 	 *            name of the ref being affected.
 	 * @param type
 	 *            type of the command. Must be
-	 *            {@link org.eclipse.jgit.transport.ReceiveCommand.Type#CREATE}
+	 *            {@link org.openrewrite.jgit.transport.ReceiveCommand.Type#CREATE}
 	 *            if {@code
 	 *            oldId} is zero, or
-	 *            {@link org.eclipse.jgit.transport.ReceiveCommand.Type#DELETE}
+	 *            {@link org.openrewrite.jgit.transport.ReceiveCommand.Type#DELETE}
 	 *            if {@code newId} is zero.
 	 * @since 2.0
 	 */
@@ -568,7 +568,7 @@ public class ReceiveCommand {
 	 * Set the message to include in the reflog.
 	 * <p>
 	 * Overrides the default set by {@code setRefLogMessage} on any containing
-	 * {@link org.eclipse.jgit.lib.BatchRefUpdate}.
+	 * {@link org.openrewrite.jgit.lib.BatchRefUpdate}.
 	 *
 	 * @param msg
 	 *            the message to describe this change. If null and appendStatus is
@@ -617,7 +617,7 @@ public class ReceiveCommand {
 	/**
 	 * Check whether this command has a custom reflog message setting that should
 	 * override defaults in any containing
-	 * {@link org.eclipse.jgit.lib.BatchRefUpdate}.
+	 * {@link org.openrewrite.jgit.lib.BatchRefUpdate}.
 	 * <p>
 	 * Does not take into account whether {@code #setForceRefLog(boolean)} has
 	 * been called.
@@ -704,7 +704,7 @@ public class ReceiveCommand {
 	 * using the supplied RevWalk to determine if {@link #getOldId()} is fully
 	 * merged into {@link #getNewId()}. If some commits are not merged the
 	 * update type is changed to
-	 * {@link org.eclipse.jgit.transport.ReceiveCommand.Type#UPDATE_NONFASTFORWARD}.
+	 * {@link org.openrewrite.jgit.transport.ReceiveCommand.Type#UPDATE_NONFASTFORWARD}.
 	 *
 	 * @param walk
 	 *            an instance to perform the merge test with. The caller must

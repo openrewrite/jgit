@@ -8,21 +8,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.patch;
+package org.openrewrite.jgit.patch;
 
-import static org.eclipse.jgit.util.RawParseUtils.match;
-import static org.eclipse.jgit.util.RawParseUtils.nextLF;
-import static org.eclipse.jgit.util.RawParseUtils.parseBase10;
+import static org.openrewrite.jgit.util.RawParseUtils.match;
+import static org.openrewrite.jgit.util.RawParseUtils.nextLF;
+import static org.openrewrite.jgit.util.RawParseUtils.parseBase10;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.diff.Edit;
-import org.eclipse.jgit.diff.EditList;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.util.MutableInteger;
+import org.openrewrite.jgit.diff.Edit;
+import org.openrewrite.jgit.diff.EditList;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.util.MutableInteger;
 
 /**
  * Hunk header describing the layout of a single block of lines

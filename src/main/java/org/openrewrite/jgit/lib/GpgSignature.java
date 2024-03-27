@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
 import java.io.Serializable;
 
-import org.eclipse.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.NonNull;
 
 /**
  * A structure for holding GPG signature together with additional related data.

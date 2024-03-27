@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
@@ -19,12 +19,12 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 import java.util.stream.LongStream;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.pack.PackExt;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.pack.PackExt;
 
 /**
  * Caches slices of a
- * {@link org.eclipse.jgit.internal.storage.dfs.BlockBasedFile} in memory for
+ * {@link org.openrewrite.jgit.internal.storage.dfs.BlockBasedFile} in memory for
  * faster read access.
  * <p>
  * The DfsBlockCache serves as a Java based "buffer cache", loading segments of

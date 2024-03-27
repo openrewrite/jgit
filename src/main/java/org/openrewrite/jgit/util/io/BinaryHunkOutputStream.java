@@ -7,12 +7,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.eclipse.jgit.util.Base85;
+import org.openrewrite.jgit.util.Base85;
 
 /**
  * An {@link OutputStream} that encodes data for a git binary patch.

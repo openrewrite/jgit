@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.FIFORevQueue;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.FIFORevQueue;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.revwalk.RevTag;
+import org.openrewrite.jgit.revwalk.RevWalk;
 
 /**
  * Command to find human-readable names of revisions.
@@ -86,7 +86,7 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	 * Create a new name-rev command.
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected NameRevCommand(Repository repo) {
 		super(repo);
@@ -167,10 +167,10 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	 * @param id
 	 *            object ID to add.
 	 * @return {@code this}
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object supplied is not available from the object
 	 *             database.
-	 * @throws org.eclipse.jgit.api.errors.JGitInternalException
+	 * @throws org.openrewrite.jgit.api.errors.JGitInternalException
 	 *             a low-level exception of JGit has occurred. The original
 	 *             exception can be retrieved by calling
 	 *             {@link java.lang.Exception#getCause()}.
@@ -195,10 +195,10 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	 * @param ids
 	 *            object IDs to add.
 	 * @return {@code this}
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object supplied is not available from the object
 	 *             database.
-	 * @throws org.eclipse.jgit.api.errors.JGitInternalException
+	 * @throws org.openrewrite.jgit.api.errors.JGitInternalException
 	 *             a low-level exception of JGit has occurred. The original
 	 *             exception can be retrieved by calling
 	 *             {@link java.lang.Exception#getCause()}.

@@ -9,21 +9,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
 import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.treewalk.TreeWalk;
 
 /**
  * Includes a tree entry if any subfilters include the same tree entry.
  * <p>
  * Classic shortcut behavior is used, so evaluation of the
- * {@link org.eclipse.jgit.treewalk.filter.TreeFilter#include(TreeWalk)} method
+ * {@link org.openrewrite.jgit.treewalk.filter.TreeFilter#include(TreeWalk)} method
  * stops as soon as a true result is obtained. Applications can improve
  * filtering performance by placing faster filters that are more likely to
  * accept a result earlier in the list.

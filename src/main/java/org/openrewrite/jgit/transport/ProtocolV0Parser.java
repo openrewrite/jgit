@@ -7,18 +7,18 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import static org.eclipse.jgit.transport.GitProtocolConstants.OPTION_FILTER;
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_FILTER;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.errors.PackProtocolException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.transport.parser.FirstWant;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.errors.PackProtocolException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.transport.parser.FirstWant;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * Parser for git protocol versions 0 and 1.

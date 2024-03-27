@@ -11,16 +11,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectChecker;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * Exception thrown when an object cannot be read from Git.
@@ -53,7 +53,7 @@ public class CorruptObjectException extends IOException {
 	 * object id
 	 *
 	 * @param id
-	 *            a {@link org.eclipse.jgit.lib.AnyObjectId}
+	 *            a {@link org.openrewrite.jgit.lib.AnyObjectId}
 	 * @param why
 	 *            error message
 	 */
@@ -66,7 +66,7 @@ public class CorruptObjectException extends IOException {
 	 * object id
 	 *
 	 * @param id
-	 *            a {@link org.eclipse.jgit.lib.ObjectId}
+	 *            a {@link org.openrewrite.jgit.lib.ObjectId}
 	 * @param why
 	 *            error message
 	 */
@@ -102,7 +102,7 @@ public class CorruptObjectException extends IOException {
 
 	/**
 	 * Specific error condition identified by
-	 * {@link org.eclipse.jgit.lib.ObjectChecker}.
+	 * {@link org.openrewrite.jgit.lib.ObjectChecker}.
 	 *
 	 * @return error condition or null.
 	 * @since 4.2

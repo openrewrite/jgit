@@ -16,7 +16,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -32,16 +32,16 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.events.ConfigChangedEvent;
-import org.eclipse.jgit.events.ConfigChangedListener;
-import org.eclipse.jgit.events.ListenerHandle;
-import org.eclipse.jgit.events.ListenerList;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.transport.RefSpec;
-import org.eclipse.jgit.util.FS;
-import org.eclipse.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.events.ConfigChangedEvent;
+import org.openrewrite.jgit.events.ConfigChangedListener;
+import org.openrewrite.jgit.events.ListenerHandle;
+import org.openrewrite.jgit.events.ListenerList;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.transport.RefSpec;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.RawParseUtils;
 
 /**
  * Git style {@code .config}, {@code .gitconfig}, {@code .gitmodules} file.
@@ -125,7 +125,7 @@ public class Config {
 	}
 
 	/**
-	 * Globally sets a {@link org.eclipse.jgit.lib.TypedConfigGetter} that is
+	 * Globally sets a {@link org.openrewrite.jgit.lib.TypedConfigGetter} that is
 	 * subsequently used to read typed values from all git configs.
 	 *
 	 * @param getter
@@ -511,7 +511,7 @@ public class Config {
 	}
 
 	/**
-	 * Parse a list of {@link org.eclipse.jgit.transport.RefSpec}s from the
+	 * Parse a list of {@link org.openrewrite.jgit.transport.RefSpec}s from the
 	 * configuration.
 	 *
 	 * @param section
@@ -521,7 +521,7 @@ public class Config {
 	 * @param name
 	 *            the key name.
 	 * @return a possibly empty list of
-	 *         {@link org.eclipse.jgit.transport.RefSpec}s
+	 *         {@link org.openrewrite.jgit.transport.RefSpec}s
 	 * @since 4.9
 	 */
 	public List<RefSpec> getRefSpecs(String section, String subsection,
@@ -546,9 +546,9 @@ public class Config {
 	}
 
 	/**
-	 * Get the sections defined in this {@link org.eclipse.jgit.lib.Config}.
+	 * Get the sections defined in this {@link org.openrewrite.jgit.lib.Config}.
 	 *
-	 * @return the sections defined in this {@link org.eclipse.jgit.lib.Config}.
+	 * @return the sections defined in this {@link org.openrewrite.jgit.lib.Config}.
 	 *         The set's iterator returns sections in the order they are
 	 *         declared by the configuration starting from this instance and
 	 *         progressing through the base.
@@ -655,7 +655,7 @@ public class Config {
 	 * Adds a listener to be notified about changes.
 	 * <p>
 	 * Clients are supposed to remove the listeners after they are done with
-	 * them using the {@link org.eclipse.jgit.events.ListenerHandle#remove()}
+	 * them using the {@link org.openrewrite.jgit.events.ListenerHandle#remove()}
 	 * method
 	 *
 	 * @param listener
@@ -1090,7 +1090,7 @@ public class Config {
 	 *
 	 * @param text
 	 *            Git style text file listing configuration properties.
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 *             the text supplied is not formatted correctly. No changes were
 	 *             made to {@code this}.
 	 */
@@ -1180,7 +1180,7 @@ public class Config {
 	 *            possibly relative path to the included config, as specified in
 	 *            this config
 	 * @return the read bytes, or null if the included config should be ignored
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 *             if something went wrong while reading the config
 	 * @since 4.10
 	 */

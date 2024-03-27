@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,17 +29,17 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.eclipse.jgit.errors.NotSupportedException;
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Ref.Storage;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.SymbolicRef;
+import org.openrewrite.jgit.errors.NotSupportedException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref.Storage;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.SymbolicRef;
 
 /**
  * Transport over the non-Git aware Amazon S3 protocol.
@@ -55,7 +55,7 @@ import org.eclipse.jgit.lib.SymbolicRef;
  * from a remote repository that is stored on S3.
  * <p>
  * Unlike the HTTP variant (see
- * {@link org.eclipse.jgit.transport.TransportHttp}) we rely upon being able to
+ * {@link org.openrewrite.jgit.transport.TransportHttp}) we rely upon being able to
  * list objects in a bucket, as the S3 API supports this function. By listing
  * the bucket contents we can avoid relying on <code>objects/info/packs</code>
  * or <code>info/refs</code> in the remote repository.

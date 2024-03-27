@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.io;
+package org.openrewrite.jgit.internal.storage.io;
 
 import java.io.FileInputStream;
 import java.io.IOException;

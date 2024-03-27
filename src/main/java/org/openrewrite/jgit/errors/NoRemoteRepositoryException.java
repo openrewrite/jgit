@@ -8,9 +8,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
-import org.eclipse.jgit.transport.URIish;
+import org.openrewrite.jgit.transport.URIish;
 
 /**
  * Indicates a remote repository does not exist.

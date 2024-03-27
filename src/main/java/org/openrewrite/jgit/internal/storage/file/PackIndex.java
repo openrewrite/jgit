@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.file;
+package org.openrewrite.jgit.internal.storage.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,22 +19,22 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.UnsupportedPackIndexVersionException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AbbreviatedObjectId;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.MutableObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdSet;
-import org.eclipse.jgit.util.IO;
-import org.eclipse.jgit.util.NB;
-import org.eclipse.jgit.util.io.SilentFileInputStream;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.UnsupportedPackIndexVersionException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AbbreviatedObjectId;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.MutableObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdSet;
+import org.openrewrite.jgit.util.IO;
+import org.openrewrite.jgit.util.NB;
+import org.openrewrite.jgit.util.io.SilentFileInputStream;
 
 /**
- * Access path to locate objects by {@link org.eclipse.jgit.lib.ObjectId} in a
- * {@link org.eclipse.jgit.internal.storage.file.Pack}.
+ * Access path to locate objects by {@link org.openrewrite.jgit.lib.ObjectId} in a
+ * {@link org.openrewrite.jgit.internal.storage.file.Pack}.
  * <p>
  * Indexes are strictly redundant information in that we can rebuild all of the
  * data held in the index file from the on disk representation of the pack file
@@ -87,7 +87,7 @@ public abstract class PackIndex
 	 * @return a copy of the index in-memory.
 	 * @throws java.io.IOException
 	 *             the stream cannot be read.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             the stream does not contain a valid pack index.
 	 */
 	public static PackIndex read(InputStream fd) throws IOException,
@@ -180,7 +180,7 @@ public abstract class PackIndex
 	 * @param nthPosition
 	 *            position within the traversal of {@link #iterator()} that the
 	 *            caller needs the object for. The first returned
-	 *            {@link org.eclipse.jgit.internal.storage.file.PackIndex.MutableEntry}
+	 *            {@link org.openrewrite.jgit.internal.storage.file.PackIndex.MutableEntry}
 	 *            is 0, the second is 1, etc.
 	 * @return the ObjectId for the corresponding entry.
 	 */
@@ -203,7 +203,7 @@ public abstract class PackIndex
 	 *            unsigned 32 bit position within the traversal of
 	 *            {@link #iterator()} that the caller needs the object for. The
 	 *            first returned
-	 *            {@link org.eclipse.jgit.internal.storage.file.PackIndex.MutableEntry}
+	 *            {@link org.openrewrite.jgit.internal.storage.file.PackIndex.MutableEntry}
 	 *            is 0, the second is 1, etc. Positions past 2**31-1 are
 	 *            negative, but still valid.
 	 * @return the ObjectId for the corresponding entry.
@@ -247,7 +247,7 @@ public abstract class PackIndex
 	 * @param objId
 	 *            id of object to look for
 	 * @return CRC32 checksum of specified object (at 32 less significant bits)
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             when requested ObjectId was not found in this index
 	 * @throws java.lang.UnsupportedOperationException
 	 *             when this index doesn't support CRC32 checksum

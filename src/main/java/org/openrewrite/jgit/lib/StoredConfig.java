@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
 
 /**
  * Persistent configuration that can be stored and loaded from a location.
@@ -44,7 +44,7 @@ public abstract class StoredConfig extends Config {
 	 *
 	 * @throws java.io.IOException
 	 *             the configuration could not be read (but does exist).
-	 * @throws org.eclipse.jgit.errors.ConfigInvalidException
+	 * @throws org.openrewrite.jgit.errors.ConfigInvalidException
 	 *             the configuration is not properly formatted.
 	 */
 	public abstract void load() throws IOException, ConfigInvalidException;

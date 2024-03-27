@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 /**
- * Internal API to assist {@code org.eclipse.jgit.http.server}.
+ * Internal API to assist {@code org.openrewrite.jgit.http.server}.
  * <p>
  * <b>Do not call.</b>
  *

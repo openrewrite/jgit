@@ -14,7 +14,7 @@
  *    George Young - initial API and implementation
  *    Christian Halstrick - initial API and implementation
  */
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -23,21 +23,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.eclipse.jgit.dircache.DirCache;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.NoMergeBaseException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.CommitBuilder;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectInserter;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.EmptyTreeIterator;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.dircache.DirCache;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.NoMergeBaseException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.CommitBuilder;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectInserter;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
+import org.openrewrite.jgit.treewalk.AbstractTreeIterator;
+import org.openrewrite.jgit.treewalk.EmptyTreeIterator;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
 
 /**
  * A three-way merger performing a content-merge if necessary across multiple
@@ -65,7 +65,7 @@ public class RecursiveMerger extends ResolveMerger {
 	 * inCore
 	 *
 	 * @param local
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 * @param inCore
 	 *            a boolean.
 	 */
@@ -76,7 +76,7 @@ public class RecursiveMerger extends ResolveMerger {
 	/**
 	 * Normal recursive merge, implies not inCore
 	 *
-	 * @param local a {@link org.eclipse.jgit.lib.Repository} object.
+	 * @param local a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	protected RecursiveMerger(Repository local) {
 		this(local, false);
@@ -86,7 +86,7 @@ public class RecursiveMerger extends ResolveMerger {
 	 * Normal recursive merge, implies inCore.
 	 *
 	 * @param inserter
-	 *            an {@link org.eclipse.jgit.lib.ObjectInserter} object.
+	 *            an {@link org.openrewrite.jgit.lib.ObjectInserter} object.
 	 * @param config
 	 *            the repository configuration
 	 * @since 4.8

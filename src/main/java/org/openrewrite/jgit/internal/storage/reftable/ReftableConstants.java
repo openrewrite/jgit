@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 class ReftableConstants {
 	static final byte[] FILE_HEADER_MAGIC = { 'R', 'E', 'F', 'T' };

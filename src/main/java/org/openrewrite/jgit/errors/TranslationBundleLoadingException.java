@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.errors;
+package org.openrewrite.jgit.errors;
 
 import java.util.Locale;
 
@@ -20,7 +20,7 @@ public class TranslationBundleLoadingException extends TranslationBundleExceptio
 
 	/**
 	 * Construct a
-	 * {@link org.eclipse.jgit.errors.TranslationBundleLoadingException} for the
+	 * {@link org.openrewrite.jgit.errors.TranslationBundleLoadingException} for the
 	 * specified bundle class and locale.
 	 *
 	 * @param bundleClass

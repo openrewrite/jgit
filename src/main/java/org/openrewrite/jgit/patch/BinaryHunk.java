@@ -9,12 +9,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.patch;
+package org.openrewrite.jgit.patch;
 
-import static org.eclipse.jgit.lib.Constants.encodeASCII;
-import static org.eclipse.jgit.util.RawParseUtils.match;
-import static org.eclipse.jgit.util.RawParseUtils.nextLF;
-import static org.eclipse.jgit.util.RawParseUtils.parseBase10;
+import static org.openrewrite.jgit.lib.Constants.encodeASCII;
+import static org.openrewrite.jgit.util.RawParseUtils.match;
+import static org.openrewrite.jgit.util.RawParseUtils.nextLF;
+import static org.openrewrite.jgit.util.RawParseUtils.parseBase10;
 
 /**
  * Part of a "GIT binary patch" to describe the pre-image or post-image

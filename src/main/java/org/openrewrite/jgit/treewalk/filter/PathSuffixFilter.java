@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.treewalk.TreeWalk;
 
 /**
  * Includes tree entries only if they end with the configured path (suffix
@@ -26,7 +26,7 @@ import org.eclipse.jgit.treewalk.TreeWalk;
  * paths ending in <code>.txt</code>.
  * <p>
  * Using this filter is recommended instead of filtering the entries using
- * {@link org.eclipse.jgit.treewalk.TreeWalk#getPathString()} and
+ * {@link org.openrewrite.jgit.treewalk.TreeWalk#getPathString()} and
  * <code>endsWith</code> or some other type of string match function.
  */
 public class PathSuffixFilter extends TreeFilter {

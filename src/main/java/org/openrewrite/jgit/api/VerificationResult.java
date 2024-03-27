@@ -7,10 +7,10 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
-import org.eclipse.jgit.lib.GpgSignatureVerifier;
-import org.eclipse.jgit.revwalk.RevObject;
+import org.openrewrite.jgit.lib.GpgSignatureVerifier;
+import org.openrewrite.jgit.revwalk.RevObject;
 
 /**
  * A {@code VerificationResult} describes the outcome of a signature

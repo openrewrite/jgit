@@ -9,11 +9,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.dircache;
+package org.openrewrite.jgit.dircache;
 
-import static org.eclipse.jgit.dircache.DirCache.cmp;
-import static org.eclipse.jgit.dircache.DirCacheTree.peq;
-import static org.eclipse.jgit.lib.FileMode.TYPE_TREE;
+import static org.openrewrite.jgit.dircache.DirCache.cmp;
+import static org.openrewrite.jgit.dircache.DirCacheTree.peq;
+import static org.openrewrite.jgit.lib.FileMode.TYPE_TREE;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -22,21 +22,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.util.Paths;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.util.Paths;
 
 /**
- * Updates a {@link org.eclipse.jgit.dircache.DirCache} by supplying discrete
+ * Updates a {@link org.openrewrite.jgit.dircache.DirCache} by supplying discrete
  * edit commands.
  * <p>
  * An editor updates a DirCache by taking a list of
- * {@link org.eclipse.jgit.dircache.DirCacheEditor.PathEdit} commands and
+ * {@link org.openrewrite.jgit.dircache.DirCacheEditor.PathEdit} commands and
  * executing them against the entries of the destination cache to produce a new
  * cache. This edit style allows applications to insert a few commands and then
  * have the editor compute the proper entry indexes necessary to perform an
  * efficient in-order update of the index records. This can be easier to use
- * than {@link org.eclipse.jgit.dircache.DirCacheBuilder}.
+ * than {@link org.openrewrite.jgit.dircache.DirCacheBuilder}.
  * <p>
  *
  * @see DirCacheBuilder

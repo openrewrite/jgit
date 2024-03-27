@@ -7,23 +7,23 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.attributes;
+package org.openrewrite.jgit.attributes;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.eclipse.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.Repository;
 
 /**
  * The factory responsible for creating instances of
- * {@link org.eclipse.jgit.attributes.FilterCommand}.
+ * {@link org.openrewrite.jgit.attributes.FilterCommand}.
  *
  * @since 4.6
  */
 public interface FilterCommandFactory {
 	/**
-	 * Create a new {@link org.eclipse.jgit.attributes.FilterCommand}.
+	 * Create a new {@link org.openrewrite.jgit.attributes.FilterCommand}.
 	 *
 	 * @param db
 	 *            the repository this command should work on
@@ -31,7 +31,7 @@ public interface FilterCommandFactory {
 	 *            the {@link java.io.InputStream} this command should read from
 	 * @param out
 	 *            the {@link java.io.OutputStream} this command should write to
-	 * @return the created {@link org.eclipse.jgit.attributes.FilterCommand}
+	 * @return the created {@link org.openrewrite.jgit.attributes.FilterCommand}
 	 * @throws java.io.IOException
 	 *             thrown when the command constructor throws an
 	 *             java.io.IOException

@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -18,10 +18,10 @@ import java.util.Map;
 
 /**
  * Result of push operation to the remote repository. Holding information of
- * {@link org.eclipse.jgit.transport.OperationResult} and remote refs updates
+ * {@link org.openrewrite.jgit.transport.OperationResult} and remote refs updates
  * status.
  *
- * @see Transport#push(org.eclipse.jgit.lib.ProgressMonitor, Collection)
+ * @see Transport#push(org.openrewrite.jgit.lib.ProgressMonitor, Collection)
  */
 public class PushResult extends OperationResult {
 	private Map<String, RemoteRefUpdate> remoteUpdates = Collections.emptyMap();

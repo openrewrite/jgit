@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.util;
+package org.openrewrite.jgit.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,16 +28,16 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.jgit.errors.ConfigInvalidException;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Config;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.ObjectChecker;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.storage.file.FileBasedConfig;
-import org.eclipse.jgit.util.time.MonotonicClock;
-import org.eclipse.jgit.util.time.MonotonicSystemClock;
+import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.storage.file.FileBasedConfig;
+import org.openrewrite.jgit.util.time.MonotonicClock;
+import org.openrewrite.jgit.util.time.MonotonicSystemClock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -521,7 +521,7 @@ public abstract class SystemReader {
 	 * Scans a multi-directory path string such as {@code "src/main.c"}.
 	 *
 	 * @param path path string to scan.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException path is invalid.
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException path is invalid.
 	 * @since 3.6
 	 */
 	public void checkPath(String path) throws CorruptObjectException {
@@ -535,7 +535,7 @@ public abstract class SystemReader {
 	 *
 	 * @param path
 	 *            path string to scan.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             path is invalid.
 	 * @since 4.2
 	 */

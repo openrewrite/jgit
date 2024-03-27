@@ -8,14 +8,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Wrapper around the general {@link org.eclipse.jgit.lib.ProgressMonitor} to
+ * Wrapper around the general {@link org.openrewrite.jgit.lib.ProgressMonitor} to
  * make it thread safe.
  *
  * Updates to the underlying ProgressMonitor are made only from the thread that

@@ -8,13 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.blame;
+package org.openrewrite.jgit.blame;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.diff.RawText;
-import org.eclipse.jgit.lib.PersonIdent;
-import org.eclipse.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.diff.RawText;
+import org.openrewrite.jgit.lib.PersonIdent;
+import org.openrewrite.jgit.revwalk.RevCommit;
 
 /**
  * Collects line annotations for inspection by applications.

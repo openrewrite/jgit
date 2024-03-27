@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.nls;
+package org.openrewrite.jgit.nls;
 
 import java.lang.reflect.Field;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.eclipse.jgit.errors.TranslationBundleLoadingException;
-import org.eclipse.jgit.errors.TranslationStringMissingException;
+import org.openrewrite.jgit.errors.TranslationBundleLoadingException;
+import org.openrewrite.jgit.errors.TranslationStringMissingException;
 
 /**
  * Base class for all translation bundles that provides injection of translated
@@ -60,8 +60,8 @@ import org.eclipse.jgit.errors.TranslationStringMissingException;
  *
  * The translated text is automatically injected into the public String fields
  * according to the locale set with
- * {@link org.eclipse.jgit.nls.NLS#setLocale(Locale)}. However, the
- * {@link org.eclipse.jgit.nls.NLS#setLocale(Locale)} method defines only
+ * {@link org.openrewrite.jgit.nls.NLS#setLocale(Locale)}. However, the
+ * {@link org.openrewrite.jgit.nls.NLS#setLocale(Locale)} method defines only
  * prefered locale which will be honored only if it is supported by the provided
  * resource bundle property files. Basically, this class will use
  * {@link java.util.ResourceBundle#getBundle(String, Locale)} method to load a

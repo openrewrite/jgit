@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.treewalk.filter;
+package org.openrewrite.jgit.treewalk.filter;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.dircache.DirCacheIterator;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.WorkingTreeIterator;
+import org.openrewrite.jgit.dircache.DirCacheIterator;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.treewalk.TreeWalk;
+import org.openrewrite.jgit.treewalk.WorkingTreeIterator;
 
 /**
  * Selects interesting tree entries during walking.
@@ -35,7 +35,7 @@ import org.eclipse.jgit.treewalk.WorkingTreeIterator;
  * <b>Path filters:</b>
  * <ul>
  * <li>Matching pathname:
- * {@link org.eclipse.jgit.treewalk.filter.PathFilter}</li>
+ * {@link org.openrewrite.jgit.treewalk.filter.PathFilter}</li>
  * </ul>
  *
  * <p>
@@ -47,9 +47,9 @@ import org.eclipse.jgit.treewalk.WorkingTreeIterator;
  * <p>
  * <b>Boolean modifiers:</b>
  * <ul>
- * <li>AND: {@link org.eclipse.jgit.treewalk.filter.AndTreeFilter}</li>
- * <li>OR: {@link org.eclipse.jgit.treewalk.filter.OrTreeFilter}</li>
- * <li>NOT: {@link org.eclipse.jgit.treewalk.filter.NotTreeFilter}</li>
+ * <li>AND: {@link org.openrewrite.jgit.treewalk.filter.AndTreeFilter}</li>
+ * <li>OR: {@link org.openrewrite.jgit.treewalk.filter.OrTreeFilter}</li>
+ * <li>NOT: {@link org.openrewrite.jgit.treewalk.filter.NotTreeFilter}</li>
  * </ul>
  */
 public abstract class TreeFilter {
@@ -141,7 +141,7 @@ public abstract class TreeFilter {
 	 * Determine if the current entry is interesting to report.
 	 * <p>
 	 * This method is consulted for subtree entries even if
-	 * {@link org.eclipse.jgit.treewalk.TreeWalk#isRecursive()} is enabled. The
+	 * {@link org.openrewrite.jgit.treewalk.TreeWalk#isRecursive()} is enabled. The
 	 * consultation allows the filter to bypass subtree recursion on a
 	 * case-by-case basis, even when recursion is enabled at the application
 	 * level.
@@ -150,12 +150,12 @@ public abstract class TreeFilter {
 	 *            the walker the filter needs to examine.
 	 * @return true if the current entry should be seen by the application;
 	 *         false to hide the entry.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             an object the filter needs to consult to determine its answer
 	 *             does not exist in the Git repository the walker is operating
 	 *             on. Filtering this current walker entry is impossible without
 	 *             the object.
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             an object the filter needed to consult was not of the
 	 *             expected object type. This usually indicates a corrupt
 	 *             repository, as an object link is referencing the wrong type.
@@ -180,9 +180,9 @@ public abstract class TreeFilter {
 	 * @return -1 if the current entry is a parent of the filter but no exact
 	 *         match has been made; 0 if the current entry should be seen by the
 	 *         application; 1 if it should be hidden.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             as thrown by {@link #include(TreeWalk)}
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             as thrown by {@link #include(TreeWalk)}
 	 * @throws java.io.IOException
 	 *             as thrown by {@link #include(TreeWalk)}

@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -51,14 +51,14 @@ import java.util.stream.Collectors;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.util.Base64;
-import org.eclipse.jgit.util.HttpSupport;
-import org.eclipse.jgit.util.StringUtils;
-import org.eclipse.jgit.util.TemporaryBuffer;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.util.Base64;
+import org.openrewrite.jgit.util.HttpSupport;
+import org.openrewrite.jgit.util.StringUtils;
+import org.openrewrite.jgit.util.TemporaryBuffer;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

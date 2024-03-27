@@ -9,16 +9,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.diff;
+package org.openrewrite.jgit.diff;
 
-import static org.eclipse.jgit.util.RawCharUtil.isWhitespace;
-import static org.eclipse.jgit.util.RawCharUtil.trimLeadingWhitespace;
-import static org.eclipse.jgit.util.RawCharUtil.trimTrailingWhitespace;
+import static org.openrewrite.jgit.util.RawCharUtil.isWhitespace;
+import static org.openrewrite.jgit.util.RawCharUtil.trimLeadingWhitespace;
+import static org.openrewrite.jgit.util.RawCharUtil.trimTrailingWhitespace;
 
-import org.eclipse.jgit.util.IntList;
+import org.openrewrite.jgit.util.IntList;
 
 /**
- * Equivalence function for {@link org.eclipse.jgit.diff.RawText}.
+ * Equivalence function for {@link org.openrewrite.jgit.diff.RawText}.
  */
 public abstract class RawTextComparator extends SequenceComparator<RawText> {
 	/** No special treatment. */

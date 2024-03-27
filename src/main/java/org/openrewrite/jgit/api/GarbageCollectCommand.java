@@ -7,7 +7,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -15,19 +15,19 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Properties;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.dfs.DfsGarbageCollector;
-import org.eclipse.jgit.internal.storage.dfs.DfsRepository;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.internal.storage.file.GC;
-import org.eclipse.jgit.internal.storage.file.GC.RepoStatistics;
-import org.eclipse.jgit.lib.ConfigConstants;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.StoredConfig;
-import org.eclipse.jgit.storage.pack.PackConfig;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.dfs.DfsGarbageCollector;
+import org.openrewrite.jgit.internal.storage.dfs.DfsRepository;
+import org.openrewrite.jgit.internal.storage.file.FileRepository;
+import org.openrewrite.jgit.internal.storage.file.GC;
+import org.openrewrite.jgit.internal.storage.file.GC.RepoStatistics;
+import org.openrewrite.jgit.lib.ConfigConstants;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.lib.StoredConfig;
+import org.openrewrite.jgit.storage.pack.PackConfig;
 
 /**
  * A class used to execute a {@code gc} command. It has setters for all
@@ -66,7 +66,7 @@ public class GarbageCollectCommand extends GitCommand<Properties> {
 	 * Constructor for GarbageCollectCommand.
 	 *
 	 * @param repo
-	 *            a {@link org.eclipse.jgit.lib.Repository} object.
+	 *            a {@link org.openrewrite.jgit.lib.Repository} object.
 	 */
 	protected GarbageCollectCommand(Repository repo) {
 		super(repo);
@@ -89,7 +89,7 @@ public class GarbageCollectCommand extends GitCommand<Properties> {
 	 * During gc() or prune() each unreferenced, loose object which has been
 	 * created or modified after <code>expire</code> will not be pruned. Only
 	 * older objects may be pruned. If set to null then every object is a
-	 * candidate for pruning. Use {@link org.eclipse.jgit.util.GitDateParser} to
+	 * candidate for pruning. Use {@link org.openrewrite.jgit.util.GitDateParser} to
 	 * parse time formats used by git gc.
 	 *
 	 * @param expire
@@ -201,7 +201,7 @@ public class GarbageCollectCommand extends GitCommand<Properties> {
 	 * Computes and returns the repository statistics.
 	 *
 	 * @return the repository statistics
-	 * @throws org.eclipse.jgit.api.errors.GitAPIException
+	 * @throws org.openrewrite.jgit.api.errors.GitAPIException
 	 *             thrown if the repository statistics cannot be computed
 	 * @since 3.0
 	 */

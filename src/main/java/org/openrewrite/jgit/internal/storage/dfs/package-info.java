@@ -1,4 +1,4 @@
 /**
  * Distributed file system based repository storage.
  */
-package org.eclipse.jgit.internal.storage.dfs;
+package org.openrewrite.jgit.internal.storage.dfs;

@@ -9,7 +9,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api;
+package org.openrewrite.jgit.api;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -20,44 +20,44 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.api.MergeResult.MergeStatus;
-import org.eclipse.jgit.api.errors.CheckoutConflictException;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidMergeHeadsException;
-import org.eclipse.jgit.api.errors.JGitInternalException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.NoMessageException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
-import org.eclipse.jgit.dircache.DirCacheCheckout;
-import org.eclipse.jgit.events.WorkingTreeModifiedEvent;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.Config.ConfigEnum;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.NullProgressMonitor;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectIdRef;
-import org.eclipse.jgit.lib.ProgressMonitor;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Ref.Storage;
-import org.eclipse.jgit.lib.RefUpdate;
-import org.eclipse.jgit.lib.RefUpdate.Result;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.merge.ContentMergeStrategy;
-import org.eclipse.jgit.merge.MergeConfig;
-import org.eclipse.jgit.merge.MergeMessageFormatter;
-import org.eclipse.jgit.merge.MergeStrategy;
-import org.eclipse.jgit.merge.Merger;
-import org.eclipse.jgit.merge.ResolveMerger;
-import org.eclipse.jgit.merge.ResolveMerger.MergeFailureReason;
-import org.eclipse.jgit.merge.SquashMessageFormatter;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.RevWalkUtils;
-import org.eclipse.jgit.treewalk.FileTreeIterator;
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.api.MergeResult.MergeStatus;
+import org.openrewrite.jgit.api.errors.CheckoutConflictException;
+import org.openrewrite.jgit.api.errors.ConcurrentRefUpdateException;
+import org.openrewrite.jgit.api.errors.GitAPIException;
+import org.openrewrite.jgit.api.errors.InvalidMergeHeadsException;
+import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.NoHeadException;
+import org.openrewrite.jgit.api.errors.NoMessageException;
+import org.openrewrite.jgit.api.errors.WrongRepositoryStateException;
+import org.openrewrite.jgit.dircache.DirCacheCheckout;
+import org.openrewrite.jgit.events.WorkingTreeModifiedEvent;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.Config.ConfigEnum;
+import org.openrewrite.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.NullProgressMonitor;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.ObjectIdRef;
+import org.openrewrite.jgit.lib.ProgressMonitor;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref.Storage;
+import org.openrewrite.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.lib.RefUpdate.Result;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.merge.ContentMergeStrategy;
+import org.openrewrite.jgit.merge.MergeConfig;
+import org.openrewrite.jgit.merge.MergeMessageFormatter;
+import org.openrewrite.jgit.merge.MergeStrategy;
+import org.openrewrite.jgit.merge.Merger;
+import org.openrewrite.jgit.merge.ResolveMerger;
+import org.openrewrite.jgit.merge.ResolveMerger.MergeFailureReason;
+import org.openrewrite.jgit.merge.SquashMessageFormatter;
+import org.openrewrite.jgit.revwalk.RevCommit;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.RevWalkUtils;
+import org.openrewrite.jgit.treewalk.FileTreeIterator;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * A class used to execute a {@code Merge} command. It has setters for all
@@ -200,7 +200,7 @@ public class MergeCommand extends GitCommand<MergeResult> {
 	 * Constructor for MergeCommand.
 	 *
 	 * @param repo
-	 *            the {@link org.eclipse.jgit.lib.Repository}
+	 *            the {@link org.openrewrite.jgit.lib.Repository}
 	 */
 	protected MergeCommand(Repository repo) {
 		super(repo);
@@ -332,7 +332,7 @@ public class MergeCommand extends GitCommand<MergeResult> {
 				Merger merger = mergeStrategy.newMerger(repo);
 				merger.setProgressMonitor(monitor);
 				boolean noProblems;
-				Map<String, org.eclipse.jgit.merge.MergeResult<?>> lowLevelResults = null;
+				Map<String, org.openrewrite.jgit.merge.MergeResult<?>> lowLevelResults = null;
 				Map<String, MergeFailureReason> failingPaths = null;
 				List<String> unmergedPaths = null;
 				if (merger instanceof ResolveMerger) {
@@ -413,7 +413,7 @@ public class MergeCommand extends GitCommand<MergeResult> {
 						MergeStatus.CONFLICTING, mergeStrategy, lowLevelResults,
 						null);
 			}
-		} catch (org.eclipse.jgit.errors.CheckoutConflictException e) {
+		} catch (org.openrewrite.jgit.errors.CheckoutConflictException e) {
 			List<String> conflicts = (dco == null) ? Collections
 					.<String> emptyList() : dco.getConflicts();
 			throw new CheckoutConflictException(conflicts, e);
@@ -481,7 +481,7 @@ public class MergeCommand extends GitCommand<MergeResult> {
 	 * Set merge strategy
 	 *
 	 * @param mergeStrategy
-	 *            the {@link org.eclipse.jgit.merge.MergeStrategy} to be used
+	 *            the {@link org.openrewrite.jgit.merge.MergeStrategy} to be used
 	 * @return {@code this}
 	 */
 	public MergeCommand setStrategy(MergeStrategy mergeStrategy) {
@@ -550,9 +550,9 @@ public class MergeCommand extends GitCommand<MergeResult> {
 	 * HEAD. Otherwise, perform the merge and commit the result.
 	 * <p>
 	 * In case the merge was successful but this flag was set to
-	 * <code>true</code> a {@link org.eclipse.jgit.api.MergeResult} with status
-	 * {@link org.eclipse.jgit.api.MergeResult.MergeStatus#MERGED_SQUASHED} or
-	 * {@link org.eclipse.jgit.api.MergeResult.MergeStatus#FAST_FORWARD_SQUASHED}
+	 * <code>true</code> a {@link org.openrewrite.jgit.api.MergeResult} with status
+	 * {@link org.openrewrite.jgit.api.MergeResult.MergeStatus#MERGED_SQUASHED} or
+	 * {@link org.openrewrite.jgit.api.MergeResult.MergeStatus#FAST_FORWARD_SQUASHED}
 	 * is returned.
 	 *
 	 * @param squash
@@ -593,9 +593,9 @@ public class MergeCommand extends GitCommand<MergeResult> {
 	 *            default behavior). <code>false</code> if this command should
 	 *            not commit. In case the merge was successful but this flag was
 	 *            set to <code>false</code> a
-	 *            {@link org.eclipse.jgit.api.MergeResult} with type
-	 *            {@link org.eclipse.jgit.api.MergeResult} with status
-	 *            {@link org.eclipse.jgit.api.MergeResult.MergeStatus#MERGED_NOT_COMMITTED}
+	 *            {@link org.openrewrite.jgit.api.MergeResult} with type
+	 *            {@link org.openrewrite.jgit.api.MergeResult} with status
+	 *            {@link org.openrewrite.jgit.api.MergeResult.MergeStatus#MERGED_NOT_COMMITTED}
 	 *            is returned
 	 * @return {@code this}
 	 * @since 3.0

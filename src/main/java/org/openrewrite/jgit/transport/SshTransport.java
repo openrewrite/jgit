@@ -12,12 +12,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.transport;
+package org.openrewrite.jgit.transport;
 
-import org.eclipse.jgit.errors.TransportException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.util.FS;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FS;
 
 /**
  * The base class for transports that use SSH protocol. This class allows
@@ -92,7 +92,7 @@ public abstract class SshTransport extends TcpTransport {
 	 * Get the default SSH session
 	 *
 	 * @return a remote session
-	 * @throws org.eclipse.jgit.errors.TransportException
+	 * @throws org.openrewrite.jgit.errors.TransportException
 	 *             in case of error with opening SSH session
 	 */
 	protected RemoteSession getSession() throws TransportException {

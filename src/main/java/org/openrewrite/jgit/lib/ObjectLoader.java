@@ -12,15 +12,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.eclipse.jgit.errors.LargeObjectException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.util.IO;
+import org.openrewrite.jgit.errors.LargeObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.util.IO;
 
 /**
  * Base class for a set of loaders for different representations of Git objects.
@@ -31,7 +31,7 @@ public abstract class ObjectLoader {
 	 * Get Git in pack object type
 	 *
 	 * @return Git in pack object type, see
-	 *         {@link org.eclipse.jgit.lib.Constants}.
+	 *         {@link org.openrewrite.jgit.lib.Constants}.
 	 */
 	public abstract int getType();
 
@@ -65,7 +65,7 @@ public abstract class ObjectLoader {
 	 * be modified by the caller.
 	 *
 	 * @return the bytes of this object.
-	 * @throws org.eclipse.jgit.errors.LargeObjectException
+	 * @throws org.openrewrite.jgit.errors.LargeObjectException
 	 *             if the object won't fit into a byte array, because
 	 *             {@link #isLarge()} returns true. Callers should use
 	 *             {@link #openStream()} instead to access the contents.
@@ -88,15 +88,15 @@ public abstract class ObjectLoader {
 	 * @param sizeLimit
 	 *            maximum number of bytes to return. If the object is larger
 	 *            than this limit,
-	 *            {@link org.eclipse.jgit.errors.LargeObjectException} will be
+	 *            {@link org.openrewrite.jgit.errors.LargeObjectException} will be
 	 *            thrown.
 	 * @return the bytes of this object.
-	 * @throws org.eclipse.jgit.errors.LargeObjectException
+	 * @throws org.openrewrite.jgit.errors.LargeObjectException
 	 *             if the object is bigger than {@code sizeLimit}, or if
 	 *             {@link java.lang.OutOfMemoryError} occurs during allocation
 	 *             of the result array. Callers should use {@link #openStream()}
 	 *             instead to access the contents.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object is large, and it no longer exists.
 	 * @throws java.io.IOException
 	 *             the object store cannot be accessed.
@@ -120,7 +120,7 @@ public abstract class ObjectLoader {
 	 * Changes (if made) will affect the cache but not the repository itself.
 	 *
 	 * @return the cached bytes of this object. Do not modify it.
-	 * @throws org.eclipse.jgit.errors.LargeObjectException
+	 * @throws org.openrewrite.jgit.errors.LargeObjectException
 	 *             if the object won't fit into a byte array, because
 	 *             {@link #isLarge()} returns true. Callers should use
 	 *             {@link #openStream()} instead to access the contents.
@@ -143,15 +143,15 @@ public abstract class ObjectLoader {
 	 * @param sizeLimit
 	 *            maximum number of bytes to return. If the object size is
 	 *            larger than this limit and {@link #isLarge()} is true,
-	 *            {@link org.eclipse.jgit.errors.LargeObjectException} will be
+	 *            {@link org.openrewrite.jgit.errors.LargeObjectException} will be
 	 *            thrown.
 	 * @return the cached bytes of this object. Do not modify it.
-	 * @throws org.eclipse.jgit.errors.LargeObjectException
+	 * @throws org.openrewrite.jgit.errors.LargeObjectException
 	 *             if the object is bigger than {@code sizeLimit}, or if
 	 *             {@link java.lang.OutOfMemoryError} occurs during allocation
 	 *             of the result array. Callers should use {@link #openStream()}
 	 *             instead to access the contents.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object is large, and it no longer exists.
 	 * @throws java.io.IOException
 	 *             the object store cannot be accessed.
@@ -187,7 +187,7 @@ public abstract class ObjectLoader {
 	 * @return a stream of this object's data. Caller must close the stream when
 	 *         through with it. The returned stream is buffered with a
 	 *         reasonable buffer size.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object no longer exists.
 	 * @throws java.io.IOException
 	 *             the object store cannot be accessed.
@@ -210,7 +210,7 @@ public abstract class ObjectLoader {
 	 *            stream to receive the complete copy of this object's data.
 	 *            Caller is responsible for flushing or closing this stream
 	 *            after this method returns.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object no longer exists.
 	 * @throws java.io.IOException
 	 *             the object store cannot be accessed, or the stream cannot be

@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.pack;
+package org.openrewrite.jgit.internal.storage.pack;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.eclipse.jgit.lib.Constants;
+import org.openrewrite.jgit.lib.Constants;
 
 /**
  * Encodes an instruction stream for
- * {@link org.eclipse.jgit.internal.storage.pack.BinaryDelta}.
+ * {@link org.openrewrite.jgit.internal.storage.pack.BinaryDelta}.
  */
 public class DeltaEncoder {
 	/**

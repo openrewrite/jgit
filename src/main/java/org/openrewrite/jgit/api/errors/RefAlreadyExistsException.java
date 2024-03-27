@@ -7,13 +7,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.api.errors;
+package org.openrewrite.jgit.api.errors;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.lib.RefUpdate;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.lib.RefUpdate;
 
 /**
- * Thrown when trying to create a {@link org.eclipse.jgit.lib.Ref} with the same
+ * Thrown when trying to create a {@link org.openrewrite.jgit.lib.Ref} with the same
  * name as an existing one
  */
 public class RefAlreadyExistsException extends GitAPIException {
@@ -47,10 +47,10 @@ public class RefAlreadyExistsException extends GitAPIException {
 	}
 
 	/**
-	 * Retrieves the {@link org.eclipse.jgit.lib.RefUpdate.Result
+	 * Retrieves the {@link org.openrewrite.jgit.lib.RefUpdate.Result
 	 * RefUpdate.Result} that caused the exception.
 	 *
-	 * @return the {@link org.eclipse.jgit.lib.RefUpdate.Result
+	 * @return the {@link org.openrewrite.jgit.lib.RefUpdate.Result
 	 *         RefUpdate.Result} or {@code null} if unknown
 	 * @since 5.11
 	 */

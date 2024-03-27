@@ -8,20 +8,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.revwalk.filter;
+package org.openrewrite.jgit.revwalk.filter;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.revwalk.ObjectWalk;
+import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
+import org.openrewrite.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.revwalk.ObjectWalk;
 
 /**
  * Selects interesting objects when walking.
  * <p>
  * Applications should install the filter on an ObjectWalk by
- * {@link org.eclipse.jgit.revwalk.ObjectWalk#setObjectFilter(ObjectFilter)}
+ * {@link org.openrewrite.jgit.revwalk.ObjectWalk#setObjectFilter(ObjectFilter)}
  * prior to starting traversal.
  *
  * @since 4.0
@@ -45,10 +45,10 @@ public abstract class ObjectFilter {
 	 * @param objid
 	 *            the object currently being tested.
 	 * @return {@code true} if the named object should be included in the walk.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             an object the filter needed to consult to determine its
 	 *             answer was missing
-	 * @throws org.eclipse.jgit.errors.IncorrectObjectTypeException
+	 * @throws org.openrewrite.jgit.errors.IncorrectObjectTypeException
 	 *             an object the filter needed to consult to determine its
 	 *             answer was of the wrong type
 	 * @throws java.io.IOException

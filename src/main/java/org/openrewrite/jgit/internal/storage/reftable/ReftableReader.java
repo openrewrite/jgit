@@ -8,19 +8,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.eclipse.jgit.internal.storage.reftable.BlockReader.decodeBlockLen;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_FOOTER_LEN;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_LEN;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.INDEX_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.LOG_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.REF_BLOCK_TYPE;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.VERSION_1;
-import static org.eclipse.jgit.internal.storage.reftable.ReftableConstants.isFileHeaderMagic;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.internal.storage.reftable.BlockReader.decodeBlockLen;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_FOOTER_LEN;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.FILE_HEADER_LEN;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.INDEX_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.LOG_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.REF_BLOCK_TYPE;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.VERSION_1;
+import static org.openrewrite.jgit.internal.storage.reftable.ReftableConstants.isFileHeaderMagic;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -28,16 +28,16 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.zip.CRC32;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.io.BlockSource;
-import org.eclipse.jgit.internal.storage.reftable.BlockWriter.LogEntry;
-import org.eclipse.jgit.lib.AnyObjectId;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.ReflogEntry;
-import org.eclipse.jgit.util.LongList;
-import org.eclipse.jgit.util.LongMap;
-import org.eclipse.jgit.util.NB;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.io.BlockSource;
+import org.openrewrite.jgit.internal.storage.reftable.BlockWriter.LogEntry;
+import org.openrewrite.jgit.lib.AnyObjectId;
+import org.openrewrite.jgit.lib.ObjectId;
+import org.openrewrite.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.util.LongList;
+import org.openrewrite.jgit.util.LongMap;
+import org.openrewrite.jgit.util.NB;
 
 /**
  * Reads a reftable formatted file.
@@ -83,7 +83,7 @@ public class ReftableReader extends Reftable implements AutoCloseable {
 	 *
 	 * @return the block size in bytes chosen for this file by the writer. Most
 	 *         reads from the
-	 *         {@link org.eclipse.jgit.internal.storage.io.BlockSource} will be
+	 *         {@link org.openrewrite.jgit.internal.storage.io.BlockSource} will be
 	 *         aligned to the block size.
 	 * @throws java.io.IOException
 	 *             file cannot be read.

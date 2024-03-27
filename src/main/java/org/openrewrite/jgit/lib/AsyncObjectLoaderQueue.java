@@ -8,11 +8,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.errors.MissingObjectException;
+import org.openrewrite.jgit.errors.MissingObjectException;
 
 /**
  * Queue to open objects asynchronously.
@@ -30,13 +30,13 @@ public interface AsyncObjectLoaderQueue<T extends ObjectId> extends
 	 * Position this queue onto the next available result.
 	 *
 	 * Even if this method returns true, {@link #open()} may still throw
-	 * {@link org.eclipse.jgit.errors.MissingObjectException} if the underlying
+	 * {@link org.openrewrite.jgit.errors.MissingObjectException} if the underlying
 	 * object database was concurrently modified and the current object is no
 	 * longer available.
 	 *
 	 * @return true if there is a result available; false if the queue has
 	 *         finished its input iteration.
-	 * @throws org.eclipse.jgit.errors.MissingObjectException
+	 * @throws org.openrewrite.jgit.errors.MissingObjectException
 	 *             the object does not exist. If the implementation is retaining
 	 *             the application's objects {@link #getCurrent()} will be the
 	 *             current object that is missing. There may be more results

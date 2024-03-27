@@ -7,14 +7,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.util.io;
+package org.openrewrite.jgit.util.io;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
-import org.eclipse.jgit.util.SystemReader;
+import org.openrewrite.jgit.util.SystemReader;
 
 /**
  * An alternative PrintWriter that doesn't catch exceptions.

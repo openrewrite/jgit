@@ -8,17 +8,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jgit.diff.Sequence;
-import org.eclipse.jgit.merge.MergeChunk.ConflictState;
-import org.eclipse.jgit.util.IntList;
+import org.openrewrite.jgit.diff.Sequence;
+import org.openrewrite.jgit.merge.MergeChunk.ConflictState;
+import org.openrewrite.jgit.util.IntList;
 
 /**
- * The result of merging a number of {@link org.eclipse.jgit.diff.Sequence}
+ * The result of merging a number of {@link org.openrewrite.jgit.diff.Sequence}
  * objects. These sequences have one common predecessor sequence. The result of
  * a merge is a list of MergeChunks. Each MergeChunk contains either a range (a
  * subsequence) from one of the merged sequences, a range from the common
@@ -48,7 +48,7 @@ public class MergeResult<S extends Sequence> implements Iterable<MergeChunk> {
 	 *            contains the common predecessor sequence at position 0
 	 *            followed by the merged sequences. This list should not be
 	 *            modified anymore during the lifetime of this
-	 *            {@link org.eclipse.jgit.merge.MergeResult}.
+	 *            {@link org.openrewrite.jgit.merge.MergeResult}.
 	 */
 	public MergeResult(List<S> sequences) {
 		this.sequences = sequences;

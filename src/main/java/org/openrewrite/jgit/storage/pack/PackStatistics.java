@@ -40,12 +40,12 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.eclipse.jgit.storage.pack;
+package org.openrewrite.jgit.storage.pack;
 
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.Constants.OBJ_COMMIT;
-import static org.eclipse.jgit.lib.Constants.OBJ_TAG;
-import static org.eclipse.jgit.lib.Constants.OBJ_TREE;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.lib.Constants.OBJ_COMMIT;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TAG;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TREE;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -53,12 +53,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.internal.storage.pack.CachedPack;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.internal.storage.pack.CachedPack;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
- * Statistics about {@link org.eclipse.jgit.internal.storage.pack.PackWriter}
+ * Statistics about {@link org.openrewrite.jgit.internal.storage.pack.PackWriter}
  * pack creation.
  *
  * @since 4.1
@@ -317,7 +317,7 @@ public class PackStatistics {
 	private Accumulator statistics;
 
 	/**
-	 * Creates a new {@link org.eclipse.jgit.storage.pack.PackStatistics} object
+	 * Creates a new {@link org.openrewrite.jgit.storage.pack.PackStatistics} object
 	 * from the accumulator.
 	 *
 	 * @param accumulator

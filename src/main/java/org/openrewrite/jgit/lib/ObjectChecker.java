@@ -9,46 +9,46 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.lib;
+package org.openrewrite.jgit.lib;
 
-import static org.eclipse.jgit.lib.Constants.DOT_GIT_MODULES;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_LENGTH;
-import static org.eclipse.jgit.lib.Constants.OBJECT_ID_STRING_LENGTH;
-import static org.eclipse.jgit.lib.Constants.OBJ_BAD;
-import static org.eclipse.jgit.lib.Constants.OBJ_BLOB;
-import static org.eclipse.jgit.lib.Constants.OBJ_COMMIT;
-import static org.eclipse.jgit.lib.Constants.OBJ_TAG;
-import static org.eclipse.jgit.lib.Constants.OBJ_TREE;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.BAD_DATE;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.BAD_EMAIL;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.BAD_OBJECT_SHA1;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.BAD_PARENT_SHA1;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.BAD_TIMEZONE;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.BAD_TREE_SHA1;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.BAD_UTF8;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.DUPLICATE_ENTRIES;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.EMPTY_NAME;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.FULL_PATHNAME;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.HAS_DOT;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.HAS_DOTDOT;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.HAS_DOTGIT;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.MISSING_AUTHOR;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.MISSING_COMMITTER;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.MISSING_EMAIL;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.MISSING_OBJECT;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.MISSING_SPACE_BEFORE_DATE;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.MISSING_TAG_ENTRY;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.MISSING_TREE;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.MISSING_TYPE_ENTRY;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.NULL_SHA1;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.TREE_NOT_SORTED;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.UNKNOWN_TYPE;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.WIN32_BAD_NAME;
-import static org.eclipse.jgit.lib.ObjectChecker.ErrorType.ZERO_PADDED_FILEMODE;
-import static org.eclipse.jgit.util.Paths.compare;
-import static org.eclipse.jgit.util.Paths.compareSameName;
-import static org.eclipse.jgit.util.RawParseUtils.nextLF;
-import static org.eclipse.jgit.util.RawParseUtils.parseBase10;
+import static org.openrewrite.jgit.lib.Constants.DOT_GIT_MODULES;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_LENGTH;
+import static org.openrewrite.jgit.lib.Constants.OBJECT_ID_STRING_LENGTH;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BAD;
+import static org.openrewrite.jgit.lib.Constants.OBJ_BLOB;
+import static org.openrewrite.jgit.lib.Constants.OBJ_COMMIT;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TAG;
+import static org.openrewrite.jgit.lib.Constants.OBJ_TREE;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.BAD_DATE;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.BAD_EMAIL;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.BAD_OBJECT_SHA1;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.BAD_PARENT_SHA1;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.BAD_TIMEZONE;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.BAD_TREE_SHA1;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.BAD_UTF8;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.DUPLICATE_ENTRIES;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.EMPTY_NAME;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.FULL_PATHNAME;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.HAS_DOT;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.HAS_DOTDOT;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.HAS_DOTGIT;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.MISSING_AUTHOR;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.MISSING_COMMITTER;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.MISSING_EMAIL;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.MISSING_OBJECT;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.MISSING_SPACE_BEFORE_DATE;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.MISSING_TAG_ENTRY;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.MISSING_TREE;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.MISSING_TYPE_ENTRY;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.NULL_SHA1;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.TREE_NOT_SORTED;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.UNKNOWN_TYPE;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.WIN32_BAD_NAME;
+import static org.openrewrite.jgit.lib.ObjectChecker.ErrorType.ZERO_PADDED_FILEMODE;
+import static org.openrewrite.jgit.util.Paths.compare;
+import static org.openrewrite.jgit.util.Paths.compareSameName;
+import static org.openrewrite.jgit.util.RawParseUtils.nextLF;
+import static org.openrewrite.jgit.util.RawParseUtils.parseBase10;
 
 import java.text.MessageFormat;
 import java.text.Normalizer;
@@ -59,13 +59,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.eclipse.jgit.annotations.NonNull;
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.internal.JGitText;
-import org.eclipse.jgit.util.MutableInteger;
-import org.eclipse.jgit.util.RawParseUtils;
-import org.eclipse.jgit.util.StringUtils;
+import org.openrewrite.jgit.annotations.NonNull;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.CorruptObjectException;
+import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.util.MutableInteger;
+import org.openrewrite.jgit.util.RawParseUtils;
+import org.openrewrite.jgit.util.StringUtils;
 
 /**
  * Verifies that an object is formatted correctly.
@@ -300,12 +300,12 @@ public class ObjectChecker {
 	 *
 	 * @param objType
 	 *            type of the object. Must be a valid object type code in
-	 *            {@link org.eclipse.jgit.lib.Constants}.
+	 *            {@link org.openrewrite.jgit.lib.Constants}.
 	 * @param raw
 	 *            the raw data which comprises the object. This should be in the
 	 *            canonical format (that is the format used to generate the
 	 *            ObjectId of the object). The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if an error is identified.
 	 */
 	public void check(int objType, byte[] raw)
@@ -320,12 +320,12 @@ public class ObjectChecker {
 	 *            identify of the object being checked.
 	 * @param objType
 	 *            type of the object. Must be a valid object type code in
-	 *            {@link org.eclipse.jgit.lib.Constants}.
+	 *            {@link org.openrewrite.jgit.lib.Constants}.
 	 * @param raw
 	 *            the raw data which comprises the object. This should be in the
 	 *            canonical format (that is the format used to generate the
 	 *            ObjectId of the object). The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if an error is identified.
 	 * @since 4.2
 	 */
@@ -432,7 +432,7 @@ public class ObjectChecker {
 	 *
 	 * @param raw
 	 *            the commit data. The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if any error was detected.
 	 */
 	public void checkCommit(byte[] raw) throws CorruptObjectException {
@@ -446,7 +446,7 @@ public class ObjectChecker {
 	 *            identity of the object being checked.
 	 * @param raw
 	 *            the commit data. The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if any error was detected.
 	 * @since 4.2
 	 */
@@ -486,7 +486,7 @@ public class ObjectChecker {
 	 *
 	 * @param raw
 	 *            the tag data. The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if any error was detected.
 	 */
 	public void checkTag(byte[] raw) throws CorruptObjectException {
@@ -500,7 +500,7 @@ public class ObjectChecker {
 	 *            identity of the object being checked.
 	 * @param raw
 	 *            the tag data. The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if any error was detected.
 	 * @since 4.2
 	 */
@@ -576,7 +576,7 @@ public class ObjectChecker {
 	 *
 	 * @param raw
 	 *            the raw tree data. The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if any error was detected.
 	 */
 	public void checkTree(byte[] raw) throws CorruptObjectException {
@@ -590,7 +590,7 @@ public class ObjectChecker {
 	 *            identity of the object being checked.
 	 * @param raw
 	 *            the raw tree data. The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if any error was detected.
 	 * @since 4.2
 	 */
@@ -733,7 +733,7 @@ public class ObjectChecker {
 	 *
 	 * @param path
 	 *            path string to scan.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             path is invalid.
 	 * @since 3.6
 	 */
@@ -754,7 +754,7 @@ public class ObjectChecker {
 	 *            offset to first byte of the name.
 	 * @param end
 	 *            offset to one past last byte of name.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             path is invalid.
 	 * @since 3.6
 	 */
@@ -779,7 +779,7 @@ public class ObjectChecker {
 	 *            offset to first byte of the name.
 	 * @param end
 	 *            offset to one past last byte of name.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             name is invalid.
 	 * @since 3.4
 	 */
@@ -1183,7 +1183,7 @@ public class ObjectChecker {
 	}
 
 	/**
-	 * Create a new {@link org.eclipse.jgit.lib.BlobObjectChecker}.
+	 * Create a new {@link org.openrewrite.jgit.lib.BlobObjectChecker}.
 	 *
 	 * @return new BlobObjectChecker or null if it's not provided.
 	 * @since 4.9
@@ -1202,7 +1202,7 @@ public class ObjectChecker {
 	 *
 	 * @param raw
 	 *            the blob data. The array is never modified.
-	 * @throws org.eclipse.jgit.errors.CorruptObjectException
+	 * @throws org.openrewrite.jgit.errors.CorruptObjectException
 	 *             if any error was detected.
 	 */
 	public void checkBlob(byte[] raw) throws CorruptObjectException {

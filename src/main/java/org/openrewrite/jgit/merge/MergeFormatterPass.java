@@ -9,15 +9,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.merge;
+package org.openrewrite.jgit.merge;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import org.eclipse.jgit.diff.RawText;
-import org.eclipse.jgit.merge.MergeChunk.ConflictState;
+import org.openrewrite.jgit.diff.RawText;
+import org.openrewrite.jgit.merge.MergeChunk.ConflictState;
 
 class MergeFormatterPass {
 

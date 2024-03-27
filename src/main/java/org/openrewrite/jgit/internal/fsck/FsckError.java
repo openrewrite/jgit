@@ -7,16 +7,16 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-package org.eclipse.jgit.internal.fsck;
+package org.openrewrite.jgit.internal.fsck;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.jgit.annotations.Nullable;
-import org.eclipse.jgit.errors.CorruptPackIndexException;
-import org.eclipse.jgit.errors.CorruptPackIndexException.ErrorType;
-import org.eclipse.jgit.lib.ObjectChecker;
-import org.eclipse.jgit.lib.ObjectId;
+import org.openrewrite.jgit.annotations.Nullable;
+import org.openrewrite.jgit.errors.CorruptPackIndexException;
+import org.openrewrite.jgit.errors.CorruptPackIndexException.ErrorType;
+import org.openrewrite.jgit.lib.ObjectChecker;
+import org.openrewrite.jgit.lib.ObjectId;
 
 /**
  * Holds all fsck errors of a git repository.

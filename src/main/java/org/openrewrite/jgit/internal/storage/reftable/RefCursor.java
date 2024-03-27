@@ -8,15 +8,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-package org.eclipse.jgit.internal.storage.reftable;
+package org.openrewrite.jgit.internal.storage.reftable;
 
 import java.io.IOException;
 
-import org.eclipse.jgit.lib.Ref;
+import org.openrewrite.jgit.lib.Ref;
 
 /**
  * Iterator over references inside a
- * {@link org.eclipse.jgit.internal.storage.reftable.Reftable}.
+ * {@link org.openrewrite.jgit.internal.storage.reftable.Reftable}.
  */
 public abstract class RefCursor implements AutoCloseable {
 	/**
