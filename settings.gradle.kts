@@ -8,3 +8,4 @@ pluginManagement {
 rootProject.name = "openrewrite-jgit"
 
 include("jgit")
+include("jgit-gpg-bc")
