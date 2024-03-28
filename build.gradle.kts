@@ -7,7 +7,7 @@ description = "Fork of jgit to maintain Java 8 compatibility"
 
 dependencies {
     implementation("com.googlecode.javaewah:JavaEWAH:1.1.13")
-    implementation("org.slf4j:slf4j-api:1.7.30")
+    compileOnly("org.slf4j:slf4j-api:1.7.30")
 }
 
 java {
