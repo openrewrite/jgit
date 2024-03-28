@@ -5,4 +5,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "jgit"
+rootProject.name = "openrewrite-jgit"
+
+include("jgit")
