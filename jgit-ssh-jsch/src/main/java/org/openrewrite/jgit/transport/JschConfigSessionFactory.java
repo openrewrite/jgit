@@ -442,9 +442,9 @@ public class JschConfigSessionFactory extends SshSessionFactory {
 			loadIdentity(sch, new File(sshdir, "identity")); //$NON-NLS-1$
 			loadIdentity(sch, new File(sshdir, "id_rsa")); //$NON-NLS-1$
 			loadIdentity(sch, new File(sshdir, "id_dsa")); //$NON-NLS-1$
-            loadIdentity(sch, new File(sshdir, "id_ecdsa")); //$NON-NLS-1$
-            loadIdentity(sch, new File(sshdir, "id_ed25519")); //$NON-NLS-1$
-            loadIdentity(sch, new File(sshdir, "id_ed448")); //$NON-NLS-1$
+			loadIdentity(sch, new File(sshdir, "id_ecdsa")); //$NON-NLS-1$
+			loadIdentity(sch, new File(sshdir, "id_ed25519")); //$NON-NLS-1$
+			loadIdentity(sch, new File(sshdir, "id_ed448")); //$NON-NLS-1$
 		}
 	}
 
