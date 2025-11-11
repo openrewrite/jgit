@@ -28,6 +28,8 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 
 import org.openrewrite.jgit.diff.DiffAlgorithm.SupportedAlgorithm;
 import org.openrewrite.jgit.diff.DiffEntry.ChangeType;
@@ -68,6 +70,7 @@ import org.openrewrite.jgit.treewalk.filter.PathFilter;
 import org.openrewrite.jgit.treewalk.filter.TreeFilter;
 import org.openrewrite.jgit.util.LfsFactory;
 import org.openrewrite.jgit.util.QuotedString;
+import org.openrewrite.jgit.util.io.BinaryHunkOutputStream;
 
 /**
  * Format a Git style patch script.
@@ -95,6 +98,8 @@ public class DiffFormatter implements AutoCloseable {
 	private DiffAlgorithm diffAlgorithm;
 
 	private RawTextComparator comparator = RawTextComparator.DEFAULT;
+
+	private PatchType patchType = PatchType.UNIFIED;
 
 	private int binaryFileThreshold = DEFAULT_BINARY_FILE_THRESHOLD;
 
@@ -257,6 +262,10 @@ public class DiffFormatter implements AutoCloseable {
 	 */
 	public void setBinaryFileThreshold(int threshold) {
 		this.binaryFileThreshold = threshold;
+	}
+
+	public void setPatchType(PatchType type) {
+		this.patchType = type;
 	}
 
 	/**
@@ -714,7 +723,7 @@ public class DiffFormatter implements AutoCloseable {
 	}
 
 	private String format(AbbreviatedObjectId id) {
-		if (id.isComplete() && reader != null) {
+		if (id.isComplete() && reader != null && patchType != PatchType.GIT_BINARY) {
 			try {
 				id = reader.abbreviate(id.toObjectId(), abbreviationLength);
 			} catch (IOException cannotAbbreviate) {
@@ -764,6 +773,8 @@ public class DiffFormatter implements AutoCloseable {
 		out.write(head.getBuffer(), start, end - start);
 		if (head.getPatchType() == PatchType.UNIFIED)
 			format(head.toEditList(), a, b);
+		else if (head.getPatchType() == PatchType.GIT_BINARY)
+			formatBinary(a, b);
 	}
 
 	/**
@@ -814,6 +825,26 @@ public class DiffFormatter implements AutoCloseable {
 					curEdit = edits.get(curIdx);
 			}
 		}
+	}
+
+	private void formatBinary(RawText a, RawText b) throws IOException {
+		byte[] oldImage = a.getRawContent();
+		byte[] newImage = b.getRawContent();
+		out.write(encodeASCII("literal " + newImage.length + "\n"));
+		Deflater deflater = new Deflater();
+		deflater.setLevel(Deflater.BEST_SPEED);
+		try (OutputStream os = new DeflaterOutputStream(new BinaryHunkOutputStream(out), deflater, 1024)) {
+			os.write(newImage);
+		}
+		out.write('\n');
+		out.write(encodeASCII("literal " + oldImage.length + "\n"));
+		deflater = new Deflater(); // deflater is stateful, reset it
+		deflater.setLevel(Deflater.BEST_SPEED);
+		try (OutputStream os = new DeflaterOutputStream(new BinaryHunkOutputStream(out), deflater, 1024)) {
+			os.write(oldImage);
+		}
+		out.write('\n');
+		out.write('\n');
 	}
 
 	/**
@@ -997,17 +1028,39 @@ public class DiffFormatter implements AutoCloseable {
 			aRaw = new RawText(writeGitLinkText(ent.getOldId()));
 			bRaw = new RawText(writeGitLinkText(ent.getNewId()));
 		} else {
-			try {
-				aRaw = open(OLD, ent);
-				bRaw = open(NEW, ent);
-			} catch (BinaryBlobException e) {
-				// Do nothing; we check for null below.
-				formatOldNewPaths(buf, ent);
-				buf.write(encodeASCII("Binary files differ\n")); //$NON-NLS-1$
-				editList = new EditList();
-				type = PatchType.BINARY;
-				res.header = new FileHeader(buf.toByteArray(), editList, type);
+			if (patchType == PatchType.GIT_BINARY) {
+				try {
+					aRaw = open(OLD, ent);
+					bRaw = open(NEW, ent);
+				} catch (BinaryBlobException e) {
+					// Do nothing; we check for null below.
+					formatOldNewPaths(buf, ent);
+					buf.write(encodeASCII("Binary files differ\n")); //$NON-NLS-1$
+					editList = new EditList();
+					type = PatchType.BINARY;
+					res.header = new FileHeader(buf.toByteArray(), editList, type);
+					return res;
+				}
+
+				buf.write(encodeASCII("GIT binary patch\n"));
+				type = PatchType.GIT_BINARY;
+				res.header = new FileHeader(buf.toByteArray(), type);
+				res.a = aRaw;
+				res.b = bRaw;
 				return res;
+			} else {
+				try {
+					aRaw = open(OLD, ent);
+					bRaw = open(NEW, ent);
+				} catch (BinaryBlobException e) {
+					// Do nothing; we check for null below.
+					formatOldNewPaths(buf, ent);
+					buf.write(encodeASCII("Binary files differ\n")); //$NON-NLS-1$
+					editList = new EditList();
+					type = PatchType.BINARY;
+					res.header = new FileHeader(buf.toByteArray(), editList, type);
+					return res;
+				}
 			}
 		}
 
@@ -1072,7 +1125,11 @@ public class DiffFormatter implements AutoCloseable {
 
 		ObjectLoader ldr = LfsFactory.getInstance().applySmudgeFilter(repository,
 				source.open(side, entry), entry.getDiffAttribute());
-		return RawText.load(ldr, binaryFileThreshold);
+		if (patchType == PatchType.GIT_BINARY) {
+			return RawText.loadBinary(ldr, binaryFileThreshold);
+		} else {
+			return RawText.load(ldr, binaryFileThreshold);
+		}
 	}
 
 	/**
