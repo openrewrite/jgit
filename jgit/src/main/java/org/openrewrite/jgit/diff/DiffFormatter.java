@@ -99,7 +99,7 @@ public class DiffFormatter implements AutoCloseable {
 
 	private RawTextComparator comparator = RawTextComparator.DEFAULT;
 
-	private PatchType patchType = PatchType.UNIFIED;
+	private boolean binaryPatch = false;
 
 	private int binaryFileThreshold = DEFAULT_BINARY_FILE_THRESHOLD;
 
@@ -264,8 +264,8 @@ public class DiffFormatter implements AutoCloseable {
 		this.binaryFileThreshold = threshold;
 	}
 
-	public void setPatchType(PatchType type) {
-		this.patchType = type;
+	public void setBinary(boolean binaryPatch) {
+		this.binaryPatch = binaryPatch;
 	}
 
 	/**
@@ -723,7 +723,7 @@ public class DiffFormatter implements AutoCloseable {
 	}
 
 	private String format(AbbreviatedObjectId id) {
-		if (id.isComplete() && reader != null && patchType != PatchType.GIT_BINARY) {
+		if (id.isComplete() && reader != null && binaryPatch) {
 			try {
 				id = reader.abbreviate(id.toObjectId(), abbreviationLength);
 			} catch (IOException cannotAbbreviate) {
@@ -1028,7 +1028,7 @@ public class DiffFormatter implements AutoCloseable {
 			aRaw = new RawText(writeGitLinkText(ent.getOldId()));
 			bRaw = new RawText(writeGitLinkText(ent.getNewId()));
 		} else {
-			if (patchType == PatchType.GIT_BINARY) {
+			if (binaryPatch) {
 				try {
 					aRaw = open(OLD, ent);
 					bRaw = open(NEW, ent);
@@ -1125,7 +1125,7 @@ public class DiffFormatter implements AutoCloseable {
 
 		ObjectLoader ldr = LfsFactory.getInstance().applySmudgeFilter(repository,
 				source.open(side, entry), entry.getDiffAttribute());
-		if (patchType == PatchType.GIT_BINARY) {
+		if (binaryPatch) {
 			return RawText.loadBinary(ldr, binaryFileThreshold);
 		} else {
 			return RawText.load(ldr, binaryFileThreshold);
