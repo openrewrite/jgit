@@ -35,6 +35,7 @@ import static org.openrewrite.jgit.util.HttpSupport.METHOD_POST;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -79,6 +80,7 @@ import javax.net.ssl.SSLHandshakeException;
 
 import org.openrewrite.jgit.annotations.NonNull;
 import org.openrewrite.jgit.errors.ConfigInvalidException;
+import org.openrewrite.jgit.errors.HttpResponseException;
 import org.openrewrite.jgit.errors.NoRemoteRepositoryException;
 import org.openrewrite.jgit.errors.NotSupportedException;
 import org.openrewrite.jgit.errors.PackProtocolException;
@@ -689,9 +691,10 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 					continue;
 
 				case HttpConnection.HTTP_FORBIDDEN:
-					throw new TransportException(uri, MessageFormat.format(
-							JGitText.get().serviceNotPermitted, baseUrl,
-							service));
+					throw createHttpResponseException(conn, status,
+							MessageFormat.format(
+									JGitText.get().serviceNotPermitted, baseUrl,
+									service));
 
 				case HttpConnection.HTTP_MOVED_PERM:
 				case HttpConnection.HTTP_MOVED_TEMP:
@@ -715,8 +718,7 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 					authAttempts = 1;
 					break;
 				default:
-					String err = status + " " + conn.getResponseMessage(); //$NON-NLS-1$
-					throw new TransportException(uri, err);
+					throw createHttpResponseException(conn, status, null);
 				}
 			} catch (NotSupportedException | TransportException e) {
 				throw e;
@@ -1155,6 +1157,50 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 	IOException wrongContentType(String expType, String actType) {
 		final String why = MessageFormat.format(JGitText.get().expectedReceivedContentType, expType, actType);
 		return new TransportException(uri, why);
+	}
+
+	/**
+	 * Read the error response body from a failed HTTP connection.
+	 * Limited to 8KB to avoid memory issues.
+	 */
+	private String readErrorBody(HttpConnection conn) {
+		try (InputStream err = conn.getErrorStream()) {
+			if (err == null) {
+				return null;
+			}
+			byte[] buf = new byte[1024];
+			int total = 0;
+			int n;
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			while ((n = err.read(buf)) >= 0 && total < 8192) {
+				out.write(buf, 0, n);
+				total += n;
+			}
+			return out.toString(StandardCharsets.UTF_8.name());
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Create an HttpResponseException with full response details for error
+	 * status codes (4xx, 5xx). This allows consumers to log and analyze
+	 * the actual server response.
+	 */
+	HttpResponseException createHttpResponseException(HttpConnection conn,
+			int status, String message) throws IOException {
+		Map<String, List<String>> headers = conn.getHeaderFields();
+		String body = readErrorBody(conn);
+
+		String fullMessage = status + " " + conn.getResponseMessage();
+		if (message != null) {
+			fullMessage = fullMessage + ": " + message;
+		}
+		if (body != null && !body.isEmpty() && body.length() < 200) {
+			fullMessage = fullMessage + " - " + body;
+		}
+
+		return new HttpResponseException(uri, status, headers, body, fullMessage);
 	}
 
 	private NetscapeCookieFile getCookieFileFromConfig(
@@ -1684,7 +1730,7 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 								conn.getResponseMessage());
 
 					case HttpConnection.HTTP_FORBIDDEN:
-						throw new TransportException(uri,
+						throw createHttpResponseException(conn, status,
 								MessageFormat.format(
 										JGitText.get().serviceNotPermitted,
 										baseUrl, serviceName));
@@ -1811,8 +1857,7 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 		void openResponse() throws IOException {
 			final int status = HttpSupport.response(conn);
 			if (status != HttpConnection.HTTP_OK) {
-				throw new TransportException(uri, status + " " //$NON-NLS-1$
-						+ conn.getResponseMessage());
+				throw createHttpResponseException(conn, status, null);
 			}
 
 			final String contentType = conn.getContentType();

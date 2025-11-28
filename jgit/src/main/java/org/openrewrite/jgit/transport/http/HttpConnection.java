@@ -212,6 +212,16 @@ public interface HttpConnection {
 	InputStream getInputStream() throws IOException;
 
 	/**
+	 * Get error stream for reading the response body when the server returns
+	 * an error status code (4xx, 5xx). Returns null if no error occurred or
+	 * if no error data was sent by the server.
+	 *
+	 * @see HttpURLConnection#getErrorStream()
+	 * @return an input stream for reading error response data, or null
+	 */
+	InputStream getErrorStream();
+
+	/**
 	 * Get header field. According to
 	 * {@link <a href="https://tools.ietf.org/html/rfc2616#section-4.2">RFC
 	 * 2616</a>} header field names are case insensitive. Header fields defined
