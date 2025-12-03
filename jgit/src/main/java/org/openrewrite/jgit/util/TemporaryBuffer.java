@@ -89,6 +89,10 @@ public abstract class TemporaryBuffer extends OutputStream {
 			overflow.write(b);
 			return;
 		}
+		if (blocks == null) {
+			throw new IOException(
+					"Buffer is closed and cannot accept additional data");
+		}
 
 		Block s = last();
 		if (s.isFull()) {
@@ -107,6 +111,10 @@ public abstract class TemporaryBuffer extends OutputStream {
 	@Override
 	public void write(byte[] b, int off, int len) throws IOException {
 		if (overflow == null) {
+			if (blocks == null) {
+				throw new IOException(
+						"Buffer is closed and cannot accept additional data");
+			}
 			while (len > 0) {
 				Block s = last();
 				if (s.isFull()) {
