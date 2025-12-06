@@ -723,7 +723,7 @@ public class DiffFormatter implements AutoCloseable {
 	}
 
 	private String format(AbbreviatedObjectId id) {
-		if (id.isComplete() && reader != null && binaryPatch) {
+		if (id.isComplete() && reader != null && !binaryPatch) {
 			try {
 				id = reader.abbreviate(id.toObjectId(), abbreviationLength);
 			} catch (IOException cannotAbbreviate) {
