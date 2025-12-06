@@ -108,17 +108,29 @@ public class FileHeader extends DiffEntry {
 	 *
 	 * @param headerLines
 	 *            buffer holding the diff header for this file
+	 * @param type
+	 *            the type of patch used to modify this file
+	 */
+	public FileHeader(byte[] headerLines, PatchType type) {
+		this(headerLines, 0);
+		endOffset = headerLines.length;
+		int ptr = parseGitFileName(Patch.DIFF_GIT.length, headerLines.length);
+		parseGitHeaders(ptr, headerLines.length);
+		this.patchType = type;
+	}
+
+	/**
+	 * Constructs a new FileHeader
+	 *
+	 * @param headerLines
+	 *            buffer holding the diff header for this file
 	 * @param edits
 	 *            the edits for this file
 	 * @param type
 	 *            the type of patch used to modify this file
 	 */
 	public FileHeader(byte[] headerLines, EditList edits, PatchType type) {
-		this(headerLines, 0);
-		endOffset = headerLines.length;
-		int ptr = parseGitFileName(Patch.DIFF_GIT.length, headerLines.length);
-		parseGitHeaders(ptr, headerLines.length);
-		this.patchType = type;
+		this(headerLines, type);
 		addHunk(new HunkHeader(this, edits));
 	}
 

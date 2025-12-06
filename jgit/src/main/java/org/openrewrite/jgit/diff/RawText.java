@@ -449,4 +449,41 @@ public class RawText extends Sequence {
 			return new RawText(data, RawParseUtils.lineMapOrBinary(data, 0, (int) sz));
 		}
 	}
+
+	/**
+	 * Read a blob object into RawText, or throw BinaryBlobException if the blob
+	 * is binary.
+	 *
+	 * @param ldr
+	 *            the ObjectLoader for the blob
+	 * @param threshold
+	 *            if the blob is larger than this size, it is always assumed to
+	 *            be binary.
+	 * @since 4.10
+	 * @return the RawText representing the blob.
+	 * @throws org.openrewrite.jgit.errors.BinaryBlobException
+	 *             if the blob contains binary data.
+	 * @throws java.io.IOException
+	 *             if the input could not be read.
+	 */
+	public static RawText loadBinary(ObjectLoader ldr, int threshold)
+			throws IOException, BinaryBlobException {
+		long sz = ldr.getSize();
+
+		if (sz > threshold) {
+			throw new BinaryBlobException();
+		}
+
+		try (InputStream stream = ldr.openStream()) {
+			byte[] data;
+			try {
+				data = new byte[(int) sz];
+			} catch (OutOfMemoryError e) {
+				throw new LargeObjectException.OutOfMemory(e);
+			}
+
+			IO.readFully(stream, data, 0, (int) sz);
+			return new RawText(data);
+		}
+	}
 }
