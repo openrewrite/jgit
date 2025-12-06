@@ -25,6 +25,7 @@ import static org.openrewrite.jgit.lib.FileMode.GITLINK;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -773,7 +774,7 @@ public class DiffFormatter implements AutoCloseable {
 		out.write(head.getBuffer(), start, end - start);
 		if (head.getPatchType() == PatchType.UNIFIED)
 			format(head.toEditList(), a, b);
-		else if (head.getPatchType() == PatchType.GIT_BINARY)
+		else if (head.getPatchType() == PatchType.GIT_BINARY && a != null && b != null)
 			formatBinary(a, b);
 	}
 
@@ -1039,6 +1040,12 @@ public class DiffFormatter implements AutoCloseable {
 					editList = new EditList();
 					type = PatchType.BINARY;
 					res.header = new FileHeader(buf.toByteArray(), editList, type);
+					return res;
+				}
+
+				if (Arrays.equals(aRaw.getRawContent(), bRaw.getRawContent())) {
+					type = PatchType.GIT_BINARY;
+					res.header = new FileHeader(buf.toByteArray(), type);
 					return res;
 				}
 
