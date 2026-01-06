@@ -76,6 +76,8 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 
 	private String initialBranch;
 
+	private Integer depth;
+
 	/**
 	 * Callback for status of fetch operation.
 	 *
@@ -209,6 +211,9 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 			if (tagOption != null)
 				transport.setTagOpt(tagOption);
 			transport.setFetchThin(thin);
+			if (depth != null) {
+				transport.setDepth(depth.intValue());
+			}
 			configure(transport);
 			FetchResult result = transport.fetch(monitor,
 					applyOptions(refSpecs), initialBranch);
@@ -540,6 +545,24 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	 */
 	public FetchCommand setForceUpdate(boolean force) {
 		this.isForceUpdate = force;
+		return this;
+	}
+
+	/**
+	 * Limits fetching to the specified number of commits from the tip of each
+	 * remote branch history.
+	 *
+	 * @param depth
+	 *            the depth
+	 * @return {@code this}
+	 * @since 5.13
+	 */
+	public FetchCommand setDepth(int depth) {
+		checkCallable();
+		if (depth < 1) {
+			throw new IllegalArgumentException("depth must be >= 1");
+		}
+		this.depth = Integer.valueOf(depth);
 		return this;
 	}
 }

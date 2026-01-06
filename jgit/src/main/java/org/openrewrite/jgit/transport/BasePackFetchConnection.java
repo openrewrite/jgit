@@ -12,16 +12,22 @@
 
 package org.openrewrite.jgit.transport;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.openrewrite.jgit.errors.PackProtocolException;
@@ -31,6 +37,7 @@ import org.openrewrite.jgit.internal.JGitText;
 import org.openrewrite.jgit.internal.storage.file.PackLock;
 import org.openrewrite.jgit.lib.AnyObjectId;
 import org.openrewrite.jgit.lib.Config;
+import org.openrewrite.jgit.lib.Constants;
 import org.openrewrite.jgit.lib.MutableObjectId;
 import org.openrewrite.jgit.lib.NullProgressMonitor;
 import org.openrewrite.jgit.lib.ObjectId;
@@ -226,6 +233,8 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 	 */
 	private final FilterSpec filterSpec;
 
+	private final Integer depth;
+
 	/**
 	 * Create a new connection to fetch using the native git transport.
 	 *
@@ -247,6 +256,7 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 		includeTags = transport.getTagOpt() != TagOpt.NO_TAGS;
 		thinPack = transport.isFetchThin();
 		filterSpec = transport.getFilterSpec();
+		depth = transport.getDepth();
 
 		if (local != null) {
 			walk = new RevWalk(local);
@@ -459,8 +469,12 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 		if (sentDone && line.startsWith("ERR ")) { //$NON-NLS-1$
 			throw new RemoteRepositoryException(uri, line.substring(4));
 		}
-		// "shallow-info", "wanted-refs", and "packfile-uris" would have to be
-		// handled here in that order.
+		// Handle shallow-info section for shallow clones
+		if (GitProtocolConstants.SECTION_SHALLOW_INFO.equals(line)) {
+			readShallowInfo();
+			line = pckIn.readString();
+		}
+		// "wanted-refs" and "packfile-uris" would have to be handled here
 		if (!GitProtocolConstants.SECTION_PACKFILE.equals(line)) {
 			throw new PackProtocolException(
 					MessageFormat.format(JGitText.get().expectedGot,
@@ -702,7 +716,46 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 		if (!filterSpec.isNoOp()) {
 			p.writeString(filterSpec.filterLine());
 		}
+		sendShallow(p);
 		return true;
+	}
+
+	private void sendShallow(PacketLineOut p) throws IOException {
+		if (depth != null) {
+			p.writeString("deepen " + depth); //$NON-NLS-1$
+		}
+	}
+
+	private void readShallowInfo() throws IOException {
+		// Read shallow-info section and write to .git/shallow file
+		// The server sends "shallow <oid>" lines for commits that are shallow boundaries
+		List<ObjectId> shallowCommits = new ArrayList<>();
+		String line;
+		while ((line = pckIn.readString()) != PacketLineIn.END) {
+			if (PacketLineIn.isDelimiter(line)) {
+				break;
+			}
+			if (line.startsWith("shallow ")) { //$NON-NLS-1$
+				ObjectId id = ObjectId.fromString(line.substring(8));
+				shallowCommits.add(id);
+			}
+			// "unshallow" lines are ignored for now (used when deepening)
+		}
+
+		// Write shallow commits to .git/shallow file
+		if (!shallowCommits.isEmpty() && local != null) {
+			File gitDir = local.getDirectory();
+			if (gitDir != null) {
+				File shallowFile = new File(gitDir, Constants.SHALLOW);
+				try (BufferedWriter writer = Files.newBufferedWriter(
+						shallowFile.toPath(), StandardCharsets.UTF_8)) {
+					for (ObjectId id : shallowCommits) {
+						writer.write(id.name());
+						writer.newLine();
+					}
+				}
+			}
+		}
 	}
 
 	private Set<String> getCapabilitiesV2(Set<String> advertisedCapabilities)
@@ -727,6 +780,7 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 					JGitText.get().filterRequiresCapability);
 		}
 		// The FilterSpec will be added later in sendWants().
+		// Shallow capabilities are handled implicitly in protocol v2
 		return capabilities;
 	}
 
@@ -763,6 +817,10 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 			throw new PackProtocolException(uri, MessageFormat.format(
 					JGitText.get().statelessRPCRequiresOptionToBeEnabled,
 					OPTION_MULTI_ACK_DETAILED));
+		}
+
+		if (depth != null) {
+			wantCapability(line, OPTION_SHALLOW);
 		}
 
 		if (!filterSpec.isNoOp() && !wantCapability(line, OPTION_FILTER)) {

@@ -371,6 +371,10 @@ class FetchProcess {
 	}
 
 	private boolean askForIsComplete() throws TransportException {
+		// Shallow clones cannot assume completeness
+		if (transport.getDepth() != null) {
+			return false;
+		}
 		try {
 			try (ObjectWalk ow = new ObjectWalk(transport.local)) {
 				for (ObjectId want : askFor.keySet())

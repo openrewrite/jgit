@@ -778,6 +778,8 @@ public abstract class Transport implements AutoCloseable {
 	@Nullable
 	TransferConfig.ProtocolVersion protocol;
 
+	private Integer depth;
+
 	/**
 	 * Create a new transport instance.
 	 *
@@ -1202,6 +1204,31 @@ public abstract class Transport implements AutoCloseable {
 	 */
 	public void setPushOptions(List<String> pushOptions) {
 		this.pushOptions = pushOptions;
+	}
+
+	/**
+	 * Get the depth of the shallow clone.
+	 *
+	 * @return the depth of the shallow clone, or null if not set
+	 * @since 5.13
+	 */
+	public Integer getDepth() {
+		return depth;
+	}
+
+	/**
+	 * Limit fetching to the specified number of commits from the tip of each
+	 * remote branch history.
+	 *
+	 * @param depth
+	 *            the depth
+	 * @since 5.13
+	 */
+	public void setDepth(int depth) {
+		if (depth < 1) {
+			throw new IllegalArgumentException("depth must be >= 1");
+		}
+		this.depth = Integer.valueOf(depth);
 	}
 
 	/**

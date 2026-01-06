@@ -91,6 +91,8 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 
 	private TagOpt tagOption;
 
+	private Integer depth;
+
 	private enum FETCH_TYPE {
 		MULTIPLE_BRANCHES, ALL_BRANCHES, MIRROR
 	}
@@ -306,6 +308,9 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 					fetchAll ? TagOpt.FETCH_TAGS : TagOpt.AUTO_FOLLOW);
 		}
 		command.setInitialBranch(branch);
+		if (depth != null) {
+			command.setDepth(depth.intValue());
+		}
 		configure(command);
 
 		return command.call();
@@ -734,6 +739,23 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 	 */
 	public CloneCommand setCallback(Callback callback) {
 		this.callback = callback;
+		return this;
+	}
+
+	/**
+	 * Creates a shallow clone with a history truncated to the specified number
+	 * of commits.
+	 *
+	 * @param depth
+	 *            the depth of the shallow clone
+	 * @return {@code this}
+	 * @since 5.13
+	 */
+	public CloneCommand setDepth(int depth) {
+		if (depth < 1) {
+			throw new IllegalArgumentException("depth must be >= 1");
+		}
+		this.depth = Integer.valueOf(depth);
 		return this;
 	}
 
