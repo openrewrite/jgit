@@ -600,7 +600,7 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 			// We assume hunks to be ordered
 			if (hh.getNewStartLine() <= lastHunkNewLine) {
 				throw new PatchApplyException(MessageFormat
-						.format(JGitText.get().patchApplyException, hh));
+						.format(JGitText.get().patchApplyErrorWithHunk, path, hh, "hunk out of sequence"));
 			}
 			lastHunkNewLine = hh.getNewStartLine();
 
@@ -622,7 +622,7 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 					break;
 				}
 				throw new PatchApplyException(MessageFormat
-						.format(JGitText.get().patchApplyException, hh));
+						.format(JGitText.get().patchApplyErrorWithHunk, path, hh, "cannot apply hunk"));
 			}
 			// Hunk lines as reported by the hunk may be off, so don't rely on
 			// them.
@@ -634,7 +634,7 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 			}
 			if (applyAt < afterLastHunk) {
 				throw new PatchApplyException(MessageFormat
-						.format(JGitText.get().patchApplyException, hh));
+						.format(JGitText.get().patchApplyErrorWithHunk, path, hh, "hunk application position overlaps with previous hunk"));
 			}
 			boolean applies = false;
 			int oldLinesInHunk = hh.getLinesContext()
@@ -673,7 +673,7 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 			}
 			if (!applies) {
 				throw new PatchApplyException(MessageFormat
-						.format(JGitText.get().patchApplyException, hh));
+						.format(JGitText.get().patchApplyErrorWithHunk, path, hh, "hunk does not apply to file content"));
 			}
 			// Hunk applies at applyAt. Apply it, and update afterLastHunk and
 			// lineNumberShift
