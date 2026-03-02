@@ -712,67 +712,11 @@ public abstract class FS {
 
 		private static void saveToConfig(FileStore s,
 				FileStoreAttributes c) {
-			StoredConfig jgitConfig;
-			try {
-				jgitConfig = SystemReader.getInstance().getJGitConfig();
-			} catch (IOException | ConfigInvalidException e) {
-				LOG.error(JGitText.get().saveFileStoreAttributesFailed, e);
-				return;
-			}
-			long resolution = c.getFsTimestampResolution().toNanos();
-			TimeUnit resolutionUnit = getUnit(resolution);
-			long resolutionValue = resolutionUnit.convert(resolution,
-					TimeUnit.NANOSECONDS);
-
-			long minRacyThreshold = c.getMinimalRacyInterval().toNanos();
-			TimeUnit minRacyThresholdUnit = getUnit(minRacyThreshold);
-			long minRacyThresholdValue = minRacyThresholdUnit
-					.convert(minRacyThreshold, TimeUnit.NANOSECONDS);
-
-			final int max_retries = 5;
-			int retries = 0;
-			boolean succeeded = false;
-			String key = getConfigKey(s);
-			while (!succeeded && retries < max_retries) {
-				try {
-					jgitConfig.setString(
-							ConfigConstants.CONFIG_FILESYSTEM_SECTION, key,
-							ConfigConstants.CONFIG_KEY_TIMESTAMP_RESOLUTION,
-							String.format("%d %s", //$NON-NLS-1$
-									Long.valueOf(resolutionValue),
-									resolutionUnit.name().toLowerCase()));
-					jgitConfig.setString(
-							ConfigConstants.CONFIG_FILESYSTEM_SECTION, key,
-							ConfigConstants.CONFIG_KEY_MIN_RACY_THRESHOLD,
-							String.format("%d %s", //$NON-NLS-1$
-									Long.valueOf(minRacyThresholdValue),
-									minRacyThresholdUnit.name().toLowerCase()));
-					jgitConfig.save();
-					succeeded = true;
-				} catch (LockFailedException e) {
-					// race with another thread, wait a bit and try again
-					try {
-						retries++;
-						if (retries < max_retries) {
-							Thread.sleep(100);
-							LOG.debug("locking {} failed, retries {}/{}", //$NON-NLS-1$
-									jgitConfig, Integer.valueOf(retries),
-									Integer.valueOf(max_retries));
-						} else {
-							LOG.warn(MessageFormat.format(
-									JGitText.get().lockFailedRetry, jgitConfig,
-									Integer.valueOf(retries)));
-						}
-					} catch (InterruptedException e1) {
-						Thread.currentThread().interrupt();
-						break;
-					}
-				} catch (IOException e) {
-					LOG.error(MessageFormat.format(
-							JGitText.get().cannotSaveConfig, jgitConfig), e);
-					break;
-				}
-			}
+			// Don't persist filesystem timestamp resolution to the JGit config
+			// file. When user.home resolves to a relative or invalid path (e.g.
+			// "?" on JDK 8-18 in containers), this creates files inside the
+			// working tree that pollute the repository. The in-memory cache is
+			// sufficient; the only cost is re-measuring on the next JVM start.
 		}
 
 		private static String getConfigKey(FileStore s) {
