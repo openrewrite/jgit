@@ -556,6 +556,9 @@ public class FileHeader extends DiffEntry {
 			r = decode(UTF_8, buf, ptr, tab - 1);
 		}
 
+		if (r.endsWith("\r")) {
+			r = r.substring(0, r.length() - 1);
+		}
 		if (r.equals(DEV_NULL))
 			r = DEV_NULL;
 		return r;
