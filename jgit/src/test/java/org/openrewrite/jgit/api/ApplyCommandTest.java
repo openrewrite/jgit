@@ -12,6 +12,7 @@ package org.openrewrite.jgit.api;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openrewrite.jgit.api.errors.PatchApplyException;
 import org.openrewrite.jgit.lib.Repository;
 import org.openrewrite.jgit.util.FileUtils;
 
@@ -23,7 +24,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Tests for {@link ApplyCommand}, focusing on multi-hunk patch application.
@@ -56,156 +58,71 @@ public class ApplyCommandTest {
 	 */
 	@Test
 	public void testMultiHunkPatchWithLF() throws Exception {
-		// Create a file with 150 lines using LF endings
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {
 			fileContent.append("Line ").append(i).append('\n');
 		}
 		writeFileAndCommit("test.txt", fileContent.toString());
 
-		// Create a patch with 2 hunks:
-		// Hunk 1: adds 6 lines around line 10 (net +6)
-		// Hunk 2: adds 1 line around line 118 (old) / 124 (new)
-		String patch = "diff --git a/test.txt b/test.txt\n"
-				+ "--- a/test.txt\n"
-				+ "+++ b/test.txt\n"
-				+ "@@ -10,6 +10,12 @@\n"
-				+ " Line 10\n"
-				+ " Line 11\n"
-				+ " Line 12\n"
-				+ "+New Line A1\n"
-				+ "+New Line A2\n"
-				+ "+New Line A3\n"
-				+ "+New Line A4\n"
-				+ "+New Line A5\n"
-				+ "+New Line A6\n"
-				+ " Line 13\n"
-				+ " Line 14\n"
-				+ " Line 15\n"
-				+ "@@ -118,6 +124,7 @@\n"
-				+ " Line 118\n"
-				+ " Line 119\n"
-				+ " Line 120\n"
-				+ "+New Line B\n"
-				+ " Line 121\n"
-				+ " Line 122\n"
-				+ " Line 123\n";
+		String patch = multiHunkPatch("\n");
 
 		ApplyResult result = applyPatch(patch);
-		assertTrue(result.getUpdatedFiles().size() > 0);
+		assertThat(result.getUpdatedFiles()).isNotEmpty();
 
 		String resultContent = readFile("test.txt");
-		assertTrue(resultContent.contains("New Line A1"));
-		assertTrue(resultContent.contains("New Line A6"));
-		assertTrue(resultContent.contains("New Line B"));
+		assertThat(resultContent).contains("New Line A1", "New Line A6",
+				"New Line B");
 	}
 
 	/**
 	 * Test applying a patch with CRLF line endings to a file with LF line
-	 * endings. The patch context lines will have trailing \r after
-	 * getRawString strips the \n, causing mismatch with the LF-only file
-	 * lines.
+	 * endings.
 	 */
 	@Test
 	public void testMultiHunkPatchWithCRLFPatchAndLFFile() throws Exception {
-		// Create a file with 150 lines using LF endings
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {
 			fileContent.append("Line ").append(i).append('\n');
 		}
 		writeFileAndCommit("test.txt", fileContent.toString());
 
-		// Create the same patch but with CRLF line endings
-		String patch = "diff --git a/test.txt b/test.txt\r\n"
-				+ "--- a/test.txt\r\n"
-				+ "+++ b/test.txt\r\n"
-				+ "@@ -10,6 +10,12 @@\r\n"
-				+ " Line 10\r\n"
-				+ " Line 11\r\n"
-				+ " Line 12\r\n"
-				+ "+New Line A1\r\n"
-				+ "+New Line A2\r\n"
-				+ "+New Line A3\r\n"
-				+ "+New Line A4\r\n"
-				+ "+New Line A5\r\n"
-				+ "+New Line A6\r\n"
-				+ " Line 13\r\n"
-				+ " Line 14\r\n"
-				+ " Line 15\r\n"
-				+ "@@ -118,6 +124,7 @@\r\n"
-				+ " Line 118\r\n"
-				+ " Line 119\r\n"
-				+ " Line 120\r\n"
-				+ "+New Line B\r\n"
-				+ " Line 121\r\n"
-				+ " Line 122\r\n"
-				+ " Line 123\r\n";
+		String patch = multiHunkPatch("\r\n");
 
 		ApplyResult result = applyPatch(patch);
-		assertTrue(result.getUpdatedFiles().size() > 0);
+		assertThat(result.getUpdatedFiles()).isNotEmpty();
 
 		String resultContent = readFile("test.txt");
-		assertTrue(resultContent.contains("New Line A1"));
-		assertTrue(resultContent.contains("New Line B"));
+		assertThat(resultContent).contains("New Line A1", "New Line B");
 	}
 
 	/**
 	 * Test applying a patch with LF line endings to a file with CRLF line
-	 * endings. The needsCrLfConversion logic should handle this case by
-	 * converting the file to LF before comparison.
+	 * endings.
 	 */
 	@Test
 	public void testMultiHunkPatchWithLFPatchAndCRLFFile() throws Exception {
-		// Create a file with 150 lines using CRLF endings
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {
 			fileContent.append("Line ").append(i).append("\r\n");
 		}
 		writeFileAndCommit("test.txt", fileContent.toString());
 
-		// Create a patch with LF line endings
-		String patch = "diff --git a/test.txt b/test.txt\n"
-				+ "--- a/test.txt\n"
-				+ "+++ b/test.txt\n"
-				+ "@@ -10,6 +10,12 @@\n"
-				+ " Line 10\n"
-				+ " Line 11\n"
-				+ " Line 12\n"
-				+ "+New Line A1\n"
-				+ "+New Line A2\n"
-				+ "+New Line A3\n"
-				+ "+New Line A4\n"
-				+ "+New Line A5\n"
-				+ "+New Line A6\n"
-				+ " Line 13\n"
-				+ " Line 14\n"
-				+ " Line 15\n"
-				+ "@@ -118,6 +124,7 @@\n"
-				+ " Line 118\n"
-				+ " Line 119\n"
-				+ " Line 120\n"
-				+ "+New Line B\n"
-				+ " Line 121\n"
-				+ " Line 122\n"
-				+ " Line 123\n";
+		String patch = multiHunkPatch("\n");
 
 		ApplyResult result = applyPatch(patch);
-		assertTrue(result.getUpdatedFiles().size() > 0);
+		assertThat(result.getUpdatedFiles()).isNotEmpty();
 
 		String resultContent = readFile("test.txt");
-		assertTrue(resultContent.contains("New Line A1"));
-		assertTrue(resultContent.contains("New Line B"));
+		assertThat(resultContent).contains("New Line A1", "New Line B");
 	}
 
 	/**
 	 * Test applying a patch where the file has trailing whitespace on some
-	 * context lines but the patch does not. The trailing-whitespace-tolerant
-	 * comparison should handle this.
+	 * context lines but the patch does not.
 	 */
 	@Test
 	public void testMultiHunkPatchWithTrailingWhitespaceDifference()
 			throws Exception {
-		// Create a file where some lines have trailing spaces
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {
 			if (i == 118 || i == 119 || i == 120) {
@@ -216,38 +133,63 @@ public class ApplyCommandTest {
 		}
 		writeFileAndCommit("test.txt", fileContent.toString());
 
-		// Patch context lines do NOT have trailing spaces
-		String patch = "diff --git a/test.txt b/test.txt\n"
-				+ "--- a/test.txt\n"
-				+ "+++ b/test.txt\n"
-				+ "@@ -10,6 +10,12 @@\n"
-				+ " Line 10\n"
-				+ " Line 11\n"
-				+ " Line 12\n"
-				+ "+New Line A1\n"
-				+ "+New Line A2\n"
-				+ "+New Line A3\n"
-				+ "+New Line A4\n"
-				+ "+New Line A5\n"
-				+ "+New Line A6\n"
-				+ " Line 13\n"
-				+ " Line 14\n"
-				+ " Line 15\n"
-				+ "@@ -118,6 +124,7 @@\n"
-				+ " Line 118\n"
-				+ " Line 119\n"
-				+ " Line 120\n"
-				+ "+New Line B\n"
-				+ " Line 121\n"
-				+ " Line 122\n"
-				+ " Line 123\n";
+		String patch = multiHunkPatch("\n");
 
 		ApplyResult result = applyPatch(patch);
-		assertTrue(result.getUpdatedFiles().size() > 0);
+		assertThat(result.getUpdatedFiles()).isNotEmpty();
 
 		String resultContent = readFile("test.txt");
-		assertTrue(resultContent.contains("New Line A1"));
-		assertTrue(resultContent.contains("New Line B"));
+		assertThat(resultContent).contains("New Line A1", "New Line B");
+	}
+
+	/**
+	 * Test that a patch with genuinely mismatched context lines is still
+	 * rejected.
+	 */
+	@Test
+	public void testMultiHunkPatchWithMismatchedContextIsRejected()
+			throws Exception {
+		StringBuilder fileContent = new StringBuilder();
+		for (int i = 1; i <= 150; i++) {
+			fileContent.append("Line ").append(i).append('\n');
+		}
+		// Replace line 119 with completely different content
+		String content = fileContent.toString()
+				.replace("Line 119\n", "DIFFERENT CONTENT\n");
+		writeFileAndCommit("test.txt", content);
+
+		String patch = multiHunkPatch("\n");
+
+		assertThatThrownBy(() -> applyPatch(patch))
+				.isInstanceOf(PatchApplyException.class)
+				.hasMessageContaining("hunk");
+	}
+
+	private String multiHunkPatch(String eol) {
+		return "diff --git a/test.txt b/test.txt" + eol
+				+ "--- a/test.txt" + eol
+				+ "+++ b/test.txt" + eol
+				+ "@@ -10,6 +10,12 @@" + eol
+				+ " Line 10" + eol
+				+ " Line 11" + eol
+				+ " Line 12" + eol
+				+ "+New Line A1" + eol
+				+ "+New Line A2" + eol
+				+ "+New Line A3" + eol
+				+ "+New Line A4" + eol
+				+ "+New Line A5" + eol
+				+ "+New Line A6" + eol
+				+ " Line 13" + eol
+				+ " Line 14" + eol
+				+ " Line 15" + eol
+				+ "@@ -118,6 +124,7 @@" + eol
+				+ " Line 118" + eol
+				+ " Line 119" + eol
+				+ " Line 120" + eol
+				+ "+New Line B" + eol
+				+ " Line 121" + eol
+				+ " Line 122" + eol
+				+ " Line 123" + eol;
 	}
 
 	private void writeFileAndCommit(String name, String content)

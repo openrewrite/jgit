@@ -5,6 +5,9 @@ plugins {
 dependencies {
     implementation("com.googlecode.javaewah:JavaEWAH:1.1.13")
     compileOnly("org.slf4j:slf4j-api:1.7.36")
+    testImplementation("org.assertj:assertj-core:3.26.3") {
+        version { strictly("3.26.3") }
+    }
     testRuntimeOnly("org.slf4j:slf4j-simple:1.7.36")
 }
 
