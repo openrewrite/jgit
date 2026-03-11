@@ -760,7 +760,8 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 			case ' ':
 			case '-':
 				if (pos >= limit
-						|| !newLines.get(pos).equals(slice(hunkLine, 1))) {
+						|| !equalsIgnoringTrailingWhitespace(
+								newLines.get(pos), slice(hunkLine, 1))) {
 					return false;
 				}
 				pos++;
@@ -775,6 +776,35 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 	private ByteBuffer slice(ByteBuffer b, int off) {
 		int newOffset = b.position() + off;
 		return ByteBuffer.wrap(b.array(), newOffset, b.limit() - newOffset);
+	}
+
+	private static boolean equalsIgnoringTrailingWhitespace(ByteBuffer a,
+			ByteBuffer b) {
+		int aEnd = a.limit();
+		while (aEnd > a.position()
+				&& isWhitespace(a.array()[aEnd - 1])) {
+			aEnd--;
+		}
+		int bEnd = b.limit();
+		while (bEnd > b.position()
+				&& isWhitespace(b.array()[bEnd - 1])) {
+			bEnd--;
+		}
+		int aLen = aEnd - a.position();
+		int bLen = bEnd - b.position();
+		if (aLen != bLen) {
+			return false;
+		}
+		for (int i = 0; i < aLen; i++) {
+			if (a.array()[a.position() + i] != b.array()[b.position() + i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean isWhitespace(byte b) {
+		return b == ' ' || b == '\t' || b == '\r';
 	}
 
 	private boolean isNoNewlineAtEndOfFile(FileHeader fh) {
