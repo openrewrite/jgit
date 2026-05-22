@@ -30,21 +30,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * Tests for {@link ApplyCommand}, focusing on multi-hunk patch application.
  */
-public class ApplyCommandTest {
+class ApplyCommandTest {
 
 	private Repository db;
 	private Git git;
 	private File trash;
 
 	@BeforeEach
-	public void setUp() throws Exception {
+	void setUp() throws Exception {
 		trash = Files.createTempDirectory("jgit-apply-test").toFile();
 		git = Git.init().setDirectory(trash).call();
 		db = git.getRepository();
 	}
 
 	@AfterEach
-	public void tearDown() throws Exception {
+	void tearDown() throws Exception {
 		if (db != null) {
 			db.close();
 		}
@@ -57,7 +57,7 @@ public class ApplyCommandTest {
 	 * Test applying a multi-hunk patch where both the file and patch use LF line endings.
 	 */
 	@Test
-	public void testMultiHunkPatchWithLF() throws Exception {
+	void multiHunkPatchWithLF() throws Exception {
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {
 			fileContent.append("Line ").append(i).append('\n');
@@ -79,7 +79,7 @@ public class ApplyCommandTest {
 	 * endings.
 	 */
 	@Test
-	public void testMultiHunkPatchWithCRLFPatchAndLFFile() throws Exception {
+	void multiHunkPatchWithCRLFPatchAndLFFile() throws Exception {
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {
 			fileContent.append("Line ").append(i).append('\n');
@@ -100,7 +100,7 @@ public class ApplyCommandTest {
 	 * endings.
 	 */
 	@Test
-	public void testMultiHunkPatchWithLFPatchAndCRLFFile() throws Exception {
+	void multiHunkPatchWithLFPatchAndCRLFFile() throws Exception {
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {
 			fileContent.append("Line ").append(i).append("\r\n");
@@ -121,7 +121,7 @@ public class ApplyCommandTest {
 	 * context lines but the patch does not.
 	 */
 	@Test
-	public void testMultiHunkPatchWithTrailingWhitespaceDifference()
+	void multiHunkPatchWithTrailingWhitespaceDifference()
 			throws Exception {
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {
@@ -147,7 +147,7 @@ public class ApplyCommandTest {
 	 * rejected.
 	 */
 	@Test
-	public void testMultiHunkPatchWithMismatchedContextIsRejected()
+	void multiHunkPatchWithMismatchedContextIsRejected()
 			throws Exception {
 		StringBuilder fileContent = new StringBuilder();
 		for (int i = 1; i <= 150; i++) {

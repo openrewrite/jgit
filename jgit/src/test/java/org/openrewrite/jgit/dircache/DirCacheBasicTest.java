@@ -66,7 +66,7 @@ import org.openrewrite.jgit.storage.file.FileBasedConfig;
 import org.openrewrite.jgit.util.FileUtils;
 import org.openrewrite.jgit.util.SystemReader;
 
-public class DirCacheBasicTest {
+class DirCacheBasicTest {
 
 	protected Repository db;
 	private Git git;
@@ -85,7 +85,7 @@ public class DirCacheBasicTest {
 	}
 
 	@AfterEach
-	public void tearDown() throws Exception {
+	void tearDown() throws Exception {
 		if (originalSystemReader != null) {
 			SystemReader.setInstance(originalSystemReader);
 		}
@@ -98,8 +98,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testReadMissing_RealIndex(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void readMissingRealIndex(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final File idx = new File(db.getDirectory(), "index");
 		assertFalse(idx.exists());
@@ -110,8 +110,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testReadMissing_TempIndex(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void readMissingTempIndex(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final File idx = new File(db.getDirectory(), "tmp_index");
 		assertFalse(idx.exists());
@@ -122,8 +122,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testLockMissing_RealIndex(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void lockMissingRealIndex(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final File idx = new File(db.getDirectory(), "index");
 		final File lck = new File(db.getDirectory(), "index.lock");
@@ -142,8 +142,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testLockMissing_TempIndex(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void lockMissingTempIndex(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final File idx = new File(db.getDirectory(), "tmp_index");
 		final File lck = new File(db.getDirectory(), "tmp_index.lock");
@@ -162,8 +162,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testWriteEmptyUnlock_RealIndex(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void writeEmptyUnlockRealIndex(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final File idx = new File(db.getDirectory(), "index");
 		final File lck = new File(db.getDirectory(), "index.lock");
@@ -181,8 +181,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testWriteEmptyCommit_RealIndex(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void writeEmptyCommitRealIndex(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final File idx = new File(db.getDirectory(), "index");
 		final File lck = new File(db.getDirectory(), "index.lock");
@@ -201,8 +201,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testWriteEmptyReadEmpty_RealIndex(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void writeEmptyReadEmptyRealIndex(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final File idx = new File(db.getDirectory(), "index");
 		final File lck = new File(db.getDirectory(), "index.lock");
@@ -221,8 +221,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testWriteEmptyLockEmpty_RealIndex(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void writeEmptyLockEmptyRealIndex(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final File idx = new File(db.getDirectory(), "index");
 		final File lck = new File(db.getDirectory(), "index.lock");
@@ -244,8 +244,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testBuildThenClear(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void buildThenClear(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final DirCache dc = db.readDirCache();
 
@@ -270,8 +270,8 @@ public class DirCacheBasicTest {
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testDetectUnmergedPaths(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void detectUnmergedPaths(boolean skipHash) throws Exception {
 		setup(skipHash);
 		final DirCache dc = db.readDirCache();
 		final DirCacheEntry[] ents = new DirCacheEntry[3];
@@ -292,15 +292,15 @@ public class DirCacheBasicTest {
 	}
 
 	@Test
-	public void testFindOnEmpty() throws Exception {
+	void findOnEmpty() throws Exception {
 		final DirCache dc = DirCache.newInCore();
 		final byte[] path = Constants.encode("a");
 		assertEquals(-1, dc.findEntry(path, path.length));
 	}
 
 	@ParameterizedTest(name = "skipHash: {0}")
-	@ValueSource(booleans = { true, false })
-	public void testRejectInvalidWindowsPaths(boolean skipHash) throws Exception {
+	@ValueSource(booleans = {true, false})
+	void rejectInvalidWindowsPaths(boolean skipHash) throws Exception {
 		setup(skipHash);
 		SystemReader.setInstance(new OsNameSystemReader(originalSystemReader, "Linux"));
 
