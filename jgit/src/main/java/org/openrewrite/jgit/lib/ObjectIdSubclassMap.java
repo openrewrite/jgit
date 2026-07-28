@@ -100,8 +100,9 @@ public class ObjectIdSubclassMap<V extends ObjectId>
 	 *            the object to store.
 	 */
 	public <Q extends V> void add(Q newValue) {
-		if (++size == grow)
+		if (++size == grow) {
 			grow();
+		}
 		insert(newValue);
 	}
 
@@ -130,8 +131,9 @@ public class ObjectIdSubclassMap<V extends ObjectId>
 		V obj;
 
 		while ((obj = tbl[i]) != null) {
-			if (AnyObjectId.isEqual(obj, newValue))
+			if (AnyObjectId.isEqual(obj, newValue)) {
 				return obj;
+			}
 			i = (i + 1) & msk;
 		}
 
@@ -198,8 +200,9 @@ public class ObjectIdSubclassMap<V extends ObjectId>
 		final int msk = mask;
 		int j = newValue.w1 & msk;
 		final V[] tbl = table;
-		while (tbl[j] != null)
+		while (tbl[j] != null) {
 			j = (j + 1) & msk;
+		}
 		tbl[j] = newValue;
 	}
 
@@ -210,8 +213,9 @@ public class ObjectIdSubclassMap<V extends ObjectId>
 		initTable(oldSize << 1);
 		for (int i = 0; i < oldSize; i++) {
 			final V obj = oldTable[i];
-			if (obj != null)
+			if (obj != null) {
 				insert(obj);
+			}
 		}
 	}
 

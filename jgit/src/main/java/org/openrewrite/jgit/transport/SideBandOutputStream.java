@@ -70,18 +70,20 @@ public class SideBandOutputStream extends OutputStream {
 	 *            be attached to a SideBandInputStream on the remote side.
 	 */
 	public SideBandOutputStream(int chan, int sz, OutputStream os) {
-		if (chan <= 0 || chan > 255)
+		if (chan <= 0 || chan > 255) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().channelMustBeInRange1_255,
 					Integer.valueOf(chan)));
-		if (sz <= HDR_SIZE)
+		}
+		if (sz <= HDR_SIZE) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().packetSizeMustBeAtLeast,
 					Integer.valueOf(sz), Integer.valueOf(HDR_SIZE)));
-		else if (MAX_BUF < sz)
+		} else if (MAX_BUF < sz) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().packetSizeMustBeAtMost, Integer.valueOf(sz),
 					Integer.valueOf(MAX_BUF)));
+		}
 
 		out = os;
 		buffer = new byte[sz];
@@ -90,8 +92,9 @@ public class SideBandOutputStream extends OutputStream {
 	}
 
 	void flushBuffer() throws IOException {
-		if (HDR_SIZE < cnt)
+		if (HDR_SIZE < cnt) {
 			writeBuffer();
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -116,8 +119,9 @@ public class SideBandOutputStream extends OutputStream {
 				len -= capacity;
 
 			} else {
-				if (capacity == 0)
+				if (capacity == 0) {
 					writeBuffer();
+				}
 
 				int n = Math.min(len, capacity);
 				System.arraycopy(b, off, buffer, cnt, n);
@@ -131,8 +135,9 @@ public class SideBandOutputStream extends OutputStream {
 	/** {@inheritDoc} */
 	@Override
 	public void write(int b) throws IOException {
-		if (cnt == buffer.length)
+		if (cnt == buffer.length) {
 			writeBuffer();
+		}
 		buffer[cnt++] = (byte) b;
 	}
 

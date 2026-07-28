@@ -41,27 +41,30 @@ public class AttributesRule {
 		ArrayList<Attribute> result = new ArrayList<>();
 		for (String attribute : attributesLine.split(ATTRIBUTES_SPLIT_REGEX)) {
 			attribute = attribute.trim();
-			if (attribute.length() == 0)
+			if (attribute.length() == 0) {
 				continue;
+			}
 
 			if (attribute.startsWith("-")) {//$NON-NLS-1$
-				if (attribute.length() > 1)
+				if (attribute.length() > 1) {
 					result.add(new Attribute(attribute.substring(1),
 							State.UNSET));
+				}
 				continue;
 			}
 
 			if (attribute.startsWith("!")) {//$NON-NLS-1$
-				if (attribute.length() > 1)
+				if (attribute.length() > 1) {
 					result.add(new Attribute(attribute.substring(1),
 							State.UNSPECIFIED));
+				}
 				continue;
 			}
 
 			final int equalsIndex = attribute.indexOf('=');
-			if (equalsIndex == -1)
+			if (equalsIndex == -1) {
 				result.add(new Attribute(attribute, State.SET));
-			else {
+			} else {
 				String attributeKey = attribute.substring(0, equalsIndex);
 				if (attributeKey.length() > 0) {
 					String attributeValue = attribute
@@ -179,12 +182,13 @@ public class AttributesRule {
 	 * @return True if a match was made.
 	 */
 	public boolean isMatch(String relativeTarget, boolean isDirectory) {
-		if (relativeTarget == null)
+		if (relativeTarget == null) {
 			return false;
-		if (relativeTarget.length() == 0)
+		}
+		if (relativeTarget.length() == 0) {
 			return false;
-		boolean match = matcher.matches(relativeTarget, isDirectory, true);
-		return match;
+		}
+		return matcher.matches(relativeTarget, isDirectory, true);
 	}
 
 	/** {@inheritDoc} */

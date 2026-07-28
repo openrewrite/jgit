@@ -9,14 +9,14 @@
  */
 package org.openrewrite.jgit.internal.revwalk;
 
+import org.openrewrite.jgit.lib.AnyObjectId;
 import org.openrewrite.jgit.lib.BitmapIndex.Bitmap;
 import org.openrewrite.jgit.lib.BitmapIndex.BitmapBuilder;
 import org.openrewrite.jgit.lib.Constants;
-import org.openrewrite.jgit.lib.AnyObjectId;
-import org.openrewrite.jgit.revwalk.filter.RevFilter;
-import org.openrewrite.jgit.revwalk.RevWalk;
 import org.openrewrite.jgit.revwalk.RevCommit;
 import org.openrewrite.jgit.revwalk.RevFlag;
+import org.openrewrite.jgit.revwalk.RevWalk;
+import org.openrewrite.jgit.revwalk.filter.RevFilter;
 
 /**
  * A RevFilter that adds the visited commits to {@code bitmap} as a side effect.

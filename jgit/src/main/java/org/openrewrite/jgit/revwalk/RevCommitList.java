@@ -114,10 +114,11 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 
 			while (rangeBegin++ < rangeEnd && index < BLOCK_SIZE) {
 				final RevCommit c = (RevCommit) s.contents[index++];
-				if (matching.include(w, c))
+				if (matching.include(w, c)) {
 					c.add(flag);
-				else
+				} else {
 					c.remove(flag);
+				}
 			}
 		}
 	}
@@ -186,8 +187,9 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 
 			while (begin++ < size() && index < BLOCK_SIZE) {
 				final RevCommit c = (RevCommit) s.contents[index++];
-				if (c.has(flag))
+				if (c.has(flag)) {
 					return begin;
+				}
 			}
 		}
 		return -1;
@@ -218,8 +220,9 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 
 			while (begin-- >= 0 && index >= 0) {
 				final RevCommit c = (RevCommit) s.contents[index--];
-				if (c.has(flag))
+				if (c.has(flag)) {
 					return begin;
+				}
 			}
 		}
 		return -1;
@@ -268,8 +271,9 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 	@SuppressWarnings("unchecked")
 	public void fillTo(int highMark) throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {
-		if (walker == null || size > highMark)
+		if (walker == null || size > highMark) {
 			return;
+		}
 
 		RevCommit c = walker.next();
 		if (c == null) {
@@ -290,8 +294,9 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 			while (s.shift > 0) {
 				final int i = index >> s.shift;
 				index -= i << s.shift;
-				if (s.contents[i] == null)
+				if (s.contents[i] == null) {
 					s.contents[i] = new Block(s.shift - BLOCK_SHIFT);
+				}
 				s = (Block) s.contents[i];
 			}
 
@@ -335,8 +340,9 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 			throws MissingObjectException, IncorrectObjectTypeException,
 			IOException {
 		if (walker == null || commitToLoad == null
-				|| (highMark > 0 && size > highMark))
+				|| (highMark > 0 && size > highMark)) {
 			return;
+		}
 
 		RevCommit c = walker.next();
 		if (c == null) {
@@ -357,8 +363,9 @@ public class RevCommitList<E extends RevCommit> extends RevObjectList<E> {
 			while (s.shift > 0) {
 				final int i = index >> s.shift;
 				index -= i << s.shift;
-				if (s.contents[i] == null)
+				if (s.contents[i] == null) {
 					s.contents[i] = new Block(s.shift - BLOCK_SHIFT);
+				}
 				s = (Block) s.contents[i];
 			}
 

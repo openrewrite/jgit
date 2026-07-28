@@ -90,7 +90,7 @@ public class DirCacheEntry {
 
 	private static final int INTENT_TO_ADD = 0x20000000;
 	private static final int SKIP_WORKTREE = 0x40000000;
-	private static final int EXTENDED_FLAGS = (INTENT_TO_ADD | SKIP_WORKTREE);
+	private static final int EXTENDED_FLAGS = INTENT_TO_ADD | SKIP_WORKTREE;
 
 	private static final int INFO_LEN = 62;
 	private static final int INFO_LEN_EXTENDED = 64;
@@ -127,11 +127,13 @@ public class DirCacheEntry {
 			len = INFO_LEN_EXTENDED;
 			IO.readFully(in, info, infoOffset + INFO_LEN, INFO_LEN_EXTENDED - INFO_LEN);
 
-			if ((getExtendedFlags() & ~EXTENDED_FLAGS) != 0)
+			if ((getExtendedFlags() & ~EXTENDED_FLAGS) != 0) {
 				throw new IOException(MessageFormat.format(JGitText.get()
 						.DIRCUnrecognizedExtendedFlags, String.valueOf(getExtendedFlags())));
-		} else
+			}
+		} else {
 			len = INFO_LEN;
+		}
 
 		infoAt.value += len;
 		md.update(info, infoOffset, len);
@@ -204,8 +206,9 @@ public class DirCacheEntry {
 		} catch (InvalidPathException e) {
 			CorruptObjectException p =
 				new CorruptObjectException(e.getMessage());
-			if (e.getCause() != null)
+			if (e.getCause() != null) {
 				p.initCause(e.getCause());
+			}
 			throw p;
 		}
 
@@ -295,20 +298,22 @@ public class DirCacheEntry {
 	@SuppressWarnings("boxing")
 	public DirCacheEntry(byte[] path, int stage) {
 		checkPath(path);
-		if (stage < 0 || 3 < stage)
+		if (stage < 0 || 3 < stage) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().invalidStageForPath,
 					stage, toString(path)));
+		}
 
 		info = new byte[INFO_LEN];
 		infoOffset = 0;
 		this.path = path;
 
-		int flags = ((stage & 0x3) << 12);
-		if (path.length < NAME_MASK)
+		int flags = (stage & 0x3) << 12;
+		if (path.length < NAME_MASK) {
 			flags |= path.length;
-		else
+		} else {
 			flags |= NAME_MASK;
+		}
 		NB.encodeInt16(info, infoOffset + P_FLAGS, flags);
 	}
 
@@ -357,8 +362,9 @@ public class DirCacheEntry {
 			//
 			int entryLen = len + path.length;
 			int expLen = (entryLen + 8) & ~7;
-			if (entryLen != expLen)
+			if (entryLen != expLen) {
 				os.write(nullpad, 0, expLen - entryLen);
+			}
 		} else {
 			int pathCommon = 0;
 			int toRemove;
@@ -502,10 +508,11 @@ public class DirCacheEntry {
 	 *            modified to detect file modifications.
 	 */
 	public void setAssumeValid(boolean assume) {
-		if (assume)
+		if (assume) {
 			info[infoOffset + P_FLAGS] |= (byte) ASSUME_VALID;
-		else
+		} else {
 			info[infoOffset + P_FLAGS] &= (byte) ~ASSUME_VALID;
+		}
 	}
 
 	/**
@@ -524,10 +531,11 @@ public class DirCacheEntry {
 	 *            whether this entry must be checked for changes
 	 */
 	public void setUpdateNeeded(boolean updateNeeded) {
-		if (updateNeeded)
+		if (updateNeeded) {
 			inCoreFlags |= (byte) UPDATE_NEEDED;
-		else
+		} else {
 			inCoreFlags &= (byte) ~UPDATE_NEEDED;
+		}
 	}
 
 	/**
@@ -855,10 +863,11 @@ public class DirCacheEntry {
 		final int pLen = origflags & NAME_MASK;
 		final int SHIFTED_STAGE_MASK = 0x3 << 12;
 		final int pStageShifted;
-		if (keepStage)
+		if (keepStage) {
 			pStageShifted = origflags & SHIFTED_STAGE_MASK;
-		else
+		} else {
 			pStageShifted = newflags & SHIFTED_STAGE_MASK;
+		}
 		NB.encodeInt16(info, infoOffset + P_FLAGS, pStageShifted | pLen
 				| (newflags & ~NAME_MASK & ~SHIFTED_STAGE_MASK));
 	}

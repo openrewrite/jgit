@@ -10,7 +10,7 @@
 
 package org.openrewrite.jgit.internal.storage.reftable;
 
-class ReftableConstants {
+final class ReftableConstants {
 	static final byte[] FILE_HEADER_MAGIC = { 'R', 'E', 'F', 'T' };
 	static final byte VERSION_1 = (byte) 1;
 

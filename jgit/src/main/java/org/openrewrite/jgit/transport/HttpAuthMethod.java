@@ -28,14 +28,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.openrewrite.jgit.transport.http.HttpConnection;
-import org.openrewrite.jgit.util.Base64;
-import org.openrewrite.jgit.util.GSSManagerFactory;
 import org.ietf.jgss.GSSContext;
 import org.ietf.jgss.GSSException;
 import org.ietf.jgss.GSSManager;
 import org.ietf.jgss.GSSName;
 import org.ietf.jgss.Oid;
+import org.openrewrite.jgit.transport.http.HttpConnection;
+import org.openrewrite.jgit.util.Base64;
+import org.openrewrite.jgit.util.GSSManagerFactory;
 
 /**
  * Support class to populate user authentication data on a connection.
@@ -149,10 +149,11 @@ abstract class HttpAuthMethod {
 								}
 
 								final String param;
-								if (valuePart.length == 1)
+								if (valuePart.length == 1) {
 									param = EMPTY_STRING;
-								else
+								} else {
 									param = valuePart[1];
+								}
 
 								authentication = methodType
 										.method(param);
@@ -205,10 +206,11 @@ abstract class HttpAuthMethod {
 					&& credentialsProvider.get(uri, u, p)) {
 				username = u.getValue();
 				char[] v = p.getValue();
-				password = (v == null) ? null : new String(p.getValue());
+				password = v == null ? null : new String(p.getValue());
 				p.clear();
-			} else
+			} else {
 				return false;
+			}
 		} else {
 			username = uri.getUser();
 			password = uri.getPass();
@@ -338,32 +340,39 @@ abstract class HttpAuthMethod {
 			r.put("nonce", nonce); //$NON-NLS-1$
 			r.put("uri", uri); //$NON-NLS-1$
 
-			final String response, nc;
+			final String response;
+			final String nc;
 			if ("auth".equals(qop)) { //$NON-NLS-1$
 				nc = String.format("%08x", ++requestCount); //$NON-NLS-1$
-				response = KD(H(A1), nonce + ":" + nc + ":" + cnonce + ":" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				response = kD(h(A1), nonce + ":" + nc + ":" + cnonce + ":" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						+ qop + ":" //$NON-NLS-1$
-						+ H(A2));
+						+ h(A2));
 			} else {
 				nc = null;
-				response = KD(H(A1), nonce + ":" + H(A2)); //$NON-NLS-1$
+				response = kD(h(A1), nonce + ":" + h(A2)); //$NON-NLS-1$
 			}
 			r.put("response", response); //$NON-NLS-1$
-			if (params.containsKey("algorithm")) //$NON-NLS-1$
+			if (params.containsKey("algorithm")) { //$NON-NLS-1$
 				r.put("algorithm", "MD5"); //$NON-NLS-1$ //$NON-NLS-2$
-			if (cnonce != null && qop != null)
+			}
+			if (cnonce != null && qop != null) {
 				r.put("cnonce", cnonce); //$NON-NLS-1$
-			if (params.containsKey("opaque")) //$NON-NLS-1$
+			}
+			if (params.containsKey("opaque")) { //$NON-NLS-1$
 				r.put("opaque", params.get("opaque")); //$NON-NLS-1$ //$NON-NLS-2$
-			if (qop != null)
+			}
+			if (qop != null) {
 				r.put("qop", qop); //$NON-NLS-1$
-			if (nc != null)
+			}
+			if (nc != null) {
 				r.put("nc", nc); //$NON-NLS-1$
 
+			}
 			StringBuilder v = new StringBuilder();
 			for (Map.Entry<String, String> e : r.entrySet()) {
-				if (v.length() > 0)
+				if (v.length() > 0) {
 					v.append(", "); //$NON-NLS-1$
+				}
 				v.append(e.getKey());
 				v.append('=');
 				v.append('"');
@@ -390,23 +399,24 @@ abstract class HttpAuthMethod {
 				}
 			}
 			r.append(u.getPath());
-			if (u.getQuery() != null)
+			if (u.getQuery() != null) {
 				r.append('?').append(u.getQuery());
+			}
 			return r.toString();
 		}
 
-		private static String H(String data) {
+		private static String h(String data) {
 			MessageDigest md = newMD5();
 			md.update(data.getBytes(UTF_8));
-			return LHEX(md.digest());
+			return lHEX(md.digest());
 		}
 
-		private static String KD(String secret, String data) {
+		private static String kD(String secret, String data) {
 			MessageDigest md = newMD5();
 			md.update(secret.getBytes(UTF_8));
 			md.update((byte) ':');
 			md.update(data.getBytes(UTF_8));
-			return LHEX(md.digest());
+			return lHEX(md.digest());
 		}
 
 		private static MessageDigest newMD5() {
@@ -421,7 +431,7 @@ abstract class HttpAuthMethod {
 				'7', '8', '9', //
 				'a', 'b', 'c', 'd', 'e', 'f' };
 
-		private static String LHEX(byte[] bin) {
+		private static String lHEX(byte[] bin) {
 			StringBuilder r = new StringBuilder(bin.length * 2);
 			for (byte b : bin) {
 				r.append(LHEX[(b >>> 4) & 0x0f]);
@@ -460,10 +470,12 @@ abstract class HttpAuthMethod {
 				} else {
 					int space = auth.indexOf(' ', eq + 1);
 					int comma = auth.indexOf(',', eq + 1);
-					if (space < 0)
+					if (space < 0) {
 						space = auth.length();
-					if (comma < 0)
+					}
+					if (comma < 0) {
 						comma = auth.length();
+					}
 
 					final int e = Math.min(space, comma);
 					value = auth.substring(eq + 1, e);

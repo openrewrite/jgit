@@ -29,7 +29,7 @@ import org.openrewrite.jgit.treewalk.TreeWalk;
  * {@link org.openrewrite.jgit.treewalk.TreeWalk#getPathString()} and
  * <code>endsWith</code> or some other type of string match function.
  */
-public class PathSuffixFilter extends TreeFilter {
+public final class PathSuffixFilter extends TreeFilter {
 
 	/**
 	 * Create a new tree filter for a user supplied path suffix.
@@ -43,8 +43,9 @@ public class PathSuffixFilter extends TreeFilter {
 	 *             the path supplied was the empty string.
 	 */
 	public static PathSuffixFilter create(String path) {
-		if (path.length() == 0)
+		if (path.length() == 0) {
 			throw new IllegalArgumentException(JGitText.get().emptyPathNotPermitted);
+		}
 		return new PathSuffixFilter(path);
 	}
 

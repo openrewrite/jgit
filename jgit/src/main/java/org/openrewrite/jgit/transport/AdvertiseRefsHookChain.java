@@ -22,7 +22,7 @@ import java.util.List;
  * {@link org.openrewrite.jgit.transport.ReceivePack#getAdvertisedRefs()} or
  * {@link org.openrewrite.jgit.transport.ReceivePack#getAdvertisedObjects()}.
  */
-public class AdvertiseRefsHookChain implements AdvertiseRefsHook {
+public final class AdvertiseRefsHookChain implements AdvertiseRefsHook {
 	private final AdvertiseRefsHook[] hooks;
 	private final int count;
 
@@ -36,9 +36,11 @@ public class AdvertiseRefsHookChain implements AdvertiseRefsHook {
 	public static AdvertiseRefsHook newChain(List<? extends AdvertiseRefsHook> hooks) {
 		AdvertiseRefsHook[] newHooks = new AdvertiseRefsHook[hooks.size()];
 		int i = 0;
-		for (AdvertiseRefsHook hook : hooks)
-			if (hook != AdvertiseRefsHook.DEFAULT)
+		for (AdvertiseRefsHook hook : hooks) {
+			if (hook != AdvertiseRefsHook.DEFAULT) {
 				newHooks[i++] = hook;
+			}
+		}
 		switch (i) {
 		case 0:
 			return AdvertiseRefsHook.DEFAULT;
@@ -53,16 +55,18 @@ public class AdvertiseRefsHookChain implements AdvertiseRefsHook {
 	@Override
 	public void advertiseRefs(ReceivePack rp)
 			throws ServiceMayNotContinueException {
-		for (int i = 0; i < count; i++)
+		for (int i = 0;i < count;i++) {
 			hooks[i].advertiseRefs(rp);
+		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public void advertiseRefs(UploadPack rp)
 			throws ServiceMayNotContinueException {
-		for (int i = 0; i < count; i++)
+		for (int i = 0;i < count;i++) {
 			hooks[i].advertiseRefs(rp);
+		}
 	}
 
 	private AdvertiseRefsHookChain(AdvertiseRefsHook[] hooks, int count) {

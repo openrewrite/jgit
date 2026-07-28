@@ -73,10 +73,12 @@ class SideBandProgressMonitor extends BatchingProgressMonitor {
 			int totalWork, int pcnt) {
 		s.append(taskName);
 		s.append(": "); //$NON-NLS-1$
-		if (pcnt < 100)
+		if (pcnt < 100) {
 			s.append(' ');
-		if (pcnt < 10)
+		}
+		if (pcnt < 10) {
 			s.append(' ');
+		}
 		s.append(pcnt);
 		s.append("% ("); //$NON-NLS-1$
 		s.append(cmp);

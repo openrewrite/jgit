@@ -28,7 +28,7 @@ import org.openrewrite.jgit.util.FS;
 
 abstract class FileObjectDatabase extends ObjectDatabase {
 	enum InsertLooseObjectResult {
-		INSERTED, EXISTS_PACKED, EXISTS_LOOSE, FAILURE;
+		INSERTED, EXISTS_PACKED, EXISTS_LOOSE, FAILURE
 	}
 
 	/** {@inheritDoc} */

@@ -213,8 +213,9 @@ public abstract class Merger {
 	public boolean merge(boolean flush, AnyObjectId... tips)
 			throws IOException {
 		sourceObjects = new RevObject[tips.length];
-		for (int i = 0; i < tips.length; i++)
+		for (int i = 0;i < tips.length;i++) {
 			sourceObjects[i] = walk.parseAny(tips[i]);
+		}
 
 		sourceCommits = new RevCommit[sourceObjects.length];
 		for (int i = 0; i < sourceObjects.length; i++) {
@@ -226,17 +227,20 @@ public abstract class Merger {
 		}
 
 		sourceTrees = new RevTree[sourceObjects.length];
-		for (int i = 0; i < sourceObjects.length; i++)
+		for (int i = 0;i < sourceObjects.length;i++) {
 			sourceTrees[i] = walk.parseTree(sourceObjects[i]);
+		}
 
 		try {
 			boolean ok = mergeImpl();
-			if (ok && flush)
+			if (ok && flush) {
 				inserter.flush();
+			}
 			return ok;
 		} finally {
-			if (flush)
+			if (flush) {
 				inserter.close();
+			}
 			reader.close();
 		}
 	}
@@ -271,8 +275,9 @@ public abstract class Merger {
 		walk.markStart(a);
 		walk.markStart(b);
 		final RevCommit base = walk.next();
-		if (base == null)
+		if (base == null) {
 			return null;
+		}
 		final RevCommit base2 = walk.next();
 		if (base2 != null) {
 			throw new NoMergeBaseException(

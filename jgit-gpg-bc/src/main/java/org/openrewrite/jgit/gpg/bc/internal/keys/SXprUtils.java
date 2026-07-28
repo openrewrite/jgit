@@ -55,7 +55,7 @@ class SXprUtils {
 
 		char[] chars = new char[len];
 
-		for (int i = 0; i != chars.length; i++) {
+		for (int i = 0; i < chars.length; i++) {
 			chars[i] = (char) in.read();
 		}
 
@@ -83,14 +83,12 @@ class SXprUtils {
 		skipCloseParenthesis(in);
 
 		// we have to return the actual iteration count provided.
-		S2K s2k = new S2K(HashAlgorithmTags.SHA1, iv, (int) iterationCount) {
+		return new S2K(HashAlgorithmTags.SHA1, iv, (int) iterationCount) {
 			@Override
 			public long getIterationCount() {
 				return iterationCount;
 			}
 		};
-
-		return s2k;
 	}
 
 	static void skipOpenParenthesis(InputStream in) throws IOException {

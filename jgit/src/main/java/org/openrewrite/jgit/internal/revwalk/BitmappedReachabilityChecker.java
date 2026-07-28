@@ -143,7 +143,7 @@ public class BitmappedReachabilityChecker implements ReachabilityChecker {
 			return true;
 		}
 
-		private static final void dontFollow(RevCommit cmit) {
+		private static void dontFollow(RevCommit cmit) {
 			for (RevCommit p : cmit.getParents()) {
 				p.add(RevFlag.SEEN);
 			}

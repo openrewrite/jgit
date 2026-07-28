@@ -68,5 +68,5 @@ public enum RevSort {
 	 * A boundary commit is a UNINTERESTING parent of an interesting commit that
 	 * was previously output.
 	 */
-	BOUNDARY;
+	BOUNDARY
 }

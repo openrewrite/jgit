@@ -362,10 +362,12 @@ abstract class WalkRemoteObjectDatabase {
 			final Collection<WalkRemoteObjectDatabase> alts = new ArrayList<>();
 			for (;;) {
 				String line = br.readLine();
-				if (line == null)
+				if (line == null) {
 					break;
-				if (!line.endsWith("/")) //$NON-NLS-1$
+				}
+				if (!line.endsWith("/")) { //$NON-NLS-1$
 					line += "/"; //$NON-NLS-1$
+				}
 				alts.add(openAlternate(line));
 			}
 			return alts;
@@ -398,8 +400,9 @@ abstract class WalkRemoteObjectDatabase {
 		boolean peeled = false;
 		for (;;) {
 			String line = br.readLine();
-			if (line == null)
+			if (line == null) {
 				break;
+			}
 			if (line.charAt(0) == '#') {
 				if (line.startsWith(RefDirectory.PACKED_REFS_HEADER)) {
 					line = line.substring(RefDirectory.PACKED_REFS_HEADER.length());
@@ -408,8 +411,9 @@ abstract class WalkRemoteObjectDatabase {
 				continue;
 			}
 			if (line.charAt(0) == '^') {
-				if (last == null)
+				if (last == null) {
 					throw new TransportException(JGitText.get().peeledLineBeforeRef);
+				}
 				final ObjectId id = ObjectId.fromString(line.substring(1));
 				last = new ObjectIdRef.PeeledTag(Ref.Storage.PACKED, last
 						.getName(), last.getObjectId(), id);
@@ -418,14 +422,16 @@ abstract class WalkRemoteObjectDatabase {
 			}
 
 			final int sp = line.indexOf(' ');
-			if (sp < 0)
+			if (sp < 0) {
 				throw new TransportException(MessageFormat.format(JGitText.get().unrecognizedRef, line));
+			}
 			final ObjectId id = ObjectId.fromString(line.substring(0, sp));
 			final String name = line.substring(sp + 1);
-			if (peeled)
+			if (peeled) {
 				last = new ObjectIdRef.PeeledNonTag(Ref.Storage.PACKED, name, id);
-			else
+			} else {
 				last = new ObjectIdRef.Unpeeled(Ref.Storage.PACKED, name, id);
+			}
 			avail.put(last.getName(), last);
 		}
 	}
@@ -473,8 +479,9 @@ abstract class WalkRemoteObjectDatabase {
 				final ByteArrayOutputStream r = new ByteArrayOutputStream();
 				final byte[] buf = new byte[2048];
 				int n;
-				while ((n = in.read(buf)) >= 0)
+				while ((n = in.read(buf)) >= 0) {
 					r.write(buf, 0, n);
+				}
 				return r.toByteArray();
 			} finally {
 				in.close();

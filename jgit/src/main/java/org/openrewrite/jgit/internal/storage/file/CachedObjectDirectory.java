@@ -62,17 +62,21 @@ class CachedObjectDirectory extends FileObjectDatabase {
 		ObjectIdOwnerMap<UnpackedObjectId> m = new ObjectIdOwnerMap<>();
 		File objects = wrapped.getDirectory();
 		String[] fanout = objects.list();
-		if (fanout == null)
+		if (fanout == null) {
 			return m;
+		}
 		for (String d : fanout) {
-			if (d.length() != 2)
+			if (d.length() != 2) {
 				continue;
+			}
 			String[] entries = new File(objects, d).list();
-			if (entries == null)
+			if (entries == null) {
 				continue;
+			}
 			for (String e : entries) {
-				if (e.length() != Constants.OBJECT_ID_STRING_LENGTH - 2)
+				if (e.length() != Constants.OBJECT_ID_STRING_LENGTH - 2) {
 					continue;
+				}
 				try {
 					ObjectId id = ObjectId.fromString(d + e);
 					m.add(new UnpackedObjectId(id));
@@ -125,8 +129,9 @@ class CachedObjectDirectory extends FileObjectDatabase {
 		if (alts == null) {
 			ObjectDirectory.AlternateHandle[] src = wrapped.myAlternates();
 			alts = new CachedObjectDirectory[src.length];
-			for (int i = 0; i < alts.length; i++)
+			for (int i = 0;i < alts.length;i++) {
 				alts[i] = src[i].db.newCachedFileObjectDatabase();
+			}
 		}
 		return alts;
 	}
@@ -213,8 +218,9 @@ class CachedObjectDirectory extends FileObjectDatabase {
 			throws IOException {
 		if (unpackedObjects.contains(id)) {
 			ObjectLoader ldr = wrapped.openLooseObject(curs, id);
-			if (ldr != null)
+			if (ldr != null) {
 				return ldr;
+			}
 			unpackedObjects = scanLoose();
 		}
 		return null;

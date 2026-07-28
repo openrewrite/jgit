@@ -60,12 +60,13 @@ class LeafBucket extends InMemoryNoteBucket {
 		while (low < high) {
 			int mid = (low + high) >>> 1;
 			int cmp = objId.compareTo(notes[mid]);
-			if (cmp < 0)
+			if (cmp < 0) {
 				high = mid;
-			else if (cmp == 0)
+			} else if (cmp == 0) {
 				return mid;
-			else
+			} else {
 				low = mid + 1;
+			}
 		}
 		return -(low + 1);
 	}
@@ -178,15 +179,17 @@ class LeafBucket extends InMemoryNoteBucket {
 			fmt.append(nameBuf, prefixLen, nameLen, REGULAR_FILE, n.getData());
 		}
 
-		for (; e != null; e = e.next)
+		for (;e != null;e = e.next) {
 			e.format(fmt);
+		}
 		return fmt;
 	}
 
 	private int treeSize(int nameLen) {
 		int sz = cnt * TreeFormatter.entrySize(REGULAR_FILE, nameLen);
-		for (NonNoteEntry e = nonNotes; e != null; e = e.next)
+		for (NonNoteEntry e = nonNotes;e != null;e = e.next) {
 			sz += e.treeEntrySize();
+		}
 		return sz;
 	}
 
@@ -219,8 +222,9 @@ class LeafBucket extends InMemoryNoteBucket {
 
 	FanoutBucket split() {
 		FanoutBucket n = new FanoutBucket(prefixLen);
-		for (int i = 0; i < cnt; i++)
+		for (int i = 0;i < cnt;i++) {
 			n.append(notes[i]);
+		}
 		n.nonNotes = nonNotes;
 		return n;
 	}

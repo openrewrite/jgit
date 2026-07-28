@@ -109,11 +109,13 @@ public class DfsPackParser extends PackParser {
 		try {
 			blockCache = DfsBlockCache.getInstance();
 			super.parse(receiving, resolving);
-			if (isEmptyPack)
+			if (isEmptyPack) {
 				return null;
+			}
 			buffer(packHash, 0, packHash.length);
-			if (currEnd != 0)
+			if (currEnd != 0) {
 				flushBlock();
+			}
 			out.close();
 			out = null;
 			currBuf = null;
@@ -128,8 +130,9 @@ public class DfsPackParser extends PackParser {
 
 			DfsPackFile p = new DfsPackFile(blockCache, packDsc);
 			p.setBlockSize(blockSize);
-			if (packIndex != null)
+			if (packIndex != null) {
 				p.setPackIndex(packIndex);
+			}
 
 			objdb.addPack(p);
 
@@ -186,10 +189,11 @@ public class DfsPackParser extends PackParser {
 		packKey = packDsc.getStreamKey(PACK);
 
 		int size = out.blockSize();
-		if (size <= 0)
+		if (size <= 0) {
 			size = blockCache.getBlockSize();
-		else if (size < blockCache.getBlockSize())
+		} else if (size < blockCache.getBlockSize()) {
 			size = (blockCache.getBlockSize() / size) * size;
+		}
 		blockSize = size;
 		currBuf = new byte[blockSize];
 	}
@@ -278,8 +282,9 @@ public class DfsPackParser extends PackParser {
 	}
 
 	private DfsBlock flushBlock() throws IOException {
-		if (isEmptyPack)
+		if (isEmptyPack) {
 			throw new IOException(DfsText.get().willNotStoreEmptyPack);
+		}
 
 		out.write(currBuf, 0, currEnd);
 
@@ -328,15 +333,17 @@ public class DfsPackParser extends PackParser {
 	/** {@inheritDoc} */
 	@Override
 	protected int readDatabase(byte[] dst, int pos, int cnt) throws IOException {
-		if (cnt == 0)
+		if (cnt == 0) {
 			return 0;
+		}
 
 		if (currPos <= readPos) {
 			// Requested read is still buffered. Copy direct from buffer.
 			int p = (int) (readPos - currPos);
 			int n = Math.min(cnt, currEnd - p);
-			if (n == 0)
+			if (n == 0) {
 				throw new EOFException();
+			}
 			System.arraycopy(currBuf, p, dst, pos, n);
 			readPos += n;
 			return n;
@@ -348,8 +355,9 @@ public class DfsPackParser extends PackParser {
 			if (readBlock == null) {
 				int size = (int) Math.min(blockSize, packEnd - start);
 				byte[] buf = new byte[size];
-				if (read(start, buf, 0, size) != size)
+				if (read(start, buf, 0, size) != size) {
 					throw new EOFException();
+				}
 				readBlock = new DfsBlock(packKey, start, buf);
 				blockCache.put(readBlock);
 			}
@@ -361,14 +369,16 @@ public class DfsPackParser extends PackParser {
 	}
 
 	private int read(long pos, byte[] dst, int off, int len) throws IOException {
-		if (len == 0)
+		if (len == 0) {
 			return 0;
+		}
 
 		int cnt = 0;
 		while (0 < len) {
 			int r = out.read(pos, ByteBuffer.wrap(dst, off, len));
-			if (r <= 0)
+			if (r <= 0) {
 				break;
+			}
 			pos += r;
 			off += r;
 			len -= r;
@@ -409,10 +419,11 @@ public class DfsPackParser extends PackParser {
 		crc.update(buf, 0, len);
 		buffer(buf, 0, len);
 
-		if (def == null)
+		if (def == null) {
 			def = new Deflater(Deflater.DEFAULT_COMPRESSION, false);
-		else
+		} else {
 			def.reset();
+		}
 		def.setInput(data);
 		def.finish();
 

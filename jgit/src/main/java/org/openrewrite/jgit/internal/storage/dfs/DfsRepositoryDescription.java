@@ -45,8 +45,9 @@ public class DfsRepositoryDescription {
 	/** {@inheritDoc} */
 	@Override
 	public int hashCode() {
-		if (getRepositoryName() != null)
+		if (getRepositoryName() != null) {
 			return getRepositoryName().hashCode();
+		}
 		return System.identityHashCode(this);
 	}
 

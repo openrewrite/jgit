@@ -132,8 +132,9 @@ class RewriteGenerator extends Generator {
 		int newCnt = 0;
 		for (int o = 0; o < oldList.length; o++) {
 			final RevCommit p = oldList[o];
-			if (p == null)
+			if (p == null) {
 				continue;
+			}
 			if ((p.flags & DUPLICATE) != 0) {
 				oldList[o] = null;
 				continue;
@@ -143,8 +144,9 @@ class RewriteGenerator extends Generator {
 		}
 
 		if (newCnt == oldList.length) {
-			for (RevCommit p : oldList)
+			for (RevCommit p : oldList) {
 				p.flags &= ~DUPLICATE;
+			}
 			return oldList;
 		}
 

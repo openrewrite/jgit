@@ -70,8 +70,9 @@ class EolAwareOutputStream extends OutputStream {
 	 *                if an I/O error occurs.
 	 */
 	void beginln() throws IOException {
-		if (!bol)
+		if (!bol) {
 			write('\n');
+		}
 	}
 
 	/** @return true if a new line has just begun. */
@@ -83,7 +84,7 @@ class EolAwareOutputStream extends OutputStream {
 	@Override
 	public void write(int val) throws IOException {
 		out.write(val);
-		bol = (val == '\n');
+		bol = val == '\n';
 	}
 
 	/** {@inheritDoc} */
@@ -91,7 +92,7 @@ class EolAwareOutputStream extends OutputStream {
 	public void write(byte[] buf, int pos, int cnt) throws IOException {
 		if (cnt > 0) {
 			out.write(buf, pos, cnt);
-			bol = (buf[pos + (cnt - 1)] == '\n');
+			bol = buf[pos + (cnt - 1)] == '\n';
 		}
 	}
 }

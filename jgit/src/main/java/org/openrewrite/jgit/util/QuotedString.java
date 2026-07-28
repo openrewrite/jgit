@@ -117,7 +117,8 @@ public abstract class QuotedString {
 		public String quote(String in) {
 			final StringBuilder r = new StringBuilder();
 			r.append('\'');
-			int start = 0, i = 0;
+			int start = 0;
+			int i = 0;
 			for (; i < in.length(); i++) {
 				switch (in.charAt(i)) {
 				case '\'':
@@ -148,10 +149,11 @@ public abstract class QuotedString {
 					inquote = !inquote;
 					continue;
 				case '\\':
-					if (inquote || ip == ie)
+					if (inquote || ip == ie) {
 						r[rPtr++] = b; // literal within a quote
-					else
+					} else {
 						r[rPtr++] = in[ip++];
+					}
 					continue;
 				default:
 					r[rPtr++] = b;
@@ -178,8 +180,9 @@ public abstract class QuotedString {
 				// we must not escape ~/ or ~user/ from the shell.
 				//
 				final int i = in.indexOf('/') + 1;
-				if (i == in.length())
+				if (i == in.length()) {
 					return in;
+				}
 				return in.substring(0, i) + super.quote(in.substring(i));
 			}
 
@@ -194,12 +197,15 @@ public abstract class QuotedString {
 			quote = new byte[128];
 			Arrays.fill(quote, (byte) -1);
 
-			for (int i = '0'; i <= '9'; i++)
+			for (int i = '0';i <= '9';i++) {
 				quote[i] = 0;
-			for (int i = 'a'; i <= 'z'; i++)
+			}
+			for (int i = 'a';i <= 'z';i++) {
 				quote[i] = 0;
-			for (int i = 'A'; i <= 'Z'; i++)
+			}
+			for (int i = 'A';i <= 'Z';i++) {
 				quote[i] = 0;
+			}
 			quote[' '] = 0;
 			quote['$'] = 0;
 			quote['%'] = 0;
@@ -264,9 +270,9 @@ public abstract class QuotedString {
 
 				reuse = false;
 				out[o++] = '\\';
-				out[o++] = (byte) (((c >> 6) & 03) + '0');
-				out[o++] = (byte) (((c >> 3) & 07) + '0');
-				out[o++] = (byte) (((c >> 0) & 07) + '0');
+				out[o++] = (byte) (((c >> 6) & 3) + '0');
+				out[o++] = (byte) (((c >> 3) & 7) + '0');
+				out[o++] = (byte) (((c >> 0) & 7) + '0');
 			}
 			if (reuse) {
 				return instr;
@@ -277,8 +283,9 @@ public abstract class QuotedString {
 
 		@Override
 		public String dequote(byte[] in, int inPtr, int inEnd) {
-			if (2 <= inEnd - inPtr && in[inPtr] == '"' && in[inEnd - 1] == '"')
+			if (2 <= inEnd - inPtr && in[inPtr] == '"' && in[inEnd - 1] == '"') {
 				return dq(in, inPtr + 1, inEnd - 1);
+			}
 			return RawParseUtils.decode(UTF_8, in, inPtr, inEnd);
 		}
 

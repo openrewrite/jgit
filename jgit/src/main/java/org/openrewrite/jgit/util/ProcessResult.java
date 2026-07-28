@@ -32,7 +32,7 @@ public class ProcessResult {
 		 * The script was found but could not be launched since it was not
 		 * supported by the current {@link FS}.
 		 */
-		NOT_SUPPORTED;
+		NOT_SUPPORTED
 	}
 
 	/** The exit code of the process. */

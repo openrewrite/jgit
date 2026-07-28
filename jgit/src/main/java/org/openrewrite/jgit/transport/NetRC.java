@@ -152,8 +152,9 @@ public class NetRC {
 	 */
 	public NetRC() {
 		netrc = getDefaultFile();
-		if (netrc != null)
+		if (netrc != null) {
 			parse();
+		}
 	}
 
 	/**
@@ -170,12 +171,14 @@ public class NetRC {
 	private static File getDefaultFile() {
 		File home = FS.DETECTED.userHome();
 		File netrc = new File(home, ".netrc"); //$NON-NLS-1$
-		if (netrc.exists())
+		if (netrc.exists()) {
 			return netrc;
+		}
 
 		netrc = new File(home, "_netrc"); //$NON-NLS-1$
-		if (netrc.exists())
+		if (netrc.exists()) {
 			return netrc;
+		}
 
 		return null;
 	}
@@ -188,8 +191,9 @@ public class NetRC {
 	 * @return entry associated with host name or null
 	 */
 	public NetRCEntry getEntry(String host) {
-		if (netrc == null)
+		if (netrc == null) {
 			return null;
+		}
 
 		if (!this.lastModified
 				.equals(FS.DETECTED.lastModifiedInstant(this.netrc))) {
@@ -198,8 +202,9 @@ public class NetRC {
 
 		NetRCEntry entry = this.hosts.get(host);
 
-		if (entry == null)
+		if (entry == null) {
 			entry = this.hosts.get(DEFAULT_ENTRY);
+		}
 
 		return entry;
 	}
@@ -249,8 +254,9 @@ public class NetRC {
 						continue;
 					}
 					state = STATE.get(command);
-					if (state == null)
+					if (state == null) {
 						state = State.COMMAND;
+					}
 
 					switch (state) {
 					case COMMAND:
@@ -260,8 +266,9 @@ public class NetRC {
 							hosts.put(entry.machine, entry);
 							entry = new NetRCEntry();
 						}
-						if (matcher.find())
+						if (matcher.find()) {
 							entry.account = matcher.group();
+						}
 						state = State.COMMAND;
 						break;
 					case LOGIN:
@@ -269,8 +276,9 @@ public class NetRC {
 							hosts.put(entry.machine, entry);
 							entry = new NetRCEntry();
 						}
-						if (matcher.find())
+						if (matcher.find()) {
 							entry.login = matcher.group();
+						}
 						state = State.COMMAND;
 						break;
 					case PASSWORD:
@@ -278,8 +286,9 @@ public class NetRC {
 							hosts.put(entry.machine, entry);
 							entry = new NetRCEntry();
 						}
-						if (matcher.find())
+						if (matcher.find()) {
 							entry.password = matcher.group().toCharArray();
+						}
 						state = State.COMMAND;
 						break;
 					case DEFAULT:
@@ -295,8 +304,9 @@ public class NetRC {
 							hosts.put(entry.machine, entry);
 							entry = new NetRCEntry();
 						}
-						if (matcher.find())
+						if (matcher.find()) {
 							entry.macdef = matcher.group();
+						}
 						state = State.COMMAND;
 						break;
 					case MACHINE:
@@ -304,8 +314,9 @@ public class NetRC {
 							hosts.put(entry.machine, entry);
 							entry = new NetRCEntry();
 						}
-						if (matcher.find())
+						if (matcher.find()) {
 							entry.machine = matcher.group();
+						}
 						state = State.COMMAND;
 						break;
 					}
@@ -313,11 +324,13 @@ public class NetRC {
 			}
 
 			// reading macbody on EOF
-			if (entry.macdef != null && entry.macbody == null)
+			if (entry.macdef != null && entry.macbody == null) {
 				entry.macbody = macbody;
+			}
 
-			if (entry.complete())
+			if (entry.complete()) {
 				hosts.put(entry.machine, entry);
+			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

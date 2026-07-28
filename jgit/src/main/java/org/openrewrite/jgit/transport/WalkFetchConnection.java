@@ -203,8 +203,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 
 		while (!monitor.isCancelled() && !workQueue.isEmpty()) {
 			final ObjectId id = workQueue.removeFirst();
-			if (!(id instanceof RevObject) || !((RevObject) id).has(COMPLETE))
+			if (!(id instanceof RevObject) || !((RevObject) id).has(COMPLETE)) {
 				downloadObject(monitor, id);
+			}
 			process(id);
 		}
 
@@ -233,11 +234,13 @@ class WalkFetchConnection extends BaseFetchConnection {
 		inserter.close();
 		reader.close();
 		for (RemotePack p : unfetchedPacks) {
-			if (p.tmpIdx != null)
+			if (p.tmpIdx != null) {
 				p.tmpIdx.delete();
+			}
 		}
-		for (WalkRemoteObjectDatabase r : remotes)
+		for (WalkRemoteObjectDatabase r : remotes) {
 			r.close();
+		}
 	}
 
 	private void queueWants(Collection<Ref> want)
@@ -251,15 +254,17 @@ class WalkFetchConnection extends BaseFetchConnection {
 			}
 			try {
 				final RevObject obj = revWalk.parseAny(id);
-				if (obj.has(COMPLETE))
+				if (obj.has(COMPLETE)) {
 					continue;
+				}
 				if (inWorkQueue.add(id)) {
 					obj.add(IN_WORK_QUEUE);
 					workQueue.add(obj);
 				}
 			} catch (MissingObjectException e) {
-				if (inWorkQueue.add(id))
+				if (inWorkQueue.add(id)) {
 					workQueue.add(id);
+				}
 			} catch (IOException e) {
 				throw new TransportException(MessageFormat.format(JGitText.get().cannotRead, id.name()), e);
 			}
@@ -271,13 +276,15 @@ class WalkFetchConnection extends BaseFetchConnection {
 		try {
 			if (id instanceof RevObject) {
 				obj = (RevObject) id;
-				if (obj.has(COMPLETE))
+				if (obj.has(COMPLETE)) {
 					return;
+				}
 				revWalk.parseHeaders(obj);
 			} else {
 				obj = revWalk.parseAny(id);
-				if (obj.has(COMPLETE))
+				if (obj.has(COMPLETE)) {
 					return;
+				}
 			}
 		} catch (IOException e) {
 			throw new TransportException(MessageFormat.format(JGitText.get().cannotRead, id.name()), e);
@@ -308,12 +315,13 @@ class WalkFetchConnection extends BaseFetchConnection {
 
 	private void processBlob(RevObject obj) throws TransportException {
 		try {
-			if (reader.has(obj, Constants.OBJ_BLOB))
+			if (reader.has(obj, Constants.OBJ_BLOB)) {
 				obj.add(COMPLETE);
-			else
+			} else {
 				throw new TransportException(MessageFormat.format(JGitText
-						.get().cannotReadBlob, obj.name()),
+								.get().cannotReadBlob, obj.name()),
 						new MissingObjectException(obj, Constants.TYPE_BLOB));
+			}
 		} catch (IOException error) {
 			throw new TransportException(MessageFormat.format(
 					JGitText.get().cannotReadBlob, obj.name()), error);
@@ -335,8 +343,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 					continue;
 
 				default:
-					if (FileMode.GITLINK.equals(mode))
+					if (FileMode.GITLINK.equals(mode)) {
 						continue;
+					}
 					treeWalk.getObjectId(idBuffer, 0);
 					throw new CorruptObjectException(MessageFormat.format(JGitText.get().invalidModeFor
 							, mode, idBuffer.name(), treeWalk.getPathString(), obj.getId().name()));
@@ -352,8 +361,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 		final RevCommit commit = (RevCommit) obj;
 		markLocalCommitsComplete(commit.getCommitTime());
 		needs(commit.getTree());
-		for (RevCommit p : commit.getParents())
+		for (RevCommit p : commit.getParents()) {
 			needs(p);
+		}
 		obj.add(COMPLETE);
 	}
 
@@ -364,8 +374,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 	}
 
 	private void needs(RevObject obj) {
-		if (obj.has(COMPLETE))
+		if (obj.has(COMPLETE)) {
 			return;
+		}
 		if (!obj.has(IN_WORK_QUEUE)) {
 			obj.add(IN_WORK_QUEUE);
 			workQueue.add(obj);
@@ -374,16 +385,18 @@ class WalkFetchConnection extends BaseFetchConnection {
 
 	private void downloadObject(ProgressMonitor pm, AnyObjectId id)
 			throws TransportException {
-		if (alreadyHave(id))
+		if (alreadyHave(id)) {
 			return;
+		}
 
 		for (;;) {
 			// Try a pack file we know about, but don't have yet. Odds are
 			// that if it has this object, it has others related to it so
 			// getting the pack is a good bet.
 			//
-			if (downloadPackedObject(pm, id))
+			if (downloadPackedObject(pm, id)) {
 				return;
+			}
 
 			// Search for a loose object over all alternates, starting
 			// from the one we last successfully located an object through.
@@ -424,14 +437,17 @@ class WalkFetchConnection extends BaseFetchConnection {
 					pm.endTask();
 				}
 
-				if (packNameList == null || packNameList.isEmpty())
+				if (packNameList == null || packNameList.isEmpty()) {
 					continue;
-				for (String packName : packNameList) {
-					if (packsConsidered.add(packName))
-						unfetchedPacks.add(new RemotePack(wrr, packName));
 				}
-				if (downloadPackedObject(pm, id))
+				for (String packName : packNameList) {
+					if (packsConsidered.add(packName)) {
+						unfetchedPacks.add(new RemotePack(wrr, packName));
+					}
+				}
+				if (downloadPackedObject(pm, id)) {
 					return;
+				}
 			}
 
 			// Try to expand the first alternate we haven't expanded yet.
@@ -453,10 +469,11 @@ class WalkFetchConnection extends BaseFetchConnection {
 
 			te = new TransportException(MessageFormat.format(JGitText.get().cannotGet, id.name()));
 			if (failures != null && !failures.isEmpty()) {
-				if (failures.size() == 1)
+				if (failures.size() == 1) {
 					te.initCause(failures.get(0));
-				else
+				} else {
 					te.initCause(new CompoundException(failures));
+				}
 			}
 			throw te;
 		}
@@ -530,8 +547,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 				// are unusable and we shouldn't consult them again.
 				//
 				try {
-					if (pack.tmpIdx != null)
+					if (pack.tmpIdx != null) {
 						FileUtils.delete(pack.tmpIdx);
+					}
 				} catch (IOException e) {
 					if (e1 != null) {
 						e.addSuppressed(e1);
@@ -645,8 +663,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 				pm.beginTask(JGitText.get().listingAlternates, ProgressMonitor.UNKNOWN);
 				Collection<WalkRemoteObjectDatabase> altList = wrr
 						.getAlternates();
-				if (altList != null && !altList.isEmpty())
+				if (altList != null && !altList.isEmpty()) {
 					return altList;
+				}
 			} catch (IOException e) {
 				// Try another repository.
 				//
@@ -706,13 +725,15 @@ class WalkFetchConnection extends BaseFetchConnection {
 		try {
 			for (;;) {
 				final RevCommit c = localCommitQueue.peek();
-				if (c == null || c.getCommitTime() < until)
+				if (c == null || c.getCommitTime() < until) {
 					return;
+				}
 				localCommitQueue.next();
 
 				markTreeComplete(c.getTree());
-				for (RevCommit p : c.getParents())
+				for (RevCommit p : c.getParents()) {
 					pushLocalCommit(p);
+				}
 			}
 		} catch (IOException err) {
 			throw new TransportException(JGitText.get().localObjectsIncomplete, err);
@@ -721,8 +742,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 
 	private void pushLocalCommit(RevCommit p)
 			throws MissingObjectException, IOException {
-		if (p.has(LOCALLY_SEEN))
+		if (p.has(LOCALLY_SEEN)) {
 			return;
+		}
 		revWalk.parseHeaders(p);
 		p.add(LOCALLY_SEEN);
 		p.add(COMPLETE);
@@ -731,8 +753,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 	}
 
 	private void markTreeComplete(RevTree tree) throws IOException {
-		if (tree.has(COMPLETE))
+		if (tree.has(COMPLETE)) {
 			return;
+		}
 		tree.add(COMPLETE);
 		treeWalk.reset(tree);
 		while (treeWalk.next()) {
@@ -755,8 +778,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 				continue;
 			}
 			default:
-				if (FileMode.GITLINK.equals(mode))
+				if (FileMode.GITLINK.equals(mode)) {
 					continue;
+				}
 				treeWalk.getObjectId(idBuffer, 0);
 				throw new CorruptObjectException(MessageFormat.format(JGitText.get().corruptObjectInvalidMode3
 						, mode, idBuffer.name(), treeWalk.getPathString(), tree.name()));
@@ -791,10 +815,12 @@ class WalkFetchConnection extends BaseFetchConnection {
 			idxName = packName.substring(0, packName.length() - 5) + ".idx"; //$NON-NLS-1$
 
 			String tn = idxName;
-			if (tn.startsWith("pack-")) //$NON-NLS-1$
+			if (tn.startsWith("pack-")) { //$NON-NLS-1$
 				tn = tn.substring(5);
-			if (tn.endsWith(".idx")) //$NON-NLS-1$
+			}
+			if (tn.endsWith(".idx")) { //$NON-NLS-1$
 				tn = tn.substring(0, tn.length() - 4);
+			}
 
 			if (local.getObjectDatabase() instanceof ObjectDirectory) {
 				tmpIdx = new File(((ObjectDirectory) local.getObjectDatabase())
@@ -804,11 +830,12 @@ class WalkFetchConnection extends BaseFetchConnection {
 		}
 
 		void openIndex(ProgressMonitor pm) throws IOException {
-			if (index != null)
+			if (index != null) {
 				return;
-			if (tmpIdx == null)
+			}
+			if (tmpIdx == null) {
 				tmpIdx = File.createTempFile("jgit-walk-", ".idx"); //$NON-NLS-1$ //$NON-NLS-2$
-			else if (tmpIdx.isFile()) {
+			} else if (tmpIdx.isFile()) {
 				try {
 					index = PackIndex.open(tmpIdx);
 					return;
@@ -859,8 +886,9 @@ class WalkFetchConnection extends BaseFetchConnection {
 				parser.setObjectChecker(objCheck);
 				parser.setLockMessage(lockMessage);
 				PackLock lock = parser.parse(monitor);
-				if (lock != null)
+				if (lock != null) {
 					packLocks.add(lock);
+				}
 			} finally {
 				s.in.close();
 			}

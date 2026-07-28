@@ -42,7 +42,7 @@ public class AutoLFOutputStream extends OutputStream {
 
 	private byte[] onebytebuf = new byte[1];
 
-	private int binbufcnt = 0;
+	private int binbufcnt;
 
 	private boolean detectBinary;
 

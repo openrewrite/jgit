@@ -39,12 +39,12 @@ import org.openrewrite.jgit.errors.UnsupportedCredentialItem;
 import org.openrewrite.jgit.internal.JGitText;
 import org.openrewrite.jgit.lib.CommitBuilder;
 import org.openrewrite.jgit.lib.GpgConfig;
+import org.openrewrite.jgit.lib.GpgConfig.GpgFormat;
 import org.openrewrite.jgit.lib.GpgObjectSigner;
 import org.openrewrite.jgit.lib.GpgSignature;
 import org.openrewrite.jgit.lib.GpgSigner;
 import org.openrewrite.jgit.lib.ObjectBuilder;
 import org.openrewrite.jgit.lib.PersonIdent;
-import org.openrewrite.jgit.lib.GpgConfig.GpgFormat;
 import org.openrewrite.jgit.transport.CredentialsProvider;
 import org.openrewrite.jgit.util.StringUtils;
 

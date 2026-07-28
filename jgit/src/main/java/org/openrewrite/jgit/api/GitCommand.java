@@ -68,13 +68,13 @@ import org.openrewrite.jgit.lib.Repository;
  */
 public abstract class GitCommand<T> implements Callable<T> {
 	/** The repository this command is working with */
-	final protected Repository repo;
+	protected final Repository repo;
 
 	/**
 	 * a state which tells whether it is allowed to call {@link #call()} on this
 	 * instance.
 	 */
-	private AtomicBoolean callable = new AtomicBoolean(true);
+	private final AtomicBoolean callable = new AtomicBoolean(true);
 
 	/**
 	 * Creates a new command which interacts with a single repository
@@ -119,10 +119,11 @@ public abstract class GitCommand<T> implements Callable<T> {
 	 *             is {@code false}
 	 */
 	protected void checkCallable() {
-		if (!callable.get())
+		if (!callable.get()) {
 			throw new IllegalStateException(MessageFormat.format(
 					JGitText.get().commandWasCalledInTheWrongState
-					, this.getClass().getName()));
+			, this.getClass().getName()));
+		}
 	}
 
 	/**

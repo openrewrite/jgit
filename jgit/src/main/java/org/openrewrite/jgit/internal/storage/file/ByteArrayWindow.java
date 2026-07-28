@@ -61,7 +61,8 @@ final class ByteArrayWindow extends ByteWindow {
 	void check(Inflater inf, byte[] tmp, long pos, int cnt)
 			throws DataFormatException {
 		inf.setInput(array, (int) (pos - start), cnt);
-		while (inf.inflate(tmp, 0, tmp.length) > 0)
+		while (inf.inflate(tmp, 0, tmp.length) > 0) {
 			continue;
+		}
 	}
 }

@@ -235,7 +235,8 @@ public class PacketLineOut {
 			lenbuffer[o--] = hexchar[w & 0xf];
 			w >>>= 4;
 		}
-		while (o >= 0)
+		while (o >= 0) {
 			lenbuffer[o--] = '0';
+		}
 	}
 }

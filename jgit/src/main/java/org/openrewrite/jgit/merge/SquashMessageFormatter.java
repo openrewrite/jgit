@@ -24,7 +24,7 @@ import org.openrewrite.jgit.util.GitDateFormatter.Format;
  */
 public class SquashMessageFormatter {
 
-	private GitDateFormatter dateFormatter;
+	private final GitDateFormatter dateFormatter;
 
 	/**
 	 * Create a new squash message formatter.

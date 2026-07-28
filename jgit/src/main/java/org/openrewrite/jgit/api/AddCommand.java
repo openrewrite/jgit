@@ -52,11 +52,11 @@ import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
  */
 public class AddCommand extends GitCommand<DirCache> {
 
-	private Collection<String> filepatterns;
+	private final Collection<String> filepatterns;
 
 	private WorkingTreeIterator workingTreeIterator;
 
-	private boolean update = false;
+	private boolean update;
 
 	/**
 	 * Constructor for AddCommand
@@ -110,8 +110,9 @@ public class AddCommand extends GitCommand<DirCache> {
 	@Override
 	public DirCache call() throws GitAPIException, NoFilepatternException {
 
-		if (filepatterns.isEmpty())
+		if (filepatterns.isEmpty()) {
 			throw new NoFilepatternException(JGitText.get().atLeastOnePatternIsRequired);
+		}
 		checkCallable();
 		DirCache dc = null;
 		boolean addAll = filepatterns.contains("."); //$NON-NLS-1$
@@ -123,12 +124,14 @@ public class AddCommand extends GitCommand<DirCache> {
 
 			DirCacheBuilder builder = dc.builder();
 			tw.addTree(new DirCacheBuildIterator(builder));
-			if (workingTreeIterator == null)
+			if (workingTreeIterator == null) {
 				workingTreeIterator = new FileTreeIterator(repo);
+			}
 			workingTreeIterator.setDirCacheIterator(tw, 0);
 			tw.addTree(workingTreeIterator);
-			if (!addAll)
+			if (!addAll) {
 				tw.setFilter(PathFilterGroup.createFromStrings(filepatterns));
+			}
 
 			byte[] lastAdded = null;
 
@@ -220,13 +223,15 @@ public class AddCommand extends GitCommand<DirCache> {
 			setCallable(false);
 		} catch (IOException e) {
 			Throwable cause = e.getCause();
-			if (cause != null && cause instanceof FilterFailedException)
+			if (cause instanceof FilterFailedException) {
 				throw (FilterFailedException) cause;
+			}
 			throw new JGitInternalException(
 					JGitText.get().exceptionCaughtDuringExecutionOfAddCommand, e);
 		} finally {
-			if (dc != null)
+			if (dc != null) {
 				dc.unlock();
+			}
 		}
 
 		return dc;

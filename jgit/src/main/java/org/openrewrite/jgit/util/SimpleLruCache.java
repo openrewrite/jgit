@@ -65,16 +65,16 @@ public class SimpleLruCache<K, V> {
 		}
 	}
 
-	private Lock lock = new ReentrantLock();
+	private final Lock lock = new ReentrantLock();
 
-	private Map<K, Entry<K,V>> map = new ConcurrentHashMap<>();
+	private final Map<K, Entry<K,V>> map = new ConcurrentHashMap<>();
 
 	private volatile int maximumSize;
 
 	private int purgeSize;
 
 	// pseudo clock to implement LRU order of access to entries
-	private volatile long time = 0L;
+	private volatile long time;
 
 	private static void checkPurgeFactor(float purgeFactor) {
 		if (purgeFactor <= 0 || purgeFactor >= 1) {

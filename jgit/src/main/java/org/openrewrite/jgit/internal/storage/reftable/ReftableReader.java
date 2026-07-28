@@ -102,7 +102,7 @@ public class ReftableReader extends Reftable implements AutoCloseable {
 		}
 
 		// We have the map, we have no refs, or the table is small.
-		return (objPosition > 0 || refEnd == 24 || refIndexPosition == 0);
+		return objPosition > 0 || refEnd == 24 || refIndexPosition == 0;
 	}
 
 	/**

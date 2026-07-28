@@ -156,7 +156,7 @@ public final class Attributes {
 	 *         all other cases
 	 */
 	public boolean isSet(String key) {
-		return (getState(key) == State.SET);
+		return getState(key) == State.SET;
 	}
 
 	/**
@@ -169,7 +169,7 @@ public final class Attributes {
 	 *         in all other cases
 	 */
 	public boolean isUnset(String key) {
-		return (getState(key) == State.UNSET);
+		return getState(key) == State.UNSET;
 	}
 
 	/**
@@ -182,7 +182,7 @@ public final class Attributes {
 	 *         false in all other cases
 	 */
 	public boolean isUnspecified(String key) {
-		return (getState(key) == State.UNSPECIFIED);
+		return getState(key) == State.UNSPECIFIED;
 	}
 
 	/**
@@ -196,7 +196,7 @@ public final class Attributes {
 	 *         the key
 	 */
 	public boolean isCustom(String key) {
-		return (getState(key) == State.CUSTOM);
+		return getState(key) == State.CUSTOM;
 	}
 
 	/**
@@ -224,8 +224,8 @@ public final class Attributes {
 		if (isUnset(Constants.ATTR_MERGE)) {
 			return false;
 		} else if (isCustom(Constants.ATTR_MERGE)
-				&& getValue(Constants.ATTR_MERGE)
-						.equals(Constants.ATTR_BUILTIN_BINARY_MERGER)) {
+				&& Constants.ATTR_BUILTIN_BINARY_MERGER
+						.equals(getValue(Constants.ATTR_MERGE))) {
 			return false;
 		}
 		return true;
@@ -255,10 +255,12 @@ public final class Attributes {
 	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!(obj instanceof Attributes))
+		}
+		if (!(obj instanceof Attributes)) {
 			return false;
+		}
 		Attributes other = (Attributes) obj;
 		return this.map.equals(other.map);
 	}

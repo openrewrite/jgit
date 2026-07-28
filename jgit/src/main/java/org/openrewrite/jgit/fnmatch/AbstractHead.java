@@ -15,7 +15,7 @@ import java.util.List;
 import org.openrewrite.jgit.internal.JGitText;
 
 abstract class AbstractHead implements Head {
-	private List<Head> newHeads = null;
+	private List<Head> newHeads;
 
 	private final boolean star;
 
@@ -40,8 +40,9 @@ abstract class AbstractHead implements Head {
 	 *            not be modified.
 	 */
 	public final void setNewHeads(List<Head> newHeads) {
-		if (this.newHeads != null)
+		if (this.newHeads != null) {
 			throw new IllegalStateException(JGitText.get().propertyIsAlreadyNonNull);
+		}
 		this.newHeads = newHeads;
 	}
 

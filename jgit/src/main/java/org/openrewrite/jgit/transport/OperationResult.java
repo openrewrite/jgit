@@ -127,11 +127,13 @@ public abstract class OperationResult {
 
 	void addMessages(String msg) {
 		if (msg != null && msg.length() > 0) {
-			if (messageBuffer == null)
+			if (messageBuffer == null) {
 				messageBuffer = new StringBuilder();
+			}
 			messageBuffer.append(msg);
-			if (!msg.endsWith("\n")) //$NON-NLS-1$
+			if (!msg.endsWith("\n")) { //$NON-NLS-1$
 				messageBuffer.append('\n');
+			}
 		}
 	}
 

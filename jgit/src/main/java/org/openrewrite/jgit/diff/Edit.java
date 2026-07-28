@@ -42,7 +42,7 @@ public class Edit {
 		REPLACE,
 
 		/** Sequence A and B have zero length, describing nothing. */
-		EMPTY;
+		EMPTY
 	}
 
 	int beginA;

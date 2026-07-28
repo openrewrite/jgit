@@ -138,17 +138,20 @@ public abstract class RefDatabase {
 		int lastSlash = name.lastIndexOf('/');
 		while (0 < lastSlash) {
 			String needle = name.substring(0, lastSlash);
-			if (allRefs.containsKey(needle))
+			if (allRefs.containsKey(needle)) {
 				return Collections.singletonList(needle);
+			}
 			lastSlash = name.lastIndexOf('/', lastSlash - 1);
 		}
 
 		List<String> conflicting = new ArrayList<>();
 		// Cannot be the container of an existing reference.
 		String prefix = name + '/';
-		for (String existing : allRefs.keySet())
-			if (existing.startsWith(prefix))
+		for (String existing : allRefs.keySet()) {
+			if (existing.startsWith(prefix)) {
 				conflicting.add(existing);
+			}
+		}
 
 		return conflicting;
 	}
@@ -410,7 +413,7 @@ public abstract class RefDatabase {
 			String p = prefix.substring(lastSlash + 1);
 			result = coarseRefs.entrySet().stream()
 					.filter(e -> e.getKey().startsWith(p))
-					.map(e -> e.getValue())
+					.map(Map.Entry::getValue)
 					.collect(toList());
 		}
 		return Collections.unmodifiableList(result);
@@ -589,8 +592,9 @@ public abstract class RefDatabase {
 		for (String prefix : SEARCH_PATH) {
 			String fullname = prefix + name;
 			Ref ref = map.get(fullname);
-			if (ref != null)
+			if (ref != null) {
 				return ref;
+			}
 		}
 		return null;
 	}

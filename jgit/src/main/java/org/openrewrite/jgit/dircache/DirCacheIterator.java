@@ -89,8 +89,9 @@ public class DirCacheIterator extends AbstractTreeIterator {
 		treeStart = 0;
 		treeEnd = tree.getEntrySpan();
 		subtreeId = new byte[Constants.OBJECT_ID_LENGTH];
-		if (!eof())
+		if (!eof()) {
 			parseEntry();
+		}
 	}
 
 	DirCacheIterator(DirCacheIterator p, DirCacheTree dct) {
@@ -108,9 +109,10 @@ public class DirCacheIterator extends AbstractTreeIterator {
 	@Override
 	public AbstractTreeIterator createSubtreeIterator(ObjectReader reader)
 			throws IncorrectObjectTypeException, IOException {
-		if (currentSubtree == null)
+		if (currentSubtree == null) {
 			throw new IncorrectObjectTypeException(getEntryObjectId(),
 					Constants.TYPE_TREE);
+		}
 		return new DirCacheIterator(this, currentSubtree);
 	}
 
@@ -126,28 +128,33 @@ public class DirCacheIterator extends AbstractTreeIterator {
 	/** {@inheritDoc} */
 	@Override
 	public boolean hasId() {
-		if (currentSubtree != null)
+		if (currentSubtree != null) {
 			return currentSubtree.isValid();
+		}
 		return currentEntry != null;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public byte[] idBuffer() {
-		if (currentSubtree != null)
+		if (currentSubtree != null) {
 			return currentSubtree.isValid() ? subtreeId : zeroid;
-		if (currentEntry != null)
+		}
+		if (currentEntry != null) {
 			return currentEntry.idBuffer();
+		}
 		return zeroid;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public int idOffset() {
-		if (currentSubtree != null)
+		if (currentSubtree != null) {
 			return 0;
-		if (currentEntry != null)
+		}
+		if (currentEntry != null) {
 			return currentEntry.idOffset();
+		}
 		return 0;
 	}
 
@@ -159,8 +166,9 @@ public class DirCacheIterator extends AbstractTreeIterator {
 			nextSubtreePos = 0;
 			currentEntry = null;
 			currentSubtree = null;
-			if (!eof())
+			if (!eof()) {
 				parseEntry();
+			}
 		}
 	}
 
@@ -180,12 +188,14 @@ public class DirCacheIterator extends AbstractTreeIterator {
 	@Override
 	public void next(int delta) {
 		while (--delta >= 0) {
-			if (currentSubtree != null)
+			if (currentSubtree != null) {
 				ptr += currentSubtree.getEntrySpan();
-			else
+			} else {
 				ptr++;
-			if (eof())
+			}
+			if (eof()) {
 				break;
+			}
 			parseEntry();
 		}
 	}
@@ -194,12 +204,14 @@ public class DirCacheIterator extends AbstractTreeIterator {
 	@Override
 	public void back(int delta) {
 		while (--delta >= 0) {
-			if (currentSubtree != null)
+			if (currentSubtree != null) {
 				nextSubtreePos--;
+			}
 			ptr--;
 			parseEntry(false);
-			if (currentSubtree != null)
+			if (currentSubtree != null) {
 				ptr -= currentSubtree.getEntrySpan() - 1;
+			}
 		}
 	}
 
@@ -229,8 +241,9 @@ public class DirCacheIterator extends AbstractTreeIterator {
 				currentSubtree = s;
 				nextSubtreePos++;
 
-				if (s.isValid())
+				if (s.isValid()) {
 					s.getObjectId().copyRawTo(subtreeId, 0);
+				}
 				mode = FileMode.TREE.getBits();
 				path = cep;
 				pathLen = pathOffset + s.nameLength();
@@ -246,9 +259,10 @@ public class DirCacheIterator extends AbstractTreeIterator {
 		pathLen = cep.length;
 		currentSubtree = null;
 		// Checks if this entry is a .gitattributes file
-		if (RawParseUtils.match(path, pathOffset, DOT_GIT_ATTRIBUTES_BYTES) == path.length)
+		if (RawParseUtils.match(path, pathOffset, DOT_GIT_ATTRIBUTES_BYTES) == path.length) {
 			attributesNode = new LazyLoadingAttributesNode(
 					currentEntry.getObjectId());
+		}
 	}
 
 	/**
@@ -275,9 +289,10 @@ public class DirCacheIterator extends AbstractTreeIterator {
 	 */
 	public AttributesNode getEntryAttributesNode(ObjectReader reader)
 			throws IOException {
-		if (attributesNode instanceof LazyLoadingAttributesNode)
+		if (attributesNode instanceof LazyLoadingAttributesNode) {
 			attributesNode = ((LazyLoadingAttributesNode) attributesNode)
 					.load(reader);
+		}
 		return attributesNode;
 	}
 

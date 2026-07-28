@@ -38,8 +38,9 @@ abstract class BlockRevQueue extends AbstractRevQueue {
 		s.shareFreeList(this);
 		for (;;) {
 			final RevCommit c = s.next();
-			if (c == null)
+			if (c == null) {
 				break;
+			}
 			add(c);
 		}
 	}
@@ -67,8 +68,9 @@ abstract class BlockRevQueue extends AbstractRevQueue {
 
 		Block newBlock() {
 			Block b = next;
-			if (b == null)
+			if (b == null) {
 				return new Block();
+			}
 			next = b.next;
 			b.clear();
 			return b;

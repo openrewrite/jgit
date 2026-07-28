@@ -204,10 +204,11 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	protected void initRootIterator(Repository repo) {
 		repository = repo;
 		Entry entry;
-		if (ignoreNode instanceof PerDirectoryIgnoreNode)
+		if (ignoreNode instanceof PerDirectoryIgnoreNode) {
 			entry = ((PerDirectoryIgnoreNode) ignoreNode).entry;
-		else
+		} else {
 			entry = null;
+		}
 		ignoreNode = new RootIgnoreNode(entry, repo);
 	}
 
@@ -273,16 +274,18 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	/** {@inheritDoc} */
 	@Override
 	public boolean hasId() {
-		if (contentIdFromPtr == ptr)
+		if (contentIdFromPtr == ptr) {
 			return true;
+		}
 		return (mode & FileMode.TYPE_MASK) == FileMode.TYPE_FILE;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public byte[] idBuffer() {
-		if (contentIdFromPtr == ptr)
+		if (contentIdFromPtr == ptr) {
 			return contentId;
+		}
 
 		if (state.walk != null) {
 			// If there is a matching DirCacheIterator, we can reuse
@@ -331,8 +334,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 * @return non-null submodule id
 	 */
 	protected byte[] idSubmodule(Entry e) {
-		if (repository == null)
+		if (repository == null) {
 			return zeroid;
+		}
 		File directory;
 		try {
 			directory = repository.getWorkTree();
@@ -381,8 +385,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	private byte[] idBufferBlob(Entry e) {
 		try {
 			final InputStream is = e.openInputStream();
-			if (is == null)
+			if (is == null) {
 				return zeroid;
+			}
 			try {
 				state.initializeReadBuffer();
 
@@ -545,8 +550,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	public void reset() {
 		if (!first()) {
 			ptr = 0;
-			if (!eof())
+			if (!eof()) {
 				parseEntry();
+			}
 		}
 	}
 
@@ -609,8 +615,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	public long getEntryContentLength() throws IOException {
 		if (canonLen == -1) {
 			long rawLen = getEntryLength();
-			if (rawLen == 0)
+			if (rawLen == 0) {
 				canonLen = 0;
+			}
 			InputStream is = current().openInputStream();
 			try {
 				// canonLen gets updated here
@@ -748,8 +755,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	}
 
 	private IgnoreNode getIgnoreNode() throws IOException {
-		if (ignoreNode instanceof PerDirectoryIgnoreNode)
+		if (ignoreNode instanceof PerDirectoryIgnoreNode) {
 			ignoreNode = ((PerDirectoryIgnoreNode) ignoreNode).load();
+		}
 		return ignoreNode;
 	}
 
@@ -762,9 +770,10 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 * @throws IOException
 	 */
 	public AttributesNode getEntryAttributesNode() throws IOException {
-		if (attributesNode instanceof PerDirectoryAttributesNode)
+		if (attributesNode instanceof PerDirectoryAttributesNode) {
 			attributesNode = ((PerDirectoryAttributesNode) attributesNode)
 					.load();
+		}
 		return attributesNode;
 	}
 
@@ -786,27 +795,34 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 		// later on during sorting and iteration.
 		//
 		entries = list;
-		int i, o;
+		int i;
+		int o;
 
 		final CharsetEncoder nameEncoder = state.nameEncoder;
 		for (i = 0, o = 0; i < entries.length; i++) {
 			final Entry e = entries[i];
-			if (e == null)
+			if (e == null) {
 				continue;
+			}
 			final String name = e.getName();
-			if (".".equals(name) || "..".equals(name)) //$NON-NLS-1$ //$NON-NLS-2$
+			if (".".equals(name) || "..".equals(name)) { //$NON-NLS-1$ //$NON-NLS-2$
 				continue;
-			if (Constants.DOT_GIT.equals(name))
+			}
+			if (Constants.DOT_GIT.equals(name)) {
 				continue;
-			if (Constants.DOT_GIT_IGNORE.equals(name))
+			}
+			if (Constants.DOT_GIT_IGNORE.equals(name)) {
 				ignoreNode = new PerDirectoryIgnoreNode(
 						TreeWalk.pathOf(path, 0, pathOffset)
 								+ Constants.DOT_GIT_IGNORE,
 						e);
-			if (Constants.DOT_GIT_ATTRIBUTES.equals(name))
+			}
+			if (Constants.DOT_GIT_ATTRIBUTES.equals(name)) {
 				attributesNode = new PerDirectoryAttributesNode(e);
-			if (i != o)
+			}
+			if (i != o) {
 				entries[o] = e;
+			}
 			e.encodeName(nameEncoder);
 			o++;
 		}
@@ -815,10 +831,11 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 
 		contentIdFromPtr = -1;
 		ptr = 0;
-		if (!eof())
+		if (!eof()) {
 			parseEntry();
-		else if (pathLen == 0) // see bug 445363
+		} else if (pathLen == 0) { // see bug 445363
 			pathLen = pathOffset;
+		}
 	}
 
 	/**
@@ -871,19 +888,23 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 		// differ at this position.
 		int modeDiff = getEntryRawMode() ^ rawMode;
 
-		if (modeDiff == 0)
+		if (modeDiff == 0) {
 			return false;
+		}
 
 		// Do not rely on filemode differences in case of symbolic links
-		if (getOptions().getSymLinks() == SymLinks.FALSE)
-			if (FileMode.SYMLINK.equals(rawMode))
+		if (getOptions().getSymLinks() == SymLinks.FALSE) {
+			if (FileMode.SYMLINK.equals(rawMode)) {
 				return false;
+			}
+		}
 
 		// Ignore the executable file bits if WorkingTreeOptions tell me to
 		// do so. Ignoring is done by setting the bits representing a
 		// EXECUTABLE_FILE to '0' in modeDiff
-		if (!state.options.isFileMode())
+		if (!state.options.isFileMode()) {
 			modeDiff &= ~FileMode.EXECUTABLE_FILE.getBits();
+		}
 		return modeDiff != 0;
 	}
 
@@ -899,22 +920,27 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 *         which tells whether and how the entries metadata differ
 	 */
 	public MetadataDiff compareMetadata(DirCacheEntry entry) {
-		if (entry.isAssumeValid())
+		if (entry.isAssumeValid()) {
 			return MetadataDiff.EQUAL;
+		}
 
-		if (entry.isUpdateNeeded())
+		if (entry.isUpdateNeeded()) {
 			return MetadataDiff.DIFFER_BY_METADATA;
+		}
 
-		if (isModeDifferent(entry.getRawMode()))
+		if (isModeDifferent(entry.getRawMode())) {
 			return MetadataDiff.DIFFER_BY_METADATA;
+		}
 
 		// Don't check for length or lastmodified on folders
 		int type = mode & FileMode.TYPE_MASK;
-		if (type == FileMode.TYPE_TREE || type == FileMode.TYPE_GITLINK)
+		if (type == FileMode.TYPE_TREE || type == FileMode.TYPE_GITLINK) {
 			return MetadataDiff.EQUAL;
+		}
 
-		if (!entry.isSmudged() && entry.getLength() != (int) getEntryLength())
+		if (!entry.isSmudged() && entry.getLength() != (int) getEntryLength()) {
 			return MetadataDiff.DIFFER_BY_METADATA;
+		}
 
 		// Cache and file timestamps may differ in resolution. Therefore don't
 		// compare instants directly but use a comparator that compares only
@@ -956,8 +982,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 */
 	public boolean isModified(DirCacheEntry entry, boolean forceContentCheck,
 			ObjectReader reader) throws IOException {
-		if (entry == null)
+		if (entry == null) {
 			return !FileMode.MISSING.equals(getEntryFileMode());
+		}
 		MetadataDiff diff = compareMetadata(entry);
 		switch (diff) {
 		case DIFFER_BY_TIMESTAMP:
@@ -991,8 +1018,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 					return FileUtils.hasFiles(p);
 				}
 				return false;
-			} else if (mode == FileMode.SYMLINK.getBits())
+			} else if (mode == FileMode.SYMLINK.getBits()) {
 				return contentCheck(entry, reader);
+			}
 			return true;
 		default:
 			throw new IllegalStateException(MessageFormat.format(
@@ -1118,8 +1146,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 		long length = 0;
 		for (;;) {
 			long n = in.skip(1 << 20);
-			if (n <= 0)
+			if (n <= 0) {
 				break;
+			}
 			length += n;
 		}
 		return length;
@@ -1148,13 +1177,15 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 
 		for (;;) {
 			final int r = in.read(contentReadBuffer);
-			if (r <= 0)
+			if (r <= 0) {
 				break;
+			}
 			contentDigest.update(contentReadBuffer, 0, r);
 			sz += r;
 		}
-		if (sz != length)
+		if (sz != length) {
 			return zeroid;
+		}
 		return contentDigest.digest();
 	}
 
@@ -1179,10 +1210,11 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 			}
 
 			encodedNameLen = b.limit();
-			if (b.hasArray() && b.arrayOffset() == 0)
+			if (b.hasArray() && b.arrayOffset() == 0) {
 				encodedName = b.array();
-			else
+			} else {
 				b.get(encodedName = new byte[encodedNameLen]);
+			}
 		}
 
 		@Override
@@ -1309,8 +1341,9 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 			IgnoreNode r;
 			if (entry != null) {
 				r = super.load();
-				if (r == null)
+				if (r == null) {
 					r = new IgnoreNode();
+				}
 			} else {
 				r = new IgnoreNode();
 			}
@@ -1376,7 +1409,7 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 		int dirCacheTree = -1;
 
 		/** Whether the iterator shall walk ignored directories. */
-		boolean walkIgnored = false;
+		boolean walkIgnored;
 
 		final Map<String, Boolean> directoryToIgnored = new HashMap<>();
 

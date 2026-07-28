@@ -165,18 +165,21 @@ public class BlameCommand extends GitCommand<BlameResult> {
 	public BlameResult call() throws GitAPIException {
 		checkCallable();
 		try (BlameGenerator gen = new BlameGenerator(repo, path)) {
-			if (diffAlgorithm != null)
+			if (diffAlgorithm != null) {
 				gen.setDiffAlgorithm(diffAlgorithm);
-			if (textComparator != null)
+			}
+			if (textComparator != null) {
 				gen.setTextComparator(textComparator);
-			if (followFileRenames != null)
+			}
+			if (followFileRenames != null) {
 				gen.setFollowFileRenames(followFileRenames.booleanValue());
+			}
 
-			if (reverseEndCommits != null)
+			if (reverseEndCommits != null) {
 				gen.reverse(startCommit, reverseEndCommits);
-			else if (startCommit != null)
+			} else if (startCommit != null) {
 				gen.push(null, startCommit);
-			else {
+			} else {
 				gen.prepareHead();
 			}
 			return gen.computeBlameResult();

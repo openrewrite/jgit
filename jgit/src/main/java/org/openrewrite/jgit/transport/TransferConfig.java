@@ -21,8 +21,8 @@ import java.util.Map;
 import org.openrewrite.jgit.annotations.Nullable;
 import org.openrewrite.jgit.internal.storage.file.LazyObjectIdSetFile;
 import org.openrewrite.jgit.lib.Config;
-import org.openrewrite.jgit.lib.ConfigConstants;
 import org.openrewrite.jgit.lib.Config.SectionParser;
+import org.openrewrite.jgit.lib.ConfigConstants;
 import org.openrewrite.jgit.lib.ObjectChecker;
 import org.openrewrite.jgit.lib.ObjectIdSet;
 import org.openrewrite.jgit.lib.Ref;
@@ -57,7 +57,7 @@ public class TransferConfig {
 		/**
 		 * Ignore the error.
 		 */
-		IGNORE;
+		IGNORE
 	}
 
 	/**
@@ -337,8 +337,9 @@ public class TransferConfig {
 	 * @since 3.1
 	 */
 	public RefFilter getRefFilter() {
-		if (hideRefs.length == 0)
+		if (hideRefs.length == 0) {
 			return RefFilter.DEFAULT;
+		}
 
 		return new RefFilter() {
 			@Override
@@ -352,8 +353,9 @@ public class TransferConfig {
 							break;
 						}
 					}
-					if (add)
+					if (add) {
 						result.put(e.getKey(), e.getValue());
+					}
 				}
 				return result;
 			}
@@ -374,7 +376,7 @@ public class TransferConfig {
 		return hideRefs.length == 0;
 	}
 
-	static class FsckKeyNameHolder {
+	static final class FsckKeyNameHolder {
 		private static final Map<String, ObjectChecker.ErrorType> errors;
 
 		static {

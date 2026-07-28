@@ -241,15 +241,17 @@ public class URIish implements Serializable {
 	}
 
 	private static int parseHexByte(byte c1, byte c2) {
-			return ((RawParseUtils.parseHexInt4(c1) << 4)
-					| RawParseUtils.parseHexInt4(c2));
+			return (RawParseUtils.parseHexInt4(c1) << 4)
+					| RawParseUtils.parseHexInt4(c2);
 	}
 
 	private static String unescape(String s) throws URISyntaxException {
-		if (s == null)
+		if (s == null) {
 			return null;
-		if (s.indexOf('%') < 0)
+		}
+		if (s.indexOf('%') < 0) {
 			return s;
+		}
 
 		byte[] bytes = s.getBytes(UTF_8);
 
@@ -258,8 +260,9 @@ public class URIish implements Serializable {
 		for (int i = 0; i < bytes.length; ++i) {
 			byte c = bytes[i];
 			if (c == '%') {
-				if (i + 2 >= bytes.length)
+				if (i + 2 >= bytes.length) {
 					throw new URISyntaxException(s, JGitText.get().cannotParseGitURIish);
+				}
 				byte c1 = bytes[i + 1];
 				byte c2 = bytes[i + 2];
 				int val;
@@ -273,8 +276,9 @@ public class URIish implements Serializable {
 				}
 				os[j++] = (byte) val;
 				i += 2;
-			} else
+			} else {
 				os[j++] = c;
+			}
 		}
 		return RawParseUtils.decode(os, 0, j);
 	}
@@ -282,8 +286,9 @@ public class URIish implements Serializable {
 	private static final BitSet reservedChars = new BitSet(127);
 
 	static {
-		for (byte b : Constants.encodeASCII("!*'();:@&=+$,/?#[]")) //$NON-NLS-1$
+		for (byte b : Constants.encodeASCII("!*'();:@&=+$,/?#[]")) { //$NON-NLS-1$
 			reservedChars.set(b);
+		}
 	}
 
 	/**
@@ -299,8 +304,9 @@ public class URIish implements Serializable {
 	 */
 	private static String escape(String s, boolean escapeReservedChars,
 			boolean encodeNonAscii) {
-		if (s == null)
+		if (s == null) {
 			return null;
+		}
 		ByteArrayOutputStream os = new ByteArrayOutputStream(s.length());
 		byte[] bytes = s.getBytes(UTF_8);
 		for (byte c : bytes) {
@@ -331,13 +337,14 @@ public class URIish implements Serializable {
 				&& p.charAt(0) == '/'
 				&& p.charAt(2) == ':'
 				&& ((p.charAt(1) >= 'A' && p.charAt(1) <= 'Z')
-						|| (p.charAt(1) >= 'a' && p.charAt(1) <= 'z')))
+				|| (p.charAt(1) >= 'a' && p.charAt(1) <= 'z'))) {
 			return p.substring(1);
-		else if (s != null && p.length() >= 2 && p.charAt(0) == '/'
-				&& p.charAt(1) == '~')
+		} else if (s != null && p.length() >= 2 && p.charAt(0) == '/'
+				&& p.charAt(1) == '~') {
 			return p.substring(1);
-		else
+		} else {
 			return p;
+		}
 	}
 
 	/**
@@ -555,50 +562,62 @@ public class URIish implements Serializable {
 	@Override
 	public int hashCode() {
 		int hc = 0;
-		if (getScheme() != null)
+		if (getScheme() != null) {
 			hc = hc * 31 + getScheme().hashCode();
-		if (getUser() != null)
+		}
+		if (getUser() != null) {
 			hc = hc * 31 + getUser().hashCode();
-		if (getPass() != null)
+		}
+		if (getPass() != null) {
 			hc = hc * 31 + getPass().hashCode();
-		if (getHost() != null)
+		}
+		if (getHost() != null) {
 			hc = hc * 31 + getHost().hashCode();
-		if (getPort() > 0)
+		}
+		if (getPort() > 0) {
 			hc = hc * 31 + getPort();
-		if (getPath() != null)
+		}
+		if (getPath() != null) {
 			hc = hc * 31 + getPath().hashCode();
+		}
 		return hc;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof URIish))
+		if (!(obj instanceof URIish)) {
 			return false;
+		}
 		final URIish b = (URIish) obj;
-		if (!eq(getScheme(), b.getScheme()))
+		if (!eq(getScheme(), b.getScheme())) {
 			return false;
-		if (!eq(getUser(), b.getUser()))
+		}
+		if (!eq(getUser(), b.getUser())) {
 			return false;
-		if (!eq(getPass(), b.getPass()))
+		}
+		if (!eq(getPass(), b.getPass())) {
 			return false;
-		if (!eq(getHost(), b.getHost()))
+		}
+		if (!eq(getHost(), b.getHost())) {
 			return false;
-		if (getPort() != b.getPort())
+		}
+		if (getPort() != b.getPort()) {
 			return false;
-		if (!eq(getPath(), b.getPath()))
-			return false;
-		return true;
+		}
+		return eq(getPath(), b.getPath());
 	}
 
 	private static boolean eq(String a, String b) {
 		if (References.isSameObject(a, b)) {
 			return true;
 		}
-		if (StringUtils.isEmptyOrNull(a) && StringUtils.isEmptyOrNull(b))
+		if (StringUtils.isEmptyOrNull(a) && StringUtils.isEmptyOrNull(b)) {
 			return true;
-		if (a == null || b == null)
+		}
+		if (a == null || b == null) {
 			return false;
+		}
 		return a.equals(b);
 	}
 
@@ -633,8 +652,9 @@ public class URIish implements Serializable {
 		}
 
 		if (getHost() != null) {
-			if (getUser() != null && getUser().length() > 0)
+			if (getUser() != null && getUser().length() > 0) {
 				r.append('@');
+			}
 			r.append(escape(getHost(), false, escapeNonAscii));
 			if (getScheme() != null && getPort() > 0) {
 				r.append(':');
@@ -644,17 +664,21 @@ public class URIish implements Serializable {
 
 		if (getPath() != null) {
 			if (getScheme() != null) {
-				if (!getPath().startsWith("/") && !getPath().isEmpty()) //$NON-NLS-1$
+				if (!getPath().startsWith("/") && !getPath().isEmpty()) { //$NON-NLS-1$
 					r.append('/');
-			} else if (getHost() != null)
+				}
+			} else if (getHost() != null) {
 				r.append(':');
-			if (getScheme() != null)
-				if (escapeNonAscii)
+			}
+			if (getScheme() != null) {
+				if (escapeNonAscii) {
 					r.append(escape(getPath(), false, escapeNonAscii));
-				else
+				} else {
 					r.append(getRawPath());
-			else
+				}
+			} else {
 				r.append(getPath());
+			}
 		}
 
 		return r.toString();
@@ -720,24 +744,29 @@ public class URIish implements Serializable {
 	 */
 	public String getHumanishName() throws IllegalArgumentException {
 		String s = getPath();
-		if ("/".equals(s) || "".equals(s)) //$NON-NLS-1$ //$NON-NLS-2$
+		if ("/".equals(s) || "".equals(s)) { //$NON-NLS-1$ //$NON-NLS-2$
 			s = getHost();
-		if (s == null) // $NON-NLS-1$
+		}
+		if (s == null) { // $NON-NLS-1$
 			throw new IllegalArgumentException();
+		}
 
 		String[] elements;
-		if ("file".equals(scheme) || LOCAL_FILE.matcher(s).matches()) //$NON-NLS-1$
+		if ("file".equals(scheme) || LOCAL_FILE.matcher(s).matches()) { //$NON-NLS-1$
 			elements = s.split("[\\" + File.separatorChar + "/]"); //$NON-NLS-1$ //$NON-NLS-2$
-		else
+		} else {
 			elements = s.split("/+"); //$NON-NLS-1$
-		if (elements.length == 0)
+		}
+		if (elements.length == 0) {
 			throw new IllegalArgumentException();
+		}
 		String result = elements[elements.length - 1];
-		if (Constants.DOT_GIT.equals(result))
+		if (Constants.DOT_GIT.equals(result)) {
 			result = elements[elements.length - 2];
-		else if (result.endsWith(Constants.DOT_GIT_EXT))
+		} else if (result.endsWith(Constants.DOT_GIT_EXT)) {
 			result = result.substring(0, result.length()
 					- Constants.DOT_GIT_EXT.length());
+		}
 		if (("file".equals(scheme) || LOCAL_FILE.matcher(s) //$NON-NLS-1$
 				.matches())
 				&& result.endsWith(Constants.DOT_BUNDLE_EXT)) {

@@ -10,13 +10,13 @@
 
 package org.openrewrite.jgit.internal.storage.reftable;
 
-import org.openrewrite.jgit.lib.ReflogEntry;
-import org.openrewrite.jgit.lib.ReflogReader;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
+
+import org.openrewrite.jgit.lib.ReflogEntry;
+import org.openrewrite.jgit.lib.ReflogReader;
 
 /**
  * Implement the ReflogReader interface for a reflog stored in reftable.

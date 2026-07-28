@@ -46,7 +46,7 @@ class LooseObjects {
 	 * Maximum number of attempts to read a loose object for which a stale file
 	 * handle exception is thrown
 	 */
-	private final static int MAX_LOOSE_OBJECT_STALE_READ_ATTEMPTS = 5;
+	private static final int MAX_LOOSE_OBJECT_STALE_READ_ATTEMPTS = 5;
 
 	private final File directory;
 

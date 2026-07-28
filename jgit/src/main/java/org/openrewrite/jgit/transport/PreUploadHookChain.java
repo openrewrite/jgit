@@ -24,7 +24,7 @@ import org.openrewrite.jgit.lib.ObjectId;
  * Hooks are run in the order passed to the constructor. If running a method on
  * one hook throws an exception, execution of remaining hook methods is aborted.
  */
-public class PreUploadHookChain implements PreUploadHook {
+public final class PreUploadHookChain implements PreUploadHook {
 	private final List<PreUploadHook> hooks;
 
 	/**

@@ -89,10 +89,12 @@ class FanoutBucket extends InMemoryNoteBucket {
 
 	static InMemoryNoteBucket loadIfLazy(NoteBucket b, AnyObjectId prefix,
 			ObjectReader or) throws IOException {
-		if (b == null)
+		if (b == null) {
 			return null;
-		if (b instanceof InMemoryNoteBucket)
+		}
+		if (b instanceof InMemoryNoteBucket) {
 			return (InMemoryNoteBucket) b;
+		}
 		return ((LazyNoteBucket) b).load(prefix, or);
 	}
 
@@ -109,13 +111,15 @@ class FanoutBucket extends InMemoryNoteBucket {
 
 			@Override
 			public boolean hasNext() {
-				if (itr != null && itr.hasNext())
+				if (itr != null && itr.hasNext()) {
 					return true;
+				}
 
 				for (; cell < table.length; cell++) {
 					NoteBucket b = table[cell];
-					if (b == null)
+					if (b == null) {
 						continue;
+					}
 
 					try {
 						id.setByte(prefixLen >> 1, cell);
@@ -150,8 +154,9 @@ class FanoutBucket extends InMemoryNoteBucket {
 	@Override
 	int estimateSize(AnyObjectId noteOn, ObjectReader or) throws IOException {
 		// If most of this fan-out is full, estimate it should still be split.
-		if (LeafBucket.MAX_SIZE * 3 / 4 <= cnt)
+		if (LeafBucket.MAX_SIZE * 3 / 4 <= cnt) {
 			return 1 + LeafBucket.MAX_SIZE;
+		}
 
 		// Due to the uniform distribution of ObjectIds, having less nodes full
 		// indicates a good chance the total number of children below here
@@ -163,13 +168,15 @@ class FanoutBucket extends InMemoryNoteBucket {
 		int sz = 0;
 		for (int cell = 0; cell < 256; cell++) {
 			NoteBucket b = table[cell];
-			if (b == null)
+			if (b == null) {
 				continue;
+			}
 
 			id.setByte(prefixLen >> 1, cell);
 			sz += b.estimateSize(id, or);
-			if (LeafBucket.MAX_SIZE < sz)
+			if (LeafBucket.MAX_SIZE < sz) {
 				break;
+			}
 		}
 		return sz;
 	}
@@ -213,8 +220,9 @@ class FanoutBucket extends InMemoryNoteBucket {
 		if (estimateSize(noteOn, or) < LeafBucket.MAX_SIZE) {
 			// We are small enough to just contract to a single leaf.
 			InMemoryNoteBucket r = new LeafBucket(prefixLen);
-			for (Iterator<Note> i = iterator(noteOn, or); i.hasNext();)
+			for (Iterator<Note> i = iterator(noteOn, or);i.hasNext();) {
 				r = r.append(i.next());
+			}
 			r.nonNotes = nonNotes;
 			return r;
 		}
@@ -248,8 +256,9 @@ class FanoutBucket extends InMemoryNoteBucket {
 
 		for (int cell = 0; cell < 256; cell++) {
 			NoteBucket b = table[cell];
-			if (b == null)
+			if (b == null) {
 				continue;
+			}
 
 			nameBuf[0] = hexchar[cell >>> 4];
 			nameBuf[1] = hexchar[cell & 0x0f];
@@ -268,15 +277,17 @@ class FanoutBucket extends InMemoryNoteBucket {
 			fmt.append(nameBuf, 0, 2, TREE, id);
 		}
 
-		for (; e != null; e = e.next)
+		for (;e != null;e = e.next) {
 			e.format(fmt);
+		}
 		return fmt;
 	}
 
 	private int treeSize() {
 		int sz = cnt * TreeFormatter.entrySize(TREE, 2);
-		for (NonNoteEntry e = nonNotes; e != null; e = e.next)
+		for (NonNoteEntry e = nonNotes;e != null;e = e.next) {
 			sz += e.treeEntrySize();
+		}
 		return sz;
 	}
 
@@ -292,8 +303,9 @@ class FanoutBucket extends InMemoryNoteBucket {
 
 		} else {
 			InMemoryNoteBucket n = b.append(note);
-			if (n != b)
+			if (n != b) {
 				table[cell] = n;
+			}
 		}
 		return this;
 	}

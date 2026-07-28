@@ -96,7 +96,7 @@ public final class NetscapeCookieFile {
 
 	private final Instant createdAt;
 
-	private Set<HttpCookie> cookies = null;
+	private Set<HttpCookie> cookies;
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(NetscapeCookieFile.class);

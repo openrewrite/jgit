@@ -78,19 +78,21 @@ public class DirCacheBuildIterator extends DirCacheIterator {
 	@Override
 	public AbstractTreeIterator createSubtreeIterator(ObjectReader reader)
 			throws IncorrectObjectTypeException, IOException {
-		if (currentSubtree == null)
+		if (currentSubtree == null) {
 			throw new IncorrectObjectTypeException(getEntryObjectId(),
 					Constants.TYPE_TREE);
+		}
 		return new DirCacheBuildIterator(this, currentSubtree);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public void skip() throws CorruptObjectException {
-		if (currentSubtree != null)
+		if (currentSubtree != null) {
 			builder.keep(ptr, currentSubtree.getEntrySpan());
-		else
+		} else {
 			builder.keep(ptr, 1);
+		}
 		next(1);
 	}
 
@@ -99,8 +101,9 @@ public class DirCacheBuildIterator extends DirCacheIterator {
 	public void stopWalk() {
 		final int cur = ptr;
 		final int cnt = cache.getEntryCount();
-		if (cur < cnt)
+		if (cur < cnt) {
 			builder.keep(cur, cnt - cur);
+		}
 	}
 
 	/** {@inheritDoc} */

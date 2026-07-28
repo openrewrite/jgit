@@ -71,12 +71,13 @@ public class NetRCCredentialsProvider extends CredentialsProvider {
 	@Override
 	public boolean supports(CredentialItem... items) {
 		for (CredentialItem i : items) {
-			if (i instanceof CredentialItem.Username)
+			if (i instanceof CredentialItem.Username) {
 				continue;
-			else if (i instanceof CredentialItem.Password)
+			} else if (i instanceof CredentialItem.Password) {
 				continue;
-			else
+			} else {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -87,8 +88,9 @@ public class NetRCCredentialsProvider extends CredentialsProvider {
 			throws UnsupportedCredentialItem {
 		NetRCEntry cc = netrc.getEntry(uri.getHost());
 
-		if (cc == null)
+		if (cc == null) {
 			return false;
+		}
 
 		for (CredentialItem i : items) {
 			if (i instanceof CredentialItem.Username) {
@@ -100,7 +102,7 @@ public class NetRCCredentialsProvider extends CredentialsProvider {
 				continue;
 			}
 			if (i instanceof CredentialItem.StringType) {
-				if (i.getPromptText().equals("Password: ")) { //$NON-NLS-1$
+				if ("Password: ".equals(i.getPromptText())) { //$NON-NLS-1$
 					((CredentialItem.StringType) i).setValue(new String(
 							cc.password));
 					continue;

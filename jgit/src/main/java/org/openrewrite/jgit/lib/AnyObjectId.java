@@ -147,26 +147,31 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 	 */
 	@Override
 	public final int compareTo(AnyObjectId other) {
-		if (this == other)
+		if (this == other) {
 			return 0;
+		}
 
 		int cmp;
 
 		cmp = NB.compareUInt32(w1, other.w1);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w2, other.w2);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w3, other.w3);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w4, other.w4);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		return NB.compareUInt32(w5, other.w5);
 	}
@@ -186,20 +191,24 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 		int cmp;
 
 		cmp = NB.compareUInt32(w1, NB.decodeInt32(bs, p));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w2, NB.decodeInt32(bs, p + 4));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w3, NB.decodeInt32(bs, p + 8));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w4, NB.decodeInt32(bs, p + 12));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		return NB.compareUInt32(w5, NB.decodeInt32(bs, p + 16));
 	}
@@ -219,20 +228,24 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 		int cmp;
 
 		cmp = NB.compareUInt32(w1, bs[p]);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w2, bs[p + 1]);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w3, bs[p + 2]);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w4, bs[p + 3]);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		return NB.compareUInt32(w5, bs[p + 4]);
 	}
@@ -402,8 +415,9 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 			dst[o--] = hexbyte[w & 0xf];
 			w >>>= 4;
 		}
-		while (o >= p)
+		while (o >= p) {
 			dst[o--] = '0';
+		}
 	}
 
 	/**
@@ -473,8 +487,9 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 			dst[o--] = hexchar[w & 0xf];
 			w >>>= 4;
 		}
-		while (o >= p)
+		while (o >= p) {
 			dst[o--] = '0';
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -538,8 +553,9 @@ public abstract class AnyObjectId implements Comparable<AnyObjectId> {
 	 * @return an immutable copy, using the smallest memory footprint possible.
 	 */
 	public final ObjectId copy() {
-		if (getClass() == ObjectId.class)
+		if (getClass() == ObjectId.class) {
 			return (ObjectId) this;
+		}
 		return new ObjectId(this);
 	}
 

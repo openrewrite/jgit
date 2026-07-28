@@ -35,7 +35,7 @@ public class AutoCRLFOutputStream extends OutputStream {
 
 	private byte[] onebytebuf = new byte[1];
 
-	private int binbufcnt = 0;
+	private int binbufcnt;
 
 	private boolean detectBinary;
 
@@ -74,8 +74,9 @@ public class AutoCRLFOutputStream extends OutputStream {
 	@Override
 	public void write(byte[] b) throws IOException {
 		int overflow = buffer(b, 0, b.length);
-		if (overflow > 0)
+		if (overflow > 0) {
 			write(b, b.length - overflow, overflow);
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -83,12 +84,14 @@ public class AutoCRLFOutputStream extends OutputStream {
 	public void write(byte[] b, int startOff, int startLen)
 			throws IOException {
 		final int overflow = buffer(b, startOff, startLen);
-		if (overflow < 0)
+		if (overflow < 0) {
 			return;
+		}
 		final int off = startOff + startLen - overflow;
 		final int len = overflow;
-		if (len == 0)
+		if (len == 0) {
 			return;
+		}
 		int lastw = off;
 		if (isBinary) {
 			out.write(b, off, len);
@@ -118,19 +121,22 @@ public class AutoCRLFOutputStream extends OutputStream {
 		if (lastw < off + len) {
 			out.write(b, lastw, off + len - lastw);
 		}
-		if (b[off + len - 1] == '\r')
+		if (b[off + len - 1] == '\r') {
 			buf = '\r';
+		}
 	}
 
 	private int buffer(byte[] b, int off, int len) throws IOException {
-		if (binbufcnt > binbuf.length)
+		if (binbufcnt > binbuf.length) {
 			return len;
+		}
 		int copy = Math.min(binbuf.length - binbufcnt, len);
 		System.arraycopy(b, off, binbuf, binbufcnt, copy);
 		binbufcnt += copy;
 		int remaining = len - copy;
-		if (remaining > 0)
+		if (remaining > 0) {
 			decideMode();
+		}
 		return remaining;
 	}
 
@@ -147,8 +153,9 @@ public class AutoCRLFOutputStream extends OutputStream {
 	/** {@inheritDoc} */
 	@Override
 	public void flush() throws IOException {
-		if (binbufcnt <= binbuf.length)
+		if (binbufcnt <= binbuf.length) {
 			decideMode();
+		}
 		buf = -1;
 		out.flush();
 	}

@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * {@link org.openrewrite.jgit.internal.storage.file.Pack}s.
  */
 class PackDirectory {
-	private final static Logger LOG = LoggerFactory
+	private static final Logger LOG = LoggerFactory
 			.getLogger(PackDirectory.class);
 
 	private static final PackList NO_PACKS = new PackList(FileSnapshot.DIRTY,
@@ -211,8 +211,9 @@ class PackDirectory {
 					try {
 						ObjectLoader ldr = p.get(curs, objectId);
 						p.resetTransientErrorCount();
-						if (ldr != null)
+						if (ldr != null) {
 							return ldr;
+						}
 					} catch (PackMismatchException e) {
 						// Pack was modified; refresh the entire pack list.
 						if (searchPacksAgain(pList)) {
@@ -346,7 +347,8 @@ class PackDirectory {
 	}
 
 	void insert(Pack pack) {
-		PackList o, n;
+		PackList o;
+		PackList n;
 		do {
 			o = packList.get();
 
@@ -370,7 +372,8 @@ class PackDirectory {
 	}
 
 	private void remove(Pack deadPack) {
-		PackList o, n;
+		PackList o;
+		PackList n;
 		do {
 			o = packList.get();
 
@@ -399,7 +402,8 @@ class PackDirectory {
 
 	private PackList scanPacks(PackList original) {
 		synchronized (packList) {
-			PackList o, n;
+			PackList o;
+			PackList n;
 			do {
 				o = packList.get();
 				if (o != original) {

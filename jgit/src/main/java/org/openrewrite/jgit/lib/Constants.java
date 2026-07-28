@@ -573,8 +573,9 @@ public final class Constants {
 				if (typeString[position + 1] != 'l'
 						|| typeString[position + 2] != 'o'
 						|| typeString[position + 3] != 'b'
-						|| typeString[position + 4] != endMark)
+						|| typeString[position + 4] != endMark) {
 					throw new CorruptObjectException(id, JGitText.get().corruptObjectInvalidType);
+				}
 				offset.value = position + 5;
 				return Constants.OBJ_BLOB;
 
@@ -584,8 +585,9 @@ public final class Constants {
 						|| typeString[position + 3] != 'm'
 						|| typeString[position + 4] != 'i'
 						|| typeString[position + 5] != 't'
-						|| typeString[position + 6] != endMark)
+						|| typeString[position + 6] != endMark) {
 					throw new CorruptObjectException(id, JGitText.get().corruptObjectInvalidType);
+				}
 				offset.value = position + 7;
 				return Constants.OBJ_COMMIT;
 
@@ -593,16 +595,18 @@ public final class Constants {
 				switch (typeString[position + 1]) {
 				case 'a':
 					if (typeString[position + 2] != 'g'
-							|| typeString[position + 3] != endMark)
+							|| typeString[position + 3] != endMark) {
 						throw new CorruptObjectException(id, JGitText.get().corruptObjectInvalidType);
+					}
 					offset.value = position + 4;
 					return Constants.OBJ_TAG;
 
 				case 'r':
 					if (typeString[position + 2] != 'e'
 							|| typeString[position + 3] != 'e'
-							|| typeString[position + 4] != endMark)
+							|| typeString[position + 4] != endMark) {
 						throw new CorruptObjectException(id, JGitText.get().corruptObjectInvalidType);
+					}
 					offset.value = position + 5;
 					return Constants.OBJ_TREE;
 
@@ -649,8 +653,9 @@ public final class Constants {
 		final byte[] r = new byte[s.length()];
 		for (int k = r.length - 1; k >= 0; k--) {
 			final char c = s.charAt(k);
-			if (c > 127)
+			if (c > 127) {
 				throw new IllegalArgumentException(MessageFormat.format(JGitText.get().notASCIIString, s));
+			}
 			r[k] = (byte) c;
 		}
 		return r;
@@ -670,8 +675,9 @@ public final class Constants {
 		final int len = bb.limit();
 		if (bb.hasArray() && bb.arrayOffset() == 0) {
 			final byte[] arr = bb.array();
-			if (arr.length == len)
+			if (arr.length == len) {
 				return arr;
+			}
 		}
 
 		final byte[] arr = new byte[len];
@@ -680,8 +686,9 @@ public final class Constants {
 	}
 
 	static {
-		if (OBJECT_ID_LENGTH != newMessageDigest().getDigestLength())
+		if (OBJECT_ID_LENGTH != newMessageDigest().getDigestLength()) {
 			throw new LinkageError(JGitText.get().incorrectOBJECT_ID_LENGTH);
+		}
 		CHARSET = UTF_8;
 		CHARACTER_ENCODING = UTF_8.name();
 	}

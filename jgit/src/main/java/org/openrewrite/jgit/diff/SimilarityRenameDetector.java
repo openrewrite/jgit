@@ -44,7 +44,7 @@ class SimilarityRenameDetector {
 
 	private static final int SCORE_SHIFT = 2 * BITS_PER_INDEX;
 
-	private ContentSource.Pair reader;
+	private final ContentSource.Pair reader;
 
 	/**
 	 * All sources to consider for copies or renames.
@@ -89,7 +89,7 @@ class SimilarityRenameDetector {
 	private int bigFileThreshold = DEFAULT_BIG_FILE_THRESHOLD;
 
 	/** Skip content renames for binary files. */
-	private boolean skipBinaryFiles = false;
+	private boolean skipBinaryFiles;
 
 	/** Set if any {@link SimilarityIndex.TableFullException} occurs. */
 	private boolean tableOverflow;
@@ -116,8 +116,9 @@ class SimilarityRenameDetector {
 	}
 
 	void compute(ProgressMonitor pm) throws IOException, CancelledException {
-		if (pm == null)
+		if (pm == null) {
 			pm = NullProgressMonitor.INSTANCE;
+		}
 
 		pm.beginTask(JGitText.get().renamesFindingByContent, //
 				2 * srcs.size() * dsts.size());
@@ -186,8 +187,9 @@ class SimilarityRenameDetector {
 	private static List<DiffEntry> compactSrcList(List<DiffEntry> in) {
 		ArrayList<DiffEntry> r = new ArrayList<>(in.size());
 		for (DiffEntry e : in) {
-			if (e.changeType == ChangeType.DELETE)
+			if (e.changeType == ChangeType.DELETE) {
 				r.add(e);
+			}
 		}
 		return r;
 	}
@@ -195,8 +197,9 @@ class SimilarityRenameDetector {
 	private static List<DiffEntry> compactDstList(List<DiffEntry> in) {
 		ArrayList<DiffEntry> r = new ArrayList<>(in.size());
 		for (DiffEntry e : in) {
-			if (e != null)
+			if (e != null) {
 				r.add(e);
+			}
 		}
 		return r;
 	}
@@ -300,8 +303,9 @@ class SimilarityRenameDetector {
 					}
 					d = hash(loader);
 				} catch (TableFullException tableFull) {
-					if (dstTooLarge == null)
+					if (dstTooLarge == null) {
 						dstTooLarge = new BitSet(dsts.size());
+					}
 					dstTooLarge.set(dstIdx);
 					tableOverflow = true;
 					pm.update(1);
@@ -351,8 +355,9 @@ class SimilarityRenameDetector {
 		} else {
 			int dirSim = 0;
 			for (; dirSim < dirMin; dirSim++) {
-				if (a.charAt(dirSim) != b.charAt(dirSim))
+				if (a.charAt(dirSim) != b.charAt(dirSim)) {
 					break;
+				}
 			}
 			dirScoreLtr = (dirSim * 100) / dirMax;
 
@@ -361,8 +366,9 @@ class SimilarityRenameDetector {
 			} else {
 				for (dirSim = 0; dirSim < dirMin; dirSim++) {
 					if (a.charAt(aDirLen - 1 - dirSim) != b.charAt(bDirLen - 1
-							- dirSim))
+							- dirSim)) {
 						break;
+					}
 				}
 				dirScoreRtl = (dirSim * 100) / dirMax;
 			}
@@ -374,8 +380,9 @@ class SimilarityRenameDetector {
 		int fileSim = 0;
 		for (; fileSim < fileMin; fileSim++) {
 			if (a.charAt(a.length() - 1 - fileSim) != b.charAt(b.length() - 1
-					- fileSim))
+					- fileSim)) {
 				break;
+			}
 		}
 		int fileScore = (fileSim * 100) / fileMax;
 

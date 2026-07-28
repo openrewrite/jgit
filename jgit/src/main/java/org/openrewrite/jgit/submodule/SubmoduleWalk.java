@@ -73,7 +73,7 @@ public class SubmoduleWalk implements AutoCloseable {
 		/**
 		 * Ignore nothing. That's the default
 		 */
-		NONE;
+		NONE
 	}
 
 	/**
@@ -125,9 +125,11 @@ public class SubmoduleWalk implements AutoCloseable {
 			PathFilter filter = PathFilter.create(path);
 			generator.setFilter(filter);
 			generator.setRootTree(treeId);
-			while (generator.next())
-				if (filter.isDone(generator.walk))
+			while (generator.next()) {
+				if (filter.isDone(generator.walk)) {
 					return generator;
+				}
+			}
 		} catch (IOException e) {
 			generator.close();
 			throw e;
@@ -159,9 +161,11 @@ public class SubmoduleWalk implements AutoCloseable {
 			PathFilter filter = PathFilter.create(path);
 			generator.setFilter(filter);
 			generator.setRootTree(iterator);
-			while (generator.next())
-				if (filter.isDone(generator.walk))
+			while (generator.next()) {
+				if (filter.isDone(generator.walk)) {
 					return generator;
+				}
+			}
 		} catch (IOException e) {
 			generator.close();
 			throw e;
@@ -289,15 +293,17 @@ public class SubmoduleWalk implements AutoCloseable {
 	 */
 	public static String getSubmoduleRemoteUrl(final Repository parent,
 			final String url) throws IOException {
-		if (!url.startsWith("./") && !url.startsWith("../")) //$NON-NLS-1$ //$NON-NLS-2$
+		if (!url.startsWith("./") && !url.startsWith("../")) { //$NON-NLS-1$ //$NON-NLS-2$
 			return url;
+		}
 
 		String remoteName = null;
 		// Look up remote URL associated wit HEAD ref
 		Ref ref = parent.exactRef(Constants.HEAD);
 		if (ref != null) {
-			if (ref.isSymbolic())
+			if (ref.isSymbolic()) {
 				ref = ref.getLeaf();
+			}
 			remoteName = parent.getConfig().getString(
 					ConfigConstants.CONFIG_BRANCH_SECTION,
 					Repository.shortenRefName(ref.getName()),
@@ -305,8 +311,9 @@ public class SubmoduleWalk implements AutoCloseable {
 		}
 
 		// Fall back to 'origin' if current HEAD ref has no remote URL
-		if (remoteName == null)
+		if (remoteName == null) {
 			remoteName = Constants.DEFAULT_REMOTE_NAME;
+		}
 
 		String remoteUrl = parent.getConfig().getString(
 				ConfigConstants.CONFIG_REMOTE_SECTION, remoteName,
@@ -316,33 +323,37 @@ public class SubmoduleWalk implements AutoCloseable {
 		if (remoteUrl == null) {
 			remoteUrl = parent.getWorkTree().getAbsolutePath();
 			// Normalize slashes to '/'
-			if ('\\' == File.separatorChar)
+			if ('\\' == File.separatorChar) {
 				remoteUrl = remoteUrl.replace('\\', '/');
+			}
 		}
 
 		// Remove trailing '/'
-		if (remoteUrl.charAt(remoteUrl.length() - 1) == '/')
+		if (remoteUrl.charAt(remoteUrl.length() - 1) == '/') {
 			remoteUrl = remoteUrl.substring(0, remoteUrl.length() - 1);
+		}
 
 		char separator = '/';
 		String submoduleUrl = url;
 		while (submoduleUrl.length() > 0) {
-			if (submoduleUrl.startsWith("./")) //$NON-NLS-1$
+			if (submoduleUrl.startsWith("./")) { //$NON-NLS-1$
 				submoduleUrl = submoduleUrl.substring(2);
-			else if (submoduleUrl.startsWith("../")) { //$NON-NLS-1$
+			} else if (submoduleUrl.startsWith("../")) { //$NON-NLS-1$
 				int lastSeparator = remoteUrl.lastIndexOf('/');
 				if (lastSeparator < 1) {
 					lastSeparator = remoteUrl.lastIndexOf(':');
 					separator = ':';
 				}
-				if (lastSeparator < 1)
+				if (lastSeparator < 1) {
 					throw new IOException(MessageFormat.format(
 							JGitText.get().submoduleParentRemoteUrlInvalid,
 							remoteUrl));
+				}
 				remoteUrl = remoteUrl.substring(0, lastSeparator);
 				submoduleUrl = submoduleUrl.substring(3);
-			} else
+			} else {
 				break;
+			}
 		}
 		return remoteUrl + separator + submoduleUrl;
 	}
@@ -484,8 +495,9 @@ public class SubmoduleWalk implements AutoCloseable {
 					modulesConfig = new Config();
 					pathToName = null;
 				} finally {
-					if (idx > 0)
+					if (idx > 0) {
 						rootTree.next(idx);
+					}
 				}
 			}
 		}
@@ -526,7 +538,7 @@ public class SubmoduleWalk implements AutoCloseable {
 		}
 		File modulesFile = new File(repository.getWorkTree(),
 				Constants.DOT_GIT_MODULES);
-		return (modulesFile.exists());
+		return modulesFile.exists();
 	}
 
 	private void lazyLoadModulesConfig() throws IOException, ConfigInvalidException {
@@ -617,8 +629,9 @@ public class SubmoduleWalk implements AutoCloseable {
 	 */
 	public boolean next() throws IOException {
 		while (walk.next()) {
-			if (FileMode.GITLINK != walk.getFileMode(0))
+			if (FileMode.GITLINK != walk.getFileMode(0)) {
 				continue;
+			}
 			path = walk.getPathString();
 			return true;
 		}

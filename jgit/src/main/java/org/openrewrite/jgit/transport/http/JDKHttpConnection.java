@@ -160,8 +160,7 @@ public class JDKHttpConnection implements HttpConnection {
 	@Override
 	public List<String> getHeaderFields(@NonNull String name) {
 		Map<String, List<String>> m = wrappedUrlConnection.getHeaderFields();
-		List<String> fields = mapValuesToListIgnoreCase(name, m);
-		return fields;
+		return mapValuesToListIgnoreCase(name, m);
 	}
 
 	private static List<String> mapValuesToListIgnoreCase(String keyName,

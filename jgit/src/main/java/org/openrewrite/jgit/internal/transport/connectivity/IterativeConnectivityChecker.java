@@ -141,7 +141,7 @@ public class IterativeConnectivityChecker implements ConnectivityChecker {
 
 	private static List<RevCommit> parseParents(RevCommit[] parents,
 			RevWalk rw) {
-		return Arrays.stream(parents).map((commit) -> {
+		return Arrays.stream(parents).map(commit -> {
 			try {
 				return rw.parseCommit(commit);
 			} catch (Exception e) {

@@ -431,8 +431,9 @@ public final class DfsBlockCache {
 						prev = hand;
 						hand = hand.next;
 						continue;
-					} else if (prev == hand)
+					} else if (prev == hand) {
 						break;
+					}
 
 					// No recent access since last scan, kill
 					// value and remove from clock.
@@ -664,8 +665,9 @@ public final class DfsBlockCache {
 	}
 
 	private static HashEntry clean(HashEntry top) {
-		while (top != null && top.ref.next == null)
+		while (top != null && top.ref.next == null) {
 			top = top.next;
+		}
 		if (top == null) {
 			return null;
 		}

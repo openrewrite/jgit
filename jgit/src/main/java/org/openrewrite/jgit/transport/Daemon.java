@@ -19,8 +19,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.openrewrite.jgit.annotations.Nullable;
 import org.openrewrite.jgit.errors.RepositoryNotFoundException;
@@ -94,8 +94,9 @@ public class Daemon {
 
 			InetAddress peer = req.getRemoteAddress();
 			String host = peer.getCanonicalHostName();
-			if (host == null)
+			if (host == null) {
 				host = peer.getHostAddress();
+			}
 			String name = "anonymous"; //$NON-NLS-1$
 			String email = name + "@" + host; //$NON-NLS-1$
 			rp.setRefLogIdent(new PersonIdent(name, email));
@@ -164,11 +165,13 @@ public class Daemon {
 	 *         the requested service type.
 	 */
 	public synchronized DaemonService getService(String name) {
-		if (!name.startsWith("git-")) //$NON-NLS-1$
+		if (!name.startsWith("git-")) { //$NON-NLS-1$
 			name = "git-" + name; //$NON-NLS-1$
+		}
 		for (DaemonService s : services) {
-			if (s.getCommandName().equals(name))
+			if (s.getCommandName().equals(name)) {
 				return s;
+			}
 		}
 		return null;
 	}
@@ -232,10 +235,11 @@ public class Daemon {
 	 */
 	@SuppressWarnings("unchecked")
 	public void setUploadPackFactory(UploadPackFactory<DaemonClient> factory) {
-		if (factory != null)
+		if (factory != null) {
 			uploadPackFactory = factory;
-		else
+		} else {
 			uploadPackFactory = (UploadPackFactory<DaemonClient>) UploadPackFactory.DISABLED;
+		}
 	}
 
 	/**
@@ -256,10 +260,11 @@ public class Daemon {
 	 */
 	@SuppressWarnings("unchecked")
 	public void setReceivePackFactory(ReceivePackFactory<DaemonClient> factory) {
-		if (factory != null)
+		if (factory != null) {
 			receivePackFactory = factory;
-		else
+		} else {
 			receivePackFactory = (ReceivePackFactory<DaemonClient>) ReceivePackFactory.DISABLED;
+		}
 	}
 
 	private class Acceptor extends Thread {
@@ -381,8 +386,9 @@ public class Daemon {
 		final DaemonClient dc = new DaemonClient(this);
 
 		final SocketAddress peer = s.getRemoteSocketAddress();
-		if (peer instanceof InetSocketAddress)
+		if (peer instanceof InetSocketAddress) {
 			dc.setRemoteAddress(((InetSocketAddress) peer).getAddress());
+		}
 
 		new Thread(processors, "Git-Daemon-Client " + peer.toString()) { //$NON-NLS-1$
 			@Override
@@ -413,8 +419,9 @@ public class Daemon {
 
 	synchronized DaemonService matchService(String cmd) {
 		for (DaemonService d : services) {
-			if (d.handles(cmd))
+			if (d.handles(cmd)) {
 				return d;
+			}
 		}
 		return null;
 	}
@@ -428,8 +435,9 @@ public class Daemon {
 
 		// git://thishost/path should always be name="/path" here
 		//
-		if (!name.startsWith("/")) //$NON-NLS-1$
+		if (!name.startsWith("/")) { //$NON-NLS-1$
 			return null;
+		}
 
 		try {
 			return repositoryResolver.open(client, name.substring(1));

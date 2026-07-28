@@ -10,8 +10,8 @@
 
 package org.openrewrite.jgit.internal.storage.dfs;
 
-import static org.openrewrite.jgit.lib.Ref.UNDEFINED_UPDATE_INDEX;
 import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
+import static org.openrewrite.jgit.lib.Ref.UNDEFINED_UPDATE_INDEX;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -98,8 +98,9 @@ public abstract class DfsRefDatabase extends RefDatabase {
 				// collections the client is about to receive. Should be a
 				// rare occurrence so pay a copy penalty.
 				int toRemove = loose.find(name);
-				if (0 <= toRemove)
+				if (0 <= toRemove) {
 					loose = loose.remove(toRemove);
+				}
 			}
 		}
 
@@ -108,21 +109,25 @@ public abstract class DfsRefDatabase extends RefDatabase {
 
 	private Ref resolve(Ref ref, int depth, RefList<Ref> loose)
 			throws IOException {
-		if (!ref.isSymbolic())
+		if (!ref.isSymbolic()) {
 			return ref;
+		}
 
 		Ref dst = ref.getTarget();
 
-		if (MAX_SYMBOLIC_REF_DEPTH <= depth)
+		if (MAX_SYMBOLIC_REF_DEPTH <= depth) {
 			return null; // claim it doesn't exist
 
+		}
 		dst = loose.get(dst.getName());
-		if (dst == null)
+		if (dst == null) {
 			return ref;
+		}
 
 		dst = resolve(dst, depth + 1, loose);
-		if (dst == null)
+		if (dst == null) {
 			return null;
+		}
 		return new SymbolicRef(ref.getName(), dst);
 	}
 
@@ -130,8 +135,9 @@ public abstract class DfsRefDatabase extends RefDatabase {
 	@Override
 	public Ref peel(Ref ref) throws IOException {
 		final Ref oldLeaf = ref.getLeaf();
-		if (oldLeaf.isPeeled() || oldLeaf.getObjectId() == null)
+		if (oldLeaf.isPeeled() || oldLeaf.getObjectId() == null) {
 			return ref;
+		}
 
 		Ref newLeaf = doPeel(oldLeaf);
 
@@ -182,14 +188,16 @@ public abstract class DfsRefDatabase extends RefDatabase {
 			throws IOException {
 		boolean detachingSymbolicRef = false;
 		Ref ref = exactRef(refName);
-		if (ref == null)
+		if (ref == null) {
 			ref = new ObjectIdRef.Unpeeled(NEW, refName, null);
-		else
+		} else {
 			detachingSymbolicRef = detach && ref.isSymbolic();
+		}
 
 		DfsRefUpdate update = new DfsRefUpdate(this, ref);
-		if (detachingSymbolicRef)
+		if (detachingSymbolicRef) {
 			update.setDetachingSymbolicRef();
+		}
 		return update;
 	}
 
@@ -211,17 +219,16 @@ public abstract class DfsRefDatabase extends RefDatabase {
 		int lastSlash = refName.lastIndexOf('/');
 		while (0 < lastSlash) {
 			String needle = refName.substring(0, lastSlash);
-			if (all.contains(needle))
+			if (all.contains(needle)) {
 				return true;
+			}
 			lastSlash = refName.lastIndexOf('/', lastSlash - 1);
 		}
 
 		// Cannot be the container of an existing reference.
 		String prefix = refName + '/';
 		int idx = -(all.find(prefix) + 1);
-		if (idx < all.size() && all.get(idx).getName().startsWith(prefix))
-			return true;
-		return false;
+		return idx < all.size() && all.get(idx).getName().startsWith(prefix);
 	}
 
 	/** {@inheritDoc} */
@@ -247,21 +254,25 @@ public abstract class DfsRefDatabase extends RefDatabase {
 	}
 
 	void stored(Ref ref) {
-		RefCache oldCache, newCache;
+		RefCache oldCache;
+		RefCache newCache;
 		do {
 			oldCache = cache.get();
-			if (oldCache == null)
+			if (oldCache == null) {
 				return;
+			}
 			newCache = oldCache.put(ref);
 		} while (!cache.compareAndSet(oldCache, newCache));
 	}
 
 	void removed(String refName) {
-		RefCache oldCache, newCache;
+		RefCache oldCache;
+		RefCache newCache;
 		do {
 			oldCache = cache.get();
-			if (oldCache == null)
+			if (oldCache == null) {
 				return;
+			}
 			newCache = oldCache.remove(refName);
 		} while (!cache.compareAndSet(oldCache, newCache));
 	}
@@ -401,8 +412,9 @@ public abstract class DfsRefDatabase extends RefDatabase {
 				newSym = newSym.put(ref);
 			} else {
 				int p = newSym.find(ref.getName());
-				if (0 <= p)
+				if (0 <= p) {
 					newSym = newSym.remove(p);
+				}
 			}
 			return new RefCache(newIds, newSym);
 		}
@@ -419,13 +431,15 @@ public abstract class DfsRefDatabase extends RefDatabase {
 		public RefCache remove(String refName) {
 			RefList<Ref> newIds = this.ids;
 			int p = newIds.find(refName);
-			if (0 <= p)
+			if (0 <= p) {
 				newIds = newIds.remove(p);
+			}
 
 			RefList<Ref> newSym = this.sym;
 			p = newSym.find(refName);
-			if (0 <= p)
+			if (0 <= p) {
 				newSym = newSym.remove(p);
+			}
 			return new RefCache(newIds, newSym);
 		}
 	}

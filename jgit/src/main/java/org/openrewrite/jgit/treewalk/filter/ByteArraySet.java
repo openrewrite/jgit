@@ -51,19 +51,22 @@ class ByteArraySet {
 		byte[] obj;
 
 		while ((obj = tbl[i]) != null) {
-			if (equals(obj, toFind, length))
+			if (equals(obj, toFind, length)) {
 				return obj;
+			}
 			i = (i + 1) & msk;
 		}
 		return null;
 	}
 
 	private static boolean equals(byte[] storedObj, byte[] toFind, int length) {
-		if (storedObj.length != length || toFind.length < length)
+		if (storedObj.length != length || toFind.length < length) {
 			return false;
+		}
 		for (int i = 0; i < length; ++i) {
-			if (storedObj[i] != toFind[i])
+			if (storedObj[i] != toFind[i]) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -113,8 +116,9 @@ class ByteArraySet {
 		byte[] obj;
 
 		while ((obj = tbl[i]) != null) {
-			if (equals(obj, newValue, length))
+			if (equals(obj, newValue, length)) {
 				return obj;
+			}
 			i = (i + 1) & msk;
 		}
 
@@ -122,14 +126,16 @@ class ByteArraySet {
 		if (++size == grow) {
 			grow();
 			insert(valueToInsert, hash);
-		} else
+		} else {
 			tbl[i] = valueToInsert;
+		}
 		return valueToInsert;
 	}
 
 	private static byte[] copyIfNotSameSize(byte[] newValue, int length) {
-		if (newValue.length == length)
+		if (newValue.length == length) {
 			return newValue;
+		}
 		byte[] ret = new byte[length];
 		System.arraycopy(newValue, 0, ret, 0, length);
 		return ret;
@@ -151,12 +157,13 @@ class ByteArraySet {
 		final int msk = mask;
 		int j = hash & msk;
 		final byte[][] tbl = table;
-		while (tbl[j] != null)
+		while (tbl[j] != null) {
 			j = (j + 1) & msk;
+		}
 		tbl[j] = newValue;
 	}
 
-	private Hasher hasher = new Hasher(null, 0);
+	private final Hasher hasher = new Hasher(null, 0);
 
 	private void grow() {
 		final byte[][] oldTable = table;
@@ -173,8 +180,9 @@ class ByteArraySet {
 	}
 
 	private void initTable(int sz) {
-		if (sz < 2)
+		if (sz < 2) {
 			sz = 2;
+		}
 		grow = sz >> 1;
 		mask = sz - 1;
 		table = new byte[sz][];
@@ -186,10 +194,12 @@ class ByteArraySet {
 		StringBuilder sb = new StringBuilder();
 		sb.append('[');
 		for (byte[] b : table) {
-			if (b == null)
+			if (b == null) {
 				continue;
-			if (sb.length() > 1)
+			}
+			if (sb.length() > 1) {
 				sb.append(" , "); //$NON-NLS-1$
+			}
 			sb.append('"');
 			sb.append(RawParseUtils.decode(b));
 			sb.append('"');
@@ -211,8 +221,9 @@ class ByteArraySet {
 
 		int n = 0;
 		while ((obj = tbl[i]) != null) {
-			if (equals(obj, b, b.length))
+			if (equals(obj, b, b.length)) {
 				return n;
+			}
 			i = (i + 1) & msk;
 			++n;
 		}
@@ -243,8 +254,9 @@ class ByteArraySet {
 		}
 
 		int hash() {
-			while (pos < length)
+			while (pos < length) {
 				hash = hash * 31 + data[pos++];
+			}
 			return hash;
 		}
 
@@ -252,8 +264,9 @@ class ByteArraySet {
 			for (;;) {
 				hash = hash * 31 + data[pos];
 				++pos;
-				if (pos == length || data[pos] == '/')
+				if (pos == length || data[pos] == '/') {
 					return hash;
+				}
 			}
 		}
 
@@ -272,11 +285,13 @@ class ByteArraySet {
 		@Override
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < pos; ++i)
+			for (int i = 0;i < pos;++i) {
 				sb.append((char) data[i]);
+			}
 			sb.append(" | "); //$NON-NLS-1$
-			for (int i = pos; i < length; ++i)
+			for (int i = pos;i < length;++i) {
 				sb.append((char) data[i]);
+			}
 			return sb.toString();
 		}
 	}
@@ -285,8 +300,9 @@ class ByteArraySet {
 		byte[][] ret = new byte[size][];
 		int i = 0;
 		for (byte[] entry : table) {
-			if (entry != null)
+			if (entry != null) {
 				ret[i++] = entry;
+			}
 		}
 		return ret;
 	}

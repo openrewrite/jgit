@@ -157,25 +157,31 @@ public class LsRemoteCommand extends
 			transport.setOptionUploadPack(uploadPack);
 			configure(transport);
 			Collection<RefSpec> refSpecs = new ArrayList<>(1);
-			if (tags)
+			if (tags) {
 				refSpecs.add(new RefSpec(
 						"refs/tags/*:refs/remotes/origin/tags/*")); //$NON-NLS-1$
-			if (heads)
+			}
+			if (heads) {
 				refSpecs.add(new RefSpec("refs/heads/*:refs/remotes/origin/*")); //$NON-NLS-1$
+			}
 			Collection<Ref> refs;
 			Map<String, Ref> refmap = new HashMap<>();
 			try (FetchConnection fc = transport.openFetch(refSpecs)) {
 				refs = fc.getRefs();
-				if (refSpecs.isEmpty())
-					for (Ref r : refs)
+				if (refSpecs.isEmpty()) {
+					for (Ref r : refs) {
 						refmap.put(r.getName(), r);
-				else
-					for (Ref r : refs)
-						for (RefSpec rs : refSpecs)
+					}
+				} else {
+					for (Ref r : refs) {
+						for (RefSpec rs : refSpecs) {
 							if (rs.matchSource(r)) {
 								refmap.put(r.getName(), r);
 								break;
 							}
+						}
+					}
+				}
 				return refmap;
 			}
 		} catch (URISyntaxException e) {

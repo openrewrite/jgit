@@ -14,7 +14,7 @@ import java.io.OutputStream;
 /**
  * An OutputStream which ignores everything written to it.
  */
-public class NullOutputStream extends OutputStream {
+public final class NullOutputStream extends OutputStream {
 
 	/** The canonical instance. */
 	public static final NullOutputStream INSTANCE = new NullOutputStream();

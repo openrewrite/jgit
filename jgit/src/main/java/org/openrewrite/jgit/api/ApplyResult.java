@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ApplyResult {
 
-	private List<File> updatedFiles = new ArrayList<>();
+	private final List<File> updatedFiles = new ArrayList<>();
 
 	/**
 	 * Add updated file

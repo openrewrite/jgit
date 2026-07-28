@@ -266,7 +266,7 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 
 	private boolean sslVerify;
 
-	private boolean sslFailure = false;
+	private boolean sslFailure;
 
 	private HttpConnectionFactory factory;
 
@@ -502,8 +502,9 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 					if (line != null && line.startsWith(RefDirectory.SYMREF)) {
 						String target = line.substring(RefDirectory.SYMREF.length());
 						Ref r = refs.get(target);
-						if (r == null)
+						if (r == null) {
 							r = new ObjectIdRef.Unpeeled(Ref.Storage.NEW, target, null);
+						}
 						r = new SymbolicRef(HEAD, r);
 						refs.put(r.getName(), r);
 					} else if (line != null && ObjectId.isId(line)) {
@@ -662,8 +663,9 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 					// That may not work for streaming requests and jgit
 					// explicit authentication would be required
 					if (authMethod.getType() == HttpAuthMethod.Type.NONE
-							&& conn.getHeaderField(HDR_WWW_AUTHENTICATE) != null)
+							&& conn.getHeaderField(HDR_WWW_AUTHENTICATE) != null) {
 						authMethod = HttpAuthMethod.scanResponse(conn, ignoreTypes);
+					}
 					return conn;
 
 				case HttpConnection.HTTP_NOT_FOUND:
@@ -672,15 +674,18 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 
 				case HttpConnection.HTTP_UNAUTHORIZED:
 					authMethod = HttpAuthMethod.scanResponse(conn, ignoreTypes);
-					if (authMethod.getType() == HttpAuthMethod.Type.NONE)
+					if (authMethod.getType() == HttpAuthMethod.Type.NONE) {
 						throw new TransportException(uri, MessageFormat.format(
 								JGitText.get().authenticationNotSupported, uri));
+					}
 					CredentialsProvider credentialsProvider = getCredentialsProvider();
-					if (credentialsProvider == null)
+					if (credentialsProvider == null) {
 						throw new TransportException(uri,
 								JGitText.get().noCredentialsProvider);
-					if (authAttempts > 1)
+					}
+					if (authAttempts > 1) {
 						credentialsProvider.reset(currentUri);
+					}
 					if (3 < authAttempts
 							|| !authMethod.authorize(currentUri,
 									credentialsProvider)) {
@@ -1149,8 +1154,9 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 	final InputStream openInputStream(HttpConnection conn)
 			throws IOException {
 		InputStream input = conn.getInputStream();
-		if (isGzipContent(conn))
+		if (isGzipContent(conn)) {
 			input = new GZIPInputStream(input);
+		}
 		return input;
 	}
 
@@ -1461,10 +1467,12 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 			try (BufferedReader br = openReader(INFO_PACKS)) {
 				for (;;) {
 					final String s = br.readLine();
-					if (s == null || s.length() == 0)
+					if (s == null || s.length() == 0) {
 						break;
-					if (!s.startsWith("P pack-") || !s.endsWith(".pack")) //$NON-NLS-1$ //$NON-NLS-2$
+					}
+					if (!s.startsWith("P pack-") || !s.endsWith(".pack")) { //$NON-NLS-1$ //$NON-NLS-2$
 						throw invalidAdvertisement(s);
+					}
 					packs.add(s.substring(2));
 				}
 				return packs;
@@ -1508,12 +1516,14 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 			final TreeMap<String, Ref> avail = new TreeMap<>();
 			for (;;) {
 				String line = br.readLine();
-				if (line == null)
+				if (line == null) {
 					break;
+				}
 
 				final int tab = line.indexOf('\t');
-				if (tab < 0)
+				if (tab < 0) {
 					throw invalidAdvertisement(line);
+				}
 
 				String name;
 				final ObjectId id;
@@ -1523,20 +1533,23 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 				if (name.endsWith("^{}")) { //$NON-NLS-1$
 					name = name.substring(0, name.length() - 3);
 					final Ref prior = avail.get(name);
-					if (prior == null)
+					if (prior == null) {
 						throw outOfOrderAdvertisement(name);
+					}
 
-					if (prior.getPeeledObjectId() != null)
+					if (prior.getPeeledObjectId() != null) {
 						throw duplicateAdvertisement(name + "^{}"); //$NON-NLS-1$
 
+					}
 					avail.put(name, new ObjectIdRef.PeeledTag(
 							Ref.Storage.NETWORK, name,
 							prior.getObjectId(), id));
 				} else {
 					Ref prior = avail.put(name, new ObjectIdRef.PeeledNonTag(
 							Ref.Storage.NETWORK, name, id));
-					if (prior != null)
+					if (prior != null) {
 						throw duplicateAdvertisement(name);
+					}
 				}
 			}
 			return avail;
@@ -1688,8 +1701,9 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 					http.getPostBuffer());
 			try (GZIPOutputStream gzip = new GZIPOutputStream(buf)) {
 				out.writeTo(gzip, null);
-				if (out.length() < buf.length())
+				if (out.length() < buf.length()) {
 					buf = out;
+				}
 			} catch (IOException err) {
 				// Most likely caused by overflowing the buffer, meaning
 				// its larger if it were compressed. Don't compress.
@@ -1951,8 +1965,9 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 					// final request was already sent, do nothing to ensure the
 					// caller is shown EOF on the InputStream; otherwise an
 					// programming error has occurred within this module.
-					if (finalRequest)
+					if (finalRequest) {
 						return;
+					}
 					throw new TransportException(uri,
 							JGitText.get().startingReadStageWithoutWrittenRequestDataPendingIsNotSupported);
 				}
@@ -1965,8 +1980,9 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 			openResponse();
 
 			in.add(openInputStream(conn));
-			if (!finalRequest)
+			if (!finalRequest) {
 				in.add(execute);
+			}
 			conn = null;
 		}
 	}
@@ -1983,8 +1999,9 @@ public class TransportHttp extends HttpTransport implements WalkTransport,
 		@Override
 		void execute() throws IOException {
 			out.close();
-			if (conn == null)
+			if (conn == null) {
 				sendRequest();
+			}
 			openResponse();
 			in.add(openInputStream(conn));
 		}

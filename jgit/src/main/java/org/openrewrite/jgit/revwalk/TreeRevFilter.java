@@ -120,7 +120,8 @@ public class TreeRevFilter extends RevFilter {
 		if (nParents == 1) {
 			// We have exactly one parent. This is a very common case.
 			//
-			int chgs = 0, adds = 0;
+			int chgs = 0;
+			int adds = 0;
 			while (tw.next()) {
 				chgs++;
 				if (tw.getRawMode(0) == 0 && tw.getRawMode(1) != 0) {

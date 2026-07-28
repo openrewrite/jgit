@@ -48,13 +48,16 @@ public class PackLock {
 	 *             the keep file could not be written.
 	 */
 	public boolean lock(String msg) throws IOException {
-		if (msg == null)
+		if (msg == null) {
 			return false;
-		if (!msg.endsWith("\n")) //$NON-NLS-1$
+		}
+		if (!msg.endsWith("\n")) { //$NON-NLS-1$
 			msg += "\n"; //$NON-NLS-1$
+		}
 		final LockFile lf = new LockFile(keepFile);
-		if (!lf.lock())
+		if (!lf.lock()) {
 			return false;
+		}
 		lf.write(Constants.encode(msg));
 		return lf.commit();
 	}

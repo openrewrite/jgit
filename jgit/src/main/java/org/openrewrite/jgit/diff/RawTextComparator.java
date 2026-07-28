@@ -33,12 +33,14 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 			final int ae = a.lines.get(ai + 1);
 			final int be = b.lines.get(bi + 1);
 
-			if (ae - as != be - bs)
+			if (ae - as != be - bs) {
 				return false;
+			}
 
 			while (as < ae) {
-				if (a.content[as++] != b.content[bs++])
+				if (a.content[as++] != b.content[bs++]) {
 					return false;
+				}
 			}
 			return true;
 		}
@@ -46,8 +48,9 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 		@Override
 		protected int hashRegion(byte[] raw, int ptr, int end) {
 			int hash = 5381;
-			for (; ptr < end; ptr++)
+			for (;ptr < end;ptr++) {
 				hash = ((hash << 5) + hash) + (raw[ptr] & 0xff);
+			}
 			return hash;
 		}
 	};
@@ -81,8 +84,9 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 					bc = b.content[bs];
 				}
 
-				if (ac != bc)
+				if (ac != bc) {
 					return false;
+				}
 
 				as++;
 				bs++;
@@ -96,8 +100,9 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 			int hash = 5381;
 			for (; ptr < end; ptr++) {
 				byte c = raw[ptr];
-				if (!isWhitespace(c))
+				if (!isWhitespace(c)) {
 					hash = ((hash << 5) + hash) + (c & 0xff);
+				}
 			}
 			return hash;
 		}
@@ -120,12 +125,14 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 			as = trimLeadingWhitespace(a.content, as, ae);
 			bs = trimLeadingWhitespace(b.content, bs, be);
 
-			if (ae - as != be - bs)
+			if (ae - as != be - bs) {
 				return false;
+			}
 
 			while (as < ae) {
-				if (a.content[as++] != b.content[bs++])
+				if (a.content[as++] != b.content[bs++]) {
 					return false;
+				}
 			}
 			return true;
 		}
@@ -134,8 +141,9 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 		protected int hashRegion(byte[] raw, int ptr, int end) {
 			int hash = 5381;
 			ptr = trimLeadingWhitespace(raw, ptr, end);
-			for (; ptr < end; ptr++)
+			for (;ptr < end;ptr++) {
 				hash = ((hash << 5) + hash) + (raw[ptr] & 0xff);
+			}
 			return hash;
 		}
 	};
@@ -155,12 +163,14 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 			ae = trimTrailingWhitespace(a.content, as, ae);
 			be = trimTrailingWhitespace(b.content, bs, be);
 
-			if (ae - as != be - bs)
+			if (ae - as != be - bs) {
 				return false;
+			}
 
 			while (as < ae) {
-				if (a.content[as++] != b.content[bs++])
+				if (a.content[as++] != b.content[bs++]) {
 					return false;
+				}
 			}
 			return true;
 		}
@@ -169,8 +179,9 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 		protected int hashRegion(byte[] raw, int ptr, int end) {
 			int hash = 5381;
 			end = trimTrailingWhitespace(raw, ptr, end);
-			for (; ptr < end; ptr++)
+			for (;ptr < end;ptr++) {
 				hash = ((hash << 5) + hash) + (raw[ptr] & 0xff);
+			}
 			return hash;
 		}
 	};
@@ -236,8 +247,9 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 		// the slower path based on the super class' using equals() to
 		// allow for whitespace ignore modes to still work.
 
-		if (e.beginA == e.endA || e.beginB == e.endB)
+		if (e.beginA == e.endA || e.beginB == e.endB) {
 			return e;
+		}
 
 		byte[] aRaw = a.content;
 		byte[] bRaw = b.content;
@@ -252,8 +264,9 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 		// define this assertion before the tight while loops below it
 		// should be able to skip the array bound checks on access.
 		//
-		if (aPtr < 0 || bPtr < 0 || aEnd > aRaw.length || bEnd > bRaw.length)
+		if (aPtr < 0 || bPtr < 0 || aEnd > aRaw.length || bEnd > bRaw.length) {
 			throw new ArrayIndexOutOfBoundsException();
+		}
 
 		while (aPtr < aEnd && bPtr < bEnd && aRaw[aPtr] == bRaw[bPtr]) {
 			aPtr++;
@@ -271,27 +284,31 @@ public abstract class RawTextComparator extends SequenceComparator<RawText> {
 		e.endA = findReverseLine(a.lines, e.endA, aEnd);
 
 		final boolean partialA = aEnd < a.lines.get(e.endA + 1);
-		if (partialA)
+		if (partialA) {
 			bEnd += a.lines.get(e.endA + 1) - aEnd;
+		}
 
 		e.endB = findReverseLine(b.lines, e.endB, bEnd);
 
-		if (!partialA && bEnd < b.lines.get(e.endB + 1))
+		if (!partialA && bEnd < b.lines.get(e.endB + 1)) {
 			e.endA++;
+		}
 
 		return super.reduceCommonStartEnd(a, b, e);
 	}
 
 	private static int findForwardLine(IntList lines, int idx, int ptr) {
 		final int end = lines.size() - 2;
-		while (idx < end && lines.get(idx + 2) < ptr)
+		while (idx < end && lines.get(idx + 2) < ptr) {
 			idx++;
+		}
 		return idx;
 	}
 
 	private static int findReverseLine(IntList lines, int idx, int ptr) {
-		while (0 < idx && ptr <= lines.get(idx))
+		while (0 < idx && ptr <= lines.get(idx)) {
 			idx--;
+		}
 		return idx;
 	}
 

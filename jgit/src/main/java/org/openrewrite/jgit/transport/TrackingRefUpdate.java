@@ -107,8 +107,9 @@ public class TrackingRefUpdate {
 	 * @since 3.4
 	 */
 	public ReceiveCommand asReceiveCommand() {
-		if (cmd == null)
+		if (cmd == null) {
 			cmd = new Command();
+		}
 		return cmd;
 	}
 
@@ -142,8 +143,9 @@ public class TrackingRefUpdate {
 		private RefUpdate.Result decode(ReceiveCommand.Result status) {
 			switch (status) {
 			case OK:
-				if (AnyObjectId.isEqual(oldObjectId, newObjectId))
+				if (AnyObjectId.isEqual(oldObjectId, newObjectId)) {
 					return RefUpdate.Result.NO_CHANGE;
+				}
 				switch (getType()) {
 				case CREATE:
 					return RefUpdate.Result.NEW;
@@ -181,8 +183,9 @@ public class TrackingRefUpdate {
 		sb.append(remoteName);
 		sb.append(" -> ");
 		sb.append(localName);
-		if (forceUpdate)
+		if (forceUpdate) {
 			sb.append(" (forced)");
+		}
 		sb.append(" ");
 		sb.append(oldObjectId == null ? "" : oldObjectId.abbreviate(7).name());
 		sb.append("..");

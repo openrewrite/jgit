@@ -18,7 +18,7 @@ import static org.openrewrite.jgit.lib.FileMode.TYPE_TREE;
  *
  * @since 4.2
  */
-public class Paths {
+public final class Paths {
 	/**
 	 * Remove trailing {@code '/'} if present.
 	 *

@@ -22,7 +22,7 @@ import org.openrewrite.jgit.lib.CoreConfig.SymLinks;
 /**
  * Options used by the {@link org.openrewrite.jgit.treewalk.WorkingTreeIterator}.
  */
-public class WorkingTreeOptions {
+public final class WorkingTreeOptions {
 	/** Key for {@link Config#get(SectionParser)}. */
 	public static final Config.SectionParser<WorkingTreeOptions> KEY =
 			WorkingTreeOptions::new;

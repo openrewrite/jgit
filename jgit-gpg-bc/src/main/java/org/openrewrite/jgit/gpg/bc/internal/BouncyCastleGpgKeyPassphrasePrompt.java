@@ -33,7 +33,7 @@ class BouncyCastleGpgKeyPassphrasePrompt implements AutoCloseable {
 
 	private Password passphrase;
 
-	private CredentialsProvider credentialsProvider;
+	private final CredentialsProvider credentialsProvider;
 
 	public BouncyCastleGpgKeyPassphrasePrompt(
 			CredentialsProvider credentialsProvider) {

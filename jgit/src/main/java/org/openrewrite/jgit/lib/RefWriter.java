@@ -40,7 +40,7 @@ public abstract class RefWriter {
 	 *            the complete set of references. This should have been computed
 	 *            by applying updates to the advertised refs already discovered.
 	 */
-	public RefWriter(Collection<Ref> refs) {
+	protected RefWriter(Collection<Ref> refs) {
 		this.refs = RefComparator.sort(refs);
 	}
 
@@ -51,11 +51,12 @@ public abstract class RefWriter {
 	 *            the complete set of references. This should have been computed
 	 *            by applying updates to the advertised refs already discovered.
 	 */
-	public RefWriter(Map<String, Ref> refs) {
-		if (refs instanceof RefMap)
+	protected RefWriter(Map<String, Ref> refs) {
+		if (refs instanceof RefMap) {
 			this.refs = refs.values();
-		else
+		} else {
 			this.refs = RefComparator.sort(refs.values());
+		}
 	}
 
 	/**
@@ -65,7 +66,7 @@ public abstract class RefWriter {
 	 *            the complete set of references. This should have been computed
 	 *            by applying updates to the advertised refs already discovered.
 	 */
-	public RefWriter(RefList<Ref> refs) {
+	protected RefWriter(RefList<Ref> refs) {
 		this.refs = refs.asList();
 	}
 
@@ -138,15 +139,17 @@ public abstract class RefWriter {
 		final StringWriter w = new StringWriter();
 		if (peeled) {
 			w.write(RefDirectory.PACKED_REFS_HEADER);
-			if (peeled)
+			if (peeled) {
 				w.write(RefDirectory.PACKED_REFS_PEELED);
+			}
 			w.write('\n');
 		}
 
 		final char[] tmp = new char[Constants.OBJECT_ID_STRING_LENGTH];
 		for (Ref r : refs) {
-			if (r.getStorage() != Ref.Storage.PACKED)
+			if (r.getStorage() != Ref.Storage.PACKED) {
 				continue;
+			}
 
 			ObjectId objectId = r.getObjectId();
 			if (objectId == null) {

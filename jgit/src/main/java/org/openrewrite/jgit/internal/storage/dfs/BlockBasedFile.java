@@ -78,8 +78,9 @@ abstract class BlockBasedFile {
 
 	long alignToBlock(long pos) {
 		int size = blockSize;
-		if (size == 0)
+		if (size == 0) {
 			size = cache.getBlockSize();
+		}
 		return (pos / size) * size;
 	}
 
@@ -89,10 +90,11 @@ abstract class BlockBasedFile {
 		int size = blockSize;
 		if (size == 0) {
 			size = rc.blockSize();
-			if (size <= 0)
+			if (size <= 0) {
 				size = cache.getBlockSize();
-			else if (size < cache.getBlockSize())
+			} else if (size < cache.getBlockSize()) {
 				size = (cache.getBlockSize() / size) * size;
+			}
 			blockSize = size;
 		}
 		return size;
@@ -123,16 +125,19 @@ abstract class BlockBasedFile {
 			long len = length;
 			if (len < 0) {
 				len = rc.size();
-				if (0 <= len)
+				if (0 <= len) {
 					length = len;
+				}
 			}
 
-			if (0 <= len && len < pos + size)
+			if (0 <= len && len < pos + size) {
 				size = (int) (len - pos);
-			if (size <= 0)
+			}
+			if (size <= 0) {
 				throw new EOFException(MessageFormat.format(
 						DfsText.get().shortReadOfBlock, Long.valueOf(pos),
 						getFileName(), Long.valueOf(0), Long.valueOf(0)));
+			}
 
 			byte[] buf = new byte[size];
 			rc.position(pos);

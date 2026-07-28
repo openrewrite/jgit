@@ -50,7 +50,7 @@ public abstract class CredentialItem {
 	 *            input. This should be true for passwords and other secrets,
 	 *            false for names and other public data.
 	 */
-	public CredentialItem(String promptText, boolean maskValue) {
+	protected CredentialItem(String promptText, boolean maskValue) {
 		this.promptText = promptText;
 		this.valueSecure = maskValue;
 	}

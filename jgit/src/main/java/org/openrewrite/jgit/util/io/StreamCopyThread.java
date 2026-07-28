@@ -62,8 +62,9 @@ public class StreamCopyThread extends Thread {
 			if (isAlive()) {
 				done = true;
 				interrupt();
-			} else
+			} else {
 				break;
+			}
 		}
 	}
 
@@ -86,8 +87,9 @@ public class StreamCopyThread extends Thread {
 						readInterrupted = false;
 					}
 
-					if (done)
+					if (done) {
 						break;
+					}
 
 					final int n;
 					try {
@@ -96,8 +98,9 @@ public class StreamCopyThread extends Thread {
 						readInterrupted = true;
 						continue;
 					}
-					if (n < 0)
+					if (n < 0) {
 						break;
+					}
 
 					synchronized (writeLock) {
 						boolean writeInterrupted = Thread.interrupted();

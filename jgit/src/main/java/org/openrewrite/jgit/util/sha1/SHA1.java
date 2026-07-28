@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since 4.7
  */
-public class SHA1 {
+public final class SHA1 {
 	private static final Logger LOG = LoggerFactory.getLogger(SHA1.class);
 	private static final boolean DETECT_COLLISIONS;
 
@@ -197,7 +197,11 @@ public class SHA1 {
 	private void compress() {
 		// Method 1 from RFC 3174 section 6.1.
 		// Method 2 (circular queue of 16 words) is slower.
-		int a = h.a, b = h.b, c = h.c, d = h.d, e = h.e;
+		int a = h.a;
+		int b = h.b;
+		int c = h.c;
+		int d = h.d;
+		int e = h.e;
 
 		// @formatter:off
 		 e += s1(a, b, c, d,w[ 0]);  b = rotateLeft( b, 30);
@@ -302,7 +306,11 @@ public class SHA1 {
 		default:
 			throw new IllegalStateException();
 		}
-		int a = s.a, b = s.b, c = s.c, d = s.d, e = s.e;
+		int a = s.a;
+		int b = s.b;
+		int c = s.c;
+		int d = s.d;
+		int e = s.e;
 
 		// @formatter:off
 	  if (t == 65) {

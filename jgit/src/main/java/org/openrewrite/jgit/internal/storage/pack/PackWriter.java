@@ -264,7 +264,7 @@ public class PackWriter implements AutoCloseable {
 
 	private boolean indexDisabled;
 
-	private boolean checkSearchForReuseTimeout = false;
+	private boolean checkSearchForReuseTimeout;
 
 	private final Duration searchForReuseTimeout;
 
@@ -357,10 +357,11 @@ public class PackWriter implements AutoCloseable {
 			@Nullable PackStatistics.Accumulator statsAccumulator) {
 		this.config = config;
 		this.reader = reader;
-		if (reader instanceof ObjectReuseAsIs)
-			reuseSupport = ((ObjectReuseAsIs) reader);
-		else
+		if (reader instanceof ObjectReuseAsIs) {
+			reuseSupport = (ObjectReuseAsIs) reader;
+		} else {
 			reuseSupport = null;
+		}
 
 		deltaBaseAsOffset = config.isDeltaBaseAsOffset();
 		reuseDeltas = config.isReuseDeltas();
@@ -686,8 +687,9 @@ public class PackWriter implements AutoCloseable {
 			objCnt += objectsLists[OBJ_BLOB].size();
 			objCnt += objectsLists[OBJ_TAG].size();
 
-			for (CachedPack pack : cachedPacks)
+			for (CachedPack pack : cachedPacks) {
 				objCnt += pack.getObjectCount();
+			}
 			return objCnt;
 		}
 		return stats.totalObjects;
@@ -726,9 +728,10 @@ public class PackWriter implements AutoCloseable {
 	 */
 	public ObjectIdOwnerMap<ObjectIdOwnerMap.Entry> getObjectSet()
 			throws IOException {
-		if (!cachedPacks.isEmpty())
+		if (!cachedPacks.isEmpty()) {
 			throw new IOException(
 					JGitText.get().cachedPacksPreventsListingObjects);
+		}
 
 		if (writeBitmaps != null) {
 			return writeBitmaps.getObjectSet();
@@ -737,10 +740,11 @@ public class PackWriter implements AutoCloseable {
 		ObjectIdOwnerMap<ObjectIdOwnerMap.Entry> r = new ObjectIdOwnerMap<>();
 		for (BlockList<ObjectToPack> objList : objectsLists) {
 			if (objList != null) {
-				for (ObjectToPack otp : objList)
+				for (ObjectToPack otp : objList) {
 					r.add(new ObjectIdOwnerMap.Entry(otp) {
 						// A new entry that copies the ObjectId
 					});
+				}
 			}
 		}
 		return r;
@@ -992,11 +996,13 @@ public class PackWriter implements AutoCloseable {
 			@NonNull Set<? extends ObjectId> uninterestingObjects,
 			@NonNull Set<? extends ObjectId> noBitmaps)
 			throws IOException {
-		if (countingMonitor == null)
+		if (countingMonitor == null) {
 			countingMonitor = NullProgressMonitor.INSTANCE;
-		if (shallowPack && !(walk instanceof DepthWalk.ObjectWalk))
+		}
+		if (shallowPack && !(walk instanceof DepthWalk.ObjectWalk)) {
 			throw new IllegalArgumentException(
 					JGitText.get().shallowPacksRequireDepthWalk);
+		}
 		if (filterSpec.getTreeDepthLimit() >= 0) {
 			walk.setVisitationPolicy(new DepthAwareVisitationPolicy(walk));
 		}
@@ -1058,9 +1064,10 @@ public class PackWriter implements AutoCloseable {
 	public int getIndexVersion() {
 		int indexVersion = config.getIndexVersion();
 		if (indexVersion <= 0) {
-			for (BlockList<ObjectToPack> objs : objectsLists)
+			for (BlockList<ObjectToPack> objs : objectsLists) {
 				indexVersion = Math.max(indexVersion,
 						PackIndexWriter.oldestPossibleFormat(objs));
+			}
 		}
 		return indexVersion;
 	}
@@ -1081,8 +1088,9 @@ public class PackWriter implements AutoCloseable {
 	 *             the index data could not be written to the supplied stream.
 	 */
 	public void writeIndex(OutputStream indexStream) throws IOException {
-		if (isIndexDisabled())
+		if (isIndexDisabled()) {
 			throw new IOException(JGitText.get().cachedPacksPreventsIndexCreation);
+		}
 
 		long writeStart = System.currentTimeMillis();
 		final PackIndexWriter iw = PackIndexWriter.createVersion(
@@ -1104,8 +1112,9 @@ public class PackWriter implements AutoCloseable {
 	 */
 	public void writeBitmapIndex(OutputStream bitmapIndexStream)
 			throws IOException {
-		if (writeBitmaps == null)
+		if (writeBitmaps == null) {
 			throw new IOException(JGitText.get().bitmapsMustBePrepared);
+		}
 
 		long writeStart = System.currentTimeMillis();
 		final PackBitmapIndexWriterV1 iw = new PackBitmapIndexWriterV1(bitmapIndexStream);
@@ -1195,10 +1204,12 @@ public class PackWriter implements AutoCloseable {
 	public void writePack(ProgressMonitor compressMonitor,
 			ProgressMonitor writeMonitor, OutputStream packStream)
 			throws IOException {
-		if (compressMonitor == null)
+		if (compressMonitor == null) {
 			compressMonitor = NullProgressMonitor.INSTANCE;
-		if (writeMonitor == null)
+		}
+		if (writeMonitor == null) {
 			writeMonitor = NullProgressMonitor.INSTANCE;
+		}
 
 		excludeInPacks = null;
 		excludeInPackLast = null;
@@ -1210,17 +1221,20 @@ public class PackWriter implements AutoCloseable {
 
 		if (compressMonitor instanceof BatchingProgressMonitor) {
 			long delay = 1000;
-			if (needSearchForReuse && config.isDeltaCompress())
+			if (needSearchForReuse && config.isDeltaCompress()) {
 				delay = 500;
+			}
 			((BatchingProgressMonitor) compressMonitor).setDelayStart(
 					delay,
 					TimeUnit.MILLISECONDS);
 		}
 
-		if (needSearchForReuse)
+		if (needSearchForReuse) {
 			searchForReuse(compressMonitor);
-		if (config.isDeltaCompress())
+		}
+		if (config.isDeltaCompress()) {
 			searchForDeltas(compressMonitor);
+		}
 
 		crc32 = new CRC32();
 		final PackOutputStream out = new PackOutputStream(
@@ -1233,8 +1247,9 @@ public class PackWriter implements AutoCloseable {
 		long objCnt = packfileUriConfig == null ? getObjectCount() :
 			getUnoffloadedObjectCount();
 		stats.totalObjects = objCnt;
-		if (callback != null)
+		if (callback != null) {
 			callback.setObjectCount(objCnt);
+		}
 		beginPhase(PackingPhase.WRITING, writeMonitor, objCnt);
 		long writeStart = System.currentTimeMillis();
 		try {
@@ -1270,8 +1285,9 @@ public class PackWriter implements AutoCloseable {
 			writeObjects(out);
 			if (!edgeObjects.isEmpty() || !cachedPacks.isEmpty()) {
 				for (PackStatistics.ObjectType.Accumulator typeStat : stats.objectTypes) {
-					if (typeStat == null)
+					if (typeStat == null) {
 						continue;
+					}
 					stats.thinPackBytes += typeStat.bytes;
 				}
 			}
@@ -1291,8 +1307,9 @@ public class PackWriter implements AutoCloseable {
 			stats.depth = depth;
 
 			for (PackStatistics.ObjectType.Accumulator typeStat : stats.objectTypes) {
-				if (typeStat == null)
+				if (typeStat == null) {
 					continue;
+				}
 				typeStat.cntDeltas += typeStat.reusedDeltas;
 				stats.reusedObjects += typeStat.reusedObjects;
 				stats.reusedDeltas += typeStat.reusedDeltas;
@@ -1385,8 +1402,9 @@ public class PackWriter implements AutoCloseable {
 			throws IOException, MissingObjectException {
 		pruneCurrentObjectList = false;
 		reuseSupport.selectObjectRepresentation(this, monitor, list);
-		if (pruneCurrentObjectList)
+		if (pruneCurrentObjectList) {
 			pruneEdgesFromObjectList(list);
+		}
 	}
 
 	private void cutDeltaChains(BlockList<ObjectToPack> list)
@@ -1396,8 +1414,9 @@ public class PackWriter implements AutoCloseable {
 			int d = 0;
 			ObjectToPack b = list.get(idx).getDeltaBase();
 			while (b != null) {
-				if (d < b.getChainLength())
+				if (d < b.getChainLength()) {
 					break;
+				}
 				b.setChainLength(++d);
 				if (d >= max && b.isDeltaRepresentation()) {
 					reselectNonDelta(b);
@@ -1407,8 +1426,9 @@ public class PackWriter implements AutoCloseable {
 			}
 		}
 		if (config.isDeltaCompress()) {
-			for (ObjectToPack otp : list)
+			for (ObjectToPack otp : list) {
 				otp.clearChainLength();
+			}
 		}
 	}
 
@@ -1426,8 +1446,9 @@ public class PackWriter implements AutoCloseable {
 		int cnt = 0;
 		cnt = findObjectsNeedingDelta(list, cnt, OBJ_TREE);
 		cnt = findObjectsNeedingDelta(list, cnt, OBJ_BLOB);
-		if (cnt == 0)
+		if (cnt == 0) {
 			return;
+		}
 		int nonEdgeCnt = cnt;
 
 		// Queue up any edge objects that we might delta against.  We won't
@@ -1449,15 +1470,16 @@ public class PackWriter implements AutoCloseable {
 		final long sizingStart = System.currentTimeMillis();
 		beginPhase(PackingPhase.GETTING_SIZES, monitor, cnt);
 		AsyncObjectSizeQueue<ObjectToPack> sizeQueue = reader.getObjectSize(
-				Arrays.<ObjectToPack> asList(list).subList(0, cnt), false);
+				Arrays. asList(list).subList(0, cnt), false);
 		try {
 			final long limit = Math.min(
 					config.getBigFileThreshold(),
 					Integer.MAX_VALUE);
 			for (;;) {
 				try {
-					if (!sizeQueue.next())
+					if (!sizeQueue.next()) {
 						break;
+					}
 				} catch (MissingObjectException notFound) {
 					monitor.update(1);
 					if (ignoreMissingUninteresting) {
@@ -1477,14 +1499,16 @@ public class PackWriter implements AutoCloseable {
 				}
 
 				ObjectToPack otp = sizeQueue.getCurrent();
-				if (otp == null)
+				if (otp == null) {
 					otp = objectsMap.get(sizeQueue.getObjectId());
+				}
 
 				long sz = sizeQueue.getSize();
-				if (DeltaIndex.BLKSZ < sz && sz < limit)
-					otp.setWeight((int) sz);
-				else
+				if (DeltaIndex.BLKSZ < sz && sz < limit) {
+					otp.setWeight((int) sz); // too small, or too big
+				} else {
 					otp.setDoNotDelta(); // too small, or too big
+				}
 				monitor.update(1);
 			}
 		} finally {
@@ -1530,29 +1554,35 @@ public class PackWriter implements AutoCloseable {
 		// Above we stored the objects we cannot delta onto the end.
 		// Remove them from the list so we don't waste time on them.
 		while (0 < cnt && list[cnt - 1].isDoNotDelta()) {
-			if (!list[cnt - 1].isEdge())
+			if (!list[cnt - 1].isEdge()) {
 				nonEdgeCnt--;
+			}
 			cnt--;
 		}
-		if (cnt == 0)
+		if (cnt == 0) {
 			return;
+		}
 
 		final long searchStart = System.currentTimeMillis();
 		searchForDeltas(monitor, list, cnt);
 		stats.deltaSearchNonEdgeObjects = nonEdgeCnt;
 		stats.timeCompressing = System.currentTimeMillis() - searchStart;
 
-		for (int i = 0; i < cnt; i++)
-			if (!list[i].isEdge() && list[i].isDeltaRepresentation())
+		for (int i = 0;i < cnt;i++) {
+			if (!list[i].isEdge() && list[i].isDeltaRepresentation()) {
 				stats.deltasFound++;
+			}
+		}
 	}
 
 	private int findObjectsNeedingDelta(ObjectToPack[] list, int cnt, int type) {
 		for (ObjectToPack otp : objectsLists[type]) {
-			if (otp.isDoNotDelta()) // delta is disabled for this path
+			if (otp.isDoNotDelta()) { // delta is disabled for this path
 				continue;
-			if (otp.isDeltaRepresentation()) // already reusing a delta
+			}
+			if (otp.isDeltaRepresentation()) { // already reusing a delta
 				continue;
+			}
 			otp.setWeight(0);
 			list[cnt++] = otp;
 		}
@@ -1575,12 +1605,14 @@ public class PackWriter implements AutoCloseable {
 			throws MissingObjectException, IncorrectObjectTypeException,
 			LargeObjectException, IOException {
 		int threads = config.getThreads();
-		if (threads == 0)
+		if (threads == 0) {
 			threads = Runtime.getRuntime().availableProcessors();
-		if (threads <= 1 || cnt <= config.getDeltaSearchWindowSize())
+		}
+		if (threads <= 1 || cnt <= config.getDeltaSearchWindowSize()) {
 			singleThreadDeltaSearch(monitor, list, cnt);
-		else
+		} else {
 			parallelDeltaSearch(monitor, list, cnt, threads);
+		}
 	}
 
 	private void singleThreadDeltaSearch(ProgressMonitor monitor,
@@ -1592,11 +1624,13 @@ public class PackWriter implements AutoCloseable {
 		}
 
 		long bytesPerUnit = 1;
-		while (DeltaTask.MAX_METER <= (totalWeight / bytesPerUnit))
+		while (DeltaTask.MAX_METER <= (totalWeight / bytesPerUnit)) {
 			bytesPerUnit <<= 10;
+		}
 		int cost = (int) (totalWeight / bytesPerUnit);
-		if (totalWeight % bytesPerUnit != 0)
+		if (totalWeight % bytesPerUnit != 0) {
 			cost++;
+		}
 
 		beginPhase(PackingPhase.COMPRESSING, monitor, cost);
 		new DeltaWindow(config, new DeltaCache(config), reader,
@@ -1678,12 +1712,15 @@ public class PackWriter implements AutoCloseable {
 		//
 		if (!errors.isEmpty()) {
 			Throwable err = errors.get(0);
-			if (err instanceof Error)
+			if (err instanceof Error) {
 				throw (Error) err;
-			if (err instanceof RuntimeException)
+			}
+			if (err instanceof RuntimeException) {
 				throw (RuntimeException) err;
-			if (err instanceof IOException)
+			}
+			if (err instanceof IOException) {
 				throw (IOException) err;
+			}
 
 			throw new IOException(err.getMessage(), err);
 		}
@@ -1694,8 +1731,9 @@ public class PackWriter implements AutoCloseable {
 			ThreadSafeProgressMonitor pm,
 			DeltaTask.Block tb, List<Throwable> errors) throws IOException {
 		List<Future<?>> futures = new ArrayList<>(tb.tasks.size());
-		for (DeltaTask task : tb.tasks)
+		for (DeltaTask task : tb.tasks) {
 			futures.add(pool.submit(task));
+		}
 
 		try {
 			pm.waitForCompletion();
@@ -1707,8 +1745,9 @@ public class PackWriter implements AutoCloseable {
 				}
 			}
 		} catch (InterruptedException ie) {
-			for (Future<?> f : futures)
+			for (Future<?> f : futures) {
 				f.cancel(true);
+			}
 			throw new IOException(
 					JGitText.get().packingCancelledDuringObjectsWriting, ie);
 		}
@@ -1723,8 +1762,9 @@ public class PackWriter implements AutoCloseable {
 
 	private void writeObjects(PackOutputStream out, List<ObjectToPack> list)
 			throws IOException {
-		if (list.isEmpty())
+		if (list.isEmpty()) {
 			return;
+		}
 
 		typeStats = stats.objectTypes[list.get(0).getType()];
 		long beginOffset = out.length();
@@ -1732,8 +1772,9 @@ public class PackWriter implements AutoCloseable {
 		if (reuseSupport != null) {
 			reuseSupport.writeObjects(out, list);
 		} else {
-			for (ObjectToPack otp : list)
+			for (ObjectToPack otp : list) {
 				out.writeObject(otp);
+			}
 		}
 
 		typeStats.bytes += out.length() - beginOffset;
@@ -1741,8 +1782,9 @@ public class PackWriter implements AutoCloseable {
 	}
 
 	void writeObject(PackOutputStream out, ObjectToPack otp) throws IOException {
-		if (!otp.isWritten())
+		if (!otp.isWritten()) {
 			writeObjectImpl(out, otp);
+		}
 	}
 
 	private void writeObjectImpl(PackOutputStream out, ObjectToPack otp)
@@ -1759,9 +1801,10 @@ public class PackWriter implements AutoCloseable {
 
 		while (otp.isReuseAsIs()) {
 			writeBase(out, otp.getDeltaBase());
-			if (otp.isWritten())
+			if (otp.isWritten()) {
 				return; // Delta chain cycle caused this to write already.
 
+			}
 			crc32.reset();
 			otp.setOffset(out.length());
 			try {
@@ -1806,8 +1849,9 @@ public class PackWriter implements AutoCloseable {
 
 	private void writeBase(PackOutputStream out, ObjectToPack base)
 			throws IOException {
-		if (base != null && !base.isWritten() && !base.isEdge())
+		if (base != null && !base.isWritten() && !base.isEdge()) {
 			writeObjectImpl(out, base);
+		}
 	}
 
 	private void writeWholeObjectDeflate(PackOutputStream out,
@@ -1886,8 +1930,9 @@ public class PackWriter implements AutoCloseable {
 	}
 
 	private Deflater deflater() {
-		if (myDeflater == null)
+		if (myDeflater == null) {
 			myDeflater = new Deflater(config.getCompressionLevel());
+		}
 		return myDeflater;
 	}
 
@@ -1938,8 +1983,9 @@ public class PackWriter implements AutoCloseable {
 			walker.sort(RevSort.COMMIT_TIME_DESC);
 		} else {
 			walker.sort(RevSort.TOPO);
-			if (thin)
+			if (thin) {
 				walker.sort(RevSort.BOUNDARY, true);
+			}
 		}
 
 		List<RevObject> wantObjs = new ArrayList<>(want.size());
@@ -1953,20 +1999,24 @@ public class PackWriter implements AutoCloseable {
 			for (;;) {
 				try {
 					RevObject o = q.next();
-					if (o == null)
+					if (o == null) {
 						break;
-					if (have.contains(o))
+					}
+					if (have.contains(o)) {
 						haveObjs.add(o);
+					}
 					if (want.contains(o)) {
 						o.add(include);
 						wantObjs.add(o);
-						if (o instanceof RevTag)
+						if (o instanceof RevTag) {
 							wantTags.add((RevTag) o);
+						}
 					}
 				} catch (MissingObjectException e) {
 					if (ignoreMissingUninteresting
-							&& have.contains(e.getObjectId()))
+							&& have.contains(e.getObjectId())) {
 						continue;
+					}
 					throw e;
 				}
 			}
@@ -1976,8 +2026,9 @@ public class PackWriter implements AutoCloseable {
 
 		if (!wantTags.isEmpty()) {
 			all = new ArrayList<>(wantTags.size());
-			for (RevTag tag : wantTags)
+			for (RevTag tag : wantTags) {
 				all.add(tag.getObject());
+			}
 			q = walker.parseAny(all, true);
 			try {
 				while (q.next() != null) {
@@ -2011,11 +2062,13 @@ public class PackWriter implements AutoCloseable {
 				}
 			}
 		} else {
-			for (RevObject obj : wantObjs)
+			for (RevObject obj : wantObjs) {
 				walker.markStart(obj);
+			}
 		}
-		for (RevObject obj : haveObjs)
+		for (RevObject obj : haveObjs) {
 			walker.markUninteresting(obj);
+		}
 
 		final int maxBases = config.getDeltaSearchWindowSize();
 		Set<RevTree> baseTrees = new HashSet<>();
@@ -2023,11 +2076,13 @@ public class PackWriter implements AutoCloseable {
 		Set<ObjectId> roots = new HashSet<>();
 		RevCommit c;
 		while ((c = walker.next()) != null) {
-			if (exclude(c))
+			if (exclude(c)) {
 				continue;
+			}
 			if (c.has(RevFlag.UNINTERESTING)) {
-				if (baseTrees.size() <= maxBases)
+				if (baseTrees.size() <= maxBases) {
 					baseTrees.add(c.getTree());
+				}
 				continue;
 			}
 
@@ -2085,10 +2140,12 @@ public class PackWriter implements AutoCloseable {
 					objectsMap, edgeObjects, reader);
 			RevObject o;
 			while ((o = walker.nextObject()) != null) {
-				if (o.has(RevFlag.UNINTERESTING))
+				if (o.has(RevFlag.UNINTERESTING)) {
 					continue;
-				if (exclude(o))
+				}
+				if (exclude(o)) {
 					continue;
+				}
 
 				int pathHash = walker.getPathHashCode();
 				byte[] pathBuf = walker.getPathBuffer();
@@ -2102,10 +2159,12 @@ public class PackWriter implements AutoCloseable {
 		} else {
 			RevObject o;
 			while ((o = walker.nextObject()) != null) {
-				if (o.has(RevFlag.UNINTERESTING))
+				if (o.has(RevFlag.UNINTERESTING)) {
 					continue;
-				if (exclude(o))
+				}
+				if (exclude(o)) {
 					continue;
+				}
 				if (!depthSkip(o, walker)) {
 					filterAndAddObject(o, o.getType(), walker.getPathHashCode(),
 									   want);
@@ -2114,8 +2173,9 @@ public class PackWriter implements AutoCloseable {
 			}
 		}
 
-		for (CachedPack pack : cachedPacks)
+		for (CachedPack pack : cachedPacks) {
 			countingMonitor.update((int) pack.getObjectCount());
+		}
 		endPhase(countingMonitor);
 		stats.timeCounting = System.currentTimeMillis() - countingStart;
 		stats.bitmapIndexMisses = -1;
@@ -2132,9 +2192,10 @@ public class PackWriter implements AutoCloseable {
 		BitmapBuilder needBitmap = wantBitmap.andNot(haveBitmap);
 
 		if (useCachedPacks && reuseSupport != null && !reuseValidate
-				&& (excludeInPacks == null || excludeInPacks.length == 0))
+				&& (excludeInPacks == null || excludeInPacks.length == 0)) {
 			cachedPacks.addAll(
 					reuseSupport.getCachedPacksAndUpdate(needBitmap));
+		}
 
 		for (BitmapObject obj : needBitmap) {
 			ObjectId objectId = obj.getObjectId();
@@ -2145,8 +2206,9 @@ public class PackWriter implements AutoCloseable {
 			filterAndAddObject(objectId, obj.getType(), 0, want);
 		}
 
-		if (thin)
+		if (thin) {
 			haveObjects = haveBitmap;
+		}
 	}
 
 	private static void pruneEdgesFromObjectList(List<ObjectToPack> list) {
@@ -2156,15 +2218,18 @@ public class PackWriter implements AutoCloseable {
 
 		for (; src < size; src++) {
 			ObjectToPack obj = list.get(src);
-			if (obj.isEdge())
+			if (obj.isEdge()) {
 				continue;
-			if (dst != src)
+			}
+			if (dst != src) {
 				list.set(dst, obj);
+			}
 			dst++;
 		}
 
-		while (dst < list.size())
+		while (dst < list.size()) {
 			list.remove(list.size() - 1);
+		}
 	}
 
 	/**
@@ -2181,8 +2246,9 @@ public class PackWriter implements AutoCloseable {
 	 */
 	public void addObject(RevObject object)
 			throws IncorrectObjectTypeException {
-		if (!exclude(object))
+		if (!exclude(object)) {
 			addObject(object, 0);
+		}
 	}
 
 	private void addObject(RevObject object, int pathHashCode) {
@@ -2192,10 +2258,11 @@ public class PackWriter implements AutoCloseable {
 	private void addObject(
 			final AnyObjectId src, final int type, final int pathHashCode) {
 		final ObjectToPack otp;
-		if (reuseSupport != null)
+		if (reuseSupport != null) {
 			otp = reuseSupport.newObjectToPack(src, type);
-		else
+		} else {
 			otp = new ObjectToPack(src, type);
+		}
 		otp.setPathHash(pathHashCode);
 		objectsLists[type].add(otp);
 		objectsMap.add(otp);
@@ -2259,10 +2326,12 @@ public class PackWriter implements AutoCloseable {
 	}
 
 	private boolean exclude(AnyObjectId objectId) {
-		if (excludeInPacks == null)
+		if (excludeInPacks == null) {
 			return false;
-		if (excludeInPackLast.contains(objectId))
+		}
+		if (excludeInPackLast.contains(objectId)) {
 			return true;
+		}
 		for (ObjectIdSet idx : excludeInPacks) {
 			if (idx.contains(objectId)) {
 				excludeInPackLast = idx;
@@ -2288,8 +2357,9 @@ public class PackWriter implements AutoCloseable {
 		int nFmt = next.getFormat();
 
 		if (!cachedPacks.isEmpty()) {
-			if (otp.isEdge())
+			if (otp.isEdge()) {
 				return;
+			}
 			if (nFmt == PACK_WHOLE || nFmt == PACK_DELTA) {
 				for (CachedPack pack : cachedPacks) {
 					if (pack.hasObject(otp, next)) {
@@ -2322,8 +2392,9 @@ public class PackWriter implements AutoCloseable {
 				// We've chosen another PACK_WHOLE format for this object,
 				// choose the one that has the smaller compressed size.
 				//
-				if (otp.getWeight() <= nWeight)
+				if (otp.getWeight() <= nWeight) {
 					return;
+				}
 			}
 			otp.clearDeltaBase();
 			otp.setReuseAsIs();
@@ -2363,11 +2434,13 @@ public class PackWriter implements AutoCloseable {
 	 */
 	public boolean prepareBitmapIndex(ProgressMonitor pm) throws IOException {
 		if (!canBuildBitmaps || getObjectCount() > Integer.MAX_VALUE
-				|| !cachedPacks.isEmpty())
+				|| !cachedPacks.isEmpty()) {
 			return false;
+		}
 
-		if (pm == null)
+		if (pm == null) {
 			pm = NullProgressMonitor.INSTANCE;
+		}
 
 		int numCommits = objectsLists[OBJ_COMMIT].size();
 		List<ObjectToPack> byName = sortByName();
@@ -2394,10 +2467,11 @@ public class PackWriter implements AutoCloseable {
 			BitmapBuilder bitmap = walker.findObjects(
 					Collections.singleton(cmit), null, false);
 
-			if (last != null && cmit.isReuseWalker() && !bitmap.contains(last))
+			if (last != null && cmit.isReuseWalker() && !bitmap.contains(last)) {
 				throw new IllegalStateException(MessageFormat.format(
 						JGitText.get().bitmapMissingObject, cmit.name(),
 						last.name()));
+			}
 			last = BitmapCommit.copyFrom(cmit).build();
 			writeBitmaps.processBitmapForWrite(cmit, bitmap.build(),
 					cmit.getFlags());
@@ -2416,13 +2490,13 @@ public class PackWriter implements AutoCloseable {
 
 	private boolean reuseDeltaFor(ObjectToPack otp) {
 		int type = otp.getType();
-		if ((type & 2) != 0) // OBJ_TREE(2) or OBJ_BLOB(3)
+		if ((type & 2) != 0) { // OBJ_TREE(2) or OBJ_BLOB(3)
 			return true;
-		if (type == OBJ_COMMIT)
+		}
+		if (type == OBJ_COMMIT) {
 			return reuseDeltaCommits;
-		if (type == OBJ_TAG)
-			return false;
-		return true;
+		}
+		return !(type == OBJ_TAG);
 	}
 
 	private class MutableState {
@@ -2444,12 +2518,14 @@ public class PackWriter implements AutoCloseable {
 			phase = PackingPhase.COUNTING;
 			if (config.isDeltaCompress()) {
 				int threads = config.getThreads();
-				if (threads <= 0)
+				if (threads <= 0) {
 					threads = Runtime.getRuntime().availableProcessors();
+				}
 				totalDeltaSearchBytes = (threads * config.getDeltaSearchMemoryLimit())
 						+ config.getBigFileThreshold();
-			} else
+			} else {
 				totalDeltaSearchBytes = 0;
+			}
 		}
 
 		State snapshot() {
@@ -2465,8 +2541,9 @@ public class PackWriter implements AutoCloseable {
 
 			long bytesUsed = OBJECT_TO_PACK_SIZE * objCnt;
 			PackingPhase curr = phase;
-			if (curr == PackingPhase.COMPRESSING)
+			if (curr == PackingPhase.COMPRESSING) {
 				bytesUsed += totalDeltaSearchBytes;
+			}
 			return new State(curr, bytesUsed);
 		}
 	}
@@ -2489,7 +2566,7 @@ public class PackWriter implements AutoCloseable {
 		WRITING,
 
 		/** Building bitmaps phase. */
-		BUILDING_BITMAPS;
+		BUILDING_BITMAPS
 	}
 
 	/** Summary of the current state of a PackWriter. */

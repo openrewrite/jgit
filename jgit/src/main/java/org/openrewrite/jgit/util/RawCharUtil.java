@@ -15,7 +15,7 @@ package org.openrewrite.jgit.util;
  * <p>
  * Characters are assumed to be 8-bit US-ASCII.
  */
-public class RawCharUtil {
+public final class RawCharUtil {
 	private static final boolean[] WHITESPACE = new boolean[256];
 
 	static {
@@ -51,8 +51,9 @@ public class RawCharUtil {
 	 */
 	public static int trimTrailingWhitespace(byte[] raw, int start, int end) {
 		int ptr = end - 1;
-		while (start <= ptr && isWhitespace(raw[ptr]))
+		while (start <= ptr && isWhitespace(raw[ptr])) {
 			ptr--;
+		}
 
 		return ptr + 1;
 	}
@@ -71,8 +72,9 @@ public class RawCharUtil {
 	 * @return the new start point
 	 */
 	public static int trimLeadingWhitespace(byte[] raw, int start, int end) {
-		while (start < end && isWhitespace(raw[start]))
+		while (start < end && isWhitespace(raw[start])) {
 			start++;
+		}
 
 		return start;
 	}

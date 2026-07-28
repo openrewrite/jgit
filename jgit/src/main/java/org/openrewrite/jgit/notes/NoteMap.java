@@ -36,7 +36,7 @@ import org.openrewrite.jgit.revwalk.RevTree;
  * class. The caller should arrange for releasing the shared
  * {@code ObjectReader} at the proper times.
  */
-public class NoteMap implements Iterable<Note> {
+public final class NoteMap implements Iterable<Note> {
 	/**
 	 * Construct a new empty note map.
 	 *
@@ -57,8 +57,9 @@ public class NoteMap implements Iterable<Note> {
 	 * @return a more user friendly note name
 	 */
 	public static String shortenRefName(String noteRefName) {
-		if (noteRefName.startsWith(Constants.R_NOTES))
+		if (noteRefName.startsWith(Constants.R_NOTES)) {
 			return noteRefName.substring(Constants.R_NOTES.length());
+		}
 		return noteRefName;
 	}
 

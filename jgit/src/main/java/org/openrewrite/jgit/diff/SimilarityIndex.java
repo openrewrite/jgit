@@ -143,11 +143,13 @@ public class SimilarityIndex {
 			do {
 				int c = raw[ptr++] & 0xff;
 				// Ignore CR in CRLF sequence if text
-				if (text && c == '\r' && ptr < end && raw[ptr] == '\n')
+				if (text && c == '\r' && ptr < end && raw[ptr] == '\n') {
 					continue;
+				}
 				blockHashedCnt++;
-				if (c == '\n')
+				if (c == '\n') {
 					break;
+				}
 				hash = (hash << 5) + hash + c;
 			} while (ptr < end && ptr - start < 64);
 			hashedCnt += blockHashedCnt;
@@ -171,18 +173,21 @@ public class SimilarityIndex {
 				if (ptr == cnt) {
 					ptr = 0;
 					cnt = in.read(buf, 0, buf.length);
-					if (cnt <= 0)
+					if (cnt <= 0) {
 						throw new EOFException();
+					}
 				}
 
 				n++;
 				int c = buf[ptr++] & 0xff;
 				// Ignore CR in CRLF sequence if text
-				if (text && c == '\r' && ptr < cnt && buf[ptr] == '\n')
+				if (text && c == '\r' && ptr < cnt && buf[ptr] == '\n') {
 					continue;
+				}
 				blockHashedCnt++;
-				if (c == '\n')
+				if (c == '\n') {
 					break;
+				}
 				hash = (hash << 5) + hash + c;
 			} while (n < 64 && n < remaining);
 			hashedCnt += blockHashedCnt;
@@ -226,8 +231,9 @@ public class SimilarityIndex {
 	 */
 	public int score(SimilarityIndex dst, int maxScore) {
 		long max = Math.max(hashedCnt, dst.hashedCnt);
-		if (max == 0)
+		if (max == 0) {
 			return maxScore;
+		}
 		return (int) ((common(dst) * maxScore) / max);
 	}
 
@@ -245,8 +251,9 @@ public class SimilarityIndex {
 
 	private static long common(long[] srcHash, int srcIdx, //
 			long[] dstHash, int dstIdx) {
-		if (srcIdx == srcHash.length || dstIdx == dstHash.length)
+		if (srcIdx == srcHash.length || dstIdx == dstHash.length) {
 			return 0;
+		}
 
 		long common = 0;
 		int srcKey = keyOf(srcHash[srcIdx]);
@@ -257,24 +264,28 @@ public class SimilarityIndex {
 				common += Math.min(countOf(srcHash[srcIdx]),
 						countOf(dstHash[dstIdx]));
 
-				if (++srcIdx == srcHash.length)
+				if (++srcIdx == srcHash.length) {
 					break;
+				}
 				srcKey = keyOf(srcHash[srcIdx]);
 
-				if (++dstIdx == dstHash.length)
+				if (++dstIdx == dstHash.length) {
 					break;
+				}
 				dstKey = keyOf(dstHash[dstIdx]);
 
 			} else if (srcKey < dstKey) {
 				// Regions of src which do not appear in dst.
-				if (++srcIdx == srcHash.length)
+				if (++srcIdx == srcHash.length) {
 					break;
+				}
 				srcKey = keyOf(srcHash[srcIdx]);
 
 			} else /* if (dstKey < srcKey) */{
 				// Regions of dst which do not appear in src.
-				if (++dstIdx == dstHash.length)
+				if (++dstIdx == dstHash.length) {
 					break;
+				}
 				dstKey = keyOf(dstHash[dstIdx]);
 			}
 		}
@@ -299,9 +310,11 @@ public class SimilarityIndex {
 
 	// Brute force approach only for testing.
 	int findIndex(int key) {
-		for (int i = 0; i < idSize; i++)
-			if (key(i) == key)
+		for (int i = 0;i < idSize;i++) {
+			if (key(i) == key) {
 				return i;
+			}
+		}
 		return -1;
 	}
 
@@ -340,8 +353,9 @@ public class SimilarityIndex {
 	}
 
 	private static long pair(int key, long cnt) throws TableFullException {
-		if (MAX_COUNT < cnt)
+		if (MAX_COUNT < cnt) {
 			throw new TableFullException();
+		}
 		return (((long) key) << KEY_SHIFT) | cnt;
 	}
 
@@ -359,8 +373,9 @@ public class SimilarityIndex {
 
 	@SuppressWarnings("UnusedException")
 	private void grow() throws TableFullException {
-		if (idHashBits == 30)
+		if (idHashBits == 30) {
 			throw new TableFullException();
+		}
 
 		long[] oldHash = idHash;
 		int oldSize = idHash.length;
@@ -378,9 +393,11 @@ public class SimilarityIndex {
 			long v = oldHash[i];
 			if (v != 0) {
 				int j = slot(keyOf(v));
-				while (idHash[j] != 0)
-					if (++j >= idHash.length)
+				while (idHash[j] != 0) {
+					if (++j >= idHash.length) {
 						j = 0;
+					}
+				}
 				idHash[j] = v;
 			}
 		}

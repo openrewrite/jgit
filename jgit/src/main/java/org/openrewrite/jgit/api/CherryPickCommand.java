@@ -59,9 +59,9 @@ import org.openrewrite.jgit.treewalk.FileTreeIterator;
 public class CherryPickCommand extends GitCommand<CherryPickResult> {
 	private String reflogPrefix = "cherry-pick:"; //$NON-NLS-1$
 
-	private List<Ref> commits = new LinkedList<>();
+	private final List<Ref> commits = new LinkedList<>();
 
-	private String ourCommitName = null;
+	private String ourCommitName;
 
 	private MergeStrategy strategy = MergeStrategy.RECURSIVE;
 
@@ -69,7 +69,7 @@ public class CherryPickCommand extends GitCommand<CherryPickResult> {
 
 	private Integer mainlineParentNumber;
 
-	private boolean noCommit = false;
+	private boolean noCommit;
 
 	private ProgressMonitor monitor = NullProgressMonitor.INSTANCE;
 
@@ -210,12 +210,13 @@ public class CherryPickCommand extends GitCommand<CherryPickResult> {
 			IOException {
 		final RevCommit srcParent;
 		if (mainlineParentNumber == null) {
-			if (srcCommit.getParentCount() != 1)
+			if (srcCommit.getParentCount() != 1) {
 				throw new MultipleParentsNotAllowedException(
 						MessageFormat.format(
 								JGitText.get().canOnlyCherryPickCommitsWithOneParent,
 								srcCommit.name(),
 								Integer.valueOf(srcCommit.getParentCount())));
+			}
 			srcParent = srcCommit.getParent(0);
 		} else {
 			if (mainlineParentNumber.intValue() > srcCommit.getParentCount()) {
@@ -378,12 +379,12 @@ public class CherryPickCommand extends GitCommand<CherryPickResult> {
 	}
 
 	private String calculateOurName(Ref headRef) {
-		if (ourCommitName != null)
+		if (ourCommitName != null) {
 			return ourCommitName;
+		}
 
 		String targetRefName = headRef.getTarget().getName();
-		String headName = Repository.shortenRefName(targetRefName);
-		return headName;
+		return Repository.shortenRefName(targetRefName);
 	}
 
 	/** {@inheritDoc} */

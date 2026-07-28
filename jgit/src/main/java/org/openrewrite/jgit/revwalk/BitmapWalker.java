@@ -58,7 +58,7 @@ public final class BitmapWalker {
 			ObjectWalk walker, BitmapIndex bitmapIndex, ProgressMonitor pm) {
 		this.walker = walker;
 		this.bitmapIndex = bitmapIndex;
-		this.pm = (pm == null) ? NullProgressMonitor.INSTANCE : pm;
+		this.pm = pm == null ? NullProgressMonitor.INSTANCE : pm;
 	}
 
 	/**
@@ -178,8 +178,9 @@ public final class BitmapWalker {
 
 		for (ObjectId obj : start) {
 			Bitmap bitmap = bitmapIndex.getBitmap(obj);
-			if (bitmap != null)
+			if (bitmap != null) {
 				bitmapResult.or(bitmap);
+			}
 		}
 
 		boolean marked = false;
@@ -190,8 +191,9 @@ public final class BitmapWalker {
 					marked = true;
 				}
 			} catch (MissingObjectException e) {
-				if (ignoreMissingStart)
+				if (ignoreMissingStart) {
 					continue;
+				}
 				throw e;
 			}
 		}

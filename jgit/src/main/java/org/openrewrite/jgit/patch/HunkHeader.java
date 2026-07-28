@@ -248,21 +248,24 @@ public class HunkHeader {
 		final MutableInteger ptr = new MutableInteger();
 		ptr.value = nextLF(buf, startOffset, ' ');
 		old.startLine = -parseBase10(buf, ptr.value, ptr);
-		if (buf[ptr.value] == ',')
+		if (buf[ptr.value] == ',') {
 			old.lineCount = parseBase10(buf, ptr.value + 1, ptr);
-		else
+		} else {
 			old.lineCount = 1;
+		}
 
 		newStartLine = parseBase10(buf, ptr.value + 1, ptr);
-		if (buf[ptr.value] == ',')
+		if (buf[ptr.value] == ',') {
 			newLineCount = parseBase10(buf, ptr.value + 1, ptr);
-		else
+		} else {
 			newLineCount = 1;
+		}
 	}
 
 	int parseBody(Patch script, int end) {
 		final byte[] buf = file.buf;
-		int c = nextLF(buf, startOffset), last = c;
+		int c = nextLF(buf, startOffset);
+		int last = c;
 
 		old.nDeleted = 0;
 		old.nAdded = 0;
@@ -330,8 +333,9 @@ public class HunkHeader {
 		final byte[] buf = file.buf;
 		int ptr = startOffset;
 		int eol = nextLF(buf, ptr);
-		if (endOffset <= eol)
+		if (endOffset <= eol) {
 			return;
+		}
 
 		// Treat the hunk header as though it were from the ancestor,
 		// as it may have a function header appearing after it which
@@ -365,8 +369,9 @@ public class HunkHeader {
 		final byte[] buf = file.buf;
 		int ptr = startOffset;
 		int eol = nextLF(buf, ptr);
-		if (endOffset <= eol)
+		if (endOffset <= eol) {
 			return;
+		}
 		copyLine(sb, text, offsets, 0);
 		SCAN: for (ptr = eol; ptr < endOffset; ptr = eol) {
 			eol = nextLF(buf, ptr);
@@ -394,10 +399,11 @@ public class HunkHeader {
 		final String s = text[fileIdx];
 		final int start = offsets[fileIdx];
 		int end = s.indexOf('\n', start);
-		if (end < 0)
+		if (end < 0) {
 			end = s.length();
-		else
+		} else {
 			end++;
+		}
 		sb.append(s, start, end);
 		offsets[fileIdx] = end;
 	}

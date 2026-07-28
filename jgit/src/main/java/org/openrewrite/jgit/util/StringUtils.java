@@ -23,10 +23,12 @@ public final class StringUtils {
 
 	static {
 		LC = new char['Z' + 1];
-		for (char c = 0; c < LC.length; c++)
+		for (char c = 0;c < LC.length;c++) {
 			LC[c] = c;
-		for (char c = 'A'; c <= 'Z'; c++)
+		}
+		for (char c = 'A';c <= 'Z';c++) {
 			LC[c] = (char) ('a' + (c - 'A'));
+		}
 	}
 
 	/**
@@ -60,8 +62,9 @@ public final class StringUtils {
 	 */
 	public static String toLowerCase(String in) {
 		final StringBuilder r = new StringBuilder(in.length());
-		for (int i = 0; i < in.length(); i++)
+		for (int i = 0;i < in.length();i++) {
 			r.append(toLowerCase(in.charAt(i)));
+		}
 		return r.toString();
 	}
 
@@ -88,9 +91,8 @@ public final class StringUtils {
 		if (str == null || (strLen = str.length()) == 0) {
 			return str;
 		}
-		return new StringBuilder(strLen)
-				.append(Character.toTitleCase(str.charAt(0)))
-				.append(str.substring(1)).toString();
+		return String.valueOf(Character.toTitleCase(str.charAt(0))) +
+				str.substring(1);
 	}
 
 	/**
@@ -109,11 +111,13 @@ public final class StringUtils {
 		if (References.isSameObject(a, b)) {
 			return true;
 		}
-		if (a.length() != b.length())
+		if (a.length() != b.length()) {
 			return false;
+		}
 		for (int i = 0; i < a.length(); i++) {
-			if (toLowerCase(a.charAt(i)) != toLowerCase(b.charAt(i)))
+			if (toLowerCase(a.charAt(i)) != toLowerCase(b.charAt(i))) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -134,8 +138,9 @@ public final class StringUtils {
 	public static int compareIgnoreCase(String a, String b) {
 		for (int i = 0; i < a.length() && i < b.length(); i++) {
 			int d = toLowerCase(a.charAt(i)) - toLowerCase(b.charAt(i));
-			if (d != 0)
+			if (d != 0) {
 				return d;
+			}
 		}
 		return a.length() - b.length();
 	}
@@ -156,8 +161,9 @@ public final class StringUtils {
 	public static int compareWithCase(String a, String b) {
 		for (int i = 0; i < a.length() && i < b.length(); i++) {
 			int d = a.charAt(i) - b.charAt(i);
-			if (d != 0)
+			if (d != 0) {
 				return d;
+			}
 		}
 		return a.length() - b.length();
 	}
@@ -174,12 +180,14 @@ public final class StringUtils {
 	 *             boolean names.
 	 */
 	public static boolean toBoolean(String stringValue) {
-		if (stringValue == null)
+		if (stringValue == null) {
 			throw new NullPointerException(JGitText.get().expectedBooleanStringValue);
+		}
 
 		final Boolean bool = toBooleanOrNull(stringValue);
-		if (bool == null)
+		if (bool == null) {
 			throw new IllegalArgumentException(MessageFormat.format(JGitText.get().notABoolean, stringValue));
+		}
 
 		return bool.booleanValue();
 	}
@@ -201,21 +209,23 @@ public final class StringUtils {
 	 *         string does not represent a boolean value
 	 */
 	public static Boolean toBooleanOrNull(String stringValue) {
-		if (stringValue == null)
+		if (stringValue == null) {
 			return null;
+		}
 
 		if (equalsIgnoreCase("yes", stringValue) //$NON-NLS-1$
 				|| equalsIgnoreCase("true", stringValue) //$NON-NLS-1$
 				|| equalsIgnoreCase("1", stringValue) //$NON-NLS-1$
-				|| equalsIgnoreCase("on", stringValue)) //$NON-NLS-1$
+				|| equalsIgnoreCase("on", stringValue)) { //$NON-NLS-1$
 			return Boolean.TRUE;
-		else if (equalsIgnoreCase("no", stringValue) //$NON-NLS-1$
+		} else if (equalsIgnoreCase("no", stringValue) //$NON-NLS-1$
 				|| equalsIgnoreCase("false", stringValue) //$NON-NLS-1$
 				|| equalsIgnoreCase("0", stringValue) //$NON-NLS-1$
-				|| equalsIgnoreCase("off", stringValue)) //$NON-NLS-1$
+				|| equalsIgnoreCase("off", stringValue)) { //$NON-NLS-1$
 			return Boolean.FALSE;
-		else
+		} else {
 			return null;
+		}
 	}
 
 	/**
@@ -294,8 +304,9 @@ public final class StringUtils {
 				if (i + 1 < buf.length && in.charAt(i + 1) == '\n') {
 					buf[o++] = ' ';
 					++i;
-				} else
+				} else {
 					buf[o++] = ' ';
+				}
 				break;
 			case '\n':
 				buf[o++] = ' ';

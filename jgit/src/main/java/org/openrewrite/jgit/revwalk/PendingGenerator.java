@@ -100,11 +100,12 @@ class PendingGenerator extends Generator {
 				}
 
 				final boolean produce;
-				if ((c.flags & UNINTERESTING) != 0)
+				if ((c.flags & UNINTERESTING) != 0) {
 					produce = false;
-				else {
-					if (filter.requiresCommitBody())
+				} else {
+					if (filter.requiresCommitBody()) {
 						c.parseBody(walker);
+					}
 					produce = filter.include(walker, c);
 				}
 
@@ -115,10 +116,12 @@ class PendingGenerator extends Generator {
 					if (firstParent && i > 0 && (c.flags & UNINTERESTING) == 0) {
 						continue;
 					}
-					if ((p.flags & SEEN) != 0)
+					if ((p.flags & SEEN) != 0) {
 						continue;
-					if ((p.flags & PARSED) == 0)
+					}
+					if ((p.flags & PARSED) == 0) {
 						p.parseHeaders(walker);
+					}
 					p.flags |= SEEN;
 					pending.add(p);
 				}
@@ -134,20 +137,23 @@ class PendingGenerator extends Generator {
 							// flags as much as necessary.
 							//
 							overScan = OVER_SCAN;
-						} else if (--overScan == 0)
+						} else if (--overScan == 0) {
 							throw StopWalkException.INSTANCE;
+						}
 					} else {
 						overScan = OVER_SCAN;
 					}
-					if (canDispose)
+					if (canDispose) {
 						c.disposeBody();
+					}
 					continue;
 				}
 
-				if (produce)
+				if (produce) {
 					return last = c;
-				else if (canDispose)
+				} else if (canDispose) {
 					c.disposeBody();
+				}
 			}
 		} catch (StopWalkException swe) {
 			pending.clear();

@@ -96,7 +96,7 @@ public class BouncyCastleGpgKeyLocator {
 
 	private final String signingKey;
 
-	private BouncyCastleGpgKeyPassphrasePrompt passphrasePrompt;
+	private final BouncyCastleGpgKeyPassphrasePrompt passphrasePrompt;
 
 	private static Path findGpgDirectory() {
 		SystemReader system = SystemReader.getInstance();
@@ -524,8 +524,6 @@ public class BouncyCastleGpgKeyLocator {
 				return new BouncyCastleGpgKey(secretKey, userKeyboxPath);
 			}
 			return null;
-		} catch (RuntimeException e) {
-			throw e;
 		} catch (FileNotFoundException | NoSuchFileException e) {
 			clearPrompt = false;
 			return null;

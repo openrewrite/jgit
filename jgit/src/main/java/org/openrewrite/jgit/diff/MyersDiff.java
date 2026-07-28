@@ -78,7 +78,7 @@ import org.openrewrite.jgit.util.LongList;
  *            type of sequence.
  */
 @SuppressWarnings("hiding")
-public class MyersDiff<S extends Sequence> {
+public final class MyersDiff<S extends Sequence> {
 	/** Singleton instance of MyersDiff. */
 	public static final DiffAlgorithm INSTANCE = new LowLevelDiffAlgorithm() {
 		@SuppressWarnings("unused")
@@ -129,8 +129,9 @@ public class MyersDiff<S extends Sequence> {
 	private void calculateEdits(Edit r) {
 		middle.initialize(r.beginA, r.endA, r.beginB, r.endB);
 		if (middle.beginA >= middle.endA &&
-				middle.beginB >= middle.endB)
+				middle.beginB >= middle.endB) {
 			return;
+		}
 
 		calculateEdits(middle.beginA, middle.endA,
 				middle.beginB, middle.endB);
@@ -163,8 +164,9 @@ public class MyersDiff<S extends Sequence> {
 			calculateEdits(beginA, x, beginB, k + x);
 		}
 
-		if (edit.getType() != Edit.Type.EMPTY)
+		if (edit.getType() != Edit.Type.EMPTY) {
 			edits.add(edits.size(), edit);
+		}
 
 		// after middle
 		if (endA > edit.endA || endB > edit.endB) {
@@ -210,8 +212,9 @@ public class MyersDiff<S extends Sequence> {
 		 */
 		// TODO: measure speed impact when this is synchronized
 		Edit calculate(int beginA, int endA, int beginB, int endB) {
-			if (beginA == endA || beginB == endB)
+			if (beginA == endA || beginB == endB) {
 				return new Edit(beginA, endA, beginB, endB);
+			}
 			this.beginA = beginA; this.endA = endA;
 			this.beginB = beginB; this.endB = endB;
 
@@ -226,10 +229,12 @@ public class MyersDiff<S extends Sequence> {
 			forward.initialize(beginB - beginA, beginA, minK, maxK);
 			backward.initialize(endB - endA, endA, minK, maxK);
 
-			for (int d = 1; ; d++)
+			for (int d = 1;;d++) {
 				if (forward.calculate(d) ||
-						backward.calculate(d))
+						backward.calculate(d)) {
 					return edit;
+				}
+			}
 		}
 
 		/*
@@ -271,44 +276,55 @@ public class MyersDiff<S extends Sequence> {
 		EditPaths backward = new BackwardEditPaths();
 
 		/* Some variables which are shared between methods */
-		protected int beginA, endA, beginB, endB;
+		protected int beginA;
+		protected int endA;
+		protected int beginB;
+		protected int endB;
 		protected Edit edit;
 
 		abstract class EditPaths {
 			private IntList x = new IntList();
 			private LongList snake = new LongList();
-			int beginK, endK, middleK;
-			int prevBeginK, prevEndK;
+			int beginK;
+			int endK;
+			int middleK;
+			int prevBeginK;
+			int prevEndK;
 			/* if we hit one end early, no need to look further */
-			int minK, maxK; // TODO: better explanation
+			int minK;
+			int maxK; // TODO: better explanation
 
 			final int getIndex(int d, int k) {
 // TODO: remove
-if (((d + k - middleK) % 2) != 0)
-	throw new RuntimeException(MessageFormat.format(JGitText.get().unexpectedOddResult, Integer.valueOf(d), Integer.valueOf(k), Integer.valueOf(middleK)));
+				if (((d + k - middleK) % 2) != 0) {
+					throw new RuntimeException(MessageFormat.format(JGitText.get().unexpectedOddResult, Integer.valueOf(d), Integer.valueOf(k), Integer.valueOf(middleK)));
+				}
 				return (d + k - middleK) / 2;
 			}
 
 			final int getX(int d, int k) {
 // TODO: remove
-if (k < beginK || k > endK)
-	throw new RuntimeException(MessageFormat.format(JGitText.get().kNotInRange, Integer.valueOf(k), Integer.valueOf(beginK), Integer.valueOf(endK)));
+				if (k < beginK || k > endK) {
+					throw new RuntimeException(MessageFormat.format(JGitText.get().kNotInRange, Integer.valueOf(k), Integer.valueOf(beginK), Integer.valueOf(endK)));
+				}
 				return x.get(getIndex(d, k));
 			}
 
 			final long getSnake(int d, int k) {
 // TODO: remove
-if (k < beginK || k > endK)
-	throw new RuntimeException(MessageFormat.format(JGitText.get().kNotInRange, Integer.valueOf(k), Integer.valueOf(beginK), Integer.valueOf(endK)));
+				if (k < beginK || k > endK) {
+					throw new RuntimeException(MessageFormat.format(JGitText.get().kNotInRange, Integer.valueOf(k), Integer.valueOf(beginK), Integer.valueOf(endK)));
+				}
 				return snake.get(getIndex(d, k));
 			}
 
 			private int forceKIntoRange(int k) {
 				/* if k is odd, so must be the result */
-				if (k < minK)
+				if (k < minK) {
 					return minK + ((k ^ minK) & 1);
-				else if (k > maxK)
+				} else if (k > maxK) {
 					return maxK - ((k ^ maxK) & 1);
+				}
 				return k;
 			}
 
@@ -344,8 +360,10 @@ if (k < beginK || k > endK)
 			}
 
 			final boolean makeEdit(long snake1, long snake2) {
-				int x1 = snake2x(snake1), x2 = snake2x(snake2);
-				int y1 = snake2y(snake1), y2 = snake2y(snake2);
+				int x1 = snake2x(snake1);
+				int x2 = snake2x(snake2);
+				int y1 = snake2y(snake1);
+				int y2 = snake2y(snake2);
 				/*
 				 * Check for incompatible partial edit paths:
 				 * when there are ambiguities, we might have
@@ -378,8 +396,10 @@ if (k < beginK || k > endK)
 					if (Thread.interrupted()) {
 						throw new DiffInterruptedException();
 					}
-					int left = -1, right = -1;
-					long leftSnake = -1L, rightSnake = -1L;
+					int left = -1;
+					int right = -1;
+					long leftSnake = -1L;
+					long rightSnake = -1L;
 					// TODO: refactor into its own function
 					if (k > prevBeginK) {
 						int i = getIndex(d - 1, k - 1);
@@ -388,8 +408,9 @@ if (k < beginK || k > endK)
 						leftSnake = left != end ?
 							newSnake(k - 1, end) :
 							snake.get(i);
-						if (meets(d, k - 1, end, leftSnake))
+						if (meets(d, k - 1, end, leftSnake)) {
 							return true;
+						}
 						left = getLeft(end);
 					}
 					if (k < prevEndK) {
@@ -399,8 +420,9 @@ if (k < beginK || k > endK)
 						rightSnake = right != end ?
 							newSnake(k + 1, end) :
 							snake.get(i);
-						if (meets(d, k + 1, end, rightSnake))
+						if (meets(d, k + 1, end, rightSnake)) {
 							return true;
+						}
 						right = getRight(end);
 					}
 					int newX;
@@ -415,8 +437,9 @@ if (k < beginK || k > endK)
 						newX = right;
 						newSnake = rightSnake;
 					}
-					if (meets(d, k, newX, newSnake))
+					if (meets(d, k, newX, newSnake)) {
 						return true;
+					}
 					adjustMinMaxK(k, newX);
 					int i = getIndex(d, k);
 					x.set(i, newX);
@@ -429,9 +452,11 @@ if (k < beginK || k > endK)
 		class ForwardEditPaths extends EditPaths {
 			@Override
 			final int snake(int k, int x) {
-				for (; x < endA && k + x < endB; x++)
-					if (!cmp.equals(a, x, b, k + x))
+				for (;x < endA && k + x < endB;x++) {
+					if (!cmp.equals(a, x, b, k + x)) {
 						break;
+					}
+				}
 				return x;
 			}
 
@@ -453,22 +478,26 @@ if (k < beginK || k > endK)
 			@Override
 			final void adjustMinMaxK(int k, int x) {
 				if (x >= endA || k + x >= endB) {
-					if (k > backward.middleK)
+					if (k > backward.middleK) {
 						maxK = k;
-					else
+					} else {
 						minK = k;
+					}
 				}
 			}
 
 			@Override
 			final boolean meets(int d, int k, int x, long snake) {
-				if (k < backward.beginK || k > backward.endK)
+				if (k < backward.beginK || k > backward.endK) {
 					return false;
+				}
 				// TODO: move out of loop
-				if (((d - 1 + k - backward.middleK) % 2) != 0)
+				if (((d - 1 + k - backward.middleK) % 2) != 0) {
 					return false;
-				if (x < backward.getX(d - 1, k))
+				}
+				if (x < backward.getX(d - 1, k)) {
 					return false;
+				}
 				makeEdit(snake, backward.getSnake(d - 1, k));
 				return true;
 			}
@@ -477,9 +506,11 @@ if (k < beginK || k > endK)
 		class BackwardEditPaths extends EditPaths {
 			@Override
 			final int snake(int k, int x) {
-				for (; x > beginA && k + x > beginB; x--)
-					if (!cmp.equals(a, x - 1, b, k + x - 1))
+				for (;x > beginA && k + x > beginB;x--) {
+					if (!cmp.equals(a, x - 1, b, k + x - 1)) {
 						break;
+					}
+				}
 				return x;
 			}
 
@@ -501,22 +532,26 @@ if (k < beginK || k > endK)
 			@Override
 			final void adjustMinMaxK(int k, int x) {
 				if (x <= beginA || k + x <= beginB) {
-					if (k > forward.middleK)
+					if (k > forward.middleK) {
 						maxK = k;
-					else
+					} else {
 						minK = k;
+					}
 				}
 			}
 
 			@Override
 			final boolean meets(int d, int k, int x, long snake) {
-				if (k < forward.beginK || k > forward.endK)
+				if (k < forward.beginK || k > forward.endK) {
 					return false;
+				}
 				// TODO: move out of loop
-				if (((d + k - forward.middleK) % 2) != 0)
+				if (((d + k - forward.middleK) % 2) != 0) {
 					return false;
-				if (x > forward.getX(d, k))
+				}
+				if (x > forward.getX(d, k)) {
 					return false;
+				}
 				makeEdit(forward.getSnake(d, k), snake);
 				return true;
 			}

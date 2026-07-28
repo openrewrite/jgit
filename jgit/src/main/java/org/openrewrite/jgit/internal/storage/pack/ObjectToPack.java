@@ -97,8 +97,9 @@ public class ObjectToPack extends PackedObjectInfo {
 	 *         base is specified only as id.
 	 */
 	public final ObjectToPack getDeltaBase() {
-		if (deltaBase instanceof ObjectToPack)
+		if (deltaBase instanceof ObjectToPack) {
 			return (ObjectToPack) deltaBase;
+		}
 		return null;
 	}
 
@@ -122,8 +123,9 @@ public class ObjectToPack extends PackedObjectInfo {
 
 	final DeltaCache.Ref popCachedDelta() {
 		DeltaCache.Ref r = cachedDelta;
-		if (r != null)
+		if (r != null) {
 			cachedDelta = null;
+		}
 		return r;
 	}
 
@@ -238,10 +240,11 @@ public class ObjectToPack extends PackedObjectInfo {
 	}
 
 	final void setDeltaAttempted(boolean deltaAttempted) {
-		if (deltaAttempted)
+		if (deltaAttempted) {
 			flags |= DELTA_ATTEMPTED;
-		else
+		} else {
 			flags &= ~DELTA_ATTEMPTED;
+		}
 	}
 
 	/**
@@ -309,8 +312,9 @@ public class ObjectToPack extends PackedObjectInfo {
 
 	final int getFormat() {
 		if (isReuseAsIs()) {
-			if (isDeltaRepresentation())
+			if (isDeltaRepresentation()) {
 				return StoredObjectRepresentation.PACK_DELTA;
+			}
 			return StoredObjectRepresentation.PACK_WHOLE;
 		}
 		return StoredObjectRepresentation.FORMAT_OTHER;
@@ -366,24 +370,31 @@ public class ObjectToPack extends PackedObjectInfo {
 		buf.append(Constants.typeString(getType()));
 		buf.append(" ");
 		buf.append(name());
-		if (wantWrite())
+		if (wantWrite()) {
 			buf.append(" wantWrite");
-		if (isReuseAsIs())
-			buf.append(" reuseAsIs");
-		if (isDoNotDelta())
-			buf.append(" doNotDelta");
-		if (isEdge())
-			buf.append(" edge");
-		if (getDeltaDepth() > 0)
-			buf.append(" depth=").append(getDeltaDepth());
-		if (isDeltaRepresentation()) {
-			if (getDeltaBase() != null)
-				buf.append(" base=inpack:").append(getDeltaBase().name());
-			else
-				buf.append(" base=edge:").append(getDeltaBaseId().name());
 		}
-		if (isWritten())
+		if (isReuseAsIs()) {
+			buf.append(" reuseAsIs");
+		}
+		if (isDoNotDelta()) {
+			buf.append(" doNotDelta");
+		}
+		if (isEdge()) {
+			buf.append(" edge");
+		}
+		if (getDeltaDepth() > 0) {
+			buf.append(" depth=").append(getDeltaDepth());
+		}
+		if (isDeltaRepresentation()) {
+			if (getDeltaBase() != null) {
+				buf.append(" base=inpack:").append(getDeltaBase().name());
+			} else {
+				buf.append(" base=edge:").append(getDeltaBaseId().name());
+			}
+		}
+		if (isWritten()) {
 			buf.append(" offset=").append(getOffset());
+		}
 		buf.append("]");
 		return buf.toString();
 	}

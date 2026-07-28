@@ -92,12 +92,15 @@ class BoundaryGenerator extends Generator {
 			boundary.shareFreeList(held);
 			for (;;) {
 				c = held.next();
-				if (c == null)
+				if (c == null) {
 					break;
-				if ((c.flags & DUPLICATE) != 0)
+				}
+				if ((c.flags & DUPLICATE) != 0) {
 					continue;
-				if ((c.flags & PARSED) == 0)
+				}
+				if ((c.flags & PARSED) == 0) {
 					c.parseHeaders(walk);
+				}
 				c.flags |= DUPLICATE;
 				boundary.add(c);
 			}

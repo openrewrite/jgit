@@ -80,7 +80,7 @@ public class HttpResponseException extends TransportException {
 		for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
 			if (name.equalsIgnoreCase(entry.getKey())) {
 				List<String> values = entry.getValue();
-				return (values != null && !values.isEmpty()) ? values.get(0) : null;
+				return values != null && !values.isEmpty() ? values.get(0) : null;
 			}
 		}
 		return null;

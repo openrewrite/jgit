@@ -62,8 +62,9 @@ public class HashedSequencePair<S extends Sequence> {
 	 * @return wrapper around A that includes cached hash codes
 	 */
 	public HashedSequence<S> getA() {
-		if (cachedA == null)
+		if (cachedA == null) {
 			cachedA = wrap(baseA);
+		}
 		return cachedA;
 	}
 
@@ -73,16 +74,18 @@ public class HashedSequencePair<S extends Sequence> {
 	 * @return wrapper around B that includes cached hash codes
 	 */
 	public HashedSequence<S> getB() {
-		if (cachedB == null)
+		if (cachedB == null) {
 			cachedB = wrap(baseB);
+		}
 		return cachedB;
 	}
 
 	private HashedSequence<S> wrap(S base) {
 		final int end = base.size();
 		final int[] hashes = new int[end];
-		for (int ptr = 0; ptr < end; ptr++)
+		for (int ptr = 0;ptr < end;ptr++) {
 			hashes[ptr] = cmp.hash(base, ptr);
+		}
 		return new HashedSequence<>(base, hashes);
 	}
 }

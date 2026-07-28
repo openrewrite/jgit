@@ -9,12 +9,8 @@
  */
 package org.openrewrite.jgit.api;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.openrewrite.jgit.api.errors.PatchApplyException;
-import org.openrewrite.jgit.lib.Repository;
-import org.openrewrite.jgit.util.FileUtils;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -24,8 +20,12 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openrewrite.jgit.api.errors.PatchApplyException;
+import org.openrewrite.jgit.lib.Repository;
+import org.openrewrite.jgit.util.FileUtils;
 
 /**
  * Tests for {@link ApplyCommand}, focusing on multi-hunk patch application.

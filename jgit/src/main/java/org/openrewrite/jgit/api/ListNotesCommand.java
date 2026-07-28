@@ -59,8 +59,9 @@ public class ListNotesCommand extends GitCommand<List<Note>> {
 			}
 
 			Iterator<Note> i = map.iterator();
-			while (i.hasNext())
+			while (i.hasNext()) {
 				notes.add(i.next());
+			}
 		} catch (IOException e) {
 			throw new JGitInternalException(e.getMessage(), e);
 		}

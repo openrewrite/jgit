@@ -168,7 +168,7 @@ public abstract class DfsObjDatabase extends ObjectDatabase {
 			}
 		}
 
-		private static class PackSourceComparator implements Comparator<PackSource> {
+		private static final class PackSourceComparator implements Comparator<PackSource> {
 			private final Map<PackSource, Integer> ranks;
 
 			private PackSourceComparator(Map<PackSource, Integer> ranks) {
@@ -197,7 +197,7 @@ public abstract class DfsObjDatabase extends ObjectDatabase {
 
 	private final DfsRepository repository;
 
-	private DfsReaderOptions readerOptions;
+	private final DfsReaderOptions readerOptions;
 
 	private Comparator<DfsPackDescription> packComparator;
 
@@ -505,7 +505,8 @@ public abstract class DfsObjDatabase extends ObjectDatabase {
 			DfsPackDescription desc, PackExt ext) throws IOException;
 
 	void addPack(DfsPackFile newPack) throws IOException {
-		PackList o, n;
+		PackList o;
+		PackList n;
 		do {
 			o = packList.get();
 			if (o == NO_PACKS) {
@@ -535,7 +536,8 @@ public abstract class DfsObjDatabase extends ObjectDatabase {
 
 	void addReftable(DfsPackDescription add, Set<DfsPackDescription> remove)
 			throws IOException {
-		PackList o, n;
+		PackList o;
+		PackList n;
 		do {
 			o = packList.get();
 			if (o == NO_PACKS) {
@@ -559,7 +561,8 @@ public abstract class DfsObjDatabase extends ObjectDatabase {
 	}
 
 	PackList scanPacks(PackList original) throws IOException {
-		PackList o, n;
+		PackList o;
+		PackList n;
 		synchronized (packList) {
 			do {
 				o = packList.get();
@@ -570,8 +573,9 @@ public abstract class DfsObjDatabase extends ObjectDatabase {
 					return o;
 				}
 				n = scanPacksImpl(o);
-				if (n == o)
+				if (n == o) {
 					return n;
+				}
 			} while (!packList.compareAndSet(o, n));
 		}
 		getRepository().fireEvent(new DfsPacksChangedEvent());
@@ -607,8 +611,9 @@ public abstract class DfsObjDatabase extends ObjectDatabase {
 			}
 		}
 
-		if (newPacks.isEmpty() && newReftables.isEmpty())
+		if (newPacks.isEmpty() && newReftables.isEmpty()) {
 			return new PackListImpl(NO_PACKS.packs, NO_PACKS.reftables);
+		}
 		if (!foundNew) {
 			old.clearDirty();
 			return old;

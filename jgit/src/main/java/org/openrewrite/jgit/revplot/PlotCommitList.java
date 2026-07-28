@@ -62,8 +62,9 @@ public class PlotCommitList<L extends PlotLane> extends
 	/** {@inheritDoc} */
 	@Override
 	public void source(RevWalk w) {
-		if (!(w instanceof PlotWalk))
+		if (!(w instanceof PlotWalk)) {
 			throw new ClassCastException(MessageFormat.format(JGitText.get().classCastNotA, PlotWalk.class.getName()));
+		}
 		super.source(w);
 	}
 
@@ -87,8 +88,9 @@ public class PlotCommitList<L extends PlotLane> extends
 	@SuppressWarnings("unchecked")
 	public void findPassingThrough(final PlotCommit<L> currCommit,
 			final Collection<L> result) {
-		for (PlotLane p : currCommit.passingLanes)
+		for (PlotLane p : currCommit.passingLanes) {
 			result.add((L) p);
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -160,20 +162,24 @@ public class PlotCommitList<L extends PlotLane> extends
 			for (int i = 0; i < nChildren; i++) {
 				final PlotCommit c = currCommit.children[i];
 				PlotCommit firstParent = (PlotCommit) c.getParent(0);
-				if (firstParent.lane != null && firstParent.lane != c.lane)
+				if (firstParent.lane != null && firstParent.lane != c.lane) {
 					closeLane(c.lane);
+				}
 			}
 		}
 
 		continueActiveLanes(currCommit);
-		if (currCommit.getParentCount() == 0)
+		if (currCommit.getParentCount() == 0) {
 			closeLane(currCommit.lane);
+		}
 	}
 
 	private void continueActiveLanes(PlotCommit currCommit) {
-		for (PlotLane lane : activeLanes)
-			if (lane != currCommit.lane)
+		for (PlotLane lane : activeLanes) {
+			if (lane != currCommit.lane) {
 				currCommit.addPassingLane(lane);
+			}
+		}
 	}
 
 	/**
@@ -191,11 +197,12 @@ public class PlotCommitList<L extends PlotLane> extends
 	private void handleBlockedLanes(final int index, final PlotCommit currCommit,
 			final PlotCommit childOnLane) {
 		for (PlotCommit child : currCommit.children) {
-			if (child == childOnLane)
+			if (child == childOnLane) {
 				continue; // simple continuations of lanes are handled by
-							// continueActiveLanes() calls in enter()
+				// continueActiveLanes() calls in enter()
 
-			// Is the child a merge or is it forking off?
+				// Is the child a merge or is it forking off?
+			}
 			boolean childIsMerge = child.getParent(0) != currCommit;
 			if (childIsMerge) {
 				PlotLane laneToUse = currCommit.lane;
@@ -291,10 +298,12 @@ public class PlotCommitList<L extends PlotLane> extends
 			PlotLane laneToContinue) {
 		for (int r = commitIndex - 1; r >= 0; r--) {
 			final PlotCommit rObj = get(r);
-			if (rObj == child)
+			if (rObj == child) {
 				break;
-			if (rObj != null)
+			}
+			if (rObj != null) {
 				rObj.addPassingLane(laneToContinue);
+			}
 		}
 	}
 
@@ -303,15 +312,18 @@ public class PlotCommitList<L extends PlotLane> extends
 		if (rObj != null) {
 			PlotLane lane = rObj.getLane();
 			// Positions may be blocked by a commit on a lane.
-			if (lane != null)
+			if (lane != null) {
 				blockedPositions.set(lane.getPosition());
+			}
 			// Positions may also be blocked by forking off and merging lanes.
 			// We don't consider passing lanes, because every passing lane forks
 			// off and merges at it ends.
-			for (PlotLane l : rObj.forkingOffLanes)
+			for (PlotLane l : rObj.forkingOffLanes) {
 				blockedPositions.set(l.getPosition());
-			for (PlotLane l : rObj.mergingLanes)
+			}
+			for (PlotLane l : rObj.mergingLanes) {
 				blockedPositions.set(l.getPosition());
+			}
 		}
 	}
 
@@ -326,8 +338,9 @@ public class PlotCommitList<L extends PlotLane> extends
 
 	private void setupChildren(PlotCommit<L> currCommit) {
 		final int nParents = currCommit.getParentCount();
-		for (int i = 0; i < nParents; i++)
+		for (int i = 0;i < nParents;i++) {
 			((PlotCommit) currCommit.getParent(i)).addChild(currCommit);
+		}
 	}
 
 	private PlotLane nextFreeLane() {
@@ -348,15 +361,17 @@ public class PlotCommitList<L extends PlotLane> extends
 	 * @return a free lane position
 	 */
 	private int getFreePosition(BitSet blockedPositions) {
-		if (freePositions.isEmpty())
+		if (freePositions.isEmpty()) {
 			return positionsAllocated++;
+		}
 
 		if (blockedPositions != null) {
-			for (Integer pos : freePositions)
+			for (Integer pos : freePositions) {
 				if (!blockedPositions.get(pos.intValue())) {
 					freePositions.remove(pos);
 					return pos.intValue();
 				}
+			}
 			return positionsAllocated++;
 		}
 		final Integer min = freePositions.first();

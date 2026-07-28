@@ -104,8 +104,9 @@ public class DeltaEncoder {
 		}
 		buf[p++] = (byte) (((int) sz) & 0x7f);
 		size += p;
-		if (limit == 0 || size < limit)
+		if (limit == 0 || size < limit) {
 			out.write(buf, 0, p);
+		}
 	}
 
 	/**
@@ -161,14 +162,17 @@ public class DeltaEncoder {
 	 */
 	public boolean insert(byte[] text, int off, int cnt)
 			throws IOException {
-		if (cnt <= 0)
+		if (cnt <= 0) {
 			return true;
+		}
 		if (limit != 0) {
 			int hdrs = cnt / MAX_INSERT_DATA_SIZE;
-			if (cnt % MAX_INSERT_DATA_SIZE != 0)
+			if (cnt % MAX_INSERT_DATA_SIZE != 0) {
 				hdrs++;
-			if (limit < size + hdrs + cnt)
+			}
+			if (limit < size + hdrs + cnt) {
 				return false;
+			}
 		}
 		do {
 			int n = Math.min(MAX_INSERT_DATA_SIZE, cnt);
@@ -195,8 +199,9 @@ public class DeltaEncoder {
 	 *             the instruction buffer cannot store the instructions.
 	 */
 	public boolean copy(long offset, int cnt) throws IOException {
-		if (cnt == 0)
+		if (cnt == 0) {
 			return true;
+		}
 
 		int p = 0;
 
@@ -210,8 +215,9 @@ public class DeltaEncoder {
 			cnt -= MAX_V2_COPY;
 
 			if (buf.length < p + MAX_COPY_CMD_SIZE) {
-				if (limit != 0 && limit < size + p)
+				if (limit != 0 && limit < size + p) {
 					return false;
+				}
 				out.write(buf, 0, p);
 				size += p;
 				p = 0;
@@ -219,8 +225,9 @@ public class DeltaEncoder {
 		}
 
 		p = encodeCopy(p, offset, cnt);
-		if (limit != 0 && limit < size + p)
+		if (limit != 0 && limit < size + p) {
 			return false;
+		}
 		out.write(buf, 0, p);
 		size += p;
 		return true;

@@ -46,7 +46,7 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	/** Cost of traversing a merge commit compared to a linear history. */
 	private static final int MERGE_COST = 65535;
 
-	private static class NameRevCommit extends RevCommit {
+	private static final class NameRevCommit extends RevCommit {
 		private String tip;
 		private int distance;
 		private long cost;
@@ -57,8 +57,9 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 
 		private StringBuilder format() {
 			StringBuilder sb = new StringBuilder(tip);
-			if (distance > 0)
+			if (distance > 0) {
 				sb.append('~').append(distance);
+			}
 			return sb;
 		}
 
@@ -66,10 +67,11 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 		public String toString() {
 			StringBuilder sb = new StringBuilder(getClass().getSimpleName())
 				.append('[');
-			if (tip != null)
+			if (tip != null) {
 				sb.append(format());
-			else
+			} else {
 				sb.append((Object) null);
+			}
 			sb.append(',').append(cost).append(']').append(' ')
 				.append(super.toString()).toString();
 			return sb.toString();
@@ -108,18 +110,21 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 			Map<ObjectId, String> nonCommits = new HashMap<>();
 			FIFORevQueue pending = new FIFORevQueue();
 			if (refs != null) {
-				for (Ref ref : refs)
+				for (Ref ref : refs) {
 					addRef(ref, nonCommits, pending);
+				}
 			}
 			addPrefixes(nonCommits, pending);
 			int cutoff = minCommitTime() - COMMIT_TIME_SLOP;
 
 			while (true) {
 				NameRevCommit c = (NameRevCommit) pending.next();
-				if (c == null)
+				if (c == null) {
 					break;
-				if (c.getCommitTime() < cutoff)
+				}
+				if (c.getCommitTime() < cutoff) {
 					continue;
+				}
 				for (int i = 0; i < c.getParentCount(); i++) {
 					NameRevCommit p = (NameRevCommit) walk.parseCommit(c.getParent(i));
 					long cost = c.cost + (i > 0 ? mergeCost : 1);
@@ -143,12 +148,14 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 				RevObject o = walk.parseAny(id);
 				if (o instanceof NameRevCommit) {
 					NameRevCommit c = (NameRevCommit) o;
-					if (c.tip != null)
+					if (c.tip != null) {
 						result.put(id, simplify(c.format().toString()));
+					}
 				} else {
 					String name = nonCommits.get(id);
-					if (name != null)
+					if (name != null) {
 						result.put(id, simplify(name));
+					}
 				}
 			}
 
@@ -205,8 +212,9 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	 */
 	public NameRevCommand add(Iterable<ObjectId> ids)
 			throws MissingObjectException, JGitInternalException {
-		for (ObjectId id : ids)
+		for (ObjectId id : ids) {
 			add(id);
+		}
 		return this;
 	}
 
@@ -242,14 +250,16 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	 */
 	public NameRevCommand addAnnotatedTags() {
 		checkCallable();
-		if (refs == null)
+		if (refs == null) {
 			refs = new ArrayList<>();
+		}
 		try {
 			for (Ref ref : repo.getRefDatabase()
 					.getRefsByPrefix(Constants.R_TAGS)) {
 				ObjectId id = ref.getObjectId();
-				if (id != null && (walk.parseAny(id) instanceof RevTag))
+				if (id != null && (walk.parseAny(id) instanceof RevTag)) {
 					addRef(ref);
+				}
 			}
 		} catch (IOException e) {
 			throw new JGitInternalException(e.getMessage(), e);
@@ -270,8 +280,9 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	 */
 	public NameRevCommand addRef(Ref ref) {
 		checkCallable();
-		if (refs == null)
+		if (refs == null) {
 			refs = new ArrayList<>();
+		}
 		refs.add(ref);
 		return this;
 	}
@@ -284,22 +295,26 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	private void addPrefixes(Map<ObjectId, String> nonCommits,
 			FIFORevQueue pending) throws IOException {
 		if (!prefixes.isEmpty()) {
-			for (String prefix : prefixes)
+			for (String prefix : prefixes) {
 				addPrefix(prefix, nonCommits, pending);
-		} else if (refs == null)
+			}
+		} else if (refs == null) {
 			addPrefix(Constants.R_REFS, nonCommits, pending);
+		}
 	}
 
 	private void addPrefix(String prefix, Map<ObjectId, String> nonCommits,
 			FIFORevQueue pending) throws IOException {
-		for (Ref ref : repo.getRefDatabase().getRefsByPrefix(prefix))
+		for (Ref ref : repo.getRefDatabase().getRefsByPrefix(prefix)) {
 			addRef(ref, nonCommits, pending);
+		}
 	}
 
 	private void addRef(Ref ref, Map<ObjectId, String> nonCommits,
 			FIFORevQueue pending) throws IOException {
-		if (ref.getObjectId() == null)
+		if (ref.getObjectId() == null) {
 			return;
+		}
 		RevObject o = walk.parseAny(ref.getObjectId());
 		while (o instanceof RevTag) {
 			RevTag t = (RevTag) o;
@@ -309,11 +324,13 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 		}
 		if (o instanceof NameRevCommit) {
 			NameRevCommit c = (NameRevCommit) o;
-			if (c.tip == null)
+			if (c.tip == null) {
 				c.tip = ref.getName();
+			}
 			pending.add(c);
-		} else if (!nonCommits.containsKey(o))
+		} else if (!nonCommits.containsKey(o)) {
 			nonCommits.put(o, ref.getName());
+		}
 	}
 
 	private int minCommitTime() throws IOException {
@@ -326,8 +343,9 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 			}
 			if (o instanceof RevCommit) {
 				RevCommit c = (RevCommit) o;
-				if (c.getCommitTime() < min)
+				if (c.getCommitTime() < min) {
 					min = c.getCommitTime();
+				}
 			}
 		}
 		return min;
@@ -335,16 +353,19 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 
 	private long compare(String leftTip, long leftCost, String rightTip, long rightCost) {
 		long c = leftCost - rightCost;
-		if (c != 0 || prefixes.isEmpty())
+		if (c != 0 || prefixes.isEmpty()) {
 			return c;
+		}
 		int li = -1;
 		int ri = -1;
 		for (int i = 0; i < prefixes.size(); i++) {
 			String prefix = prefixes.get(i);
-			if (li < 0 && leftTip.startsWith(prefix))
+			if (li < 0 && leftTip.startsWith(prefix)) {
 				li = i;
-			if (ri < 0 && rightTip.startsWith(prefix))
+			}
+			if (ri < 0 && rightTip.startsWith(prefix)) {
 				ri = i;
+			}
 		}
 		// Don't tiebreak if prefixes are the same, in order to prefer first-parent
 		// paths.
@@ -352,12 +373,15 @@ public class NameRevCommand extends GitCommand<Map<ObjectId, String>> {
 	}
 
 	private static String simplify(String refName) {
-		if (refName.startsWith(Constants.R_HEADS))
+		if (refName.startsWith(Constants.R_HEADS)) {
 			return refName.substring(Constants.R_HEADS.length());
-		if (refName.startsWith(Constants.R_TAGS))
+		}
+		if (refName.startsWith(Constants.R_TAGS)) {
 			return refName.substring(Constants.R_TAGS.length());
-		if (refName.startsWith(Constants.R_REFS))
+		}
+		if (refName.startsWith(Constants.R_REFS)) {
 			return refName.substring(Constants.R_REFS.length());
+		}
 		return refName;
 	}
 }

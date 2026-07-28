@@ -437,16 +437,19 @@ public class Config {
 	public String[] getStringList(final String section, String subsection,
 			final String name) {
 		String[] base;
-		if (baseConfig != null)
+		if (baseConfig != null) {
 			base = baseConfig.getStringList(section, subsection, name);
-		else
+		} else {
 			base = EMPTY_STRING_ARRAY;
+		}
 
 		String[] self = getRawStringList(section, subsection, name);
-		if (self == null)
+		if (self == null) {
 			return base;
-		if (base.length == 0)
+		}
+		if (base.length == 0) {
 			return self;
+		}
 		String[] res = new String[base.length + self.length];
 		int n = base.length;
 		System.arraycopy(base, 0, res, 0, n);
@@ -707,12 +710,14 @@ public class Config {
 	}
 
 	private ConfigSnapshot getState() {
-		ConfigSnapshot cur, upd;
+		ConfigSnapshot cur;
+		ConfigSnapshot upd;
 		do {
 			cur = state.get();
 			final ConfigSnapshot base = getBaseState();
-			if (cur.baseState == base)
+			if (cur.baseState == base) {
 				return cur;
+			}
 			upd = new ConfigSnapshot(cur.entryList, base);
 		} while (!state.compareAndSet(cur, upd));
 		return upd;
@@ -767,14 +772,15 @@ public class Config {
 			final String name, final long value) {
 		final String s;
 
-		if (value >= GiB && (value % GiB) == 0)
-			s = String.valueOf(value / GiB) + "g"; //$NON-NLS-1$
-		else if (value >= MiB && (value % MiB) == 0)
-			s = String.valueOf(value / MiB) + "m"; //$NON-NLS-1$
-		else if (value >= KiB && (value % KiB) == 0)
-			s = String.valueOf(value / KiB) + "k"; //$NON-NLS-1$
-		else
+		if (value >= GiB && (value % GiB) == 0) {
+			s = value / GiB + "g"; //$NON-NLS-1$
+		} else if (value >= MiB && (value % MiB) == 0) {
+			s = value / MiB + "m"; //$NON-NLS-1$
+		} else if (value >= KiB && (value % KiB) == 0) {
+			s = value / KiB + "k"; //$NON-NLS-1$
+		} else {
 			s = String.valueOf(value);
+		}
 
 		setString(section, subsection, name, s);
 	}
@@ -823,10 +829,11 @@ public class Config {
 	public <T extends Enum<?>> void setEnum(final String section,
 			final String subsection, final String name, final T value) {
 		String n;
-		if (value instanceof ConfigEnum)
+		if (value instanceof ConfigEnum) {
 			n = ((ConfigEnum) value).toConfigValue();
-		else
+		} else {
 			n = value.name().toLowerCase(Locale.ROOT).replace('_', ' ');
+		}
 		setString(section, subsection, name, n);
 	}
 
@@ -879,7 +886,8 @@ public class Config {
 	 *            optional subsection value, e.g. a branch name
 	 */
 	public void unsetSection(String section, String subsection) {
-		ConfigSnapshot src, res;
+		ConfigSnapshot src;
+		ConfigSnapshot res;
 		do {
 			src = state.get();
 			res = unsetSection(src, section, subsection);
@@ -900,8 +908,9 @@ public class Config {
 				continue;
 			}
 
-			if (lastWasMatch && e.section == null && e.subsection == null)
+			if (lastWasMatch && e.section == null && e.subsection == null) {
 				continue; // skip this padding line in the section.
+			}
 			r.add(e);
 		}
 
@@ -928,13 +937,15 @@ public class Config {
 	 */
 	public void setStringList(final String section, final String subsection,
 			final String name, final List<String> values) {
-		ConfigSnapshot src, res;
+		ConfigSnapshot src;
+		ConfigSnapshot res;
 		do {
 			src = state.get();
 			res = replaceStringList(src, section, subsection, name, values);
 		} while (!state.compareAndSet(src, res));
-		if (notifyUponTransientChanges())
+		if (notifyUponTransientChanges()) {
 			fireConfigChangedEvent();
+		}
 	}
 
 	private ConfigSnapshot replaceStringList(final ConfigSnapshot srcState,
@@ -962,8 +973,9 @@ public class Config {
 			while (entryIndex < entries.size()) {
 				final ConfigLine e = entries.get(entryIndex++);
 				if (e.includedFrom == null
-						&& e.match(section, subsection, name))
+						&& e.match(section, subsection, name)) {
 					entries.remove(--entryIndex);
+				}
 			}
 		}
 
@@ -1025,10 +1037,11 @@ public class Config {
 				i++;
 				while (i < entries.size()) {
 					e = entries.get(i);
-					if (e.match(section, subsection, e.name))
+					if (e.match(section, subsection, e.name)) {
 						i++;
-					else
+					} else {
 						break;
+					}
 				}
 				return i;
 			}
@@ -1044,10 +1057,12 @@ public class Config {
 	public String toText() {
 		final StringBuilder out = new StringBuilder();
 		for (ConfigLine e : state.get().entryList) {
-			if (e.includedFrom != null)
+			if (e.includedFrom != null) {
 				continue;
-			if (e.prefix != null)
+			}
+			if (e.prefix != null) {
 				out.append(e.prefix);
+			}
 			if (e.section != null && e.name == null) {
 				out.append('[');
 				out.append(e.section);
@@ -1057,16 +1072,19 @@ public class Config {
 					// make sure to avoid double quotes here
 					boolean quoted = escaped.startsWith("\"") //$NON-NLS-1$
 							&& escaped.endsWith("\""); //$NON-NLS-1$
-					if (!quoted)
+					if (!quoted) {
 						out.append('"');
+					}
 					out.append(escaped);
-					if (!quoted)
+					if (!quoted) {
 						out.append('"');
+					}
 				}
 				out.append(']');
 			} else if (e.section != null && e.name != null) {
-				if (e.prefix == null || "".equals(e.prefix)) //$NON-NLS-1$
+				if (e.prefix == null || "".equals(e.prefix)) { //$NON-NLS-1$
 					out.append('\t');
+				}
 				out.append(e.name);
 				if (!isMissing(e.value)) {
 					out.append(" ="); //$NON-NLS-1$
@@ -1075,11 +1093,13 @@ public class Config {
 						out.append(escapeValue(e.value));
 					}
 				}
-				if (e.suffix != null)
+				if (e.suffix != null) {
 					out.append(' ');
+				}
 			}
-			if (e.suffix != null)
+			if (e.suffix != null) {
 				out.append(e.suffix);
+			}
 			out.append('\n');
 		}
 		return out.toString();
@@ -1112,8 +1132,9 @@ public class Config {
 		for (;;) {
 			int input = in.read();
 			if (-1 == input) {
-				if (e.section != null)
+				if (e.section != null) {
 					newEntries.add(e);
+				}
 				break;
 			}
 
@@ -1121,8 +1142,9 @@ public class Config {
 			if ('\n' == c) {
 				// End of this entry.
 				newEntries.add(e);
-				if (e.section != null)
+				if (e.section != null) {
 					last = e;
+				}
 				e = new ConfigLine();
 				e.includedFrom = includedFrom;
 			} else if (e.suffix != null) {
@@ -1135,8 +1157,9 @@ public class Config {
 
 			} else if (e.section == null && Character.isWhitespace(c)) {
 				// Save the leading whitespace (if any).
-				if (e.prefix == null)
+				if (e.prefix == null) {
 					e.prefix = ""; //$NON-NLS-1$
+				}
 				e.prefix += c;
 
 			} else if ('[' == c) {
@@ -1147,8 +1170,9 @@ public class Config {
 					e.subsection = readSubsectionName(in);
 					input = in.read();
 				}
-				if (']' != input)
+				if (']' != input) {
 					throw new ConfigInvalidException(JGitText.get().badGroupHeader);
+				}
 				e.suffix = ""; //$NON-NLS-1$
 
 			} else if (last != null) {
@@ -1160,14 +1184,16 @@ public class Config {
 				if (e.name.endsWith("\n")) { //$NON-NLS-1$
 					e.name = e.name.substring(0, e.name.length() - 1);
 					e.value = MISSING_ENTRY;
-				} else
+				} else {
 					e.value = readValue(in);
+				}
 
-				if (e.section.equalsIgnoreCase("include")) { //$NON-NLS-1$
+				if ("include".equalsIgnoreCase(e.section)) { //$NON-NLS-1$
 					addIncludedConfig(newEntries, e, depth);
 				}
-			} else
+			} else {
 				throw new ConfigInvalidException(JGitText.get().invalidLineInConfigFile);
+			}
 		}
 
 		return newEntries;
@@ -1191,8 +1217,8 @@ public class Config {
 
 	private void addIncludedConfig(final List<ConfigLine> newEntries,
 			ConfigLine line, int depth) throws ConfigInvalidException {
-		if (!line.name.equalsIgnoreCase("path") || //$NON-NLS-1$
-				line.value == null || line.value.equals(MISSING_ENTRY)) {
+		if (!"path".equalsIgnoreCase(line.name) || //$NON-NLS-1$
+				line.value == null || MISSING_ENTRY.equals(line.value)) {
 			throw new ConfigInvalidException(MessageFormat.format(
 					JGitText.get().invalidLineInConfigFileWithParam, line));
 		}
@@ -1250,8 +1276,9 @@ public class Config {
 		final StringBuilder name = new StringBuilder();
 		for (;;) {
 			int c = in.read();
-			if (c < 0)
+			if (c < 0) {
 				throw new ConfigInvalidException(JGitText.get().unexpectedEndOfConfigFile);
+			}
 
 			if (']' == c) {
 				in.reset();
@@ -1261,25 +1288,28 @@ public class Config {
 			if (' ' == c || '\t' == c) {
 				for (;;) {
 					c = in.read();
-					if (c < 0)
+					if (c < 0) {
 						throw new ConfigInvalidException(JGitText.get().unexpectedEndOfConfigFile);
+					}
 
 					if ('"' == c) {
 						in.reset();
 						break;
 					}
 
-					if (' ' == c || '\t' == c)
+					if (' ' == c || '\t' == c) {
 						continue; // Skipped...
+					}
 					throw new ConfigInvalidException(MessageFormat.format(JGitText.get().badSectionEntry, name));
 				}
 				break;
 			}
 
-			if (Character.isLetterOrDigit((char) c) || '.' == c || '-' == c)
+			if (Character.isLetterOrDigit((char) c) || '.' == c || '-' == c) {
 				name.append((char) c);
-			else
+			} else {
 				throw new ConfigInvalidException(MessageFormat.format(JGitText.get().badSectionEntry, name));
+			}
 		}
 		return name.toString();
 	}
@@ -1289,28 +1319,33 @@ public class Config {
 		final StringBuilder name = new StringBuilder();
 		for (;;) {
 			int c = in.read();
-			if (c < 0)
+			if (c < 0) {
 				throw new ConfigInvalidException(JGitText.get().unexpectedEndOfConfigFile);
+			}
 
-			if ('=' == c)
+			if ('=' == c) {
 				break;
+			}
 
 			if (' ' == c || '\t' == c) {
 				for (;;) {
 					c = in.read();
-					if (c < 0)
+					if (c < 0) {
 						throw new ConfigInvalidException(JGitText.get().unexpectedEndOfConfigFile);
+					}
 
-					if ('=' == c)
+					if ('=' == c) {
 						break;
+					}
 
 					if (';' == c || '#' == c || '\n' == c) {
 						in.reset();
 						break;
 					}
 
-					if (' ' == c || '\t' == c)
+					if (' ' == c || '\t' == c) {
 						continue; // Skipped...
+					}
 					throw new ConfigInvalidException(JGitText.get().badEntryDelimiter);
 				}
 				break;
@@ -1325,8 +1360,9 @@ public class Config {
 				in.reset();
 				name.append((char) c);
 				break;
-			} else
+			} else {
 				throw new ConfigInvalidException(MessageFormat.format(JGitText.get().badEntryName, name));
+			}
 		}
 		return name.toString();
 	}
@@ -1454,7 +1490,7 @@ public class Config {
 				throw new ConfigInvalidException(
 						MessageFormat.format(JGitText.get().badEscape,
 								Character.isAlphabetic(c)
-										? Character.valueOf(((char) c))
+										? Character.valueOf((char) c)
 										: toUnicodeLiteral(c)));
 			}
 

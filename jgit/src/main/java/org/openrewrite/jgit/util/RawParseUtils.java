@@ -62,26 +62,33 @@ public final class RawParseUtils {
 
 		digits10 = new byte['9' + 1];
 		Arrays.fill(digits10, (byte) -1);
-		for (char i = '0'; i <= '9'; i++)
+		for (char i = '0';i <= '9';i++) {
 			digits10[i] = (byte) (i - '0');
+		}
 
 		digits16 = new byte['f' + 1];
 		Arrays.fill(digits16, (byte) -1);
-		for (char i = '0'; i <= '9'; i++)
+		for (char i = '0';i <= '9';i++) {
 			digits16[i] = (byte) (i - '0');
-		for (char i = 'a'; i <= 'f'; i++)
+		}
+		for (char i = 'a';i <= 'f';i++) {
 			digits16[i] = (byte) ((i - 'a') + 10);
-		for (char i = 'A'; i <= 'F'; i++)
+		}
+		for (char i = 'A';i <= 'F';i++) {
 			digits16[i] = (byte) ((i - 'A') + 10);
+		}
 
 		footerLineKeyChars = new byte['z' + 1];
 		footerLineKeyChars['-'] = 1;
-		for (char i = '0'; i <= '9'; i++)
+		for (char i = '0';i <= '9';i++) {
 			footerLineKeyChars[i] = 1;
-		for (char i = 'A'; i <= 'Z'; i++)
+		}
+		for (char i = 'A';i <= 'Z';i++) {
 			footerLineKeyChars[i] = 1;
-		for (char i = 'a'; i <= 'z'; i++)
+		}
+		for (char i = 'a';i <= 'z';i++) {
 			footerLineKeyChars[i] = 1;
+		}
 	}
 
 	/**
@@ -95,12 +102,15 @@ public final class RawParseUtils {
 	 *            the buffer to test for equality with b.
 	 * @return ptr + src.length if b[ptr..src.length] == src; else -1.
 	 */
-	public static final int match(byte[] b, int ptr, byte[] src) {
-		if (ptr + src.length > b.length)
+	public static int match(byte[] b, int ptr, byte[] src) {
+		if (ptr + src.length > b.length) {
 			return -1;
-		for (int i = 0; i < src.length; i++, ptr++)
-			if (b[ptr] != src[i])
+		}
+		for (int i = 0;i < src.length;i++, ptr++) {
+			if (b[ptr] != src[i]) {
 				return -1;
+			}
+		}
 		return ptr;
 	}
 
@@ -147,14 +157,16 @@ public final class RawParseUtils {
 			return o;
 		}
 		final boolean isneg = value < 0;
-		if (isneg)
+		if (isneg) {
 			value = -value;
+		}
 		while (value != 0) {
 			b[--o] = base10byte[value % 10];
 			value /= 10;
 		}
-		if (isneg)
+		if (isneg) {
 			b[--o] = '-';
+		}
 		return o;
 	}
 
@@ -176,39 +188,40 @@ public final class RawParseUtils {
 	 * @return the value at this location; 0 if the location is not a valid
 	 *         numeric.
 	 */
-	public static final int parseBase10(final byte[] b, int ptr,
+	public static int parseBase10(final byte[] b, int ptr,
 			final MutableInteger ptrResult) {
 		int r = 0;
 		int sign = 0;
 		try {
 			final int sz = b.length;
-			while (ptr < sz && b[ptr] == ' ')
+			while (ptr < sz && b[ptr] == ' ') {
 				ptr++;
-			if (ptr >= sz)
+			}
+			if (ptr >= sz) {
 				return 0;
+			}
 
-			switch (b[ptr]) {
-			case '-':
+			if (b[ptr] == '-') {
 				sign = -1;
 				ptr++;
-				break;
-			case '+':
+			} else if (b[ptr] == '+') {
 				ptr++;
-				break;
 			}
 
 			while (ptr < sz) {
 				final byte v = digits10[b[ptr]];
-				if (v < 0)
+				if (v < 0) {
 					break;
+				}
 				r = (r * 10) + v;
 				ptr++;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			// Not a valid digit.
 		}
-		if (ptrResult != null)
+		if (ptrResult != null) {
 			ptrResult.value = ptr;
+		}
 		return sign < 0 ? -r : r;
 	}
 
@@ -230,39 +243,40 @@ public final class RawParseUtils {
 	 * @return the value at this location; 0 if the location is not a valid
 	 *         numeric.
 	 */
-	public static final long parseLongBase10(final byte[] b, int ptr,
+	public static long parseLongBase10(final byte[] b, int ptr,
 			final MutableInteger ptrResult) {
 		long r = 0;
 		int sign = 0;
 		try {
 			final int sz = b.length;
-			while (ptr < sz && b[ptr] == ' ')
+			while (ptr < sz && b[ptr] == ' ') {
 				ptr++;
-			if (ptr >= sz)
+			}
+			if (ptr >= sz) {
 				return 0;
+			}
 
-			switch (b[ptr]) {
-			case '-':
+			if (b[ptr] == '-') {
 				sign = -1;
 				ptr++;
-				break;
-			case '+':
+			} else if (b[ptr] == '+') {
 				ptr++;
-				break;
 			}
 
 			while (ptr < sz) {
 				final byte v = digits10[b[ptr]];
-				if (v < 0)
+				if (v < 0) {
 					break;
+				}
 				r = (r * 10) + v;
 				ptr++;
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			// Not a valid digit.
 		}
-		if (ptrResult != null)
+		if (ptrResult != null) {
 			ptrResult.value = ptr;
+		}
 		return sign < 0 ? -r : r;
 	}
 
@@ -281,7 +295,7 @@ public final class RawParseUtils {
 	 * @throws java.lang.ArrayIndexOutOfBoundsException
 	 *             if the string is not hex formatted.
 	 */
-	public static final int parseHexInt16(final byte[] bs, final int p) {
+	public static int parseHexInt16(final byte[] bs, final int p) {
 		int r = digits16[bs[p]] << 4;
 
 		r |= digits16[bs[p + 1]];
@@ -291,8 +305,9 @@ public final class RawParseUtils {
 		r <<= 4;
 
 		r |= digits16[bs[p + 3]];
-		if (r < 0)
+		if (r < 0) {
 			throw new ArrayIndexOutOfBoundsException();
+		}
 		return r;
 	}
 
@@ -311,7 +326,7 @@ public final class RawParseUtils {
 	 * @throws java.lang.ArrayIndexOutOfBoundsException
 	 *             if the string is not hex formatted.
 	 */
-	public static final int parseHexInt32(final byte[] bs, final int p) {
+	public static int parseHexInt32(final byte[] bs, final int p) {
 		int r = digits16[bs[p]] << 4;
 
 		r |= digits16[bs[p + 1]];
@@ -332,8 +347,9 @@ public final class RawParseUtils {
 		r |= digits16[bs[p + 6]];
 
 		final int last = digits16[bs[p + 7]];
-		if (r < 0 || last < 0)
+		if (r < 0 || last < 0) {
 			throw new ArrayIndexOutOfBoundsException();
+		}
 		return (r << 4) | last;
 	}
 
@@ -353,7 +369,7 @@ public final class RawParseUtils {
 	 *             if the string is not hex formatted.
 	 * @since 4.3
 	 */
-	public static final long parseHexInt64(final byte[] bs, final int p) {
+	public static long parseHexInt64(final byte[] bs, final int p) {
 		long r = digits16[bs[p]] << 4;
 
 		r |= digits16[bs[p + 1]];
@@ -398,8 +414,9 @@ public final class RawParseUtils {
 		r |= digits16[bs[p + 14]];
 
 		final int last = digits16[bs[p + 15]];
-		if (r < 0 || last < 0)
+		if (r < 0 || last < 0) {
 			throw new ArrayIndexOutOfBoundsException();
+		}
 		return (r << 4) | last;
 	}
 
@@ -412,10 +429,11 @@ public final class RawParseUtils {
 	 * @throws java.lang.ArrayIndexOutOfBoundsException
 	 *             if the input digit is not a valid hex digit.
 	 */
-	public static final int parseHexInt4(final byte digit) {
+	public static int parseHexInt4(final byte digit) {
 		final byte r = digits16[digit];
-		if (r < 0)
+		if (r < 0) {
 			throw new ArrayIndexOutOfBoundsException();
+		}
 		return r;
 	}
 
@@ -431,7 +449,7 @@ public final class RawParseUtils {
 	 *            position within buffer to start parsing digits at.
 	 * @return the timezone at this location, expressed in minutes.
 	 */
-	public static final int parseTimeZoneOffset(byte[] b, int ptr) {
+	public static int parseTimeZoneOffset(byte[] b, int ptr) {
 		return parseTimeZoneOffset(b, ptr, null);
 	}
 
@@ -451,7 +469,7 @@ public final class RawParseUtils {
 	 * @return the timezone at this location, expressed in minutes.
 	 * @since 4.1
 	 */
-	public static final int parseTimeZoneOffset(final byte[] b, int ptr,
+	public static int parseTimeZoneOffset(final byte[] b, int ptr,
 			MutableInteger ptrResult) {
 		final int v = parseBase10(b, ptr, ptrResult);
 		final int tzMins = v % 100;
@@ -470,11 +488,12 @@ public final class RawParseUtils {
 	 *            character to find.
 	 * @return new position just after chrA.
 	 */
-	public static final int next(byte[] b, int ptr, char chrA) {
+	public static int next(byte[] b, int ptr, char chrA) {
 		final int sz = b.length;
 		while (ptr < sz) {
-			if (b[ptr++] == chrA)
+			if (b[ptr++] == chrA) {
 				return ptr;
+			}
 		}
 		return ptr;
 	}
@@ -490,7 +509,7 @@ public final class RawParseUtils {
 	 *            position within buffer to start looking for LF at.
 	 * @return new position just after the first LF found.
 	 */
-	public static final int nextLF(byte[] b, int ptr) {
+	public static int nextLF(byte[] b, int ptr) {
 		return next(b, ptr, '\n');
 	}
 
@@ -507,12 +526,13 @@ public final class RawParseUtils {
 	 *            character to find.
 	 * @return new position just after the first chrA or LF to be found.
 	 */
-	public static final int nextLF(byte[] b, int ptr, char chrA) {
+	public static int nextLF(byte[] b, int ptr, char chrA) {
 		final int sz = b.length;
 		while (ptr < sz) {
 			final byte c = b[ptr++];
-			if (c == chrA || c == '\n')
+			if (c == chrA || c == '\n') {
 				return ptr;
+			}
 		}
 		return ptr;
 	}
@@ -528,7 +548,7 @@ public final class RawParseUtils {
 	 * b.length, or the index of the header's terminating newline.
 	 * @since 5.1
 	 */
-	public static final int headerEnd(final byte[] b, int ptr) {
+	public static int headerEnd(final byte[] b, int ptr) {
 		final int sz = b.length;
 		while (ptr < sz) {
 			final byte c = b[ptr++];
@@ -552,7 +572,7 @@ public final class RawParseUtils {
 	 *         not found
 	 * @since 5.1
 	 */
-	public static final int headerStart(byte[] headerName, byte[] b, int ptr) {
+	public static int headerStart(byte[] headerName, byte[] b, int ptr) {
 		// Start by advancing to just past a LF or buffer start
 		if (ptr != 0) {
 			ptr = nextLF(b, ptr - 1);
@@ -584,12 +604,14 @@ public final class RawParseUtils {
 	 *            character to find.
 	 * @return new position just before chrA, -1 for not found
 	 */
-	public static final int prev(byte[] b, int ptr, char chrA) {
-		if (ptr == b.length)
+	public static int prev(byte[] b, int ptr, char chrA) {
+		if (ptr == b.length) {
 			--ptr;
+		}
 		while (ptr >= 0) {
-			if (b[ptr--] == chrA)
+			if (b[ptr--] == chrA) {
 				return ptr;
+			}
 		}
 		return ptr;
 	}
@@ -605,7 +627,7 @@ public final class RawParseUtils {
 	 *            position within buffer to start looking for LF at.
 	 * @return new position just before the first LF found, -1 for not found
 	 */
-	public static final int prevLF(byte[] b, int ptr) {
+	public static int prevLF(byte[] b, int ptr) {
 		return prev(b, ptr, '\n');
 	}
 
@@ -623,13 +645,15 @@ public final class RawParseUtils {
 	 * @return new position just before the first chrA or LF to be found, -1 for
 	 *         not found
 	 */
-	public static final int prevLF(byte[] b, int ptr, char chrA) {
-		if (ptr == b.length)
+	public static int prevLF(byte[] b, int ptr, char chrA) {
+		if (ptr == b.length) {
 			--ptr;
+		}
 		while (ptr >= 0) {
 			final byte c = b[ptr--];
-			if (c == chrA || c == '\n')
+			if (c == chrA || c == '\n') {
 				return ptr;
+			}
 		}
 		return ptr;
 	}
@@ -656,7 +680,7 @@ public final class RawParseUtils {
 	 *            1 past the end of the content within <code>buf</code>.
 	 * @return a line map indicating the starting position of each line.
 	 */
-	public static final IntList lineMap(byte[] buf, int ptr, int end) {
+	public static IntList lineMap(byte[] buf, int ptr, int end) {
 		IntList map = new IntList((end - ptr) / 36);
 		map.fillTo(1, Integer.MIN_VALUE);
 		for (; ptr < end; ptr = nextLF(buf, ptr)) {
@@ -682,7 +706,7 @@ public final class RawParseUtils {
 	 *            if a NUL byte is found.
 	 * @since 5.0
 	 */
-	public static final IntList lineMapOrBinary(byte[] buf, int ptr, int end)
+	public static IntList lineMapOrBinary(byte[] buf, int ptr, int end)
 			throws BinaryBlobException {
 		IntList map = lineMapOrNull(buf, ptr, end);
 		if (map == null) {
@@ -708,7 +732,7 @@ public final class RawParseUtils {
 				return null;
 			}
 
-			foundLF = (buf[ptr] == '\n');
+			foundLF = buf[ptr] == '\n';
 		}
 		map.add(end);
 		return map;
@@ -727,12 +751,14 @@ public final class RawParseUtils {
 	 *         character of the author's name. If no author header can be
 	 *         located -1 is returned.
 	 */
-	public static final int author(byte[] b, int ptr) {
+	public static int author(byte[] b, int ptr) {
 		final int sz = b.length;
-		if (ptr == 0)
+		if (ptr == 0) {
 			ptr += 46; // skip the "tree ..." line.
-		while (ptr < sz && b[ptr] == 'p')
+		}
+		while (ptr < sz && b[ptr] == 'p') {
 			ptr += 48; // skip this parent.
+		}
 		return match(b, ptr, author);
 	}
 
@@ -749,14 +775,17 @@ public final class RawParseUtils {
 	 *         character of the committer's name. If no committer header can be
 	 *         located -1 is returned.
 	 */
-	public static final int committer(byte[] b, int ptr) {
+	public static int committer(byte[] b, int ptr) {
 		final int sz = b.length;
-		if (ptr == 0)
+		if (ptr == 0) {
 			ptr += 46; // skip the "tree ..." line.
-		while (ptr < sz && b[ptr] == 'p')
+		}
+		while (ptr < sz && b[ptr] == 'p') {
 			ptr += 48; // skip this parent.
-		if (ptr < sz && b[ptr] == 'a')
+		}
+		if (ptr < sz && b[ptr] == 'a') {
 			ptr = nextLF(b, ptr);
+		}
 		return match(b, ptr, committer);
 	}
 
@@ -773,16 +802,19 @@ public final class RawParseUtils {
 	 *         character of the tagger's name. If no tagger header can be
 	 *         located -1 is returned.
 	 */
-	public static final int tagger(byte[] b, int ptr) {
+	public static int tagger(byte[] b, int ptr) {
 		final int sz = b.length;
-		if (ptr == 0)
+		if (ptr == 0) {
 			ptr += 48; // skip the "object ..." line.
+		}
 		while (ptr < sz) {
-			if (b[ptr] == '\n')
+			if (b[ptr] == '\n') {
 				return -1;
+			}
 			final int m = match(b, ptr, tagger);
-			if (m >= 0)
+			if (m >= 0) {
 				return m;
+			}
 			ptr = nextLF(b, ptr);
 		}
 		return -1;
@@ -801,13 +833,15 @@ public final class RawParseUtils {
 	 *         character of the encoding's name. If no encoding header can be
 	 *         located -1 is returned (and UTF-8 should be assumed).
 	 */
-	public static final int encoding(byte[] b, int ptr) {
+	public static int encoding(byte[] b, int ptr) {
 		final int sz = b.length;
 		while (ptr < sz) {
-			if (b[ptr] == '\n')
+			if (b[ptr] == '\n') {
 				return -1;
-			if (b[ptr] == 'e')
+			}
+			if (b[ptr] == 'e') {
 				break;
+			}
 			ptr = nextLF(b, ptr);
 		}
 		return match(b, ptr, encoding);
@@ -918,8 +952,9 @@ public final class RawParseUtils {
 		final int emailB = nextLF(raw, nameB, '<');
 		final int emailE = nextLF(raw, emailB, '>');
 		if (emailB >= raw.length || raw[emailB] == '\n' ||
-				(emailE >= raw.length - 1 && raw[emailE - 1] != '>'))
+				(emailE >= raw.length - 1 && raw[emailE - 1] != '>')) {
 			return null;
+		}
 
 		final int nameEnd = emailB - 2 >= nameB && raw[emailB - 2] == ' ' ?
 				emailB - 2 : emailB - 1;
@@ -936,13 +971,15 @@ public final class RawParseUtils {
 		// character if there is no trailing LF.
 		final int tzBegin = lastIndexOfTrim(raw, ' ',
 				nextLF(raw, emailE - 1) - 2) + 1;
-		if (tzBegin <= emailE) // No time/zone, still valid
+		if (tzBegin <= emailE) { // No time/zone, still valid
 			return new PersonIdent(name, email, 0, 0);
+		}
 
 		final int whenBegin = Math.max(emailE,
 				lastIndexOfTrim(raw, ' ', tzBegin - 1) + 1);
-		if (whenBegin >= tzBegin - 1) // No time/zone, still valid
+		if (whenBegin >= tzBegin - 1) { // No time/zone, still valid
 			return new PersonIdent(name, email, 0, 0);
+		}
 
 		final long when = parseLongBase10(raw, whenBegin, null);
 		final int tz = parseTimeZoneOffset(raw, tzBegin);
@@ -978,10 +1015,11 @@ public final class RawParseUtils {
 		} else {
 			email = "invalid"; //$NON-NLS-1$
 		}
-		if (emailB < stop)
+		if (emailB < stop) {
 			name = decode(raw, nameB, emailB - 2);
-		else
+		} else {
 			name = decode(raw, nameB, stop);
+		}
 
 		final MutableInteger ptrout = new MutableInteger();
 		long when;
@@ -1018,8 +1056,9 @@ public final class RawParseUtils {
 			for (;;) {
 				final byte c = raw[ptr];
 				if (footerLineKeyChars[c] == 0) {
-					if (c == ':')
+					if (c == ':') {
 						return ptr;
+					}
 					return -1;
 				}
 				ptr++;
@@ -1190,8 +1229,9 @@ public final class RawParseUtils {
 	public static String extractBinaryString(final byte[] buffer,
 			final int start, final int end) {
 		final StringBuilder r = new StringBuilder(end - start);
-		for (int i = start; i < end; i++)
+		for (int i = start;i < end;i++) {
 			r.append((char) (buffer[i] & 0xff));
+		}
 		return r.toString();
 	}
 
@@ -1214,16 +1254,18 @@ public final class RawParseUtils {
 	 *            commit buffer.
 	 * @return position of the user's message buffer.
 	 */
-	public static final int commitMessage(byte[] b, int ptr) {
+	public static int commitMessage(byte[] b, int ptr) {
 		final int sz = b.length;
-		if (ptr == 0)
+		if (ptr == 0) {
 			ptr += 46; // skip the "tree ..." line.
-		while (ptr < sz && b[ptr] == 'p')
+		}
+		while (ptr < sz && b[ptr] == 'p') {
 			ptr += 48; // skip this parent.
 
-		// Skip any remaining header lines, ignoring what their actual
-		// header line type is. This is identical to the logic for a tag.
-		//
+			// Skip any remaining header lines, ignoring what their actual
+			// header line type is. This is identical to the logic for a tag.
+			//
+		}
 		return tagMessage(b, ptr);
 	}
 
@@ -1238,14 +1280,17 @@ public final class RawParseUtils {
 	 *            buffer.
 	 * @return position of the user's message buffer.
 	 */
-	public static final int tagMessage(byte[] b, int ptr) {
+	public static int tagMessage(byte[] b, int ptr) {
 		final int sz = b.length;
-		if (ptr == 0)
+		if (ptr == 0) {
 			ptr += 48; // skip the "object ..." line.
-		while (ptr < sz && b[ptr] != '\n')
+		}
+		while (ptr < sz && b[ptr] != '\n') {
 			ptr = nextLF(b, ptr);
-		if (ptr < sz && b[ptr] == '\n')
+		}
+		if (ptr < sz && b[ptr] == '\n') {
 			return ptr + 1;
+		}
 		return -1;
 	}
 
@@ -1263,15 +1308,18 @@ public final class RawParseUtils {
 	 * @return position of the LF at the end of the paragraph;
 	 *         <code>b.length</code> if no paragraph end could be located.
 	 */
-	public static final int endOfParagraph(byte[] b, int start) {
+	public static int endOfParagraph(byte[] b, int start) {
 		int ptr = start;
 		final int sz = b.length;
-		while (ptr < sz && (b[ptr] != '\n' && b[ptr] != '\r'))
+		while (ptr < sz && (b[ptr] != '\n' && b[ptr] != '\r')) {
 			ptr = nextLF(b, ptr);
-		if (ptr > start && b[ptr - 1] == '\n')
+		}
+		if (ptr > start && b[ptr - 1] == '\n') {
 			ptr--;
-		if (ptr > start && b[ptr - 1] == '\r')
+		}
+		if (ptr > start && b[ptr - 1] == '\r') {
 			ptr--;
+		}
 		return ptr;
 	}
 
@@ -1288,11 +1336,13 @@ public final class RawParseUtils {
 	 * @since 4.1
 	 */
 	public static int lastIndexOfTrim(byte[] raw, char ch, int pos) {
-		while (pos >= 0 && raw[pos] == ' ')
+		while (pos >= 0 && raw[pos] == ' ') {
 			pos--;
+		}
 
-		while (pos >= 0 && raw[pos] != ch)
+		while (pos >= 0 && raw[pos] != ch) {
 			pos--;
+		}
 
 		return pos;
 	}

@@ -91,8 +91,9 @@ public abstract class ThreeWayMerger extends Merger {
 	/** {@inheritDoc} */
 	@Override
 	public boolean merge(AnyObjectId... tips) throws IOException {
-		if (tips.length != 2)
+		if (tips.length != 2) {
 			return false;
+		}
 		return super.merge(tips);
 	}
 
@@ -113,7 +114,7 @@ public abstract class ThreeWayMerger extends Merger {
 		if (baseTree != null) {
 			return openTree(baseTree);
 		}
-		RevCommit baseCommit = (baseCommitId != null) ? walk
+		RevCommit baseCommit = baseCommitId != null ? walk
 				.parseCommit(baseCommitId) : getBaseCommit(sourceCommits[0],
 				sourceCommits[1]);
 		if (baseCommit == null) {

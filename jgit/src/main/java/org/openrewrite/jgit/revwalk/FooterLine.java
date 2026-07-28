@@ -57,14 +57,17 @@ public final class FooterLine {
 		final byte[] kRaw = key.raw;
 		final int len = kRaw.length;
 		int bPtr = keyStart;
-		if (keyEnd - bPtr != len)
+		if (keyEnd - bPtr != len) {
 			return false;
+		}
 		for (int kPtr = 0; kPtr < len;) {
 			byte b = buffer[bPtr++];
-			if ('A' <= b && b <= 'Z')
+			if ('A' <= b && b <= 'Z') {
 				b += (byte) ('a' - 'A');
-			if (b != kRaw[kPtr++])
+			}
+			if (b != kRaw[kPtr++]) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -107,13 +110,15 @@ public final class FooterLine {
 		final int lt = RawParseUtils.nextLF(buffer, valStart, '<');
 		if (valEnd <= lt) {
 			final int at = RawParseUtils.nextLF(buffer, valStart, '@');
-			if (valStart < at && at < valEnd)
+			if (valStart < at && at < valEnd) {
 				return getValue();
+			}
 			return null;
 		}
 		final int gt = RawParseUtils.nextLF(buffer, lt, '>');
-		if (valEnd < gt)
+		if (valEnd < gt) {
 			return null;
+		}
 		return RawParseUtils.decode(enc, buffer, lt, gt - 1);
 	}
 

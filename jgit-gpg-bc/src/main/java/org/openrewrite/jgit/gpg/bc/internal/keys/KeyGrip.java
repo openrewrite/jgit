@@ -46,11 +46,11 @@ public final class KeyGrip {
 
 	// Some OIDs apparently unknown to BouncyCastle.
 
-	private static String OID_OPENPGP_ED25519 = "1.3.6.1.4.1.11591.15.1"; //$NON-NLS-1$
+	private static final String OID_OPENPGP_ED25519 = "1.3.6.1.4.1.11591.15.1"; //$NON-NLS-1$
 
-	private static String OID_RFC8410_CURVE25519 = "1.3.101.110"; //$NON-NLS-1$
+	private static final String OID_RFC8410_CURVE25519 = "1.3.101.110"; //$NON-NLS-1$
 
-	private static String OID_RFC8410_ED25519 = "1.3.101.112"; //$NON-NLS-1$
+	private static final String OID_RFC8410_ED25519 = "1.3.101.112"; //$NON-NLS-1$
 
 	private KeyGrip() {
 		// No instantiation

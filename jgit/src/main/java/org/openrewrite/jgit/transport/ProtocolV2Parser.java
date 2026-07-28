@@ -9,9 +9,9 @@
  */
 package org.openrewrite.jgit.transport;
 
+import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_AGENT;
 import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_DEEPEN_RELATIVE;
 import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_FILTER;
-import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_AGENT;
 import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_INCLUDE_TAG;
 import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_NO_PROGRESS;
 import static org.openrewrite.jgit.transport.GitProtocolConstants.OPTION_OFS_DELTA;
@@ -68,8 +68,6 @@ final class ProtocolV2Parser {
 						.accept(line.substring(serverOptionPrefix.length()));
 			} else if (line.startsWith(agentPrefix)) {
 				agentConsumer.accept(line.substring(agentPrefix.length()));
-			} else {
-				// Unrecognized capability. Ignore it.
 			}
 			line = pckIn.readString();
 		}
@@ -100,8 +98,8 @@ final class ProtocolV2Parser {
 		reqBuilder.addClientCapability(OPTION_SIDE_BAND_64K);
 
 		String line = consumeCapabilities(pckIn,
-				serverOption -> reqBuilder.addServerOption(serverOption),
-				agent -> reqBuilder.setAgent(agent));
+				reqBuilder::addServerOption,
+				reqBuilder::setAgent);
 
 		if (PacketLineIn.isEnd(line)) {
 			return reqBuilder.build();
@@ -123,17 +121,17 @@ final class ProtocolV2Parser {
 						line2.substring(OPTION_WANT_REF.length() + 1));
 			} else if (line2.startsWith("have ")) { //$NON-NLS-1$
 				reqBuilder.addPeerHas(ObjectId.fromString(line2.substring(5)));
-			} else if (line2.equals("done")) { //$NON-NLS-1$
+			} else if ("done".equals(line2)) { //$NON-NLS-1$
 				reqBuilder.setDoneReceived();
-			} else if (line2.equals(OPTION_WAIT_FOR_DONE)) {
+			} else if (OPTION_WAIT_FOR_DONE.equals(line2)) {
 				reqBuilder.setWaitForDone();
-			} else if (line2.equals(OPTION_THIN_PACK)) {
+			} else if (OPTION_THIN_PACK.equals(line2)) {
 				reqBuilder.addClientCapability(OPTION_THIN_PACK);
-			} else if (line2.equals(OPTION_NO_PROGRESS)) {
+			} else if (OPTION_NO_PROGRESS.equals(line2)) {
 				reqBuilder.addClientCapability(OPTION_NO_PROGRESS);
-			} else if (line2.equals(OPTION_INCLUDE_TAG)) {
+			} else if (OPTION_INCLUDE_TAG.equals(line2)) {
 				reqBuilder.addClientCapability(OPTION_INCLUDE_TAG);
-			} else if (line2.equals(OPTION_OFS_DELTA)) {
+			} else if (OPTION_OFS_DELTA.equals(line2)) {
 				reqBuilder.addClientCapability(OPTION_OFS_DELTA);
 			} else if (line2.startsWith("shallow ")) { //$NON-NLS-1$
 				reqBuilder.addClientShallowCommit(
@@ -160,7 +158,7 @@ final class ProtocolV2Parser {
 					throw new PackProtocolException(
 							JGitText.get().deepenNotWithDeepen);
 				}
-			} else if (line2.equals(OPTION_DEEPEN_RELATIVE)) {
+			} else if (OPTION_DEEPEN_RELATIVE.equals(line2)) {
 				reqBuilder.addClientCapability(OPTION_DEEPEN_RELATIVE);
 			} else if (line2.startsWith("deepen-since ")) { //$NON-NLS-1$
 				int ts = Integer.parseInt(line2.substring(13));
@@ -183,7 +181,7 @@ final class ProtocolV2Parser {
 				reqBuilder.setFilterSpec(FilterSpec.fromFilterLine(
 						line2.substring(OPTION_FILTER.length() + 1)));
 			} else if (transferConfig.isAllowSidebandAll()
-					&& line2.equals(OPTION_SIDEBAND_ALL)) {
+					&& OPTION_SIDEBAND_ALL.equals(line2)) {
 				reqBuilder.setSidebandAll(true);
 			} else if (line2.startsWith("packfile-uris ")) { //$NON-NLS-1$
 				for (String s : line2.substring(14).split(",")) { //$NON-NLS-1$
@@ -221,8 +219,8 @@ final class ProtocolV2Parser {
 		List<String> prefixes = new ArrayList<>();
 
 		String line = consumeCapabilities(pckIn,
-				serverOption -> builder.addServerOption(serverOption),
-				agent -> builder.setAgent(agent));
+				builder::addServerOption,
+				builder::setAgent);
 
 		if (PacketLineIn.isEnd(line)) {
 			return builder.build();
@@ -234,9 +232,9 @@ final class ProtocolV2Parser {
 		}
 
 		for (String line2 : pckIn.readStrings()) {
-			if (line2.equals("peel")) { //$NON-NLS-1$
+			if ("peel".equals(line2)) { //$NON-NLS-1$
 				builder.setPeel(true);
-			} else if (line2.equals("symrefs")) { //$NON-NLS-1$
+			} else if ("symrefs".equals(line2)) { //$NON-NLS-1$
 				builder.setSymrefs(true);
 			} else if (line2.startsWith("ref-prefix ")) { //$NON-NLS-1$
 				prefixes.add(line2.substring("ref-prefix ".length())); //$NON-NLS-1$
@@ -260,7 +258,7 @@ final class ProtocolV2Parser {
 			return builder.build();
 		}
 
-		if (!line.equals("size")) { //$NON-NLS-1$
+		if (!"size".equals(line)) { //$NON-NLS-1$
 			throw new PackProtocolException(MessageFormat
 					.format(JGitText.get().unexpectedPacketLine, line));
 		}

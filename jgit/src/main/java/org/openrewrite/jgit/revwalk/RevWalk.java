@@ -302,10 +302,12 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 */
 	public void markStart(RevCommit c) throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {
-		if ((c.flags & SEEN) != 0)
+		if ((c.flags & SEEN) != 0) {
 			return;
-		if ((c.flags & PARSED) == 0)
+		}
+		if ((c.flags & PARSED) == 0) {
 			c.parseHeaders(this);
+		}
 		c.flags |= SEEN;
 		roots.add(c);
 		queue.add(c);
@@ -333,8 +335,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	public void markStart(Collection<RevCommit> list)
 			throws MissingObjectException, IncorrectObjectTypeException,
 			IOException {
-		for (RevCommit c : list)
+		for (RevCommit c : list) {
 			markStart(c);
+		}
 	}
 
 	/**
@@ -497,9 +500,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 */
 	public boolean isMergedIntoAny(RevCommit commit, Collection<Ref> refs)
 			throws IOException {
-		return getMergedInto(commit, refs,
+		return !getMergedInto(commit, refs,
 				GetMergedIntoStrategy.RETURN_ON_FIRST_FOUND,
-				NullProgressMonitor.INSTANCE).size() > 0;
+				NullProgressMonitor.INSTANCE).isEmpty();
 	}
 
 	/**
@@ -655,15 +658,17 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 */
 	public void sort(RevSort s, boolean use) {
 		assertNotStarted();
-		if (use)
+		if (use) {
 			sorting.add(s);
-		else
+		} else {
 			sorting.remove(s);
+		}
 
-		if (sorting.size() > 1)
+		if (sorting.size() > 1) {
 			sorting.remove(RevSort.NONE);
-		else if (sorting.isEmpty())
+		} else if (sorting.isEmpty()) {
 			sorting.add(RevSort.NONE);
+		}
 	}
 
 	/**
@@ -983,9 +988,10 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 			throws MissingObjectException, IncorrectObjectTypeException,
 			IOException {
 		RevObject c = peel(parseAny(id));
-		if (!(c instanceof RevCommit))
+		if (!(c instanceof RevCommit)) {
 			throw new IncorrectObjectTypeException(id.toObjectId(),
 					Constants.TYPE_COMMIT);
+		}
 		return (RevCommit) c;
 	}
 
@@ -1013,13 +1019,14 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 		RevObject c = peel(parseAny(id));
 
 		final RevTree t;
-		if (c instanceof RevCommit)
+		if (c instanceof RevCommit) {
 			t = ((RevCommit) c).getTree();
-		else if (!(c instanceof RevTree))
+		} else if (!(c instanceof RevTree)) {
 			throw new IncorrectObjectTypeException(id.toObjectId(),
 					Constants.TYPE_TREE);
-		else
+		} else {
 			t = (RevTree) c;
+		}
 		parseHeaders(t);
 		return t;
 	}
@@ -1045,9 +1052,10 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	public RevTag parseTag(AnyObjectId id) throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {
 		RevObject c = parseAny(id);
-		if (!(c instanceof RevTag))
+		if (!(c instanceof RevTag)) {
 			throw new IncorrectObjectTypeException(id.toObjectId(),
 					Constants.TYPE_TAG);
+		}
 		return (RevTag) c;
 	}
 
@@ -1071,10 +1079,11 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	public RevObject parseAny(AnyObjectId id)
 			throws MissingObjectException, IOException {
 		RevObject r = objects.get(id);
-		if (r == null)
+		if (r == null) {
 			r = parseNew(id, reader.open(id));
-		else
+		} else {
 			parseHeaders(r);
+		}
 		return r;
 	}
 
@@ -1149,10 +1158,11 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 		List<RevObject> have = new ArrayList<>();
 		for (T id : objectIds) {
 			RevObject r = objects.get(id);
-			if (r != null && (r.flags & PARSED) != 0)
+			if (r != null && (r.flags & PARSED) != 0) {
 				have.add(r);
-			else
+			} else {
 				need.add(id);
+			}
 		}
 
 		final Iterator<RevObject> objItr = have.iterator();
@@ -1180,24 +1190,27 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 			@Override
 			public RevObject next() throws MissingObjectException,
 					IncorrectObjectTypeException, IOException {
-				if (objItr.hasNext())
+				if (objItr.hasNext()) {
 					return objItr.next();
-				if (!lItr.next())
+				}
+				if (!lItr.next()) {
 					return null;
+				}
 
 				ObjectId id = lItr.getObjectId();
 				ObjectLoader ldr = lItr.open();
 				RevObject r = objects.get(id);
-				if (r == null)
+				if (r == null) {
 					r = parseNew(id, ldr);
-				else if (r instanceof RevCommit) {
+				} else if (r instanceof RevCommit) {
 					byte[] raw = ldr.getCachedBytes();
 					((RevCommit) r).parseCanonical(RevWalk.this, raw);
 				} else if (r instanceof RevTag) {
 					byte[] raw = ldr.getCachedBytes();
 					((RevTag) r).parseCanonical(RevWalk.this, raw);
-				} else
+				} else {
 					r.flags |= PARSED;
+				}
 				return r;
 			}
 
@@ -1228,8 +1241,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 */
 	public void parseHeaders(RevObject obj)
 			throws MissingObjectException, IOException {
-		if ((obj.flags & PARSED) == 0)
+		if ((obj.flags & PARSED) == 0) {
 			obj.parseHeaders(this);
+		}
 	}
 
 	/**
@@ -1292,10 +1306,11 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	}
 
 	int allocFlag() {
-		if (freeFlags == 0)
+		if (freeFlags == 0) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().flagsAlreadyCreated,
 					Integer.valueOf(32 - RESERVED_FLAGS)));
+		}
 		final int m = Integer.lowestOneBit(freeFlags);
 		freeFlags &= ~m;
 		return m;
@@ -1311,10 +1326,12 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 *            the flag to carry onto parents, if set on a descendant.
 	 */
 	public void carry(RevFlag flag) {
-		if ((freeFlags & flag.mask) != 0)
+		if ((freeFlags & flag.mask) != 0) {
 			throw new IllegalArgumentException(MessageFormat.format(JGitText.get().flagIsDisposed, flag.name));
-		if (flag.walker != this)
+		}
+		if (flag.walker != this) {
 			throw new IllegalArgumentException(MessageFormat.format(JGitText.get().flagNotFromThis, flag.name));
+		}
 		carryFlags |= flag.mask;
 	}
 
@@ -1328,8 +1345,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 *            the flags to carry onto parents, if set on a descendant.
 	 */
 	public void carry(Collection<RevFlag> set) {
-		for (RevFlag flag : set)
+		for (RevFlag flag : set) {
 			carry(flag);
+		}
 	}
 
 	/**
@@ -1347,10 +1365,12 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 * @since 3.6
 	 */
 	public final void retainOnReset(RevFlag flag) {
-		if ((freeFlags & flag.mask) != 0)
+		if ((freeFlags & flag.mask) != 0) {
 			throw new IllegalArgumentException(MessageFormat.format(JGitText.get().flagIsDisposed, flag.name));
-		if (flag.walker != this)
+		}
+		if (flag.walker != this) {
 			throw new IllegalArgumentException(MessageFormat.format(JGitText.get().flagNotFromThis, flag.name));
+		}
 		retainOnReset |= flag.mask;
 	}
 
@@ -1369,8 +1389,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 * @since 3.6
 	 */
 	public final void retainOnReset(Collection<RevFlag> flags) {
-		for (RevFlag f : flags)
+		for (RevFlag f : flags) {
 			retainOnReset(f);
+		}
 	}
 
 	/**
@@ -1450,8 +1471,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 */
 	public final void resetRetain(RevFlag... retainFlags) {
 		int mask = 0;
-		for (RevFlag flag : retainFlags)
+		for (RevFlag flag : retainFlags) {
 			mask |= flag.mask;
+		}
 		reset(mask);
 	}
 
@@ -1474,8 +1496,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 
 		final FIFORevQueue q = new FIFORevQueue();
 		for (RevCommit c : roots) {
-			if ((c.flags & clearFlags) == 0)
+			if ((c.flags & clearFlags) == 0) {
 				continue;
+			}
 			c.flags &= retainFlags;
 			c.reset();
 			q.add(c);
@@ -1483,13 +1506,16 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 
 		for (;;) {
 			final RevCommit c = q.next();
-			if (c == null)
+			if (c == null) {
 				break;
-			if (c.parents == null)
+			}
+			if (c.parents == null) {
 				continue;
+			}
 			for (RevCommit p : c.parents) {
-				if ((p.flags & clearFlags) == 0)
+				if ((p.flags & clearFlags) == 0) {
 					continue;
+				}
 				p.flags &= retainFlags;
 				p.reset();
 				q.add(p);
@@ -1585,8 +1611,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 * Throws an exception if we have started producing output.
 	 */
 	protected void assertNotStarted() {
-		if (isNotStarted())
+		if (isNotStarted()) {
 			return;
+		}
 		throw new IllegalStateException(JGitText.get().outputHasAlreadyBeenStarted);
 	}
 
@@ -1599,8 +1626,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 * @since 5.5
 	 */
 	protected void assertNoCommitsMarkedStart() {
-		if (roots.isEmpty())
+		if (roots.isEmpty()) {
 			return;
+		}
 		throw new IllegalStateException(
 				JGitText.get().commitsHaveAlreadyBeenMarkedAsStart);
 	}
@@ -1643,8 +1671,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 
 	void carryFlagsImpl(RevCommit c) {
 		final int carry = c.flags & carryFlags;
-		if (carry != 0)
+		if (carry != 0) {
 			RevCommit.carryFlags(c, carry);
+		}
 	}
 
 	/**
@@ -1658,8 +1687,9 @@ public class RevWalk implements Iterable<RevCommit>, AutoCloseable {
 	 * @since 3.3
 	 */
 	public void assumeShallow(Collection<? extends ObjectId> ids) {
-		for (ObjectId id : ids)
+		for (ObjectId id : ids) {
 			lookupCommit(id).parents = RevCommit.NO_PARENTS;
+		}
 	}
 
 	/**

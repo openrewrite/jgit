@@ -15,13 +15,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 
+import com.googlecode.javaewah.EWAHCompressedBitmap;
 import org.openrewrite.jgit.errors.CorruptObjectException;
 import org.openrewrite.jgit.internal.JGitText;
 import org.openrewrite.jgit.lib.AnyObjectId;
 import org.openrewrite.jgit.lib.ObjectId;
 import org.openrewrite.jgit.util.io.SilentFileInputStream;
-
-import com.googlecode.javaewah.EWAHCompressedBitmap;
 
 /**
  * Logical representation of the bitmap data stored in the pack index.

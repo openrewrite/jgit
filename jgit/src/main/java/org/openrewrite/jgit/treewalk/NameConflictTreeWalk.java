@@ -97,8 +97,9 @@ public class NameConflictTreeWalk extends TreeWalk {
 	AbstractTreeIterator min() throws CorruptObjectException {
 		for (;;) {
 			final AbstractTreeIterator minRef = fastMin();
-			if (fastMinHasMatch)
+			if (fastMinHasMatch) {
 				return minRef;
+			}
 
 			if (isTree(minRef)) {
 				if (skipEntry(minRef)) {
@@ -122,17 +123,20 @@ public class NameConflictTreeWalk extends TreeWalk {
 
 		int i = 0;
 		AbstractTreeIterator minRef = trees[i];
-		while (minRef.eof() && ++i < trees.length)
+		while (minRef.eof() && ++i < trees.length) {
 			minRef = trees[i];
-		if (minRef.eof())
+		}
+		if (minRef.eof()) {
 			return minRef;
+		}
 
 		boolean hasConflict = false;
 		minRef.matches = minRef;
 		while (++i < trees.length) {
 			final AbstractTreeIterator t = trees[i];
-			if (t.eof())
+			if (t.eof()) {
 				continue;
+			}
 
 			final int cmp = t.pathCompare(minRef);
 			if (cmp < 0) {
@@ -165,18 +169,21 @@ public class NameConflictTreeWalk extends TreeWalk {
 
 				for (int k = 0; k < i; k++) {
 					final AbstractTreeIterator p = trees[k];
-					if (p.matches == minRef)
+					if (p.matches == minRef) {
 						p.matches = t;
+					}
 				}
 				t.matches = t;
 				minRef = t;
 				hasConflict = true;
-			} else
+			} else {
 				fastMinHasMatch = false;
+			}
 		}
 
-		if (hasConflict && fastMinHasMatch && dfConflict == null)
+		if (hasConflict && fastMinHasMatch && dfConflict == null) {
 			dfConflict = minRef;
+		}
 		return minRef;
 	}
 
@@ -199,8 +206,9 @@ public class NameConflictTreeWalk extends TreeWalk {
 		// not report this path if it has already been reported.
 		//
 		for (AbstractTreeIterator t : trees) {
-			if (t.matches == minRef || t.first())
+			if (t.matches == minRef || t.first()) {
 				continue;
+			}
 
 			int stepsBack = 0;
 			for (;;) {
@@ -235,8 +243,9 @@ public class NameConflictTreeWalk extends TreeWalk {
 		//
 		AbstractTreeIterator treeMatch = null;
 		for (AbstractTreeIterator t : trees) {
-			if (t.matches == minRef || t.eof())
+			if (t.matches == minRef || t.eof()) {
 				continue;
+			}
 
 			for (;;) {
 				final int cmp = t.pathCompare(minRef, TREE_MODE);
@@ -273,9 +282,11 @@ public class NameConflictTreeWalk extends TreeWalk {
 			// matching iterators instead of the file iterator.
 			// This way isSubtree is true and isRecursive works.
 			//
-			for (AbstractTreeIterator t : trees)
-				if (t.matches == minRef)
+			for (AbstractTreeIterator t : trees) {
+				if (t.matches == minRef) {
 					t.matches = treeMatch;
+				}
+			}
 
 			if (dfConflict == null && !isGitlink(minRef)) {
 				dfConflict = treeMatch;
@@ -292,9 +303,9 @@ public class NameConflictTreeWalk extends TreeWalk {
 		final AbstractTreeIterator ch = currentHead;
 		for (AbstractTreeIterator t : trees) {
 			if (t.matches == ch) {
-				if (t.matchShift == 0)
+				if (t.matchShift == 0) {
 					t.next(1);
-				else {
+				} else {
 					t.back(t.matchShift);
 					t.matchShift = 0;
 				}
@@ -302,8 +313,9 @@ public class NameConflictTreeWalk extends TreeWalk {
 			}
 		}
 
-		if (ch == dfConflict)
+		if (ch == dfConflict) {
 			dfConflict = null;
+		}
 	}
 
 	@Override
@@ -311,9 +323,9 @@ public class NameConflictTreeWalk extends TreeWalk {
 		final AbstractTreeIterator ch = currentHead;
 		for (AbstractTreeIterator t : trees) {
 			if (t.matches == ch) {
-				if (t.matchShift == 0)
+				if (t.matchShift == 0) {
 					t.skip();
-				else {
+				} else {
 					t.back(t.matchShift);
 					t.matchShift = 0;
 				}
@@ -321,8 +333,9 @@ public class NameConflictTreeWalk extends TreeWalk {
 			}
 		}
 
-		if (ch == dfConflict)
+		if (ch == dfConflict) {
 			dfConflict = null;
+		}
 	}
 
 	@Override

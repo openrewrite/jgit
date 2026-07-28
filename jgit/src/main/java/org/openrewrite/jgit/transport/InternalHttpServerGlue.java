@@ -17,7 +17,7 @@ package org.openrewrite.jgit.transport;
  *
  * @since 4.0
  */
-public class InternalHttpServerGlue {
+public final class InternalHttpServerGlue {
 	/**
 	 * Apply a default user agent for a request.
 	 *

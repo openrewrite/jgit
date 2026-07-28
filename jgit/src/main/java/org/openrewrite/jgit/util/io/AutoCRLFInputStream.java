@@ -68,18 +68,21 @@ public class AutoCRLFInputStream extends InputStream {
 	/** {@inheritDoc} */
 	@Override
 	public int read(byte[] bs, int off, int len) throws IOException {
-		if (len == 0)
+		if (len == 0) {
 			return 0;
+		}
 
-		if (cnt == -1)
+		if (cnt == -1) {
 			return -1;
+		}
 
 		int i = off;
 		final int end = off + len;
 
 		while (i < end) {
-			if (ptr == cnt && !fillBuffer())
+			if (ptr == cnt && !fillBuffer()) {
 				break;
+			}
 
 			byte b = buf[ptr++];
 			if (isBinary || b != '\n') {
@@ -95,12 +98,14 @@ public class AutoCRLFInputStream extends InputStream {
 				}
 				bs[i++] = last = '\r';
 				ptr--;
-			} else
+			} else {
 				bs[i++] = last = b;
+			}
 		}
 		int n = i == off ? -1 : i - off;
-		if (n > 0)
+		if (n > 0) {
 			last = bs[i - 1];
+		}
 		return n;
 	}
 

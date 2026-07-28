@@ -100,7 +100,7 @@ public class DiffFormatter implements AutoCloseable {
 
 	private RawTextComparator comparator = RawTextComparator.DEFAULT;
 
-	private boolean binaryPatch = false;
+	private boolean binaryPatch;
 
 	private int binaryFileThreshold = DEFAULT_BINARY_FILE_THRESHOLD;
 
@@ -204,9 +204,10 @@ public class DiffFormatter implements AutoCloseable {
 	 *            the modified file.
 	 */
 	public void setContext(int lineCount) {
-		if (lineCount < 0)
+		if (lineCount < 0) {
 			throw new IllegalArgumentException(
 					JGitText.get().contextMustBeNonNegative);
+		}
 		context = lineCount;
 	}
 
@@ -217,9 +218,10 @@ public class DiffFormatter implements AutoCloseable {
 	 *            number of digits to show in an ObjectId.
 	 */
 	public void setAbbreviationLength(int count) {
-		if (count < 0)
+		if (count < 0) {
 			throw new IllegalArgumentException(
 					JGitText.get().abbreviationLengthMustBeNonNegative);
+		}
 		abbreviationLength = count;
 	}
 
@@ -339,8 +341,9 @@ public class DiffFormatter implements AutoCloseable {
 		if (on && renameDetector == null) {
 			assertHaveReader();
 			renameDetector = new RenameDetector(reader, diffCfg);
-		} else if (!on)
+		} else if (!on) {
 			renameDetector = null;
+		}
 	}
 
 	/**
@@ -550,35 +553,42 @@ public class DiffFormatter implements AutoCloseable {
 			walk.addTree(b);
 			walk.setFilter(filter);
 
-			if (renameDetector == null)
+			if (renameDetector == null) {
 				setDetectRenames(true);
+			}
 			files = updateFollowFilter(detectRenames(DiffEntry.scan(walk)));
 
-		} else if (renameDetector != null)
+		} else if (renameDetector != null) {
 			files = detectRenames(files);
+		}
 
 		return files;
 	}
 
 	private static TreeFilter getDiffTreeFilterFor(AbstractTreeIterator a,
 			AbstractTreeIterator b) {
-		if (a instanceof DirCacheIterator && b instanceof WorkingTreeIterator)
+		if (a instanceof DirCacheIterator && b instanceof WorkingTreeIterator) {
 			return new IndexDiffFilter(0, 1);
+		}
 
-		if (a instanceof WorkingTreeIterator && b instanceof DirCacheIterator)
+		if (a instanceof WorkingTreeIterator && b instanceof DirCacheIterator) {
 			return new IndexDiffFilter(1, 0);
+		}
 
 		TreeFilter filter = TreeFilter.ANY_DIFF;
-		if (a instanceof WorkingTreeIterator)
+		if (a instanceof WorkingTreeIterator) {
 			filter = AndTreeFilter.create(new NotIgnoredFilter(0), filter);
-		if (b instanceof WorkingTreeIterator)
+		}
+		if (b instanceof WorkingTreeIterator) {
 			filter = AndTreeFilter.create(new NotIgnoredFilter(1), filter);
+		}
 		return filter;
 	}
 
 	private ContentSource source(AbstractTreeIterator iterator) {
-		if (iterator instanceof WorkingTreeIterator)
+		if (iterator instanceof WorkingTreeIterator) {
 			return ContentSource.create((WorkingTreeIterator) iterator);
+		}
 		return ContentSource.create(reader);
 	}
 
@@ -599,8 +609,9 @@ public class DiffFormatter implements AutoCloseable {
 	private boolean isAdd(List<DiffEntry> files) {
 		String oldPath = ((FollowFilter) pathFilter).getPath();
 		for (DiffEntry ent : files) {
-			if (ent.getChangeType() == ADD && ent.getNewPath().equals(oldPath))
+			if (ent.getChangeType() == ADD && ent.getNewPath().equals(oldPath)) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -697,8 +708,9 @@ public class DiffFormatter implements AutoCloseable {
 	 *             be written to.
 	 */
 	public void format(List<? extends DiffEntry> entries) throws IOException {
-		for (DiffEntry ent : entries)
+		for (DiffEntry ent : entries) {
 			format(ent);
+		}
 	}
 
 	/**
@@ -769,13 +781,15 @@ public class DiffFormatter implements AutoCloseable {
 		//
 		final int start = head.getStartOffset();
 		int end = head.getEndOffset();
-		if (!head.getHunks().isEmpty())
+		if (!head.getHunks().isEmpty()) {
 			end = head.getHunks().get(0).getStartOffset();
+		}
 		out.write(head.getBuffer(), start, end - start);
-		if (head.getPatchType() == PatchType.UNIFIED)
+		if (head.getPatchType() == PatchType.UNIFIED) {
 			format(head.toEditList(), a, b);
-		else if (head.getPatchType() == PatchType.GIT_BINARY && a != null && b != null)
+		} else if (head.getPatchType() == PatchType.GIT_BINARY && a != null && b != null) {
 			formatBinary(a, b);
+		}
 	}
 
 	/**
@@ -806,24 +820,28 @@ public class DiffFormatter implements AutoCloseable {
 			while (aCur < aEnd || bCur < bEnd) {
 				if (aCur < curEdit.getBeginA() || endIdx + 1 < curIdx) {
 					writeContextLine(a, aCur);
-					if (isEndOfLineMissing(a, aCur))
+					if (isEndOfLineMissing(a, aCur)) {
 						out.write(noNewLine);
+					}
 					aCur++;
 					bCur++;
 				} else if (aCur < curEdit.getEndA()) {
 					writeRemovedLine(a, aCur);
-					if (isEndOfLineMissing(a, aCur))
+					if (isEndOfLineMissing(a, aCur)) {
 						out.write(noNewLine);
+					}
 					aCur++;
 				} else if (bCur < curEdit.getEndB()) {
 					writeAddedLine(b, bCur);
-					if (isEndOfLineMissing(b, bCur))
+					if (isEndOfLineMissing(b, bCur)) {
 						out.write(noNewLine);
+					}
 					bCur++;
 				}
 
-				if (end(curEdit, aCur, bCur) && ++curIdx < edits.size())
+				if (end(curEdit, aCur, bCur) && ++curIdx < edits.size()) {
 					curEdit = edits.get(curIdx);
+				}
 			}
 		}
 	}
@@ -1079,8 +1097,9 @@ public class DiffFormatter implements AutoCloseable {
 		switch (ent.getChangeType()) {
 			case RENAME:
 			case COPY:
-				if (!editList.isEmpty())
+				if (!editList.isEmpty()) {
 					formatOldNewPaths(buf, ent);
+				}
 				break;
 
 			default:
@@ -1105,29 +1124,29 @@ public class DiffFormatter implements AutoCloseable {
 
 	private RawText open(DiffEntry.Side side, DiffEntry entry)
 			throws IOException, BinaryBlobException {
-		if (entry.getMode(side) == FileMode.MISSING)
+		if (entry.getMode(side) == FileMode.MISSING) {
 			return RawText.EMPTY_TEXT;
+		}
 
-		if (entry.getMode(side).getObjectType() != Constants.OBJ_BLOB)
+		if (entry.getMode(side).getObjectType() != Constants.OBJ_BLOB) {
 			return RawText.EMPTY_TEXT;
+		}
 
 		AbbreviatedObjectId id = entry.getId(side);
 		if (!id.isComplete()) {
 			Collection<ObjectId> ids = reader.resolve(id);
 			if (ids.size() == 1) {
 				id = AbbreviatedObjectId.fromObjectId(ids.iterator().next());
-				switch (side) {
-				case OLD:
+				if (side == DiffEntry.Side.OLD) {
 					entry.oldId = id;
-					break;
-				case NEW:
+				} else if (side == DiffEntry.Side.NEW) {
 					entry.newId = id;
-					break;
 				}
-			} else if (ids.isEmpty())
+			} else if (ids.isEmpty()) {
 				throw new MissingObjectException(id, Constants.OBJ_BLOB);
-			else
+			} else {
 				throw new AmbiguousObjectException(id, ids);
+			}
 		}
 
 		ObjectLoader ldr = LfsFactory.getInstance().applySmudgeFilter(repository,
@@ -1259,8 +1278,9 @@ public class DiffFormatter implements AutoCloseable {
 
 	private void formatOldNewPaths(ByteArrayOutputStream o, DiffEntry ent)
 			throws IOException {
-		if (ent.oldId.equals(ent.newId))
+		if (ent.oldId.equals(ent.newId)) {
 			return;
+		}
 
 		final String oldp;
 		final String newp;
@@ -1289,8 +1309,9 @@ public class DiffFormatter implements AutoCloseable {
 	private int findCombinedEnd(List<Edit> edits, int i) {
 		int end = i + 1;
 		while (end < edits.size()
-				&& (combineA(edits, end) || combineB(edits, end)))
+				&& (combineA(edits, end) || combineB(edits, end))) {
 			end++;
+		}
 		return end - 1;
 	}
 

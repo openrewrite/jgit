@@ -105,13 +105,13 @@ public class SExprParser {
 		String type;
 
 		type = SXprUtils.readString(inputStream, inputStream.read());
-		if (type.equals("protected-private-key")
-				|| type.equals("private-key")) {
+		if ("protected-private-key".equals(type)
+				|| "private-key".equals(type)) {
 			SXprUtils.skipOpenParenthesis(inputStream);
 
 			String keyType = SXprUtils.readString(inputStream,
 					inputStream.read());
-			if (keyType.equals("ecc")) {
+			if ("ecc".equals(keyType)) {
 				SXprUtils.skipOpenParenthesis(inputStream);
 
 				String curveID = SXprUtils.readString(inputStream,
@@ -126,7 +126,7 @@ public class SExprParser {
 				SXprUtils.skipOpenParenthesis(inputStream);
 
 				type = SXprUtils.readString(inputStream, inputStream.read());
-				if (type.equals("q")) {
+				if ("q".equals(type)) {
 					qVal = SXprUtils.readBytes(inputStream, inputStream.read());
 				} else {
 					throw new PGPException("no q value found");
@@ -158,7 +158,7 @@ public class SExprParser {
 								SymmetricKeyAlgorithmTags.NULL, null, null,
 								new ECSecretBCPGKey(d).getEncoded()),
 						pubKey);
-			} else if (keyType.equals("dsa")) {
+			} else if ("dsa".equals(keyType)) {
 				BigInteger p = readBigInteger("p", inputStream);
 				BigInteger q = readBigInteger("q", inputStream);
 				BigInteger g = readBigInteger("g", inputStream);
@@ -183,7 +183,7 @@ public class SExprParser {
 								SymmetricKeyAlgorithmTags.NULL, null, null,
 								new DSASecretBCPGKey(x).getEncoded()),
 						pubKey);
-			} else if (keyType.equals("elg")) {
+			} else if ("elg".equals(keyType)) {
 				BigInteger p = readBigInteger("p", inputStream);
 				BigInteger g = readBigInteger("g", inputStream);
 
@@ -208,7 +208,7 @@ public class SExprParser {
 								SymmetricKeyAlgorithmTags.NULL, null, null,
 								new ElGamalSecretBCPGKey(x).getEncoded()),
 						pubKey);
-			} else if (keyType.equals("rsa")) {
+			} else if ("rsa".equals(keyType)) {
 				BigInteger n = readBigInteger("n", inputStream);
 				BigInteger e = readBigInteger("e", inputStream);
 
@@ -263,13 +263,13 @@ public class SExprParser {
 		String type;
 
 		type = SXprUtils.readString(inputStream, inputStream.read());
-		if (type.equals("protected-private-key")
-				|| type.equals("private-key")) {
+		if ("protected-private-key".equals(type)
+				|| "private-key".equals(type)) {
 			SXprUtils.skipOpenParenthesis(inputStream);
 
 			String keyType = SXprUtils.readString(inputStream,
 					inputStream.read());
-			if (keyType.equals("ecc")) {
+			if ("ecc".equals(keyType)) {
 				SXprUtils.skipOpenParenthesis(inputStream);
 
 				String curveID = SXprUtils.readString(inputStream,
@@ -288,7 +288,7 @@ public class SExprParser {
 				SXprUtils.skipOpenParenthesis(inputStream);
 
 				type = SXprUtils.readString(inputStream, inputStream.read());
-				if (type.equals("q")) {
+				if ("q".equals(type)) {
 					qVal = SXprUtils.readBytes(inputStream, inputStream.read());
 				} else {
 					throw new PGPException("no q value found");
@@ -310,7 +310,7 @@ public class SExprParser {
 								SymmetricKeyAlgorithmTags.NULL, null, null,
 								new ECSecretBCPGKey(d).getEncoded()),
 						new PGPPublicKey(pubPacket, fingerPrintCalculator));
-			} else if (keyType.equals("dsa")) {
+			} else if ("dsa".equals(keyType)) {
 				BigInteger p = readBigInteger("p", inputStream);
 				BigInteger q = readBigInteger("q", inputStream);
 				BigInteger g = readBigInteger("g", inputStream);
@@ -329,7 +329,7 @@ public class SExprParser {
 								SymmetricKeyAlgorithmTags.NULL, null, null,
 								new DSASecretBCPGKey(x).getEncoded()),
 						new PGPPublicKey(pubPacket, fingerPrintCalculator));
-			} else if (keyType.equals("elg")) {
+			} else if ("elg".equals(keyType)) {
 				BigInteger p = readBigInteger("p", inputStream);
 				BigInteger g = readBigInteger("g", inputStream);
 
@@ -347,7 +347,7 @@ public class SExprParser {
 								SymmetricKeyAlgorithmTags.NULL, null, null,
 								new ElGamalSecretBCPGKey(x).getEncoded()),
 						new PGPPublicKey(pubPacket, fingerPrintCalculator));
-			} else if (keyType.equals("rsa")) {
+			} else if ("rsa".equals(keyType)) {
 				BigInteger n = readBigInteger("n", inputStream);
 				BigInteger e = readBigInteger("e", inputStream);
 
@@ -399,7 +399,7 @@ public class SExprParser {
 		SXprUtils.skipOpenParenthesis(inputStream);
 
 		String type = SXprUtils.readString(inputStream, inputStream.read());
-		if (type.equals("protected")) {
+		if ("protected".equals(type)) {
 			String protection = SXprUtils.readString(inputStream,
 					inputStream.read());
 
@@ -448,7 +448,7 @@ public class SExprParser {
 
 			SXprUtils.skipCloseParenthesis(inputStream);
 			SXprUtils.skipCloseParenthesis(inputStream);
-		} else if (type.equals("d") || type.equals("x")) {
+		} else if ("d".equals(type) || "x".equals(type)) {
 			// JGit modification: unencrypted DSA or ECC keys can have an "x"
 			// here
 			return null;
@@ -500,12 +500,12 @@ public class SExprParser {
 		SXprUtils.skipOpenParenthesis(keyIn);
 		type = SXprUtils.readString(keyIn, keyIn.read());
 
-		if (!type.equals("hash")) {
+		if (!"hash".equals(type)) {
 			throw new PGPException("hash keyword expected");
 		}
 		type = SXprUtils.readString(keyIn, keyIn.read());
 
-		if (!type.equals("sha1")) {
+		if (!"sha1".equals(type)) {
 			throw new PGPException("hash keyword expected");
 		}
 
@@ -584,12 +584,12 @@ public class SExprParser {
 		SXprUtils.skipOpenParenthesis(keyIn);
 		type = SXprUtils.readString(keyIn, keyIn.read());
 
-		if (!type.equals("hash")) {
+		if (!"hash".equals(type)) {
 			throw new PGPException("hash keyword expected");
 		}
 		type = SXprUtils.readString(keyIn, keyIn.read());
 
-		if (!type.equals("sha1")) {
+		if (!"sha1".equals(type)) {
 			throw new PGPException("hash keyword expected");
 		}
 
@@ -667,12 +667,12 @@ public class SExprParser {
 
 		type = SXprUtils.readString(keyIn, keyIn.read());
 
-		if (!type.equals("hash")) {
+		if (!"hash".equals(type)) {
 			throw new PGPException("hash keyword expected");
 		}
 		type = SXprUtils.readString(keyIn, keyIn.read());
 
-		if (!type.equals("sha1")) {
+		if (!"sha1".equals(type)) {
 			throw new PGPException("hash keyword expected");
 		}
 
@@ -765,12 +765,12 @@ public class SExprParser {
 		SXprUtils.skipOpenParenthesis(keyIn);
 		type = SXprUtils.readString(keyIn, keyIn.read());
 
-		if (!type.equals("hash")) {
+		if (!"hash".equals(type)) {
 			throw new PGPException("hash keyword expected");
 		}
 		type = SXprUtils.readString(keyIn, keyIn.read());
 
-		if (!type.equals("sha1")) {
+		if (!"sha1".equals(type)) {
 			throw new PGPException("hash keyword expected");
 		}
 

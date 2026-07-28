@@ -21,7 +21,7 @@ import org.openrewrite.jgit.internal.storage.reftable.ReftableReader;
  * Tracks multiple open
  * {@link org.openrewrite.jgit.internal.storage.reftable.ReftableReader} instances.
  */
-public class DfsReftableStack implements AutoCloseable {
+public final class DfsReftableStack implements AutoCloseable {
 	/**
 	 * Opens a stack of tables for reading.
 	 *

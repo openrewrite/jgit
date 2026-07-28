@@ -131,8 +131,9 @@ public class RevCommit extends RevObject {
 			IncorrectObjectTypeException, IOException {
 		if (buffer == null) {
 			buffer = walk.getCachedBytes(this);
-			if ((flags & PARSED) == 0)
+			if ((flags & PARSED) == 0) {
 				parseCanonical(walk, buffer);
+			}
 		}
 	}
 
@@ -205,32 +206,38 @@ public class RevCommit extends RevObject {
 
 	static void carryFlags(RevCommit c, int carry) {
 		FIFORevQueue q = carryFlags1(c, carry, 0);
-		if (q != null)
+		if (q != null) {
 			slowCarryFlags(q, carry);
+		}
 	}
 
 	private static FIFORevQueue carryFlags1(RevCommit c, int carry, int depth) {
 		for(;;) {
 			RevCommit[] pList = c.parents;
-			if (pList == null || pList.length == 0)
+			if (pList == null || pList.length == 0) {
 				return null;
+			}
 			if (pList.length != 1) {
-				if (depth == STACK_DEPTH)
+				if (depth == STACK_DEPTH) {
 					return defer(c);
+				}
 				for (int i = 1; i < pList.length; i++) {
 					RevCommit p = pList[i];
-					if ((p.flags & carry) == carry)
+					if ((p.flags & carry) == carry) {
 						continue;
+					}
 					p.flags |= carry;
 					FIFORevQueue q = carryFlags1(p, carry, depth + 1);
-					if (q != null)
+					if (q != null) {
 						return defer(q, carry, pList, i + 1);
+					}
 				}
 			}
 
 			c = pList[0];
-			if ((c.flags & carry) == carry)
+			if ((c.flags & carry) == carry) {
 				return null;
+			}
 			c.flags |= carry;
 		}
 	}
@@ -250,8 +257,9 @@ public class RevCommit extends RevObject {
 
 		// Remaining parents (if any) need to have flags checked and be
 		// enqueued if they have ancestors.
-		for (; i < pList.length; i++)
+		for (;i < pList.length;i++) {
 			carryOneStep(q, carry, pList[i]);
+		}
 		return q;
 	}
 
@@ -259,16 +267,18 @@ public class RevCommit extends RevObject {
 		// Commits in q have non-null parent arrays and have set all
 		// flags in carry. This loop finishes copying over the graph.
 		for (RevCommit c; (c = q.next()) != null;) {
-			for (RevCommit p : c.parents)
+			for (RevCommit p : c.parents) {
 				carryOneStep(q, carry, p);
+			}
 		}
 	}
 
 	private static void carryOneStep(FIFORevQueue q, int carry, RevCommit c) {
 		if ((c.flags & carry) != carry) {
 			c.flags |= carry;
-			if (c.parents != null)
+			if (c.parents != null) {
 				q.add(c);
+			}
 		}
 	}
 
@@ -286,8 +296,9 @@ public class RevCommit extends RevObject {
 	 */
 	public void carry(RevFlag flag) {
 		final int carry = flags & flag.mask;
-		if (carry != 0)
+		if (carry != 0) {
 			carryFlags(this, carry);
+		}
 	}
 
 	/**
@@ -411,8 +422,9 @@ public class RevCommit extends RevObject {
 	public final PersonIdent getAuthorIdent() {
 		final byte[] raw = buffer;
 		final int nameB = RawParseUtils.author(raw, 0);
-		if (nameB < 0)
+		if (nameB < 0) {
 			return null;
+		}
 		return RawParseUtils.parsePersonIdent(raw, nameB);
 	}
 
@@ -438,8 +450,9 @@ public class RevCommit extends RevObject {
 	public final PersonIdent getCommitterIdent() {
 		final byte[] raw = buffer;
 		final int nameB = RawParseUtils.committer(raw, 0);
-		if (nameB < 0)
+		if (nameB < 0) {
 			return null;
+		}
 		return RawParseUtils.parsePersonIdent(raw, nameB);
 	}
 
@@ -493,9 +506,11 @@ public class RevCommit extends RevObject {
 	}
 
 	static boolean hasLF(byte[] r, int b, int e) {
-		while (b < e)
-			if (r[b++] == '\n')
+		while (b < e) {
+			if (r[b++] == '\n') {
 				return true;
+			}
+		}
 		return false;
 	}
 
@@ -569,36 +584,42 @@ public class RevCommit extends RevObject {
 	public final List<FooterLine> getFooterLines() {
 		final byte[] raw = buffer;
 		int ptr = raw.length - 1;
-		while (raw[ptr] == '\n') // trim any trailing LFs, not interesting
+		while (raw[ptr] == '\n') { // trim any trailing LFs, not interesting
 			ptr--;
+		}
 
 		final int msgB = RawParseUtils.commitMessage(raw, 0);
 		final ArrayList<FooterLine> r = new ArrayList<>(4);
 		final Charset enc = guessEncoding();
 		for (;;) {
 			ptr = RawParseUtils.prevLF(raw, ptr);
-			if (ptr <= msgB)
+			if (ptr <= msgB) {
 				break; // Don't parse commit headers as footer lines.
 
+			}
 			final int keyStart = ptr + 2;
-			if (raw[keyStart] == '\n')
+			if (raw[keyStart] == '\n') {
 				break; // Stop at first paragraph break, no footers above it.
 
+			}
 			final int keyEnd = RawParseUtils.endOfFooterLineKey(raw, keyStart);
-			if (keyEnd < 0)
+			if (keyEnd < 0) {
 				continue; // Not a well formed footer line, skip it.
 
-			// Skip over the ': *' at the end of the key before the value.
-			//
+				// Skip over the ': *' at the end of the key before the value.
+				//
+			}
 			int valStart = keyEnd + 1;
-			while (valStart < raw.length && raw[valStart] == ' ')
+			while (valStart < raw.length && raw[valStart] == ' ') {
 				valStart++;
+			}
 
 			// Value ends at the LF, and does not include it.
 			//
 			int valEnd = RawParseUtils.nextLF(raw, valStart);
-			if (raw[valEnd - 1] == '\n')
+			if (raw[valEnd - 1] == '\n') {
 				valEnd--;
+			}
 
 			r.add(new FooterLine(raw, enc, keyStart, keyEnd, valStart, valEnd));
 		}
@@ -634,12 +655,14 @@ public class RevCommit extends RevObject {
 	 */
 	public final List<String> getFooterLines(FooterKey keyName) {
 		final List<FooterLine> src = getFooterLines();
-		if (src.isEmpty())
+		if (src.isEmpty()) {
 			return Collections.emptyList();
+		}
 		final ArrayList<String> r = new ArrayList<>(src.size());
 		for (FooterLine f : src) {
-			if (f.matches(keyName))
+			if (f.matches(keyName)) {
 				r.add(f.getValue());
+			}
 		}
 		return r;
 	}

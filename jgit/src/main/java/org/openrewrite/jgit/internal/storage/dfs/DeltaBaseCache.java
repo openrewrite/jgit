@@ -54,9 +54,10 @@ final class DeltaBaseCache {
 	}
 
 	void put(DfsStreamKey key, long offset, int objectType, byte[] data) {
-		if (data.length > maxByteCount)
+		if (data.length > maxByteCount) {
 			return; // Too large to cache.
 
+		}
 		curByteCount += data.length;
 		releaseMemory();
 
@@ -124,10 +125,11 @@ final class DeltaBaseCache {
 	private void lruPushHead(Entry e) {
 		Entry n = lruHead;
 		e.lruNext = n;
-		if (n != null)
+		if (n != null) {
 			n.lruPrev = e;
-		else
+		} else {
 			lruTail = e;
+		}
 
 		e.lruPrev = null;
 		lruHead = e;

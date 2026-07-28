@@ -9,6 +9,12 @@
  */
 package org.openrewrite.jgit.api;
 
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.ADD;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.COPY;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.DELETE;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.MODIFY;
+import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.RENAME;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -75,12 +81,6 @@ import org.openrewrite.jgit.util.io.BinaryDeltaInputStream;
 import org.openrewrite.jgit.util.io.BinaryHunkInputStream;
 import org.openrewrite.jgit.util.io.EolStreamTypeUtil;
 import org.openrewrite.jgit.util.sha1.SHA1;
-
-import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.ADD;
-import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.COPY;
-import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.DELETE;
-import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.MODIFY;
-import static org.openrewrite.jgit.diff.DiffEntry.ChangeType.RENAME;
 
 /**
  * Apply a patch to files and/or to the index.
@@ -160,9 +160,10 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 					break;
 				case DELETE:
 					f = getFile(fh.getOldPath(), false, directoryCache);
-					if (!f.delete())
+					if (!f.delete()) {
 						throw new PatchApplyException(MessageFormat.format(
 								JGitText.get().cannotDeleteFile, f));
+					}
 					break;
 				case RENAME:
 					f = getFile(fh.getOldPath(), false, directoryCache);
@@ -196,10 +197,10 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 	private void verifyExistence(FileHeader fh, File src, File dest)
 			throws IOException, PatchApplyException {
 		boolean srcShouldExist = Arrays
-				.asList(new ChangeType[] { MODIFY, DELETE, RENAME, COPY })
+				.asList( MODIFY, DELETE, RENAME, COPY)
 				.contains(fh.getChangeType());
 		boolean destShouldNotExist = Arrays
-				.asList(new ChangeType[] { ADD, RENAME, COPY })
+				.asList( ADD, RENAME, COPY)
 				.contains(fh.getChangeType());
 		if (srcShouldExist && !validGitPath(fh.getOldPath())) {
 			throw new PatchApplyException(MessageFormat.format(
@@ -818,8 +819,8 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 		System.arraycopy(lastHunk.getBuffer(), lastHunk.getStartOffset(), buf,
 				0, buf.length);
 		RawText lhrt = new RawText(buf);
-		return lhrt.getString(lhrt.size() - 1)
-				.equals("\\ No newline at end of file"); //$NON-NLS-1$
+		return "\\ No newline at end of file"
+				.equals(lhrt.getString(lhrt.size() - 1)); //$NON-NLS-1$
 	}
 
 	/**

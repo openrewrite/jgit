@@ -79,8 +79,9 @@ class DepthGenerator extends Generator {
 		FIFORevQueue unshallowCommits = new FIFORevQueue();
 		for (;;) {
 			RevCommit c = s.next();
-			if (c == null)
+			if (c == null) {
 				break;
+			}
 			if (c.has(UNSHALLOW)) {
 				unshallowCommits.add(c);
 			} else if (((DepthWalk.Commit) c).getDepth() == 0) {
@@ -148,11 +149,13 @@ class DepthGenerator extends Generator {
 		// arrive by the shortest route first.
 		for (;;) {
 			final DepthWalk.Commit c = (DepthWalk.Commit) pending.next();
-			if (c == null)
+			if (c == null) {
 				return null;
+			}
 
-			if ((c.flags & RevWalk.PARSED) == 0)
+			if ((c.flags & RevWalk.PARSED) == 0) {
 				c.parseHeaders(walk);
+			}
 
 			if (c.getCommitTime() < deepenSince) {
 				continue;
@@ -216,15 +219,17 @@ class DepthGenerator extends Generator {
 			// Unshallow commits are uninteresting, but still need to be sent
 			// up to the PackWriter so that it will exclude objects correctly.
 			// All other uninteresting commits should be omitted.
-			if ((c.flags & RevWalk.UNINTERESTING) != 0 && !c.has(UNSHALLOW))
+			if ((c.flags & RevWalk.UNINTERESTING) != 0 && !c.has(UNSHALLOW)) {
 				produce = false;
+			}
 
 			if (c.getCommitTime() < deepenSince) {
 				produce = false;
 			}
 
-			if (produce)
+			if (produce) {
 				return c;
+			}
 		}
 	}
 }

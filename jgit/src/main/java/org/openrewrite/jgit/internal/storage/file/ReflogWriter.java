@@ -158,17 +158,19 @@ public class ReflogWriter {
 		Ref ref = update.getRef();
 
 		PersonIdent ident = update.getRefLogIdent();
-		if (ident == null)
+		if (ident == null) {
 			ident = new PersonIdent(refdb.getRepository());
-		else
+		} else {
 			ident = new PersonIdent(ident);
+		}
 
 		byte[] rec = encode(oldId, newId, ident, msg);
 		if (deref && ref.isSymbolic()) {
 			log(ref.getName(), rec);
 			log(ref.getLeaf().getName(), rec);
-		} else
+		} else {
 			log(ref.getName(), rec);
+		}
 
 		return this;
 	}
@@ -210,8 +212,9 @@ public class ReflogWriter {
 		boolean write = forceWrite
 				|| shouldAutoCreateLog(refName)
 				|| log.isFile();
-		if (!write)
+		if (!write) {
 			return this;
+		}
 
 		WriteConfig wc = refdb.getRepository().getConfig().get(WriteConfig.KEY);
 		try (FileOutputStream out = getFileOutputStream(log)) {
@@ -241,11 +244,11 @@ public class ReflogWriter {
 			case FALSE:
 				break;
 			case TRUE:
-				return refName.equals(HEAD) || refName.startsWith(R_HEADS)
+				return HEAD.equals(refName) || refName.startsWith(R_HEADS)
 						|| refName.startsWith(R_REMOTES)
 						|| refName.startsWith(R_NOTES);
 			case ALWAYS:
-				return refName.equals(HEAD) || refName.startsWith(R_REFS);
+				return HEAD.equals(refName) || refName.startsWith(R_REFS);
 			default:
 				break;
 			}

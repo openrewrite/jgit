@@ -29,10 +29,12 @@ final class ReverseWalk extends RevWalk {
 	public ReverseCommit next() throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {
 		ReverseCommit c = (ReverseCommit) super.next();
-		if (c == null)
+		if (c == null) {
 			return null;
-		for (int pIdx = 0; pIdx < c.getParentCount(); pIdx++)
+		}
+		for (int pIdx = 0;pIdx < c.getParentCount();pIdx++) {
 			((ReverseCommit) c.getParent(pIdx)).addChild(c);
+		}
 		return c;
 	}
 

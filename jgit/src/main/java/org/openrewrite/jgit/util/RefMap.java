@@ -130,10 +130,12 @@ public class RefMap extends AbstractMap<String, Ref> {
 	public Ref get(Object key) {
 		String name = toRefName((String) key);
 		Ref ref = resolved.get(name);
-		if (ref == null)
+		if (ref == null) {
 			ref = loose.get(name);
-		if (ref == null)
+		}
+		if (ref == null) {
 			ref = packed.get(name);
+		}
 		return ref;
 	}
 
@@ -142,14 +144,16 @@ public class RefMap extends AbstractMap<String, Ref> {
 	public Ref put(String keyName, Ref value) {
 		String name = toRefName(keyName);
 
-		if (!name.equals(value.getName()))
+		if (!name.equals(value.getName())) {
 			throw new IllegalArgumentException();
+		}
 
 		if (!resolved.isEmpty()) {
 			// Collapse the resolved list into the loose list so we
 			// can discard it and stop joining the two together.
-			for (Ref ref : resolved)
+			for (Ref ref : resolved) {
 				loose = loose.put(ref);
+			}
 			resolved = RefList.emptyList();
 		}
 
@@ -210,8 +214,9 @@ public class RefMap extends AbstractMap<String, Ref> {
 					if (!sizeIsValid) {
 						size = 0;
 						Iterator<?> i = entrySet().iterator();
-						for (; i.hasNext(); i.next())
+						for (;i.hasNext();i.next()) {
 							size++;
+						}
 						sizeIsValid = true;
 					}
 					return size;
@@ -219,8 +224,9 @@ public class RefMap extends AbstractMap<String, Ref> {
 
 				@Override
 				public boolean isEmpty() {
-					if (sizeIsValid)
+					if (sizeIsValid) {
 						return 0 == size;
+					}
 					return !iterator().hasNext();
 				}
 
@@ -244,10 +250,11 @@ public class RefMap extends AbstractMap<String, Ref> {
 		boolean first = true;
 		r.append('[');
 		for (Ref ref : values()) {
-			if (first)
-				first = false;
-			else
+			if (first) {
+				first = false; //$NON-NLS-1$
+			} else {
 				r.append(", "); //$NON-NLS-1$
+			}
 			r.append(ref);
 		}
 		r.append(']');
@@ -264,21 +271,23 @@ public class RefMap extends AbstractMap<String, Ref> {
 	public static Collector<Ref, ?, RefMap> toRefMap(
 			BinaryOperator<Ref> mergeFunction) {
 		return Collectors.collectingAndThen(RefList.toRefList(mergeFunction),
-				(refs) -> new RefMap("", //$NON-NLS-1$
+				refs -> new RefMap("", //$NON-NLS-1$
 							refs, RefList.emptyList(),
 						RefList.emptyList()));
 	}
 
 	private String toRefName(String name) {
-		if (0 < prefix.length())
+		if (0 < prefix.length()) {
 			name = prefix + name;
+		}
 		return name;
 	}
 
 	String toMapKey(Ref ref) {
 		String name = ref.getName();
-		if (0 < prefix.length())
+		if (0 < prefix.length()) {
 			name = name.substring(prefix.length());
+		}
 		return name;
 	}
 
@@ -301,8 +310,9 @@ public class RefMap extends AbstractMap<String, Ref> {
 
 		@Override
 		public boolean hasNext() {
-			if (next == null)
+			if (next == null) {
 				next = peek();
+			}
 			return next != null;
 		}
 
@@ -326,16 +336,19 @@ public class RefMap extends AbstractMap<String, Ref> {
 					return toEntry(p);
 				}
 
-				if (cmp == 0)
+				if (cmp == 0) {
 					packedIdx++;
+				}
 				looseIdx++;
 				return toEntry(resolveLoose(l));
 			}
 
-			if (looseIdx < loose.size())
+			if (looseIdx < loose.size()) {
 				return toEntry(resolveLoose(loose.get(looseIdx++)));
-			if (packedIdx < packed.size())
+			}
+			if (packedIdx < packed.size()) {
 				return toEntry(packed.get(packedIdx++));
+			}
 			return null;
 		}
 
@@ -356,8 +369,9 @@ public class RefMap extends AbstractMap<String, Ref> {
 		}
 
 		private Ent toEntry(Ref p) {
-			if (p.getName().startsWith(prefix))
+			if (p.getName().startsWith(prefix)) {
 				return new Ent(p);
+			}
 			packedIdx = packed.size();
 			looseIdx = loose.size();
 			resolvedIdx = resolved.size();

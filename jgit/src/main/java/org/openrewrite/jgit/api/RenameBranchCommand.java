@@ -100,8 +100,9 @@ public class RenameBranchCommand extends GitCommand<Ref> {
 					throw new NoHeadException(
 							JGitText.get().invalidRepositoryStateNoHead);
 				}
-				if (ObjectId.isId(fullOldName))
+				if (ObjectId.isId(fullOldName)) {
 					throw new DetachedHeadException();
+				}
 			}
 
 			if (fullOldName.startsWith(Constants.R_REMOTES)) {

@@ -1119,8 +1119,9 @@ public abstract class FS {
 	 */
 	public File resolve(File dir, String name) {
 		File abspn = new File(name);
-		if (abspn.isAbsolute())
+		if (abspn.isAbsolute()) {
 			return abspn;
+		}
 		return new File(dir, name);
 	}
 
@@ -1214,8 +1215,9 @@ public abstract class FS {
 		String home = AccessController.doPrivileged(
 				(PrivilegedAction<String>) () -> System.getProperty("user.home") //$NON-NLS-1$
 		);
-		if (home == null || home.length() == 0)
+		if (home == null || home.length() == 0) {
 			return null;
+		}
 		return new File(home).getAbsoluteFile();
 	}
 
@@ -1393,9 +1395,6 @@ public abstract class FS {
 				if (waitForProcessCompletion(e) && p.exitValue() != 0) {
 					setError(e, e.getMessage(), p.exitValue());
 					fail.set(true);
-				} else {
-					// ignore. command terminated faster and stream was just closed
-					// or the process didn't terminate within timeout
 				}
 			} finally {
 				if (waitForProcessCompletion(null) && err.length() > 0) {
@@ -1586,8 +1585,9 @@ public abstract class FS {
 	protected static File resolveGrandparentFile(File grandchild) {
 		if (grandchild != null) {
 			File parent = grandchild.getParentFile();
-			if (parent != null)
+			if (parent != null) {
 				return parent.getParentFile();
+			}
 		}
 		return null;
 	}
@@ -2079,7 +2079,7 @@ public abstract class FS {
 	public int runProcess(ProcessBuilder processBuilder,
 			OutputStream outRedirect, OutputStream errRedirect, String stdinArgs)
 			throws IOException, InterruptedException {
-		InputStream in = (stdinArgs == null) ? null : new ByteArrayInputStream(
+		InputStream in = stdinArgs == null ? null : new ByteArrayInputStream(
 						stdinArgs.getBytes(UTF_8));
 		return runProcess(processBuilder, outRedirect, errRedirect, in);
 	}
@@ -2209,8 +2209,9 @@ public abstract class FS {
 			if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
 				pool.shutdownNow(); // Cancel currently executing tasks
 				// Wait a while for tasks to respond to being canceled
-				if (!pool.awaitTermination(60, TimeUnit.SECONDS))
+				if (!pool.awaitTermination(60, TimeUnit.SECONDS)) {
 					hasShutdown = false;
+				}
 			}
 		} catch (InterruptedException ie) {
 			// (Re-)Cancel if current thread also interrupted
@@ -2380,8 +2381,9 @@ public abstract class FS {
 		 * @return length of this file object
 		 */
 		public long getLength() {
-			if (length == -1)
+			if (length == -1) {
 				return length = file.length();
+			}
 			return length;
 		}
 

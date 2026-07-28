@@ -137,18 +137,22 @@ public class RecursiveMerger extends ResolveMerger {
 		walk.markStart(a);
 		walk.markStart(b);
 		RevCommit c;
-		while ((c = walk.next()) != null)
+		while ((c = walk.next()) != null) {
 			baseCommits.add(c);
+		}
 
-		if (baseCommits.isEmpty())
+		if (baseCommits.isEmpty()) {
 			return null;
-		if (baseCommits.size() == 1)
+		}
+		if (baseCommits.size() == 1) {
 			return baseCommits.get(0);
-		if (baseCommits.size() >= MAX_BASES)
+		}
+		if (baseCommits.size() >= MAX_BASES) {
 			throw new NoMergeBaseException(NoMergeBaseException.MergeBaseFailureReason.TOO_MANY_MERGE_BASES, MessageFormat.format(
 					JGitText.get().mergeRecursiveTooManyMergeBasesFor,
 					Integer.valueOf(MAX_BASES), a.name(), b.name(),
-							Integer.valueOf(baseCommits.size())));
+					Integer.valueOf(baseCommits.size())));
+		}
 
 		// We know we have more than one base commit. We have to do merges now
 		// to determine a single base commit. We don't want to spoil the current
@@ -169,27 +173,29 @@ public class RecursiveMerger extends ResolveMerger {
 			parents.add(currentBase);
 			for (int commitIdx = 1; commitIdx < baseCommits.size(); commitIdx++) {
 				RevCommit nextBase = baseCommits.get(commitIdx);
-				if (commitIdx >= MAX_BASES)
+				if (commitIdx >= MAX_BASES) {
 					throw new NoMergeBaseException(
 							NoMergeBaseException.MergeBaseFailureReason.TOO_MANY_MERGE_BASES,
 							MessageFormat.format(
-							JGitText.get().mergeRecursiveTooManyMergeBasesFor,
-							Integer.valueOf(MAX_BASES), a.name(), b.name(),
+									JGitText.get().mergeRecursiveTooManyMergeBasesFor,
+									Integer.valueOf(MAX_BASES), a.name(), b.name(),
 									Integer.valueOf(baseCommits.size())));
+				}
 				parents.add(nextBase);
 				RevCommit bc = getBaseCommit(currentBase, nextBase,
 						callDepth + 1);
-				AbstractTreeIterator bcTree = (bc == null) ? new EmptyTreeIterator()
+				AbstractTreeIterator bcTree = bc == null ? new EmptyTreeIterator()
 						: openTree(bc.getTree());
 				if (mergeTrees(bcTree, currentBase.getTree(),
-						nextBase.getTree(), true))
+						nextBase.getTree(), true)) {
 					currentBase = createCommitForTree(resultTree, parents);
-				else
+				} else {
 					throw new NoMergeBaseException(
 							NoMergeBaseException.MergeBaseFailureReason.CONFLICTS_DURING_MERGE_BASE_CALCULATION,
 							MessageFormat.format(
 									JGitText.get().mergeRecursiveConflictsWhenMergingCommonAncestors,
 									currentBase.getName(), nextBase.getName()));
+				}
 			}
 		} finally {
 			inCore = oldIncore;
@@ -230,8 +236,9 @@ public class RecursiveMerger extends ResolveMerger {
 	private static PersonIdent mockAuthor(List<RevCommit> parents) {
 		String name = RecursiveMerger.class.getSimpleName();
 		int time = 0;
-		for (RevCommit p : parents)
+		for (RevCommit p : parents) {
 			time = Math.max(time, p.getCommitTime());
+		}
 		return new PersonIdent(
 				name, name + "@JGit", //$NON-NLS-1$
 				new Date((time + 1) * 1000L),

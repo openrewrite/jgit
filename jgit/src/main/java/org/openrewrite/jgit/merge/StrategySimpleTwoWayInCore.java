@@ -112,11 +112,11 @@ public class StrategySimpleTwoWayInCore extends ThreeWayMergeStrategy {
 				}
 
 				final int modeB = tw.getRawMode(T_BASE);
-				if (modeB == modeO && tw.idEqual(T_BASE, T_OURS))
+				if (modeB == modeO && tw.idEqual(T_BASE, T_OURS)) {
 					add(T_THEIRS, DirCacheEntry.STAGE_0);
-				else if (modeB == modeT && tw.idEqual(T_BASE, T_THEIRS))
+				} else if (modeB == modeT && tw.idEqual(T_BASE, T_THEIRS)) {
 					add(T_OURS, DirCacheEntry.STAGE_0);
-				else {
+				} else {
 					if (nonTree(modeB)) {
 						add(T_BASE, DirCacheEntry.STAGE_1);
 						hasConflict = true;
@@ -129,15 +129,17 @@ public class StrategySimpleTwoWayInCore extends ThreeWayMergeStrategy {
 						add(T_THEIRS, DirCacheEntry.STAGE_3);
 						hasConflict = true;
 					}
-					if (tw.isSubtree())
+					if (tw.isSubtree()) {
 						tw.enterSubtree();
+					}
 				}
 			}
 			builder.finish();
 			builder = null;
 
-			if (hasConflict)
+			if (hasConflict) {
 				return false;
+			}
 			try {
 				ObjectInserter odi = getObjectInserter();
 				resultTree = cache.writeTree(odi);

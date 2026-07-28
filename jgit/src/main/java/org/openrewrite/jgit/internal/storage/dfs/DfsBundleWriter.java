@@ -19,7 +19,7 @@ import org.openrewrite.jgit.lib.ProgressMonitor;
 import org.openrewrite.jgit.transport.BundleWriter;
 
 /** Writes {@link DfsRepository} to a Git bundle. */
-public class DfsBundleWriter {
+public final class DfsBundleWriter {
 	/**
 	 * Writes the entire {@link DfsRepository} to a Git bundle.
 	 * <p>

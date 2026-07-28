@@ -10,6 +10,27 @@
 
 package org.openrewrite.jgit.internal.storage.reftable;
 
+import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
+import static org.openrewrite.jgit.lib.Ref.Storage.PACKED;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.LOCK_FAILURE;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.NOT_ATTEMPTED;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.OK;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.REJECTED_MISSING_OBJECT;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Result.REJECTED_NONFASTFORWARD;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Type.DELETE;
+import static org.openrewrite.jgit.transport.ReceiveCommand.Type.UPDATE_NONFASTFORWARD;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.concurrent.locks.Lock;
+import java.util.stream.Collectors;
+
 import org.openrewrite.jgit.annotations.Nullable;
 import org.openrewrite.jgit.errors.MissingObjectException;
 import org.openrewrite.jgit.internal.JGitText;
@@ -28,28 +49,6 @@ import org.openrewrite.jgit.revwalk.RevObject;
 import org.openrewrite.jgit.revwalk.RevTag;
 import org.openrewrite.jgit.revwalk.RevWalk;
 import org.openrewrite.jgit.transport.ReceiveCommand;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.concurrent.locks.Lock;
-import java.util.stream.Collectors;
-
-import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
-import static org.openrewrite.jgit.lib.Ref.Storage.PACKED;
-
-import static org.openrewrite.jgit.transport.ReceiveCommand.Result.LOCK_FAILURE;
-import static org.openrewrite.jgit.transport.ReceiveCommand.Result.NOT_ATTEMPTED;
-import static org.openrewrite.jgit.transport.ReceiveCommand.Result.OK;
-import static org.openrewrite.jgit.transport.ReceiveCommand.Result.REJECTED_MISSING_OBJECT;
-import static org.openrewrite.jgit.transport.ReceiveCommand.Result.REJECTED_NONFASTFORWARD;
-import static org.openrewrite.jgit.transport.ReceiveCommand.Type.DELETE;
-import static org.openrewrite.jgit.transport.ReceiveCommand.Type.UPDATE_NONFASTFORWARD;
 
 /**
  * {@link org.openrewrite.jgit.lib.BatchRefUpdate} for Reftable based RefDatabase.
@@ -198,7 +197,7 @@ public abstract class ReftableBatchRefUpdate extends BatchRefUpdate {
 		Set<String> deleted =
 				pending.stream()
 						.filter(cmd -> cmd.getType() == DELETE)
-						.map(c -> c.getRefName())
+						.map(ReceiveCommand::getRefName)
 						.collect(Collectors.toSet());
 
 		boolean ok = true;

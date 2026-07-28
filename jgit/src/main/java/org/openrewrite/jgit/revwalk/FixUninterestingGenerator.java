@@ -43,10 +43,12 @@ final class FixUninterestingGenerator extends Generator {
 			IncorrectObjectTypeException, IOException {
 		for (;;) {
 			final RevCommit c = pending.next();
-			if (c == null)
+			if (c == null) {
 				return null;
-			if ((c.flags & RevWalk.UNINTERESTING) == 0)
+			}
+			if ((c.flags & RevWalk.UNINTERESTING) == 0) {
 				return c;
+			}
 		}
 	}
 }

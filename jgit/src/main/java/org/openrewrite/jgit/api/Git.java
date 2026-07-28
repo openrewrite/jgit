@@ -130,8 +130,9 @@ public class Git implements AutoCloseable {
 	 */
 	@Override
 	public void close() {
-		if (closeRepo)
+		if (closeRepo) {
 			repo.close();
+		}
 	}
 
 	/**

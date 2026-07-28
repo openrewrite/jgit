@@ -21,7 +21,7 @@ import org.openrewrite.jgit.util.StringUtils;
 /**
  * Keeps track of diff related configuration options.
  */
-public class DiffConfig {
+public final class DiffConfig {
 	/** Key for {@link Config#get(SectionParser)}. */
 	public static final Config.SectionParser<DiffConfig> KEY = DiffConfig::new;
 
@@ -90,27 +90,28 @@ public class DiffConfig {
 
 	private static RenameDetectionType parseRenameDetectionType(
 			final String renameString) {
-		if (renameString == null)
+		if (renameString == null) {
 			return RenameDetectionType.FALSE;
-		else if (StringUtils.equalsIgnoreCase(
+		} else if (StringUtils.equalsIgnoreCase(
 				ConfigConstants.CONFIG_RENAMELIMIT_COPY, renameString)
 				|| StringUtils
-						.equalsIgnoreCase(
-								ConfigConstants.CONFIG_RENAMELIMIT_COPIES,
-								renameString))
+				.equalsIgnoreCase(
+						ConfigConstants.CONFIG_RENAMELIMIT_COPIES,
+						renameString)) {
 			return RenameDetectionType.COPY;
-		else {
+		} else {
 			final Boolean renameBoolean = StringUtils
 					.toBooleanOrNull(renameString);
-			if (renameBoolean == null)
+			if (renameBoolean == null) {
 				throw new IllegalArgumentException(MessageFormat.format(
 						JGitText.get().enumValueNotSupported2,
 						ConfigConstants.CONFIG_DIFF_SECTION,
 						ConfigConstants.CONFIG_KEY_RENAMES, renameString));
-			else if (renameBoolean.booleanValue())
+			} else if (renameBoolean.booleanValue()) {
 				return RenameDetectionType.TRUE;
-			else
+			} else {
 				return RenameDetectionType.FALSE;
+			}
 		}
 	}
 }

@@ -59,9 +59,10 @@ public class PackReverseIndex {
 		index = packIndex;
 
 		final long cnt = index.getObjectCount();
-		if (cnt + 1 > Integer.MAX_VALUE)
+		if (cnt + 1 > Integer.MAX_VALUE) {
 			throw new IllegalArgumentException(
 					JGitText.get().hugeIndexesAreNotSupportedByJgitYet);
+		}
 
 		if (cnt == 0) {
 			bucketSize = Long.MAX_VALUE;
@@ -77,8 +78,9 @@ public class PackReverseIndex {
 		for (MutableEntry me : index) {
 			final long o = me.getOffset();
 			offsetsBySha1[ith++] = o;
-			if (o > maxOffset)
+			if (o > maxOffset) {
 				maxOffset = o;
+			}
 		}
 
 		bucketSize = maxOffset / cnt + 1;
@@ -104,8 +106,9 @@ public class PackReverseIndex {
 				final long o = offsetsBySha1[nthBySha1];
 				int insertion = nthByOffset++;
 				for (; start < insertion; insertion--) {
-					if (o > offsetsBySha1[nth[insertion - 1]])
+					if (o > offsetsBySha1[nth[insertion - 1]]) {
 						break;
+					}
 					nth[insertion] = nth[insertion - 1];
 				}
 				nth[insertion] = nthBySha1;
@@ -124,8 +127,9 @@ public class PackReverseIndex {
 	 */
 	public ObjectId findObject(long offset) {
 		final int ith = binarySearch(offset);
-		if (ith < 0)
+		if (ith < 0) {
 			return null;
+		}
 		return index.getObjectId(nth[ith]);
 	}
 
@@ -147,14 +151,16 @@ public class PackReverseIndex {
 	public long findNextOffset(long offset, long maxOffset)
 			throws CorruptObjectException {
 		final int ith = binarySearch(offset);
-		if (ith < 0)
+		if (ith < 0) {
 			throw new CorruptObjectException(
 					MessageFormat.format(
 							JGitText.get().cantFindObjectInReversePackIndexForTheSpecifiedOffset,
 							Long.valueOf(offset)));
+		}
 
-		if (ith + 1 == nth.length)
+		if (ith + 1 == nth.length) {
 			return maxOffset;
+		}
 		return index.getOffset(nth[ith + 1]);
 	}
 
@@ -169,12 +175,13 @@ public class PackReverseIndex {
 		while (low < high) {
 			final int mid = (low + high) >>> 1;
 			final long o = index.getOffset(nth[mid]);
-			if (offset < o)
+			if (offset < o) {
 				high = mid;
-			else if (offset == o)
+			} else if (offset == o) {
 				return mid;
-			else
+			} else {
 				low = mid + 1;
+			}
 		}
 		return -1;
 	}

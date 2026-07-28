@@ -34,7 +34,8 @@ public class BinaryDelta {
 	public static long getBaseSize(byte[] delta) {
 		int p = 0;
 		long baseLen = 0;
-		int c, shift = 0;
+		int c;
+		int shift = 0;
 		do {
 			c = delta[p++] & 0xff;
 			baseLen |= ((long) (c & 0x7f)) << shift;
@@ -81,7 +82,7 @@ public class BinaryDelta {
 	 *            another.
 	 * @return patched base
 	 */
-	public static final byte[] apply(byte[] base, byte[] delta) {
+	public static byte[] apply(byte[] base, byte[] delta) {
 		return apply(base, delta, null);
 	}
 
@@ -99,22 +100,24 @@ public class BinaryDelta {
 	 *            allocated and returned.
 	 * @return either {@code result}, or the result array allocated.
 	 */
-	public static final byte[] apply(final byte[] base, final byte[] delta,
+	public static byte[] apply(final byte[] base, final byte[] delta,
 			byte[] result) {
 		int deltaPtr = 0;
 
 		// Length of the base object (a variable length int).
 		//
 		int baseLen = 0;
-		int c, shift = 0;
+		int c;
+		int shift = 0;
 		do {
 			c = delta[deltaPtr++] & 0xff;
 			baseLen |= (c & 0x7f) << shift;
 			shift += 7;
 		} while ((c & 0x80) != 0);
-		if (base.length != baseLen)
+		if (base.length != baseLen) {
 			throw new IllegalArgumentException(
 					JGitText.get().baseLengthIncorrect);
+		}
 
 		// Length of the resulting object (a variable length int).
 		//
@@ -126,11 +129,12 @@ public class BinaryDelta {
 			shift += 7;
 		} while ((c & 0x80) != 0);
 
-		if (result == null)
+		if (result == null) {
 			result = new byte[resLen];
-		else if (result.length != resLen)
+		} else if (result.length != resLen) {
 			throw new IllegalArgumentException(
 					JGitText.get().resultLengthIncorrect);
+		}
 
 		int resultPtr = 0;
 		while (deltaPtr < delta.length) {
@@ -141,24 +145,32 @@ public class BinaryDelta {
 				// as an offset and a length.
 				//
 				int copyOffset = 0;
-				if ((cmd & 0x01) != 0)
+				if ((cmd & 0x01) != 0) {
 					copyOffset = delta[deltaPtr++] & 0xff;
-				if ((cmd & 0x02) != 0)
+				}
+				if ((cmd & 0x02) != 0) {
 					copyOffset |= (delta[deltaPtr++] & 0xff) << 8;
-				if ((cmd & 0x04) != 0)
+				}
+				if ((cmd & 0x04) != 0) {
 					copyOffset |= (delta[deltaPtr++] & 0xff) << 16;
-				if ((cmd & 0x08) != 0)
+				}
+				if ((cmd & 0x08) != 0) {
 					copyOffset |= (delta[deltaPtr++] & 0xff) << 24;
+				}
 
 				int copySize = 0;
-				if ((cmd & 0x10) != 0)
+				if ((cmd & 0x10) != 0) {
 					copySize = delta[deltaPtr++] & 0xff;
-				if ((cmd & 0x20) != 0)
+				}
+				if ((cmd & 0x20) != 0) {
 					copySize |= (delta[deltaPtr++] & 0xff) << 8;
-				if ((cmd & 0x40) != 0)
+				}
+				if ((cmd & 0x40) != 0) {
 					copySize |= (delta[deltaPtr++] & 0xff) << 16;
-				if (copySize == 0)
+				}
+				if (copySize == 0) {
 					copySize = 0x10000;
+				}
 
 				System.arraycopy(base, copyOffset, result, resultPtr, copySize);
 				resultPtr += copySize;
@@ -207,7 +219,8 @@ public class BinaryDelta {
 		int deltaPtr = 0;
 
 		long baseLen = 0;
-		int c, shift = 0;
+		int c;
+		int shift = 0;
 		do {
 			c = delta[deltaPtr++] & 0xff;
 			baseLen |= ((long) (c & 0x7f)) << shift;
@@ -238,24 +251,32 @@ public class BinaryDelta {
 				// as an offset and a length.
 				//
 				int copyOffset = 0;
-				if ((cmd & 0x01) != 0)
+				if ((cmd & 0x01) != 0) {
 					copyOffset = delta[deltaPtr++] & 0xff;
-				if ((cmd & 0x02) != 0)
+				}
+				if ((cmd & 0x02) != 0) {
 					copyOffset |= (delta[deltaPtr++] & 0xff) << 8;
-				if ((cmd & 0x04) != 0)
+				}
+				if ((cmd & 0x04) != 0) {
 					copyOffset |= (delta[deltaPtr++] & 0xff) << 16;
-				if ((cmd & 0x08) != 0)
+				}
+				if ((cmd & 0x08) != 0) {
 					copyOffset |= (delta[deltaPtr++] & 0xff) << 24;
+				}
 
 				int copySize = 0;
-				if ((cmd & 0x10) != 0)
+				if ((cmd & 0x10) != 0) {
 					copySize = delta[deltaPtr++] & 0xff;
-				if ((cmd & 0x20) != 0)
+				}
+				if ((cmd & 0x20) != 0) {
 					copySize |= (delta[deltaPtr++] & 0xff) << 8;
-				if ((cmd & 0x40) != 0)
+				}
+				if ((cmd & 0x40) != 0) {
 					copySize |= (delta[deltaPtr++] & 0xff) << 16;
-				if (copySize == 0)
+				}
+				if (copySize == 0) {
 					copySize = 0x10000;
+				}
 
 				r.append("  COPY  ("); //$NON-NLS-1$
 				r.append(copyOffset);

@@ -111,11 +111,13 @@ public class DirCacheEditor extends BaseDirCacheEditor {
 			PathEdit e = edits.get(editIdx++);
 			int eIdx = cache.findEntry(lastIdx, e.path, e.path.length);
 			final boolean missing = eIdx < 0;
-			if (eIdx < 0)
+			if (eIdx < 0) {
 				eIdx = -(eIdx + 1);
+			}
 			final int cnt = Math.min(eIdx, maxIdx) - lastIdx;
-			if (cnt > 0)
+			if (cnt > 0) {
 				fastKeep(lastIdx, cnt);
+			}
 
 			if (e instanceof DeletePath) {
 				lastIdx = missing ? eIdx : cache.nextEntry(eIdx);
@@ -168,8 +170,9 @@ public class DirCacheEditor extends BaseDirCacheEditor {
 		}
 
 		final int cnt = maxIdx - lastIdx;
-		if (cnt > 0)
+		if (cnt > 0) {
 			fastKeep(lastIdx, cnt);
+		}
 	}
 
 	private int deleteOverlappingSubtree(DirCacheEntry ent, int eIdx) {
@@ -289,7 +292,7 @@ public class DirCacheEditor extends BaseDirCacheEditor {
 		 * @param entryPath
 		 *            path of the file within the repository.
 		 */
-		public PathEdit(String entryPath) {
+		protected PathEdit(String entryPath) {
 			path = Constants.encode(entryPath);
 		}
 
@@ -304,7 +307,7 @@ public class DirCacheEditor extends BaseDirCacheEditor {
 		 *            entry instance to match path of. Only the path of this
 		 *            entry is actually considered during command evaluation.
 		 */
-		public PathEdit(DirCacheEntry ent) {
+		protected PathEdit(DirCacheEntry ent) {
 			path = ent.path;
 		}
 

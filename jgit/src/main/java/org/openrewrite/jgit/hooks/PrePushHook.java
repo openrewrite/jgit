@@ -160,7 +160,7 @@ public class PrePushHook extends GitHook<String> {
 			b.append(u.getRemoteName());
 			b.append(" "); //$NON-NLS-1$
 			ObjectId ooid = u.getExpectedOldObjectId();
-			b.append((ooid == null) ? ObjectId.zeroId().getName() : ooid
+			b.append(ooid == null ? ObjectId.zeroId().getName() : ooid
 					.getName());
 			b.append("\n"); //$NON-NLS-1$
 		}

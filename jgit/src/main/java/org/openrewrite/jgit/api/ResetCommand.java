@@ -86,11 +86,11 @@ public class ResetCommand extends GitCommand<Ref> {
 
 	// We need to be able to distinguish whether the caller set the ref
 	// explicitly or not, so we apply the default (HEAD) only later.
-	private String ref = null;
+	private String ref;
 
 	private ResetType mode;
 
-	private Collection<String> filepaths = new LinkedList<>();
+	private final Collection<String> filepaths = new LinkedList<>();
 
 	private boolean isReflogDisabled;
 
@@ -139,10 +139,11 @@ public class ResetCommand extends GitCommand<Ref> {
 			}
 
 			final ObjectId commitTree;
-			if (commitId != null)
+			if (commitId != null) {
 				commitTree = parseCommit(commitId).getTree();
-			else
+			} else {
 				commitTree = null;
+			}
 
 			if (!filepaths.isEmpty()) {
 				// reset [commit] -- paths
@@ -164,18 +165,21 @@ public class ResetCommand extends GitCommand<Ref> {
 					String message = refName + ": updating " + Constants.HEAD; //$NON-NLS-1$
 					ru.setRefLogMessage(message, false);
 				}
-				if (ru.forceUpdate() == RefUpdate.Result.LOCK_FAILURE)
+				if (ru.forceUpdate() == RefUpdate.Result.LOCK_FAILURE) {
 					throw new JGitInternalException(MessageFormat.format(
 							JGitText.get().cannotLock, ru.getName()));
+				}
 
 				ObjectId origHead = ru.getOldObjectId();
-				if (origHead != null)
+				if (origHead != null) {
 					repo.writeOrigHead(origHead);
+				}
 			}
 			result = repo.exactRef(Constants.HEAD);
 
-			if (mode == null)
+			if (mode == null) {
 				mode = ResetType.MIXED;
+			}
 
 			switch (mode) {
 				case HARD:
@@ -193,14 +197,15 @@ public class ResetCommand extends GitCommand<Ref> {
 			}
 
 			if (mode != ResetType.SOFT) {
-				if (merging)
+				if (merging) {
 					resetMerge();
-				else if (cherryPicking)
+				} else if (cherryPicking) {
 					resetCherryPick();
-				else if (reverting)
+				} else if (reverting) {
 					resetRevert();
-				else if (repo.readSquashCommitMsg() != null)
+				} else if (repo.readSquashCommitMsg() != null) {
 					repo.writeSquashCommitMsg(null /* delete */);
+				}
 			}
 
 			setCallable(false);
@@ -251,10 +256,11 @@ public class ResetCommand extends GitCommand<Ref> {
 	 * @return this instance
 	 */
 	public ResetCommand setMode(ResetType mode) {
-		if (!filepaths.isEmpty())
+		if (!filepaths.isEmpty()) {
 			throw new JGitInternalException(MessageFormat.format(
 					JGitText.get().illegalCombinationOfArguments,
 					"[--mixed | --soft | --hard]", "<paths>...")); //$NON-NLS-1$ //$NON-NLS-2$
+		}
 		this.mode = mode;
 		return this;
 	}
@@ -268,10 +274,11 @@ public class ResetCommand extends GitCommand<Ref> {
 	 * @return this instance
 	 */
 	public ResetCommand addPath(String path) {
-		if (mode != null)
+		if (mode != null) {
 			throw new JGitInternalException(MessageFormat.format(
 					JGitText.get().illegalCombinationOfArguments, "<paths>...", //$NON-NLS-1$
 					"[--mixed | --soft | --hard]")); //$NON-NLS-1$
+		}
 		filepaths.add(path);
 		return this;
 	}
@@ -332,10 +339,11 @@ public class ResetCommand extends GitCommand<Ref> {
 			DirCacheBuilder builder = dc.builder();
 
 			tw.addTree(new DirCacheBuildIterator(builder));
-			if (commitTree != null)
+			if (commitTree != null) {
 				tw.addTree(commitTree);
-			else
+			} else {
 				tw.addTree(new EmptyTreeIterator());
+			}
 			tw.setFilter(PathFilterGroup.createFromStrings(filepaths));
 			tw.setRecursive(true);
 
@@ -356,8 +364,9 @@ public class ResetCommand extends GitCommand<Ref> {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
-			if (dc != null)
+			if (dc != null) {
 				dc.unlock();
+			}
 		}
 	}
 
@@ -366,10 +375,11 @@ public class ResetCommand extends GitCommand<Ref> {
 		try (TreeWalk walk = new TreeWalk(repo)) {
 			DirCacheBuilder builder = dc.builder();
 
-			if (commitTree != null)
+			if (commitTree != null) {
 				walk.addTree(commitTree);
-			else
+			} else {
 				walk.addTree(new EmptyTreeIterator());
+			}
 			walk.addTree(new DirCacheIterator(dc));
 			walk.setRecursive(true);
 

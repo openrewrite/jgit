@@ -67,14 +67,16 @@ public class SubmoduleInitCommand extends GitCommand<Collection<String>> {
 		checkCallable();
 
 		try (SubmoduleWalk generator = SubmoduleWalk.forIndex(repo)) {
-			if (!paths.isEmpty())
+			if (!paths.isEmpty()) {
 				generator.setFilter(PathFilterGroup.createFromStrings(paths));
+			}
 			StoredConfig config = repo.getConfig();
 			List<String> initialized = new ArrayList<>();
 			while (generator.next()) {
 				// Ignore entry if URL is already present in config file
-				if (generator.getConfigUrl() != null)
+				if (generator.getConfigUrl() != null) {
 					continue;
+				}
 
 				String path = generator.getPath();
 				String name = generator.getModuleName();
@@ -82,18 +84,22 @@ public class SubmoduleInitCommand extends GitCommand<Collection<String>> {
 				// file
 				String url = generator.getRemoteUrl();
 				String update = generator.getModulesUpdate();
-				if (url != null)
+				if (url != null) {
 					config.setString(ConfigConstants.CONFIG_SUBMODULE_SECTION,
 							name, ConfigConstants.CONFIG_KEY_URL, url);
-				if (update != null)
+				}
+				if (update != null) {
 					config.setString(ConfigConstants.CONFIG_SUBMODULE_SECTION,
 							name, ConfigConstants.CONFIG_KEY_UPDATE, update);
-				if (url != null || update != null)
+				}
+				if (url != null || update != null) {
 					initialized.add(path);
+				}
 			}
 			// Save repository config if any values were updated
-			if (!initialized.isEmpty())
+			if (!initialized.isEmpty()) {
 				config.save();
+			}
 			return initialized;
 		} catch (IOException | ConfigInvalidException e) {
 			throw new JGitInternalException(e.getMessage(), e);

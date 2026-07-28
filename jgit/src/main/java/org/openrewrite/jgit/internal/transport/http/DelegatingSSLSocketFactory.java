@@ -32,7 +32,7 @@ public abstract class DelegatingSSLSocketFactory extends SSLSocketFactory {
 	 * @param delegate
 	 *            {@link SSLSocketFactory} to delegate to
 	 */
-	public DelegatingSSLSocketFactory(SSLSocketFactory delegate) {
+	protected DelegatingSSLSocketFactory(SSLSocketFactory delegate) {
 		this.delegate = delegate;
 	}
 

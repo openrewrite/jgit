@@ -158,16 +158,19 @@ public abstract class ObjectLoader {
 	 */
 	public byte[] getCachedBytes(int sizeLimit) throws LargeObjectException,
 			MissingObjectException, IOException {
-		if (!isLarge())
+		if (!isLarge()) {
 			return getCachedBytes();
+		}
 
 		try (ObjectStream in = openStream()) {
 			long sz = in.getSize();
-			if (sizeLimit < sz)
+			if (sizeLimit < sz) {
 				throw new LargeObjectException.ExceedsLimit(sizeLimit, sz);
+			}
 
-			if (Integer.MAX_VALUE < sz)
+			if (Integer.MAX_VALUE < sz) {
 				throw new LargeObjectException.ExceedsByteArrayLimit();
+			}
 
 			byte[] buf;
 			try {
@@ -225,13 +228,15 @@ public abstract class ObjectLoader {
 				long copied = 0;
 				while (copied < sz) {
 					int n = in.read(tmp);
-					if (n < 0)
+					if (n < 0) {
 						throw new EOFException();
+					}
 					out.write(tmp, 0, n);
 					copied += n;
 				}
-				if (0 <= in.read())
+				if (0 <= in.read()) {
 					throw new EOFException();
+				}
 			}
 		} else {
 			out.write(getCachedBytes());

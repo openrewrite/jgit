@@ -330,7 +330,7 @@ public final class GitProtocolConstants {
 	public static final String VERSION_2_REQUEST = "version=2"; //$NON-NLS-1$
 
 	enum MultiAck {
-		OFF, CONTINUE, DETAILED;
+		OFF, CONTINUE, DETAILED
 	}
 
 	private GitProtocolConstants() {

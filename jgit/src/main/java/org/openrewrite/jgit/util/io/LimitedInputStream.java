@@ -99,11 +99,13 @@ public abstract class LimitedInputStream extends FilterInputStream {
 	/** {@inheritDoc} */
 	@Override
 	public synchronized void reset() throws IOException {
-		if (!in.markSupported())
+		if (!in.markSupported()) {
 			throw new IOException(JGitText.get().unsupportedMark);
+		}
 
-		if (mark == -1)
+		if (mark == -1) {
 			throw new IOException(JGitText.get().unsetMark);
+		}
 
 		in.reset();
 		left = mark;

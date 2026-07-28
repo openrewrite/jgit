@@ -75,8 +75,9 @@ public class RebaseTodoLine {
 		public static Action parse(String token) {
 			for (Action action : Action.values()) {
 				if (action.token.equals(token)
-						|| action.shortToken.equals(token))
+						|| action.shortToken.equals(token)) {
 					return action;
+				}
 			}
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().unknownOrUnsupportedCommand, token,
@@ -147,18 +148,20 @@ public class RebaseTodoLine {
 	public void setAction(Action newAction) throws IllegalTodoFileModification {
 		if (!Action.COMMENT.equals(action) && Action.COMMENT.equals(newAction)) {
 			// transforming from non-comment to comment
-			if (comment == null)
+			if (comment == null) {
 				// no comment was explicitly set. Take the old line as comment
 				// text
 				comment = "# " + action.token + " " //$NON-NLS-1$ //$NON-NLS-2$
-						+ ((commit == null) ? "null" : commit.name()) + " " //$NON-NLS-1$ //$NON-NLS-2$
-						+ ((shortMessage == null) ? "null" : shortMessage); //$NON-NLS-1$
+						+ (commit == null ? "null" : commit.name()) + " " //$NON-NLS-1$ //$NON-NLS-2$
+						+ (shortMessage == null ? "null" : shortMessage); //$NON-NLS-1$
+			}
 		} else if (Action.COMMENT.equals(action) && !Action.COMMENT.equals(newAction)) {
 			// transforming from comment to non-comment
-			if (commit == null)
+			if (commit == null) {
 				throw new IllegalTodoFileModification(MessageFormat.format(
 						JGitText.get().cannotChangeActionOnComment, action,
 						newAction));
+			}
 		}
 		this.action = newAction;
 	}
@@ -184,8 +187,9 @@ public class RebaseTodoLine {
 			return;
 		}
 
-		if (newComment.contains("\n") || newComment.contains("\r")) //$NON-NLS-1$ //$NON-NLS-2$
+		if (newComment.contains("\n") || newComment.contains("\r")) { //$NON-NLS-1$ //$NON-NLS-2$
 			throw createInvalidCommentException(newComment);
+		}
 
 		if (newComment.trim().length() == 0 || newComment.startsWith("#")) { //$NON-NLS-1$
 			this.comment = newComment;
@@ -252,10 +256,10 @@ public class RebaseTodoLine {
 		return "Step["
 				+ action
 				+ ", "
-				+ ((commit == null) ? "null" : commit)
+				+ (commit == null ? "null" : commit)
 				+ ", "
-				+ ((shortMessage == null) ? "null" : shortMessage)
+				+ (shortMessage == null ? "null" : shortMessage)
 				+ ", "
-				+ ((comment == null) ? "" : comment) + "]";
+				+ (comment == null ? "" : comment) + "]";
 	}
 }

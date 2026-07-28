@@ -44,8 +44,9 @@ public class RenameDetector {
 		@Override
 		public int compare(DiffEntry a, DiffEntry b) {
 			int cmp = nameOf(a).compareTo(nameOf(b));
-			if (cmp == 0)
+			if (cmp == 0) {
 				cmp = sortOf(a.getChangeType()) - sortOf(b.getChangeType());
+			}
 			return cmp;
 		}
 
@@ -54,8 +55,9 @@ public class RenameDetector {
 			// deletes the new name is /dev/null, so we sort instead by
 			// the old name.
 			//
-			if (ent.changeType == ChangeType.DELETE)
+			if (ent.changeType == ChangeType.DELETE) {
 				return ent.oldPath;
+			}
 			return ent.newPath;
 		}
 
@@ -109,7 +111,7 @@ public class RenameDetector {
 	 * those that are not exact, that is with a slight content modification
 	 * between the two files.
 	 */
-	private boolean skipContentRenamesForBinaryFiles = false;
+	private boolean skipContentRenamesForBinaryFiles;
 
 	/** Set if the number of adds or deletes was over the limit. */
 	private boolean overRenameLimit;
@@ -163,9 +165,10 @@ public class RenameDetector {
 	 *             the score was not within [0, 100].
 	 */
 	public void setRenameScore(int score) {
-		if (score < 0 || score > 100)
+		if (score < 0 || score > 100) {
 			throw new IllegalArgumentException(
 					JGitText.get().similarityScoreMustBeWithinBounds);
+		}
 		renameScore = score;
 	}
 
@@ -273,8 +276,9 @@ public class RenameDetector {
 	 *         detector will skip expensive computation.
 	 */
 	public boolean isOverRenameLimit() {
-		if (done)
+		if (done) {
 			return overRenameLimit;
+		}
 		int cnt = Math.max(added.size(), deleted.size());
 		return getRenameLimit() != 0 && getRenameLimit() < cnt;
 	}
@@ -288,8 +292,9 @@ public class RenameDetector {
 	 *             if {@code getEntries} was already invoked.
 	 */
 	public void addAll(Collection<DiffEntry> entriesToAdd) {
-		if (done)
+		if (done) {
 			throw new IllegalStateException(JGitText.get().renamesAlreadyFound);
+		}
 
 		for (DiffEntry entry : entriesToAdd) {
 			switch (entry.getChangeType()) {
@@ -414,20 +419,25 @@ public class RenameDetector {
 		if (!done) {
 			done = true;
 
-			if (pm == null)
+			if (pm == null) {
 				pm = NullProgressMonitor.INSTANCE;
+			}
 
-			if (0 < breakScore)
+			if (0 < breakScore) {
 				breakModifies(reader, pm);
+			}
 
-			if (!added.isEmpty() && !deleted.isEmpty())
+			if (!added.isEmpty() && !deleted.isEmpty()) {
 				findExactRenames(pm);
+			}
 
-			if (!added.isEmpty() && !deleted.isEmpty())
+			if (!added.isEmpty() && !deleted.isEmpty()) {
 				findContentRenames(reader, pm);
+			}
 
-			if (0 < breakScore && !added.isEmpty() && !deleted.isEmpty())
+			if (0 < breakScore && !added.isEmpty() && !deleted.isEmpty()) {
 				rejoinModifies(pm);
+			}
 
 			entries.addAll(added);
 			added = null;
@@ -573,10 +583,11 @@ public class RenameDetector {
 		ArrayList<List<DiffEntry>> nonUniqueAdds = new ArrayList<>();
 
 		for (Object o : addedMap.values()) {
-			if (o instanceof DiffEntry)
+			if (o instanceof DiffEntry) {
 				uniqueAdds.add((DiffEntry) o);
-			else
+			} else {
 				nonUniqueAdds.add((List<DiffEntry>) o);
+			}
 		}
 
 		ArrayList<DiffEntry> left = new ArrayList<>(added.size());
@@ -697,13 +708,15 @@ public class RenameDetector {
 		for (Object o : deletedMap.values()) {
 			if (o instanceof DiffEntry) {
 				DiffEntry e = (DiffEntry) o;
-				if (e.changeType == ChangeType.DELETE)
+				if (e.changeType == ChangeType.DELETE) {
 					deleted.add(e);
+				}
 			} else {
 				List<DiffEntry> list = (List<DiffEntry>) o;
 				for (DiffEntry e : list) {
-					if (e.changeType == ChangeType.DELETE)
+					if (e.changeType == ChangeType.DELETE) {
 						deleted.add(e);
+					}
 				}
 			}
 		}

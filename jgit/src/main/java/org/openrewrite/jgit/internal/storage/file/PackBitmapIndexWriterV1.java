@@ -17,11 +17,10 @@ import java.io.OutputStream;
 import java.security.DigestOutputStream;
 import java.text.MessageFormat;
 
+import com.googlecode.javaewah.EWAHCompressedBitmap;
 import org.openrewrite.jgit.internal.JGitText;
 import org.openrewrite.jgit.internal.storage.file.PackBitmapIndexBuilder.StoredEntry;
 import org.openrewrite.jgit.lib.Constants;
-
-import com.googlecode.javaewah.EWAHCompressedBitmap;
 
 /**
  * Creates the version 1 pack bitmap index files.
@@ -62,8 +61,9 @@ public class PackBitmapIndexWriterV1 {
 	 */
 	public void write(PackBitmapIndexBuilder bitmaps, byte[] packDataChecksum)
 			throws IOException {
-		if (bitmaps == null || packDataChecksum.length != 20)
+		if (bitmaps == null || packDataChecksum.length != 20) {
 			throw new IllegalStateException();
+		}
 
 		writeHeader(bitmaps.getOptions(), bitmaps.getBitmapCount(),
 				packDataChecksum);
@@ -104,11 +104,12 @@ public class PackBitmapIndexWriterV1 {
 		}
 
 		int expectedBitmapCount = bitmaps.getBitmapCount();
-		if (expectedBitmapCount != bitmapCount)
+		if (expectedBitmapCount != bitmapCount) {
 			throw new IOException(MessageFormat.format(
 					JGitText.get().expectedGot,
 					String.valueOf(expectedBitmapCount),
 					String.valueOf(bitmapCount)));
+		}
 	}
 
 	private void writeBitmapEntry(StoredEntry entry) throws IOException {

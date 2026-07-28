@@ -50,8 +50,9 @@ public class DateRevQueue extends AbstractRevQueue {
 		super(s.firstParent);
 		for (;;) {
 			final RevCommit c = s.next();
-			if (c == null)
+			if (c == null) {
 				break;
+			}
 			add(c);
 		}
 	}
@@ -61,29 +62,32 @@ public class DateRevQueue extends AbstractRevQueue {
 	public void add(RevCommit c) {
 		sinceLastIndex++;
 		if (++inQueue > REBUILD_INDEX_COUNT
-				&& sinceLastIndex > REBUILD_INDEX_COUNT)
+				&& sinceLastIndex > REBUILD_INDEX_COUNT) {
 			buildIndex();
+		}
 
 		Entry q = head;
 		final long when = c.commitTime;
 
 		if (first <= last && index[first].commit.commitTime > when) {
-			int low = first, high = last;
+			int low = first;
+			int high = last;
 			while (low <= high) {
 				int mid = (low + high) >>> 1;
 				int t = index[mid].commit.commitTime;
-				if (t < when)
+				if (t < when) {
 					high = mid - 1;
-				else if (t > when)
+				} else if (t > when) {
 					low = mid + 1;
-				else {
+				} else {
 					low = mid - 1;
 					break;
 				}
 			}
 			low = Math.min(low, high);
-			while (low > first && when == index[low].commit.commitTime)
+			while (low > first && when == index[low].commit.commitTime) {
 				--low;
+			}
 			q = index[low];
 		}
 
@@ -106,11 +110,13 @@ public class DateRevQueue extends AbstractRevQueue {
 	@Override
 	public RevCommit next() {
 		final Entry q = head;
-		if (q == null)
+		if (q == null) {
 			return null;
+		}
 
-		if (index != null && q == index[first])
+		if (index != null && q == index[first]) {
 			index[first++] = null;
+		}
 		inQueue--;
 
 		head = q.next;
@@ -122,10 +128,12 @@ public class DateRevQueue extends AbstractRevQueue {
 		sinceLastIndex = 0;
 		first = 0;
 		index = new Entry[inQueue / 100 + 1];
-		int qi = 0, ii = 0;
+		int qi = 0;
+		int ii = 0;
 		for (Entry q = head; q != null; q = q.next) {
-			if (++qi % 100 == 0)
+			if (++qi % 100 == 0) {
 				index[ii++] = q;
+			}
 		}
 		last = ii - 1;
 	}
@@ -153,8 +161,9 @@ public class DateRevQueue extends AbstractRevQueue {
 	@Override
 	boolean everbodyHasFlag(int f) {
 		for (Entry q = head; q != null; q = q.next) {
-			if ((q.commit.flags & f) == 0)
+			if ((q.commit.flags & f) == 0) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -162,8 +171,9 @@ public class DateRevQueue extends AbstractRevQueue {
 	@Override
 	boolean anybodyHasFlag(int f) {
 		for (Entry q = head; q != null; q = q.next) {
-			if ((q.commit.flags & f) != 0)
+			if ((q.commit.flags & f) != 0) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -177,17 +187,19 @@ public class DateRevQueue extends AbstractRevQueue {
 	@Override
 	public String toString() {
 		final StringBuilder s = new StringBuilder();
-		for (Entry q = head; q != null; q = q.next)
+		for (Entry q = head;q != null;q = q.next) {
 			describe(s, q.commit);
+		}
 		return s.toString();
 	}
 
 	private Entry newEntry(RevCommit c) {
 		Entry r = free;
-		if (r == null)
+		if (r == null) {
 			r = new Entry();
-		else
+		} else {
 			free = r.next;
+		}
 		r.commit = c;
 		return r;
 	}

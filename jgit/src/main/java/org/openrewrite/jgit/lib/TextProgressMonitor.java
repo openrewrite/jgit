@@ -65,8 +65,9 @@ public class TextProgressMonitor extends BatchingProgressMonitor {
 		s.append("\r"); //$NON-NLS-1$
 		s.append(taskName);
 		s.append(": "); //$NON-NLS-1$
-		while (s.length() < 25)
+		while (s.length() < 25) {
 			s.append(' ');
+		}
 		s.append(workCurr);
 	}
 
@@ -92,17 +93,21 @@ public class TextProgressMonitor extends BatchingProgressMonitor {
 		s.append("\r"); //$NON-NLS-1$
 		s.append(taskName);
 		s.append(": "); //$NON-NLS-1$
-		while (s.length() < 25)
+		while (s.length() < 25) {
 			s.append(' ');
+		}
 
 		String endStr = String.valueOf(totalWork);
 		String curStr = String.valueOf(cmp);
-		while (curStr.length() < endStr.length())
+		while (curStr.length() < endStr.length()) {
 			curStr = " " + curStr; //$NON-NLS-1$
-		if (pcnt < 100)
+		}
+		if (pcnt < 100) {
 			s.append(' ');
-		if (pcnt < 10)
+		}
+		if (pcnt < 10) {
 			s.append(' ');
+		}
 		s.append(pcnt);
 		s.append("% ("); //$NON-NLS-1$
 		s.append(curStr);

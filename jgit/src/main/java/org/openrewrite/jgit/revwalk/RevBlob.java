@@ -42,16 +42,18 @@ public class RevBlob extends RevObject {
 	@Override
 	void parseHeaders(RevWalk walk) throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {
-		if (walk.reader.has(this))
+		if (walk.reader.has(this)) {
 			flags |= PARSED;
-		else
+		} else {
 			throw new MissingObjectException(this, getType());
+		}
 	}
 
 	@Override
 	void parseBody(RevWalk walk) throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {
-		if ((flags & PARSED) == 0)
+		if ((flags & PARSED) == 0) {
 			parseHeaders(walk);
+		}
 	}
 }

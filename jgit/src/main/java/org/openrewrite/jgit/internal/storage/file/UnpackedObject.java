@@ -76,19 +76,22 @@ public class UnpackedObject {
 				Inflater inf = wc.inflater();
 				InputStream zIn = inflate(in, inf);
 				int avail = readSome(zIn, hdr, 0, 64);
-				if (avail < 5)
+				if (avail < 5) {
 					throw new CorruptObjectException(id,
 							JGitText.get().corruptObjectNoHeader);
+				}
 
 				final MutableInteger p = new MutableInteger();
 				int type = Constants.decodeTypeString(id, hdr, (byte) ' ', p);
 				long size = RawParseUtils.parseLongBase10(hdr, p.value, p);
-				if (size < 0)
+				if (size < 0) {
 					throw new CorruptObjectException(id,
 							JGitText.get().corruptObjectNegativeSize);
-				if (hdr[p.value++] != 0)
+				}
+				if (hdr[p.value++] != 0) {
 					throw new CorruptObjectException(id,
 							JGitText.get().corruptObjectGarbageAfterSize);
+				}
 				if (path == null && Integer.MAX_VALUE < size) {
 					LargeObjectException.ExceedsByteArrayLimit e;
 					e = new LargeObjectException.ExceedsByteArrayLimit();
@@ -98,8 +101,9 @@ public class UnpackedObject {
 				if (size < wc.getStreamFileThreshold() || path == null) {
 					byte[] data = new byte[(int) size];
 					int n = avail - p.value;
-					if (n > 0)
+					if (n > 0) {
 						System.arraycopy(hdr, p.value, data, 0, n);
+					}
 					IO.readFully(zIn, data, n, data.length - n);
 					checkValidEndOfStream(in, inf, id, hdr);
 					return new ObjectLoader.SmallObject(type, data);
@@ -169,16 +173,18 @@ public class UnpackedObject {
 				Inflater inf = wc.inflater();
 				InputStream zIn = inflate(in, inf);
 				int avail = readSome(zIn, hdr, 0, 64);
-				if (avail < 5)
+				if (avail < 5) {
 					throw new CorruptObjectException(id,
 							JGitText.get().corruptObjectNoHeader);
+				}
 
 				final MutableInteger p = new MutableInteger();
 				Constants.decodeTypeString(id, hdr, (byte) ' ', p);
 				long size = RawParseUtils.parseLongBase10(hdr, p.value, p);
-				if (size < 0)
+				if (size < 0) {
 					throw new CorruptObjectException(id,
 							JGitText.get().corruptObjectNegativeSize);
+				}
 				return size;
 
 			}
@@ -214,25 +220,29 @@ public class UnpackedObject {
 				coe.initCause(e);
 				throw coe;
 			}
-			if (r != 0)
+			if (r != 0) {
 				throw new CorruptObjectException(id,
 						JGitText.get().corruptObjectIncorrectLength);
+			}
 
 			if (inf.finished()) {
-				if (inf.getRemaining() != 0 || in.read() != -1)
+				if (inf.getRemaining() != 0 || in.read() != -1) {
 					throw new CorruptObjectException(id,
 							JGitText.get().corruptObjectBadStream);
+				}
 				break;
 			}
 
-			if (!inf.needsInput())
+			if (!inf.needsInput()) {
 				throw new CorruptObjectException(id,
 						JGitText.get().corruptObjectBadStream);
+			}
 
 			r = in.read(buf);
-			if (r <= 0)
+			if (r <= 0) {
 				throw new CorruptObjectException(id,
 						JGitText.get().corruptObjectBadStream);
+			}
 			inf.setInput(buf, 0, r);
 		}
 	}
@@ -279,8 +289,9 @@ public class UnpackedObject {
 			public int read(byte[] b, int off, int cnt) throws IOException {
 				try {
 					int r = super.read(b, off, cnt);
-					if (r > 0)
+					if (r > 0) {
 						remaining -= r;
+					}
 					return r;
 				} catch (ZipException badStream) {
 					CorruptObjectException coe = new CorruptObjectException(id,
@@ -293,8 +304,9 @@ public class UnpackedObject {
 			@Override
 			public void close() throws IOException {
 				try {
-					if (remaining <= 0)
+					if (remaining <= 0) {
 						checkValidEndOfStream(in, inf, id, new byte[64]);
+					}
 				} finally {
 					InflaterCache.release(inf);
 					super.close();
@@ -316,8 +328,9 @@ public class UnpackedObject {
 		int avail = 0;
 		while (0 < cnt) {
 			int n = in.read(hdr, off, cnt);
-			if (n < 0)
+			if (n < 0) {
 				break;
+			}
 			avail += n;
 			off += n;
 			cnt -= n;
@@ -391,14 +404,16 @@ public class UnpackedObject {
 				if (isStandardFormat(hdr)) {
 					in.reset();
 					in = buffer(inflate(in, size, id));
-					while (0 < in.read())
+					while (0 < in.read()) {
 						continue;
+					}
 				} else {
 					readSome(in, hdr, 2, 18);
 					int c = hdr[0] & 0xff;
 					int p = 1;
-					while ((c & 0x80) != 0)
+					while ((c & 0x80) != 0) {
 						c = hdr[p++] & 0xff;
+					}
 
 					in.reset();
 					IO.skipFully(in, p);
@@ -408,8 +423,9 @@ public class UnpackedObject {
 				ok = true;
 				return new ObjectStream.Filter(type, size, in);
 			} finally {
-				if (!ok)
+				if (!ok) {
 					in.close();
+				}
 			}
 		}
 	}

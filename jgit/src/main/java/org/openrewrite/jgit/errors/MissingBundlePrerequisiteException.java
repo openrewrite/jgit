@@ -29,8 +29,9 @@ public class MissingBundlePrerequisiteException extends TransportException {
 		for (Map.Entry<ObjectId, String> e : missingCommits.entrySet()) {
 			r.append("\n  "); //$NON-NLS-1$
 			r.append(e.getKey().name());
-			if (e.getValue() != null)
+			if (e.getValue() != null) {
 				r.append(" ").append(e.getValue()); //$NON-NLS-1$
+			}
 		}
 		return r.toString();
 	}

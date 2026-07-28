@@ -290,7 +290,7 @@ public abstract class RefAdvertiser {
 			if (useProtocolV2) {
 				String symrefPart = symrefs.containsKey(ref.getName())
 						? (' ' + REF_ATTR_SYMREF_TARGET
-								+ symrefs.get(ref.getName()))
+						+ symrefs.get(ref.getName()))
 						: ""; //$NON-NLS-1$
 				String peelPart = ""; //$NON-NLS-1$
 				if (derefTags) {
@@ -310,17 +310,20 @@ public abstract class RefAdvertiser {
 
 			advertiseAny(objectId, ref.getName());
 
-			if (!derefTags)
+			if (!derefTags) {
 				continue;
+			}
 
 			if (!ref.isPeeled()) {
-				if (repository == null)
+				if (repository == null) {
 					continue;
+				}
 				ref = repository.getRefDatabase().peel(ref);
 			}
 
-			if (ref.getPeeledObjectId() != null)
+			if (ref.getPeeledObjectId() != null) {
 				advertiseAny(ref.getPeeledObjectId(), ref.getName() + "^{}"); //$NON-NLS-1$
+			}
 		}
 		return sent;
 	}
@@ -354,8 +357,9 @@ public abstract class RefAdvertiser {
 
 	private void advertiseAnyOnce(AnyObjectId obj, String refName)
 			throws IOException {
-		if (!sent.contains(obj))
+		if (!sent.contains(obj)) {
 			advertiseAny(obj, refName);
+		}
 	}
 
 	private void advertiseAny(AnyObjectId obj, String refName)

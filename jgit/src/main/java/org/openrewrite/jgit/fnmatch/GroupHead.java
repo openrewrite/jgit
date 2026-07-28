@@ -42,40 +42,40 @@ final class GroupHead extends AbstractHead {
 				final char start = characterClass.charAt(0);
 				final char end = characterClass.charAt(2);
 				characterClasses.add(new CharacterRange(start, end));
-			} else if (characterClass.equals("[:alnum:]")) { //$NON-NLS-1$
+			} else if ("[:alnum:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(LetterPattern.INSTANCE);
 				characterClasses.add(DigitPattern.INSTANCE);
-			} else if (characterClass.equals("[:alpha:]")) { //$NON-NLS-1$
+			} else if ("[:alpha:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(LetterPattern.INSTANCE);
-			} else if (characterClass.equals("[:blank:]")) { //$NON-NLS-1$
+			} else if ("[:blank:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(new OneCharacterPattern(' '));
 				characterClasses.add(new OneCharacterPattern('\t'));
-			} else if (characterClass.equals("[:cntrl:]")) { //$NON-NLS-1$
+			} else if ("[:cntrl:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(new CharacterRange('\u0000', '\u001F'));
 				characterClasses.add(new OneCharacterPattern('\u007F'));
-			} else if (characterClass.equals("[:digit:]")) { //$NON-NLS-1$
+			} else if ("[:digit:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(DigitPattern.INSTANCE);
-			} else if (characterClass.equals("[:graph:]")) { //$NON-NLS-1$
+			} else if ("[:graph:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(new CharacterRange('\u0021', '\u007E'));
 				characterClasses.add(LetterPattern.INSTANCE);
 				characterClasses.add(DigitPattern.INSTANCE);
-			} else if (characterClass.equals("[:lower:]")) { //$NON-NLS-1$
+			} else if ("[:lower:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(LowerPattern.INSTANCE);
-			} else if (characterClass.equals("[:print:]")) { //$NON-NLS-1$
+			} else if ("[:print:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(new CharacterRange('\u0020', '\u007E'));
 				characterClasses.add(LetterPattern.INSTANCE);
 				characterClasses.add(DigitPattern.INSTANCE);
-			} else if (characterClass.equals("[:punct:]")) { //$NON-NLS-1$
+			} else if ("[:punct:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(PunctPattern.INSTANCE);
-			} else if (characterClass.equals("[:space:]")) { //$NON-NLS-1$
+			} else if ("[:space:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(WhitespacePattern.INSTANCE);
-			} else if (characterClass.equals("[:upper:]")) { //$NON-NLS-1$
+			} else if ("[:upper:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(UpperPattern.INSTANCE);
-			} else if (characterClass.equals("[:xdigit:]")) { //$NON-NLS-1$
+			} else if ("[:xdigit:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(new CharacterRange('0', '9'));
 				characterClasses.add(new CharacterRange('a', 'f'));
 				characterClasses.add(new CharacterRange('A', 'F'));
-			} else if (characterClass.equals("[:word:]")) { //$NON-NLS-1$
+			} else if ("[:word:]".equals(characterClass)) { //$NON-NLS-1$
 				characterClasses.add(new OneCharacterPattern('_'));
 				characterClasses.add(LetterPattern.INSTANCE);
 				characterClasses.add(DigitPattern.INSTANCE);

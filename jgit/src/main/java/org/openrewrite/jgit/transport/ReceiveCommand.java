@@ -61,7 +61,7 @@ public class ReceiveCommand {
 		UPDATE_NONFASTFORWARD,
 
 		/** Delete an existing ref; the ref should already exist. */
-		DELETE;
+		DELETE
 	}
 
 	/** Result of the update command. */
@@ -97,7 +97,7 @@ public class ReceiveCommand {
 		LOCK_FAILURE,
 
 		/** The change was completed successfully. */
-		OK;
+		OK
 	}
 
 	/**
@@ -114,13 +114,15 @@ public class ReceiveCommand {
 	public static List<ReceiveCommand> filter(Iterable<ReceiveCommand> in,
 			Result want) {
 		List<ReceiveCommand> r;
-		if (in instanceof Collection)
+		if (in instanceof Collection) {
 			r = new ArrayList<>(((Collection<?>) in).size());
-		else
+		} else {
 			r = new ArrayList<>();
+		}
 		for (ReceiveCommand cmd : in) {
-			if (cmd.getResult() == want)
+			if (cmd.getResult() == want) {
 				r.add(cmd);
+			}
 		}
 		return r;
 	}
@@ -715,15 +717,17 @@ public class ReceiveCommand {
 	 *             and the command cannot be processed.
 	 */
 	public void updateType(RevWalk walk) throws IOException {
-		if (typeIsCorrect)
+		if (typeIsCorrect) {
 			return;
+		}
 		if (type == Type.UPDATE && !AnyObjectId.isEqual(oldId, newId)) {
 			RevObject o = walk.parseAny(oldId);
 			RevObject n = walk.parseAny(newId);
 			if (!(o instanceof RevCommit)
 					|| !(n instanceof RevCommit)
-					|| !walk.isMergedInto((RevCommit) o, (RevCommit) n))
+					|| !walk.isMergedInto((RevCommit) o, (RevCommit) n)) {
 				setType(Type.UPDATE_NONFASTFORWARD);
+			}
 		}
 		typeIsCorrect = true;
 	}

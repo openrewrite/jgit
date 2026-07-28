@@ -93,8 +93,6 @@ public class GitDateFormatter {
 	public GitDateFormatter(Format format) {
 		this.format = format;
 		switch (format) {
-		default:
-			break;
 		case DEFAULT: // Not default:
 			dateTimeInstance = new SimpleDateFormat(
 					"EEE MMM dd HH:mm:ss yyyy Z", Locale.US); //$NON-NLS-1$
@@ -121,6 +119,7 @@ public class GitDateFormatter {
 					DateFormat.DEFAULT, DateFormat.DEFAULT);
 			dateTimeInstance2 = systemReader.getSimpleDateFormat("Z"); //$NON-NLS-1$
 			break;
+		default:
 		}
 	}
 
@@ -139,10 +138,11 @@ public class GitDateFormatter {
 			int offset = ident.getTimeZoneOffset();
 			String sign = offset < 0 ? "-" : "+"; //$NON-NLS-1$ //$NON-NLS-2$
 			int offset2;
-			if (offset < 0)
+			if (offset < 0) {
 				offset2 = -offset;
-			else
+			} else {
 				offset2 = offset;
+			}
 			int hours = offset2 / 60;
 			int minutes = offset2 % 60;
 			return String.format("%d %s%02d%02d", //$NON-NLS-1$
@@ -156,16 +156,18 @@ public class GitDateFormatter {
 			return dateTimeInstance.format(ident.getWhen());
 		case LOCALE:
 			TimeZone tz = ident.getTimeZone();
-			if (tz == null)
+			if (tz == null) {
 				tz = SystemReader.getInstance().getTimeZone();
+			}
 			dateTimeInstance.setTimeZone(tz);
 			dateTimeInstance2.setTimeZone(tz);
 			return dateTimeInstance.format(ident.getWhen()) + " " //$NON-NLS-1$
 					+ dateTimeInstance2.format(ident.getWhen());
 		default:
 			tz = ident.getTimeZone();
-			if (tz == null)
+			if (tz == null) {
 				tz = SystemReader.getInstance().getTimeZone();
+			}
 			dateTimeInstance.setTimeZone(ident.getTimeZone());
 			return dateTimeInstance.format(ident.getWhen());
 		}

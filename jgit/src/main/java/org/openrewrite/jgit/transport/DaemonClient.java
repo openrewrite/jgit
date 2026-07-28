@@ -84,8 +84,9 @@ public class DaemonClient {
 		rawIn = new BufferedInputStream(sock.getInputStream());
 		rawOut = new BufferedOutputStream(sock.getOutputStream());
 
-		if (0 < daemon.getTimeout())
+		if (0 < daemon.getTimeout()) {
 			sock.setSoTimeout(daemon.getTimeout() * 1000);
+		}
 		String cmd = new PacketLineIn(rawIn).readStringRaw();
 
 		Collection<String> extraParameters = null;
@@ -105,8 +106,9 @@ public class DaemonClient {
 		}
 
 		final DaemonService srv = getDaemon().matchService(cmd);
-		if (srv == null)
+		if (srv == null) {
 			return;
+		}
 		sock.setSoTimeout(0);
 		srv.execute(this, cmd, extraParameters);
 	}

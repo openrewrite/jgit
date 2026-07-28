@@ -194,9 +194,10 @@ public abstract class ObjectBuilder {
 				break;
 			default:
 				// sanity check
-				if (ch > 127 && enforceAscii)
+				if (ch > 127 && enforceAscii) {
 					throw new IllegalArgumentException(MessageFormat
 							.format(JGitText.get().notASCIIString, in));
+				}
 				out.write(ch);
 				break;
 			}

@@ -74,7 +74,7 @@ public class MergeCommand extends GitCommand<MergeResult> {
 
 	private ContentMergeStrategy contentStrategy;
 
-	private List<Ref> commits = new LinkedList<>();
+	private final List<Ref> commits = new LinkedList<>();
 
 	private Boolean squash;
 
@@ -129,10 +129,12 @@ public class MergeCommand extends GitCommand<MergeResult> {
 
 		@Override
 		public boolean matchConfigValue(String in) {
-			if (StringUtils.isEmptyOrNull(in))
+			if (StringUtils.isEmptyOrNull(in)) {
 				return false;
-			if (!in.startsWith("--")) //$NON-NLS-1$
+			}
+			if (!in.startsWith("--")) { //$NON-NLS-1$
 				return false;
+			}
 			return name().equalsIgnoreCase(in.substring(2).replace('-', '_'));
 		}
 
@@ -226,9 +228,10 @@ public class MergeCommand extends GitCommand<MergeResult> {
 		DirCacheCheckout dco = null;
 		try (RevWalk revWalk = new RevWalk(repo)) {
 			Ref head = repo.exactRef(Constants.HEAD);
-			if (head == null)
+			if (head == null) {
 				throw new NoHeadException(
 						JGitText.get().commitOnRepoWithoutHEADCurrentlyNotSupported);
+			}
 			StringBuilder refLogMessage = new StringBuilder("merge "); //$NON-NLS-1$
 
 			// Check for FAST_FORWARD, ALREADY_UP_TO_DATE
@@ -241,8 +244,9 @@ public class MergeCommand extends GitCommand<MergeResult> {
 			// handle annotated tags
 			ref = repo.getRefDatabase().peel(ref);
 			ObjectId objectId = ref.getPeeledObjectId();
-			if (objectId == null)
+			if (objectId == null) {
 				objectId = ref.getObjectId();
+			}
 
 			RevCommit srcCommit = revWalk.lookupCommit(objectId);
 
@@ -259,9 +263,10 @@ public class MergeCommand extends GitCommand<MergeResult> {
 				refUpdate.setNewObjectId(objectId);
 				refUpdate.setExpectedOldObjectId(null);
 				refUpdate.setRefLogMessage("initial pull", false); //$NON-NLS-1$
-				if (refUpdate.update() != Result.NEW)
+				if (refUpdate.update() != Result.NEW) {
 					throw new NoHeadException(
 							JGitText.get().commitOnRepoWithoutHEADCurrentlyNotSupported);
+				}
 				setCallable(false);
 				return new MergeResult(srcCommit, srcCommit, new ObjectId[] {
 						null, srcCommit }, MergeStatus.FAST_FORWARD,
@@ -287,7 +292,8 @@ public class MergeCommand extends GitCommand<MergeResult> {
 				dco.setFailOnConflict(true);
 				dco.checkout();
 				String msg = null;
-				ObjectId newHead, base = null;
+				ObjectId newHead;
+				ObjectId base = null;
 				MergeStatus mergeStatus = null;
 				if (!squash) {
 					updateHead(refLogMessage, srcCommit, headId);
@@ -310,16 +316,17 @@ public class MergeCommand extends GitCommand<MergeResult> {
 			} else {
 				if (fastForwardMode == FastForwardMode.FF_ONLY) {
 					return new MergeResult(headCommit, srcCommit,
-							new ObjectId[] { headCommit, srcCommit },
+							new ObjectId[]{headCommit, srcCommit},
 							MergeStatus.ABORTED, mergeStrategy, null, null);
 				}
 				String mergeMessage = ""; //$NON-NLS-1$
 				if (!squash) {
-					if (message != null)
+					if (message != null) {
 						mergeMessage = message;
-					else
+					} else {
 						mergeMessage = new MergeMessageFormatter().format(
-							commits, head);
+								commits, head);
+					}
 					repo.writeMergeCommitMsg(mergeMessage);
 					repo.writeMergeHeads(Arrays.asList(ref.getObjectId()));
 				} else {
@@ -338,8 +345,8 @@ public class MergeCommand extends GitCommand<MergeResult> {
 				if (merger instanceof ResolveMerger) {
 					ResolveMerger resolveMerger = (ResolveMerger) merger;
 					resolveMerger.setContentMergeStrategy(contentStrategy);
-					resolveMerger.setCommitNames(new String[] {
-							"BASE", "HEAD", ref.getName() }); //$NON-NLS-1$ //$NON-NLS-2$
+					resolveMerger.setCommitNames(new String[]{
+							"BASE", "HEAD", ref.getName()}); //$NON-NLS-1$ //$NON-NLS-2$
 					resolveMerger.setWorkingTreeIterator(new FileTreeIterator(repo));
 					noProblems = merger.merge(headCommit, srcCommit);
 					lowLevelResults = resolveMerger
@@ -350,13 +357,15 @@ public class MergeCommand extends GitCommand<MergeResult> {
 						repo.fireEvent(new WorkingTreeModifiedEvent(
 								resolveMerger.getModifiedFiles(), null));
 					}
-				} else
+				} else {
 					noProblems = merger.merge(headCommit, srcCommit);
+				}
 				refLogMessage.append(": Merge made by "); //$NON-NLS-1$
-				if (!revWalk.isMergedInto(headCommit, srcCommit))
-					refLogMessage.append(mergeStrategy.getName());
-				else
+				if (!revWalk.isMergedInto(headCommit, srcCommit)) {
+					refLogMessage.append(mergeStrategy.getName()); //$NON-NLS-1$
+				} else {
 					refLogMessage.append("recursive"); //$NON-NLS-1$
+				}
 				refLogMessage.append('.');
 				if (noProblems) {
 					dco = new DirCacheCheckout(repo,
@@ -391,16 +400,16 @@ public class MergeCommand extends GitCommand<MergeResult> {
 						mergeStatus = MergeStatus.MERGED_SQUASHED;
 					}
 					return new MergeResult(newHeadId, null,
-							new ObjectId[] { headCommit.getId(),
-									srcCommit.getId() }, mergeStatus,
+							new ObjectId[]{headCommit.getId(),
+									srcCommit.getId()}, mergeStatus,
 							mergeStrategy, null, msg);
 				}
 				if (failingPaths != null) {
 					repo.writeMergeCommitMsg(null);
 					repo.writeMergeHeads(null);
 					return new MergeResult(null, merger.getBaseCommitId(),
-							new ObjectId[] { headCommit.getId(),
-									srcCommit.getId() },
+							new ObjectId[]{headCommit.getId(),
+									srcCommit.getId()},
 							MergeStatus.FAILED, mergeStrategy, lowLevelResults,
 							failingPaths, null);
 				}
@@ -408,13 +417,13 @@ public class MergeCommand extends GitCommand<MergeResult> {
 						.formatWithConflicts(mergeMessage, unmergedPaths);
 				repo.writeMergeCommitMsg(mergeMessageWithConflicts);
 				return new MergeResult(null, merger.getBaseCommitId(),
-						new ObjectId[] { headCommit.getId(),
-								srcCommit.getId() },
+						new ObjectId[]{headCommit.getId(),
+								srcCommit.getId()},
 						MergeStatus.CONFLICTING, mergeStrategy, lowLevelResults,
 						null);
 			}
 		} catch (org.openrewrite.jgit.errors.CheckoutConflictException e) {
-			List<String> conflicts = (dco == null) ? Collections
+			List<String> conflicts = dco == null ? Collections
 					.<String> emptyList() : dco.getConflicts();
 			throw new CheckoutConflictException(conflicts, e);
 		} catch (IOException e) {
@@ -431,13 +440,14 @@ public class MergeCommand extends GitCommand<MergeResult> {
 					JGitText.get().cannotCombineSquashWithNoff);
 		}
 
-		if (commits.size() != 1)
+		if (commits.size() != 1) {
 			throw new InvalidMergeHeadsException(
 					commits.isEmpty() ? JGitText.get().noMergeHeadSpecified
 							: MessageFormat.format(
-									JGitText.get().mergeStrategyDoesNotSupportHeads,
-									mergeStrategy.getName(),
-									Integer.valueOf(commits.size())));
+							JGitText.get().mergeStrategyDoesNotSupportHeads,
+							mergeStrategy.getName(),
+							Integer.valueOf(commits.size())));
+		}
 	}
 
 	/**
@@ -446,12 +456,15 @@ public class MergeCommand extends GitCommand<MergeResult> {
 	 */
 	private void fallBackToConfiguration() {
 		MergeConfig config = MergeConfig.getConfigForCurrentBranch(repo);
-		if (squash == null)
+		if (squash == null) {
 			squash = Boolean.valueOf(config.isSquash());
-		if (commit == null)
+		}
+		if (commit == null) {
 			commit = Boolean.valueOf(config.isCommit());
-		if (fastForwardMode == null)
+		}
+		if (fastForwardMode == null) {
 			fastForwardMode = config.getFastForwardMode();
+		}
 	}
 
 	private void updateHead(StringBuilder refLogMessage, ObjectId newHeadId,

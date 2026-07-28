@@ -29,7 +29,7 @@ public class CombinedHunkHeader extends HunkHeader {
 		int nContext;
 	}
 
-	private CombinedOldImage[] old;
+	private final CombinedOldImage[] old;
 
 	CombinedHunkHeader(CombinedFileHeader fh, int offset) {
 		super(fh, offset, null);
@@ -86,10 +86,11 @@ public class CombinedHunkHeader extends HunkHeader {
 		}
 
 		newStartLine = parseBase10(buf, ptr.value + 1, ptr);
-		if (buf[ptr.value] == ',')
+		if (buf[ptr.value] == ',') {
 			newLineCount = parseBase10(buf, ptr.value + 1, ptr);
-		else
+		} else {
 			newLineCount = 1;
+		}
 	}
 
 	@Override
@@ -148,8 +149,9 @@ public class CombinedHunkHeader extends HunkHeader {
 					break SCAN;
 				}
 			}
-			if (localcontext == old.length)
+			if (localcontext == old.length) {
 				nContext++;
+			}
 		}
 
 		for (int ancestor = 0; ancestor < old.length; ancestor++) {
@@ -179,8 +181,9 @@ public class CombinedHunkHeader extends HunkHeader {
 		final byte[] buf = file.buf;
 		int ptr = startOffset;
 		int eol = nextLF(buf, ptr);
-		if (endOffset <= eol)
+		if (endOffset <= eol) {
 			return;
+		}
 
 		// Treat the hunk header as though it were from the ancestor,
 		// as it may have a function header appearing after it which
@@ -244,8 +247,9 @@ public class CombinedHunkHeader extends HunkHeader {
 		final byte[] buf = file.buf;
 		int ptr = startOffset;
 		int eol = nextLF(buf, ptr);
-		if (endOffset <= eol)
+		if (endOffset <= eol) {
 			return;
+		}
 		copyLine(sb, text, offsets, 0);
 		SCAN: for (ptr = eol; ptr < endOffset; ptr = eol) {
 			eol = nextLF(buf, ptr);
@@ -274,9 +278,9 @@ public class CombinedHunkHeader extends HunkHeader {
 				switch (buf[ptr + ancestor]) {
 				case ' ':
 				case '-':
-					if (copied)
+					if (copied) {
 						skipLine(text, offsets, ancestor);
-					else {
+					} else {
 						copyLine(sb, text, offsets, ancestor);
 						copied = true;
 					}

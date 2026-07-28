@@ -85,9 +85,10 @@ public final class InterruptTimer {
 	 *            Must be &gt; 0.
 	 */
 	public void begin(int timeout) {
-		if (timeout <= 0)
+		if (timeout <= 0) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().invalidTimeout, Integer.valueOf(timeout)));
+		}
 		Thread.interrupted();
 		state.begin(timeout);
 	}
@@ -131,11 +132,6 @@ public final class InterruptTimer {
 		AutoKiller(AlarmState s) {
 			state = s;
 		}
-
-		@Override
-		protected void finalize() throws Throwable {
-			state.terminate();
-		}
 	}
 
 	static final class AlarmState implements Runnable {
@@ -171,18 +167,20 @@ public final class InterruptTimer {
 		}
 
 		synchronized void begin(int timeout) {
-			if (terminated)
+			if (terminated) {
 				throw new IllegalStateException(JGitText.get().timerAlreadyTerminated);
+			}
 			callingThread = Thread.currentThread();
 			deadline = now() + timeout;
 			notifyAll();
 		}
 
 		synchronized void end() {
-			if (0 == deadline)
+			if (0 == deadline) {
 				Thread.interrupted();
-			else
+			} else {
 				deadline = 0;
+			}
 			notifyAll();
 		}
 

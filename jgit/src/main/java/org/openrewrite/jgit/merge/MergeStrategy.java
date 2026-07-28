@@ -83,9 +83,10 @@ public abstract class MergeStrategy {
 	 */
 	public static synchronized void register(final String name,
 			final MergeStrategy imp) {
-		if (STRATEGIES.containsKey(name))
+		if (STRATEGIES.containsKey(name)) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().mergeStrategyAlreadyExistsAsDefault, name));
+		}
 		STRATEGIES.put(name, imp);
 	}
 

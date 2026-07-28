@@ -21,7 +21,7 @@ import org.openrewrite.jgit.revwalk.RevWalk;
 /**
  * Filter that includes commits after a configured number are skipped.
  */
-public class SkipRevFilter extends RevFilter {
+public final class SkipRevFilter extends RevFilter {
 
 	private final int skip;
 
@@ -35,9 +35,10 @@ public class SkipRevFilter extends RevFilter {
 	 * @return a new filter
 	 */
 	public static RevFilter create(int skip) {
-		if (skip < 0)
+		if (skip < 0) {
 			throw new IllegalArgumentException(
 					JGitText.get().skipMustBeNonNegative);
+		}
 		return new SkipRevFilter(skip);
 	}
 
@@ -50,9 +51,7 @@ public class SkipRevFilter extends RevFilter {
 	public boolean include(RevWalk walker, RevCommit cmit)
 			throws StopWalkException, MissingObjectException,
 			IncorrectObjectTypeException, IOException {
-		if (skip > count++)
-			return false;
-		return true;
+		return !(skip > count++);
 	}
 
 	/** {@inheritDoc} */

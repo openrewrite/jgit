@@ -348,8 +348,9 @@ public class OpenSshConfigFile implements SshConfigStore {
 
 	private static String dequote(String value) {
 		if (value.startsWith("\"") && value.endsWith("\"") //$NON-NLS-1$ //$NON-NLS-2$
-				&& value.length() > 1)
+				&& value.length() > 1) {
 			return value.substring(1, value.length() - 1);
+		}
 		return value;
 	}
 

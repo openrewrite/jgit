@@ -95,9 +95,10 @@ class PushProcess {
 		this.out = out;
 		this.pushOptions = transport.getPushOptions();
 		for (RemoteRefUpdate rru : toPush) {
-			if (this.toPush.put(rru.getRemoteName(), rru) != null)
+			if (this.toPush.put(rru.getRemoteName(), rru) != null) {
 				throw new TransportException(MessageFormat.format(
 						JGitText.get().duplicateRemoteRefUpdateIsIllegal, rru.getRemoteName()));
+			}
 		}
 	}
 
@@ -133,20 +134,23 @@ class PushProcess {
 				monitor.endTask();
 
 				final Map<String, RemoteRefUpdate> preprocessed = prepareRemoteUpdates();
-				if (transport.isDryRun())
+				if (transport.isDryRun()) {
 					modifyUpdatesForDryRun();
-				else if (!preprocessed.isEmpty())
+				} else if (!preprocessed.isEmpty()) {
 					connection.push(monitor, preprocessed, out);
+				}
 			} finally {
 				connection.close();
 				res.addMessages(connection.getMessages());
 			}
-			if (!transport.isDryRun())
+			if (!transport.isDryRun()) {
 				updateTrackingRefs();
+			}
 			for (RemoteRefUpdate rru : toPush.values()) {
 				final TrackingRefUpdate tru = rru.getTrackingRefUpdate();
-				if (tru != null)
+				if (tru != null) {
 					res.add(tru);
+				}
 			}
 			return res;
 		} finally {
@@ -212,8 +216,9 @@ class PushProcess {
 				if (!(oldRev instanceof RevCommit)
 						|| !(newRev instanceof RevCommit)
 						|| !walker.isMergedInto((RevCommit) oldRev,
-								(RevCommit) newRev))
+						(RevCommit) newRev)) {
 					fastForward = false;
+				}
 			} catch (MissingObjectException x) {
 				fastForward = false;
 			} catch (Exception x) {
@@ -244,9 +249,11 @@ class PushProcess {
 	}
 
 	private void modifyUpdatesForDryRun() {
-		for (RemoteRefUpdate rru : toPush.values())
-			if (rru.getStatus() == Status.NOT_ATTEMPTED)
+		for (RemoteRefUpdate rru : toPush.values()) {
+			if (rru.getStatus() == Status.NOT_ATTEMPTED) {
 				rru.setStatus(Status.OK);
+			}
+		}
 	}
 
 	private void updateTrackingRefs() {

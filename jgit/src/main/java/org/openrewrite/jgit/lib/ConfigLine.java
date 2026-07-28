@@ -68,18 +68,22 @@ class ConfigLine {
 	}
 
 	private static boolean eqIgnoreCase(String a, String b) {
-		if (a == null && b == null)
+		if (a == null && b == null) {
 			return true;
-		if (a == null || b == null)
+		}
+		if (a == null || b == null) {
 			return false;
+		}
 		return StringUtils.equalsIgnoreCase(a, b);
 	}
 
 	private static boolean eqSameCase(String a, String b) {
-		if (a == null && b == null)
+		if (a == null && b == null) {
 			return true;
-		if (a == null || b == null)
+		}
+		if (a == null || b == null) {
 			return false;
+		}
 		return a.equals(b);
 	}
 
@@ -87,15 +91,19 @@ class ConfigLine {
 	@SuppressWarnings("nls")
 	@Override
 	public String toString() {
-		if (section == null)
+		if (section == null) {
 			return "<empty>";
+		}
 		StringBuilder b = new StringBuilder(section);
-		if (subsection != null)
+		if (subsection != null) {
 			b.append(".").append(subsection);
-		if (name != null)
+		}
+		if (name != null) {
 			b.append(".").append(name);
-		if (value != null)
+		}
+		if (value != null) {
 			b.append("=").append(value);
+		}
 		return b.toString();
 	}
 }

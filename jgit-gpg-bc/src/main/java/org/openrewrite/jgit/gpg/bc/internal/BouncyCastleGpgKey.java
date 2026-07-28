@@ -19,9 +19,9 @@ import org.bouncycastle.openpgp.PGPSecretKey;
  */
 class BouncyCastleGpgKey {
 
-	private PGPSecretKey secretKey;
+	private final PGPSecretKey secretKey;
 
-	private Path origin;
+	private final Path origin;
 
 	public BouncyCastleGpgKey(PGPSecretKey secretKey, Path origin) {
 		this.secretKey = secretKey;

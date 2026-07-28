@@ -50,13 +50,15 @@ public class PathFilterGroup {
 	 * @return a new filter for the list of paths supplied.
 	 */
 	public static TreeFilter createFromStrings(Collection<String> paths) {
-		if (paths.isEmpty())
+		if (paths.isEmpty()) {
 			throw new IllegalArgumentException(
 					JGitText.get().atLeastOnePathIsRequired);
+		}
 		final PathFilter[] p = new PathFilter[paths.size()];
 		int i = 0;
-		for (String s : paths)
+		for (String s : paths) {
 			p[i++] = PathFilter.create(s);
+		}
 		return create(p);
 	}
 
@@ -77,13 +79,15 @@ public class PathFilterGroup {
 	 * @return a new filter for the paths supplied.
 	 */
 	public static TreeFilter createFromStrings(String... paths) {
-		if (paths.length == 0)
+		if (paths.length == 0) {
 			throw new IllegalArgumentException(
 					JGitText.get().atLeastOnePathIsRequired);
+		}
 		final int length = paths.length;
 		final PathFilter[] p = new PathFilter[length];
-		for (int i = 0; i < length; i++)
+		for (int i = 0;i < length;i++) {
 			p[i] = PathFilter.create(paths[i]);
+		}
 		return create(p);
 	}
 
@@ -99,21 +103,23 @@ public class PathFilterGroup {
 	 * @return a new filter for the list of paths supplied.
 	 */
 	public static TreeFilter create(Collection<PathFilter> paths) {
-		if (paths.isEmpty())
+		if (paths.isEmpty()) {
 			throw new IllegalArgumentException(
 					JGitText.get().atLeastOnePathIsRequired);
+		}
 		final PathFilter[] p = new PathFilter[paths.size()];
 		paths.toArray(p);
 		return create(p);
 	}
 
 	private static TreeFilter create(PathFilter[] p) {
-		if (p.length == 1)
+		if (p.length == 1) {
 			return new Single(p[0]);
+		}
 		return new Group(p);
 	}
 
-	static class Single extends TreeFilter {
+	static final class Single extends TreeFilter {
 		private final PathFilter path;
 
 		private final byte[] raw;
@@ -126,8 +132,9 @@ public class PathFilterGroup {
 		@Override
 		public boolean include(TreeWalk walker) {
 			final int cmp = walker.isPathPrefix(raw, raw.length);
-			if (cmp > 0)
+			if (cmp > 0) {
 				throw StopWalkException.INSTANCE;
+			}
 			return cmp == 0;
 		}
 
@@ -147,7 +154,7 @@ public class PathFilterGroup {
 		}
 	}
 
-	static class Group extends TreeFilter {
+	static final class Group extends TreeFilter {
 
 		private ByteArraySet fullpaths;
 
@@ -169,13 +176,15 @@ public class PathFilterGroup {
 				hasher.init(pf.pathRaw, pf.pathRaw.length);
 				while (hasher.hasNext()) {
 					int hash = hasher.nextHash();
-					if (hasher.hasNext())
+					if (hasher.hasNext()) {
 						prefixes.addIfAbsent(pf.pathRaw, hasher.length(), hash);
+					}
 				}
 				fullpaths.addIfAbsent(pf.pathRaw, pf.pathRaw.length,
 						hasher.getHash());
-				if (compare(max, pf.pathRaw) < 0)
+				if (compare(max, pf.pathRaw) < 0) {
 					max = pf.pathRaw;
+				}
 			}
 			// Adjust max for the git sort order. A path we compare
 			// with may end with a slash at any position (but the
@@ -183,11 +192,13 @@ public class PathFilterGroup {
 			// Such paths must be included in the processing
 			// before we can give up and throw a StopWalkException.
 			byte[] newMax = new byte[max.length + 1];
-			for (int i = 0; i < max.length; ++i)
-				if ((max[i] & 0xFF) < '/')
+			for (int i = 0;i < max.length;++i) {
+				if ((max[i] & 0xFF) < '/') {
 					newMax[i] = '/';
-				else
+				} else {
 					newMax[i] = max[i];
+				}
+			}
 			newMax[newMax.length - 1] = '/';
 			max = newMax;
 		}
@@ -198,8 +209,9 @@ public class PathFilterGroup {
 				int ba = a[i] & 0xFF;
 				int bb = b[i] & 0xFF;
 				int cmp = ba - bb;
-				if (cmp != 0)
+				if (cmp != 0) {
 					return cmp;
+				}
 				++i;
 			}
 			return a.length - b.length;
@@ -212,16 +224,19 @@ public class PathFilterGroup {
 			Hasher hasher = new Hasher(rp, walker.getPathLength());
 			while (hasher.hasNext()) {
 				int hash = hasher.nextHash();
-				if (fullpaths.contains(rp, hasher.length(), hash))
+				if (fullpaths.contains(rp, hasher.length(), hash)) {
 					return true;
+				}
 				if (!hasher.hasNext() && walker.isSubtree()
-						&& prefixes.contains(rp, hasher.length(), hash))
+						&& prefixes.contains(rp, hasher.length(), hash)) {
 					return true;
+				}
 			}
 
 			final int cmp = walker.isPathPrefix(max, max.length);
-			if (cmp > 0)
+			if (cmp > 0) {
 				throw StopWalkException.INSTANCE;
+			}
 
 			return false;
 		}

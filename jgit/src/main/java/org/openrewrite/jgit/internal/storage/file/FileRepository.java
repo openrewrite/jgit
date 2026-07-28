@@ -195,10 +195,11 @@ public class FileRepository extends Repository {
 				new File(getDirectory(), Constants.SHALLOW));
 
 		if (objectDatabase.exists()) {
-			if (repositoryFormatVersion > 1)
+			if (repositoryFormatVersion > 1) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().unknownRepositoryFormat2,
 						Long.valueOf(repositoryFormatVersion)));
+			}
 		}
 
 		if (!isBare()) {
@@ -233,8 +234,9 @@ public class FileRepository extends Repository {
 				ConfigConstants.CONFIG_KEY_HIDEDOTFILES,
 				HideDotFiles.DOTGITONLY);
 		if (hideDotFiles != HideDotFiles.FALSE && !isBare()
-				&& getDirectory().getName().startsWith(".")) //$NON-NLS-1$
+				&& getDirectory().getName().startsWith(".")) { //$NON-NLS-1$
 			getFS().setHidden(getDirectory(), true);
+		}
 		refs.create();
 		objectDatabase.create();
 
@@ -272,23 +274,26 @@ public class FileRepository extends Repository {
 				// Normally a java.nio.file.FileSystemException
 			}
 		}
-		if (symLinks != null)
+		if (symLinks != null) {
 			cfg.setString(ConfigConstants.CONFIG_CORE_SECTION, null,
 					ConfigConstants.CONFIG_KEY_SYMLINKS, symLinks.name()
 							.toLowerCase(Locale.ROOT));
+		}
 		cfg.setInt(ConfigConstants.CONFIG_CORE_SECTION, null,
 				ConfigConstants.CONFIG_KEY_REPO_FORMAT_VERSION, 0);
 		cfg.setBoolean(ConfigConstants.CONFIG_CORE_SECTION, null,
 				ConfigConstants.CONFIG_KEY_FILEMODE, fileMode);
-		if (bare)
+		if (bare) {
 			cfg.setBoolean(ConfigConstants.CONFIG_CORE_SECTION, null,
 					ConfigConstants.CONFIG_KEY_BARE, true);
+		}
 		cfg.setBoolean(ConfigConstants.CONFIG_CORE_SECTION, null,
 				ConfigConstants.CONFIG_KEY_LOGALLREFUPDATES, !bare);
-		if (SystemReader.getInstance().isMacOS())
+		if (SystemReader.getInstance().isMacOS()) {
 			// Java has no other way
 			cfg.setBoolean(ConfigConstants.CONFIG_CORE_SECTION, null,
 					ConfigConstants.CONFIG_KEY_PRECOMPOSEUNICODE, true);
+		}
 		if (!bare) {
 			File workTree = getWorkTree();
 			if (!getDirectory().getParentFile().equals(workTree)) {
@@ -448,10 +453,12 @@ public class FileRepository extends Repository {
 
 				repo = ((AlternateRepository) d).repository;
 				for (Ref ref : repo.getAllRefs().values()) {
-					if (ref.getObjectId() != null)
+					if (ref.getObjectId() != null) {
 						r.add(ref.getObjectId());
-					if (ref.getPeeledObjectId() != null)
+					}
+					if (ref.getPeeledObjectId() != null) {
 						r.add(ref.getPeeledObjectId());
+					}
 				}
 				r.addAll(repo.getAdditionalHaves(skips));
 			}
@@ -558,17 +565,19 @@ public class FileRepository extends Repository {
 
 		@Override
 		public AttributesNode getInfoAttributesNode() throws IOException {
-			if (infoAttributesNode instanceof InfoAttributesNode)
+			if (infoAttributesNode instanceof InfoAttributesNode) {
 				infoAttributesNode = ((InfoAttributesNode) infoAttributesNode)
 						.load();
+			}
 			return infoAttributesNode;
 		}
 
 		@Override
 		public AttributesNode getGlobalAttributesNode() throws IOException {
-			if (globalAttributesNode instanceof GlobalAttributesNode)
+			if (globalAttributesNode instanceof GlobalAttributesNode) {
 				globalAttributesNode = ((GlobalAttributesNode) globalAttributesNode)
 						.load();
+			}
 			return globalAttributesNode;
 		}
 
@@ -805,11 +814,11 @@ public class FileRepository extends Repository {
 	 */
 	public void convertRefStorage(String format, boolean writeLogs,
 			boolean backup) throws IOException {
-		if (format.equals("reftable")) { //$NON-NLS-1$
+		if ("reftable".equals(format)) { //$NON-NLS-1$
 			if (refs instanceof RefDirectory) {
 				convertToReftable(writeLogs, backup);
 			}
-		} else if (format.equals("refdir")) {//$NON-NLS-1$
+		} else if ("refdir".equals(format)) {//$NON-NLS-1$
 			if (refs instanceof FileReftableDatabase) {
 				convertToPackedRefs(writeLogs, backup);
 			}

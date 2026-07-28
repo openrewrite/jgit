@@ -52,7 +52,7 @@ public class CheckoutResult {
 		/**
 		 * An Exception occurred during checkout
 		 */
-		ERROR;
+		ERROR
 	}
 
 	private final Status myStatus;
@@ -102,14 +102,16 @@ public class CheckoutResult {
 	CheckoutResult(Status status, List<String> fileList, List<String> modified,
 			List<String> removed) {
 		myStatus = status;
-		if (status == Status.CONFLICTS)
+		if (status == Status.CONFLICTS) {
 			this.conflictList = fileList;
-		else
+		} else {
 			this.conflictList = new ArrayList<>(0);
-		if (status == Status.NONDELETED)
+		}
+		if (status == Status.NONDELETED) {
 			this.undeletedList = fileList;
-		else
+		} else {
 			this.undeletedList = new ArrayList<>(0);
+		}
 
 		this.modifiedList = modified;
 		this.removedList = removed;

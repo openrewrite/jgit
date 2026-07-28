@@ -644,10 +644,11 @@ public class PackConfig {
 	 *            number of objects to search at once. Must be at least 2.
 	 */
 	public void setDeltaSearchWindowSize(int objectCount) {
-		if (objectCount <= 2)
+		if (objectCount <= 2) {
 			setDeltaCompress(false);
-		else
+		} else {
 			deltaSearchWindowSize = objectCount;
+		}
 	}
 
 	/**

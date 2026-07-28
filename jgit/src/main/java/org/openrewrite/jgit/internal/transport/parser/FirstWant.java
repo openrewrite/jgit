@@ -35,7 +35,7 @@ import org.openrewrite.jgit.internal.JGitText;
  * line and the capabilities.
  *
  */
-public class FirstWant {
+public final class FirstWant {
 	private final String line;
 
 	private final Set<String> capabilities;

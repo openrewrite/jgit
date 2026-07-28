@@ -124,8 +124,9 @@ public class DeltaIndex {
 		int cnt = 0;
 		for (int element : table) {
 			int h = element;
-			if (h == 0)
+			if (h == 0) {
 				continue;
+			}
 
 			int len = 0;
 			do {
@@ -148,8 +149,9 @@ public class DeltaIndex {
 		int next = 1;
 		for (int i = 0; i < table.length; i++) {
 			int h = table[i];
-			if (h == 0)
+			if (h == 0) {
 				continue;
+			}
 
 			table[i] = next;
 			do {
@@ -259,8 +261,9 @@ public class DeltaIndex {
 		// smaller than our block size is never delta encoded as the delta
 		// will always be larger than the file itself would be.
 		//
-		if (end < BLKSZ || table.length == 0)
+		if (end < BLKSZ || table.length == 0) {
 			return enc.insert(res);
+		}
 
 		// Bootstrap the scan by constructing a hash for the first block
 		// in the input.
@@ -308,8 +311,9 @@ public class DeltaIndex {
 						bestPtr = valOf(ent);
 						bestNeg = neg;
 					}
-				} else if ((keyOf(ent) & tableMask) != tableIdx)
+				} else if ((keyOf(ent) & tableMask) != tableIdx) {
 					break;
+				}
 			} while (bestLen < 4096 && entryIdx < entries.length);
 
 			if (bestLen < BLKSZ) {
@@ -331,12 +335,14 @@ public class DeltaIndex {
 				// into the instruction stream.
 				//
 				int cnt = blkPtr - resPtr;
-				if (!enc.insert(res, resPtr, cnt))
+				if (!enc.insert(res, resPtr, cnt)) {
 					return false;
+				}
 			}
 
-			if (!enc.copy(bestPtr - bestNeg, bestLen))
+			if (!enc.copy(bestPtr - bestNeg, bestLen)) {
 				return false;
+			}
 
 			blkPtr += bestLen;
 			resPtr = blkPtr;
@@ -344,8 +350,9 @@ public class DeltaIndex {
 
 			// If we don't have a full block available to us, abort now.
 			//
-			if (end <= blkEnd)
+			if (end <= blkEnd) {
 				break;
+			}
 
 			// Start a new hash of the block after the copy region.
 			//
@@ -370,23 +377,26 @@ public class DeltaIndex {
 	private static int fwdmatch(byte[] res, int resPtr, byte[] src, int srcPtr) {
 		int start = resPtr;
 		for (; resPtr < res.length && srcPtr < src.length; resPtr++, srcPtr++) {
-			if (res[resPtr] != src[srcPtr])
+			if (res[resPtr] != src[srcPtr]) {
 				break;
+			}
 		}
 		return resPtr - start;
 	}
 
 	private static int negmatch(byte[] res, int resPtr, byte[] src, int srcPtr,
 			int limit) {
-		if (srcPtr == 0)
+		if (srcPtr == 0) {
 			return 0;
+		}
 
 		resPtr--;
 		srcPtr--;
 		int start = resPtr;
 		do {
-			if (res[resPtr] != src[srcPtr])
+			if (res[resPtr] != src[srcPtr]) {
 				break;
+			}
 			resPtr--;
 			srcPtr--;
 		} while (0 <= srcPtr && 0 < --limit);
@@ -403,8 +413,9 @@ public class DeltaIndex {
 		while (1024 <= sz && u < units.length - 1) {
 			int rem = (int) (sz % 1024);
 			sz /= 1024;
-			if (rem != 0)
+			if (rem != 0) {
 				sz++;
+			}
 			u++;
 		}
 		return "DeltaIndex[" + sz + " " + units[u] + "]";
@@ -435,9 +446,7 @@ public class DeltaIndex {
 		hash = ((hash << 8) | (raw[ptr + 12] & 0xff)) ^ T[hash >>> 23];
 		hash = ((hash << 8) | (raw[ptr + 13] & 0xff)) ^ T[hash >>> 23];
 		hash = ((hash << 8) | (raw[ptr + 14] & 0xff)) ^ T[hash >>> 23];
-		hash = ((hash << 8) | (raw[ptr + 15] & 0xff)) ^ T[hash >>> 23];
-
-		return hash;
+		return ((hash << 8) | (raw[ptr + 15] & 0xff)) ^ T[hash >>> 23];
 	}
 
 	private static int step(int hash, byte toRemove, byte toAdd) {

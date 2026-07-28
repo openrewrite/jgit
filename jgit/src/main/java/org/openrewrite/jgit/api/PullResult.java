@@ -82,10 +82,11 @@ public class PullResult {
 	 * @return whether the pull was successful
 	 */
 	public boolean isSuccessful() {
-		if (mergeResult != null)
+		if (mergeResult != null) {
 			return mergeResult.getMergeStatus().isSuccessful();
-		else if (rebaseResult != null)
+		} else if (rebaseResult != null) {
 			return rebaseResult.getStatus().isSuccessful();
+		}
 		return true;
 	}
 
@@ -94,17 +95,19 @@ public class PullResult {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (fetchResult != null)
+		if (fetchResult != null) {
 			sb.append(fetchResult.toString());
-		else
+		} else {
 			sb.append("No fetch result");
+		}
 		sb.append("\n");
-		if (mergeResult != null)
+		if (mergeResult != null) {
 			sb.append(mergeResult.toString());
-		else if (rebaseResult != null)
+		} else if (rebaseResult != null) {
 			sb.append(rebaseResult.toString());
-		else
+		} else {
 			sb.append("No update result");
+		}
 		return sb.toString();
 	}
 }

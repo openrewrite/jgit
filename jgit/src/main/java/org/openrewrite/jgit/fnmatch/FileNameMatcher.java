@@ -154,9 +154,10 @@ public class FileNameMatcher {
 		int firstValidCharClassIndex = indexOfStartBracket + 1;
 		int firstValidEndBracketIndex = indexOfStartBracket + 2;
 
-		if (indexOfStartBracket + 1 >= pattern.length())
+		if (indexOfStartBracket + 1 >= pattern.length()) {
 			throw new NoClosingBracketException(indexOfStartBracket, "[", "]", //$NON-NLS-1$ //$NON-NLS-2$
 					pattern);
+		}
 
 		if (pattern.charAt(firstValidCharClassIndex) == '!') {
 			firstValidCharClassIndex++;
@@ -171,10 +172,11 @@ public class FileNameMatcher {
 
 			final int possibleGroupEnd = indexOfUnescaped(pattern, ']',
 					firstValidEndBracketIndex);
-			if (possibleGroupEnd == -1)
+			if (possibleGroupEnd == -1) {
 				throw new NoClosingBracketException(indexOfStartBracket, "[", //$NON-NLS-1$
 						"]", pattern); //$NON-NLS-1$
 
+			}
 			final boolean foundCharClass = charClassStartMatcher
 					.find(firstValidCharClassIndex);
 
@@ -188,9 +190,10 @@ public class FileNameMatcher {
 				final int classEndIndex = pattern.indexOf(classEnd,
 						classStartIndex + 2);
 
-				if (classEndIndex == -1)
+				if (classEndIndex == -1) {
 					throw new NoClosingBracketException(classStartIndex,
 							classStart, classEnd, pattern);
+				}
 
 				firstValidCharClassIndex = classEndIndex + 2;
 				firstValidEndBracketIndex = firstValidCharClassIndex;
@@ -294,8 +297,9 @@ public class FileNameMatcher {
 			// This is the case with the heads "a" and "*" of "a*b" which
 			// both can return the list ["*","b"]
 			if (headsToAdd != lastAddedHeads) {
-				if (!headsToAdd.isEmpty())
+				if (!headsToAdd.isEmpty()) {
 					newHeads.addAll(headsToAdd);
+				}
 				lastAddedHeads = headsToAdd;
 			}
 		}
@@ -308,10 +312,12 @@ public class FileNameMatcher {
 			final char ch, final int fromIndex) {
 		for (int i = fromIndex; i < searchString.length(); i++) {
 			char current = searchString.charAt(i);
-			if (current == ch)
+			if (current == ch) {
 				return i;
-			if (current == '\\')
+			}
+			if (current == '\\') {
 				i++; // Skip the next char as it is escaped }
+			}
 		}
 		return -1;
 	}
@@ -326,8 +332,9 @@ public class FileNameMatcher {
 	public void append(String stringToMatch) {
 		for (int i = 0; i < stringToMatch.length(); i++) {
 			final char c = stringToMatch.charAt(i);
-			if (!extendStringToMatchByOneCharacter(c))
+			if (!extendStringToMatchByOneCharacter(c)) {
 				break;
+			}
 		}
 	}
 
@@ -360,8 +367,9 @@ public class FileNameMatcher {
 	 * @return whether the matcher matches
 	 */
 	public boolean isMatch() {
-		if (heads.isEmpty())
+		if (heads.isEmpty()) {
 			return false;
+		}
 
 		final ListIterator<Head> headIterator = heads
 				.listIterator(heads.size());

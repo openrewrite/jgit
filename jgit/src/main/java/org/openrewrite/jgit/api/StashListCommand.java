@@ -50,8 +50,9 @@ public class StashListCommand extends GitCommand<Collection<RevCommit>> {
 		checkCallable();
 
 		try {
-			if (repo.exactRef(Constants.R_STASH) == null)
+			if (repo.exactRef(Constants.R_STASH) == null) {
 				return Collections.emptyList();
+			}
 		} catch (IOException e) {
 			throw new InvalidRefNameException(MessageFormat.format(
 					JGitText.get().cannotRead, Constants.R_STASH), e);
@@ -60,8 +61,9 @@ public class StashListCommand extends GitCommand<Collection<RevCommit>> {
 		final ReflogCommand refLog = new ReflogCommand(repo);
 		refLog.setRef(Constants.R_STASH);
 		final Collection<ReflogEntry> stashEntries = refLog.call();
-		if (stashEntries.isEmpty())
+		if (stashEntries.isEmpty()) {
 			return Collections.emptyList();
+		}
 
 		final List<RevCommit> stashCommits = new ArrayList<>(
 				stashEntries.size());

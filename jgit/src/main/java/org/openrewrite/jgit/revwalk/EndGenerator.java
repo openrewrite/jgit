@@ -10,7 +10,7 @@
 
 package org.openrewrite.jgit.revwalk;
 
-class EndGenerator extends Generator {
+final class EndGenerator extends Generator {
 	static final EndGenerator INSTANCE = new EndGenerator();
 
 	private EndGenerator() {

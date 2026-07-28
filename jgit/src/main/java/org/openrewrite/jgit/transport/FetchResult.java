@@ -36,8 +36,9 @@ public class FetchResult extends OperationResult {
 	}
 
 	void add(FetchHeadRecord r) {
-		if (!r.notForMerge)
+		if (!r.notForMerge) {
 			forMerge.add(r);
+		}
 	}
 
 	/**

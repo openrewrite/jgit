@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.googlecode.javaewah.EWAHCompressedBitmap;
 import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
 import org.openrewrite.jgit.errors.MissingObjectException;
 import org.openrewrite.jgit.internal.JGitText;
@@ -47,8 +48,6 @@ import org.openrewrite.jgit.revwalk.filter.RevFilter;
 import org.openrewrite.jgit.storage.pack.PackConfig;
 import org.openrewrite.jgit.util.BlockList;
 import org.openrewrite.jgit.util.SystemReader;
-
-import com.googlecode.javaewah.EWAHCompressedBitmap;
 
 /**
  * Helper class for the {@link PackWriter} to select commits for which to build

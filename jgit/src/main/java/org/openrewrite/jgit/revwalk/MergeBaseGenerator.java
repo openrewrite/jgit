@@ -47,7 +47,7 @@ class MergeBaseGenerator extends Generator {
 	private int recarryTest;
 	private int recarryMask;
 	private int mergeBaseAncestor = -1;
-	private LinkedList<RevCommit> ret = new LinkedList<>();
+	private final LinkedList<RevCommit> ret = new LinkedList<>();
 
 	private CarryStack stack;
 
@@ -61,8 +61,9 @@ class MergeBaseGenerator extends Generator {
 		try {
 			for (;;) {
 				final RevCommit c = p.next();
-				if (c == null)
+				if (c == null) {
 					break;
+				}
 				add(c);
 			}
 			// Setup the condition used by carryOntoOne to detect a late
@@ -115,10 +116,12 @@ class MergeBaseGenerator extends Generator {
 			}
 
 			for (RevCommit p : c.parents) {
-				if ((p.flags & IN_PENDING) != 0)
+				if ((p.flags & IN_PENDING) != 0) {
 					continue;
-				if ((p.flags & PARSED) == 0)
+				}
+				if ((p.flags & PARSED) == 0) {
 					p.parseHeaders(walker);
+				}
 				p.flags |= IN_PENDING;
 				pending.add(p);
 			}
@@ -140,8 +143,9 @@ class MergeBaseGenerator extends Generator {
 				// that way we are done traversing; if not we just need
 				// to move to the next available commit and try again.
 				//
-				if (pending.everbodyHasFlag(MERGE_BASE))
+				if (pending.everbodyHasFlag(MERGE_BASE)) {
 					return null;
+				}
 				continue;
 			}
 			c.flags |= POPPED;

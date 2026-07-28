@@ -54,7 +54,7 @@ class MergeFormatterPass {
 		this.res = res;
 		this.seqName = seqName;
 		this.charset = charset;
-		this.threeWayMerge = (res.getSequences().size() == 3);
+		this.threeWayMerge = res.getSequences().size() == 3;
 	}
 
 	void formatMerge() throws IOException {
@@ -63,16 +63,19 @@ class MergeFormatterPass {
 			RawText seq = res.getSequences().get(chunk.getSequenceIndex());
 			writeConflictMetadata(chunk);
 			// the lines with conflict-metadata are written. Now write the chunk
-			for (int i = chunk.getBegin(); i < chunk.getEnd(); i++)
+			for (int i = chunk.getBegin();i < chunk.getEnd();i++) {
 				writeLine(seq, i);
+			}
 			missingNewlineAtEnd = seq.isMissingNewlineAtEnd();
 		}
 		// one possible leftover: if the merge result ended with a conflict we
 		// have to close the last conflict here
-		if (lastConflictingName != null)
+		if (lastConflictingName != null) {
 			writeConflictEnd();
-		if (!missingNewlineAtEnd)
+		}
+		if (!missingNewlineAtEnd) {
 			out.beginln();
+		}
 	}
 
 	private void writeConflictMetadata(MergeChunk chunk) throws IOException {
@@ -122,7 +125,8 @@ class MergeFormatterPass {
 		out.beginln();
 		seq.writeLine(out, i);
 		// still BOL? It was a blank line. But writeLine won't lf, so we do.
-		if (out.isBeginln())
+		if (out.isBeginln()) {
 			out.write('\n');
+		}
 	}
 }

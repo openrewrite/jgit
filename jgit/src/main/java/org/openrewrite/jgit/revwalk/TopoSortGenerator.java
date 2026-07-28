@@ -72,8 +72,9 @@ class TopoSortGenerator extends Generator {
 			IncorrectObjectTypeException, IOException {
 		for (;;) {
 			final RevCommit c = pending.next();
-			if (c == null)
+			if (c == null) {
 				return null;
+			}
 
 			if (c.inDegree > 0) {
 				// At least one of our children is missing. We delay

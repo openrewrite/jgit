@@ -72,8 +72,9 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 	}
 
 	DeltaBaseCache getDeltaBaseCache() {
-		if (baseCache == null)
+		if (baseCache == null) {
 			baseCache = new DeltaBaseCache();
+		}
 		return baseCache;
 	}
 
@@ -88,8 +89,9 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 	public BitmapIndex getBitmapIndex() throws IOException {
 		for (Pack pack : db.getPacks()) {
 			PackBitmapIndex index = pack.getBitmapIndex();
-			if (index != null)
+			if (index != null) {
 				return new BitmapIndexImpl(index);
+			}
 		}
 		return null;
 	}
@@ -100,9 +102,10 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 			BitmapBuilder needBitmap) throws IOException {
 		for (Pack pack : db.getPacks()) {
 			PackBitmapIndex index = pack.getBitmapIndex();
-			if (needBitmap.removeAllOrNone(index))
-				return Collections.<CachedPack> singletonList(
+			if (needBitmap.removeAllOrNone(index)) {
+				return Collections.<CachedPack>singletonList(
 						new LocalCachedPack(Collections.singletonList(pack)));
+			}
 		}
 		return Collections.emptyList();
 	}
@@ -111,8 +114,9 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 	@Override
 	public Collection<ObjectId> resolve(AbbreviatedObjectId id)
 			throws IOException {
-		if (id.isComplete())
+		if (id.isComplete()) {
 			return Collections.singleton(id.toObjectId());
+		}
 		HashSet<ObjectId> matches = new HashSet<>(4);
 		db.resolve(matches, id);
 		return matches;
@@ -131,13 +135,15 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 			IOException {
 		final ObjectLoader ldr = db.openObject(this, objectId);
 		if (ldr == null) {
-			if (typeHint == OBJ_ANY)
+			if (typeHint == OBJ_ANY) {
 				throw new MissingObjectException(objectId.copy(),
 						JGitText.get().unknownObjectType2);
+			}
 			throw new MissingObjectException(objectId.copy(), typeHint);
 		}
-		if (typeHint != OBJ_ANY && ldr.getType() != typeHint)
+		if (typeHint != OBJ_ANY && ldr.getType() != typeHint) {
 			throw new IncorrectObjectTypeException(objectId.copy(), typeHint);
+		}
 		return ldr;
 	}
 
@@ -154,9 +160,10 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 			IOException {
 		long sz = db.getObjectSize(this, objectId);
 		if (sz < 0) {
-			if (typeHint == OBJ_ANY)
+			if (typeHint == OBJ_ANY) {
 				throw new MissingObjectException(objectId.copy(),
 						JGitText.get().unknownObjectType2);
+			}
 			throw new MissingObjectException(objectId.copy(), typeHint);
 		}
 		return sz;
@@ -192,8 +199,9 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 	@Override
 	public void writeObjects(PackOutputStream out, List<ObjectToPack> list)
 			throws IOException {
-		for (ObjectToPack otp : list)
+		for (ObjectToPack otp : list) {
 			out.writeObject(otp);
+		}
 	}
 
 	/**
@@ -283,13 +291,15 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 		for (int dstoff = 0;;) {
 			int n = inf.inflate(dstbuf, dstoff, dstbuf.length - dstoff);
 			dstoff += n;
-			if (inf.finished() || (headerOnly && dstoff == dstbuf.length))
+			if (inf.finished() || (headerOnly && dstoff == dstbuf.length)) {
 				return dstoff;
+			}
 			if (inf.needsInput()) {
 				pin(pack, position);
 				position += window.setInput(position, inf);
-			} else if (n == 0)
+			} else if (n == 0) {
 				throw new DataFormatException();
+			}
 		}
 	}
 
@@ -297,8 +307,9 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 			throws IOException {
 		pin(p, pos);
 		if (window instanceof ByteArrayWindow
-				&& window.contains(p, pos + (cnt - 1)))
+				&& window.contains(p, pos + (cnt - 1))) {
 			return (ByteArrayWindow) window;
+		}
 		return null;
 	}
 
@@ -308,10 +319,11 @@ final class WindowCursor extends ObjectReader implements ObjectReuseAsIs {
 	}
 
 	private void prepareInflater() {
-		if (inf == null)
+		if (inf == null) {
 			inf = InflaterCache.get();
-		else
+		} else {
 			inf.reset();
+		}
 	}
 
 	void pin(Pack pack, long position)

@@ -135,7 +135,7 @@ public abstract class RefUpdate {
 		 *
 		 * @since 4.9
 		 */
-		REJECTED_OTHER_REASON;
+		REJECTED_OTHER_REASON
 	}
 
 	/** New value the caller wants this ref to have. */
@@ -430,9 +430,9 @@ public abstract class RefUpdate {
 	 *            message.
 	 */
 	public void setRefLogMessage(String msg, boolean appendStatus) {
-		if (msg == null && !appendStatus)
+		if (msg == null && !appendStatus) {
 			disableRefLog();
-		else if (msg == null && appendStatus) {
+		} else if (msg == null && appendStatus) {
 			refLogMessage = ""; //$NON-NLS-1$
 			refLogIncludeResult = true;
 		} else {
@@ -531,8 +531,9 @@ public abstract class RefUpdate {
 	}
 
 	private void requireCanDoUpdate() {
-		if (newValue == null)
+		if (newValue == null) {
 			throw new IllegalStateException(JGitText.get().aNewObjectIdIsRequired);
+		}
 	}
 
 	/**
@@ -590,8 +591,9 @@ public abstract class RefUpdate {
 			return result = updateImpl(walk, new Store() {
 				@Override
 				Result execute(Result status) throws IOException {
-					if (status == Result.NO_CHANGE)
+					if (status == Result.NO_CHANGE) {
 						return status;
+					}
 					return doUpdate(status);
 				}
 			});
@@ -638,8 +640,9 @@ public abstract class RefUpdate {
 			Ref head = getRefDatabase().exactRef(Constants.HEAD);
 			while (head != null && head.isSymbolic()) {
 				head = head.getTarget();
-				if (myName.equals(head.getName()))
+				if (myName.equals(head.getName())) {
 					return result = Result.REJECTED_CURRENT_BRANCH;
+				}
 			}
 		}
 
@@ -670,27 +673,33 @@ public abstract class RefUpdate {
 	 * @throws java.io.IOException
 	 */
 	public Result link(String target) throws IOException {
-		if (!target.startsWith(Constants.R_REFS))
+		if (!target.startsWith(Constants.R_REFS)) {
 			throw new IllegalArgumentException(MessageFormat.format(JGitText.get().illegalArgumentNotA, Constants.R_REFS));
-		if (checkConflicting && getRefDatabase().isNameConflicting(getName()))
+		}
+		if (checkConflicting && getRefDatabase().isNameConflicting(getName())) {
 			return Result.LOCK_FAILURE;
+		}
 		try {
-			if (!tryLock(false))
+			if (!tryLock(false)) {
 				return Result.LOCK_FAILURE;
+			}
 
 			final Ref old = getRefDatabase().exactRef(getName());
 			if (old != null && old.isSymbolic()) {
 				final Ref dst = old.getTarget();
-				if (target.equals(dst.getName()))
+				if (target.equals(dst.getName())) {
 					return result = Result.NO_CHANGE;
+				}
 			}
 
-			if (old != null && old.getObjectId() != null)
+			if (old != null && old.getObjectId() != null) {
 				setOldObjectId(old.getObjectId());
+			}
 
 			final Ref dst = getRefDatabase().exactRef(target);
-			if (dst != null && dst.getObjectId() != null)
+			if (dst != null && dst.getObjectId() != null) {
 				setNewObjectId(dst.getObjectId());
+			}
 
 			return result = doLink(target);
 		} catch (IOException x) {

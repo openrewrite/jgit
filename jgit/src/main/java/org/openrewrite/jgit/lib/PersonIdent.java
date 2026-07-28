@@ -264,12 +264,14 @@ public class PersonIdent implements Serializable {
 	 */
 	public PersonIdent(final String aName, final String aEmailAddress,
 			final long aWhen, final int aTZ) {
-		if (aName == null)
+		if (aName == null) {
 			throw new IllegalArgumentException(
 					JGitText.get().personIdentNameNonNull);
-		if (aEmailAddress == null)
+		}
+		if (aEmailAddress == null) {
 			throw new IllegalArgumentException(
 					JGitText.get().personIdentEmailNonNull);
+		}
 		name = aName;
 		emailAddress = aEmailAddress;
 		when = aWhen;

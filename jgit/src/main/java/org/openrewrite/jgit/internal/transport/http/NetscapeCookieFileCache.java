@@ -27,7 +27,7 @@ import org.openrewrite.jgit.util.LRUMap;
  * @see NetscapeCookieFile
  *
  */
-public class NetscapeCookieFileCache {
+public final class NetscapeCookieFileCache {
 
 	private final LRUMap<Path, NetscapeCookieFile> cookieFileMap;
 

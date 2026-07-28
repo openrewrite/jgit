@@ -30,7 +30,7 @@ public class BinaryHunk {
 		LITERAL_DEFLATED,
 
 		/** A Git pack-style delta is stored, deflated. */
-		DELTA_DEFLATED;
+		DELTA_DEFLATED
 	}
 
 	private final FileHeader file;
@@ -133,8 +133,9 @@ public class BinaryHunk {
 		while (ptr < end) {
 			final boolean empty = buf[ptr] == '\n';
 			ptr = nextLF(buf, ptr);
-			if (empty)
+			if (empty) {
 				break;
+			}
 		}
 
 		return ptr;

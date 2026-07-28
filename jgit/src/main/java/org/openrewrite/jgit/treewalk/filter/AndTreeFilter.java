@@ -39,10 +39,12 @@ public abstract class AndTreeFilter extends TreeFilter {
 	 * @return a filter that must match both input filters.
 	 */
 	public static TreeFilter create(TreeFilter a, TreeFilter b) {
-		if (a == ALL)
+		if (a == ALL) {
 			return b;
-		if (b == ALL)
+		}
+		if (b == ALL) {
 			return a;
+		}
 		return new Binary(a, b);
 	}
 
@@ -55,10 +57,12 @@ public abstract class AndTreeFilter extends TreeFilter {
 	 * @return a filter that must match all input filters.
 	 */
 	public static TreeFilter create(TreeFilter[] list) {
-		if (list.length == 2)
+		if (list.length == 2) {
 			return create(list[0], list[1]);
-		if (list.length < 2)
+		}
+		if (list.length < 2) {
 			throw new IllegalArgumentException(JGitText.get().atLeastTwoFiltersNeeded);
+		}
 		final TreeFilter[] subfilters = new TreeFilter[list.length];
 		System.arraycopy(list, 0, subfilters, 0, list.length);
 		return new List(subfilters);
@@ -73,12 +77,14 @@ public abstract class AndTreeFilter extends TreeFilter {
 	 * @return a filter that must match all input filters.
 	 */
 	public static TreeFilter create(Collection<TreeFilter> list) {
-		if (list.size() < 2)
+		if (list.size() < 2) {
 			throw new IllegalArgumentException(JGitText.get().atLeastTwoFiltersNeeded);
+		}
 		final TreeFilter[] subfilters = new TreeFilter[list.size()];
 		list.toArray(subfilters);
-		if (subfilters.length == 2)
+		if (subfilters.length == 2) {
 			return create(subfilters[0], subfilters[1]);
+		}
 		return new List(subfilters);
 	}
 
@@ -167,17 +173,20 @@ public abstract class AndTreeFilter extends TreeFilter {
 
 		@Override
 		public boolean shouldBeRecursive() {
-			for (TreeFilter f : subfilters)
-				if (f.shouldBeRecursive())
+			for (TreeFilter f : subfilters) {
+				if (f.shouldBeRecursive()) {
 					return true;
+				}
+			}
 			return false;
 		}
 
 		@Override
 		public TreeFilter clone() {
 			final TreeFilter[] s = new TreeFilter[subfilters.length];
-			for (int i = 0; i < s.length; i++)
+			for (int i = 0;i < s.length;i++) {
 				s[i] = subfilters[i].clone();
+			}
 			return new List(s);
 		}
 
@@ -187,8 +196,9 @@ public abstract class AndTreeFilter extends TreeFilter {
 			final StringBuilder r = new StringBuilder();
 			r.append("(");
 			for (int i = 0; i < subfilters.length; i++) {
-				if (i > 0)
+				if (i > 0) {
 					r.append(" AND ");
+				}
 				r.append(subfilters[i].toString());
 			}
 			r.append(")");

@@ -60,7 +60,7 @@ public class ListBranchCommand extends GitCommand<List<Ref>> {
 		/**
 		 * Corresponds to the -r option (remote branches only)
 		 */
-		REMOTE;
+		REMOTE
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class ListBranchCommand extends GitCommand<List<Ref>> {
 
 			// Also return HEAD if it's detached
 			Ref head = repo.exactRef(HEAD);
-			if (head != null && head.getLeaf().getName().equals(HEAD)) {
+			if (head != null && HEAD.equals(head.getLeaf().getName())) {
 				refs.add(head);
 			}
 
@@ -108,14 +108,16 @@ public class ListBranchCommand extends GitCommand<List<Ref>> {
 
 	private Collection<Ref> filterRefs(Collection<Ref> refs)
 			throws RefNotFoundException, IOException {
-		if (containsCommitish == null)
+		if (containsCommitish == null) {
 			return refs;
+		}
 
 		try (RevWalk walk = new RevWalk(repo)) {
 			ObjectId resolved = repo.resolve(containsCommitish);
-			if (resolved == null)
+			if (resolved == null) {
 				throw new RefNotFoundException(MessageFormat.format(
 						JGitText.get().refNotResolved, containsCommitish));
+			}
 
 			RevCommit containsCommit = walk.parseCommit(resolved);
 			return RevWalkUtils.findBranchesReachableFrom(containsCommit, walk,

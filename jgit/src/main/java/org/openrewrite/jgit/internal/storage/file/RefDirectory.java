@@ -338,10 +338,12 @@ public class RefDirectory extends RefDatabase {
 		if (scan.newLoose != null) {
 			scan.newLoose.sort();
 			loose = scan.newLoose.toRefList();
-			if (looseRefs.compareAndSet(oldLoose, loose))
+			if (looseRefs.compareAndSet(oldLoose, loose)) {
 				modCnt.incrementAndGet();
-		} else
+			}
+		} else {
 			loose = oldLoose;
+		}
 		fireRefsChanged();
 
 		RefList.Builder<Ref> symbolic = scan.symbolic;
@@ -357,8 +359,9 @@ public class RefDirectory extends RefDatabase {
 				// rare occurrence so pay a copy penalty.
 				symbolic.remove(idx);
 				final int toRemove = loose.find(symbolicRef.getName());
-				if (0 <= toRemove)
+				if (0 <= toRemove) {
 					loose = loose.remove(toRemove);
+				}
 			}
 		}
 		symbolic.sort();
@@ -372,8 +375,9 @@ public class RefDirectory extends RefDatabase {
 		List<Ref> ret = new LinkedList<>();
 		for (String name : additionalRefsNames) {
 			Ref r = exactRef(name);
-			if (r != null)
+			if (r != null) {
 				ret.add(r);
+			}
 		}
 		return ret;
 	}
@@ -402,8 +406,9 @@ public class RefDirectory extends RefDatabase {
 				scanTree(R_REFS, refsDir);
 
 				// If any entries remain, they are deleted, drop them.
-				if (newLoose == null && curIdx < curLoose.size())
+				if (newLoose == null && curIdx < curLoose.size()) {
 					newLoose = curLoose.copy(curIdx);
+				}
 
 			} else if (prefix.startsWith(R_REFS) && prefix.endsWith("/")) { //$NON-NLS-1$
 				curIdx = -(curLoose.find(prefix) + 1);
@@ -413,39 +418,45 @@ public class RefDirectory extends RefDatabase {
 				// Skip over entries still within the prefix; these have
 				// been removed from the directory.
 				while (curIdx < curLoose.size()) {
-					if (!curLoose.get(curIdx).getName().startsWith(prefix))
+					if (!curLoose.get(curIdx).getName().startsWith(prefix)) {
 						break;
-					if (newLoose == null)
+					}
+					if (newLoose == null) {
 						newLoose = curLoose.copy(curIdx);
+					}
 					curIdx++;
 				}
 
 				// Keep any entries outside of the prefix space, we
 				// do not know anything about their status.
 				if (newLoose != null) {
-					while (curIdx < curLoose.size())
+					while (curIdx < curLoose.size()) {
 						newLoose.add(curLoose.get(curIdx++));
+					}
 				}
 			}
 		}
 
 		private boolean scanTree(String prefix, File dir) {
 			final String[] entries = dir.list(LockFile.FILTER);
-			if (entries == null) // not a directory or an I/O error
+			if (entries == null) { // not a directory or an I/O error
 				return false;
+			}
 			if (0 < entries.length) {
 				for (int i = 0; i < entries.length; ++i) {
 					String e = entries[i];
 					File f = new File(dir, e);
-					if (f.isDirectory())
+					if (f.isDirectory()) {
 						entries[i] += '/';
+					}
 				}
 				Arrays.sort(entries);
 				for (String name : entries) {
-					if (name.charAt(name.length() - 1) == '/')
+					if (name.charAt(name.length() - 1) == '/') {
 						scanTree(prefix + name, new File(dir, name));
-					else
+					} else {
 						scanOne(prefix + name);
+					}
 				}
 			}
 			return true;
@@ -461,20 +472,23 @@ public class RefDirectory extends RefDatabase {
 					if (cmp < 0) {
 						// Reference is not loose anymore, its been deleted.
 						// Skip the name in the new result list.
-						if (newLoose == null)
+						if (newLoose == null) {
 							newLoose = curLoose.copy(curIdx);
+						}
 						curIdx++;
 						cur = null;
 						continue;
 					}
 
-					if (cmp > 0) // Newly discovered loose reference.
+					if (cmp > 0) { // Newly discovered loose reference.
 						cur = null;
+					}
 					break;
 				} while (curIdx < curLoose.size());
-			} else
+			} else {
 				cur = null; // Newly discovered loose reference.
 
+			}
 			LooseRef n;
 			try {
 				n = scanRef(cur, name);
@@ -483,21 +497,26 @@ public class RefDirectory extends RefDatabase {
 			}
 
 			if (n != null) {
-				if (cur != n && newLoose == null)
+				if (cur != n && newLoose == null) {
 					newLoose = curLoose.copy(curIdx);
-				if (newLoose != null)
+				}
+				if (newLoose != null) {
 					newLoose.add(n);
-				if (n.isSymbolic())
+				}
+				if (n.isSymbolic()) {
 					symbolic.add(n);
+				}
 			} else if (cur != null) {
 				// Tragically, this file is no longer a loose reference.
 				// Kill our cached entry of it.
-				if (newLoose == null)
+				if (newLoose == null) {
 					newLoose = curLoose.copy(curIdx);
+				}
 			}
 
-			if (cur != null)
+			if (cur != null) {
 				curIdx++;
+			}
 		}
 	}
 
@@ -505,8 +524,9 @@ public class RefDirectory extends RefDatabase {
 	@Override
 	public Ref peel(Ref ref) throws IOException {
 		final Ref leaf = ref.getLeaf();
-		if (leaf.isPeeled() || leaf.getObjectId() == null)
+		if (leaf.isPeeled() || leaf.getObjectId() == null) {
 			return ref;
+		}
 
 		ObjectIdRef newLeaf = doPeel(leaf);
 
@@ -559,16 +579,18 @@ public class RefDirectory extends RefDatabase {
 		boolean detachingSymbolicRef = false;
 		final RefList<Ref> packed = getPackedRefs();
 		Ref ref = readRef(name, packed);
-		if (ref != null)
+		if (ref != null) {
 			ref = resolve(ref, 0, null, null, packed);
-		if (ref == null)
+		}
+		if (ref == null) {
 			ref = new ObjectIdRef.Unpeeled(NEW, name, null);
-		else {
+		} else {
 			detachingSymbolicRef = detach && ref.isSymbolic();
 		}
 		RefDirectoryUpdate refDirUpdate = new RefDirectoryUpdate(this, ref);
-		if (detachingSymbolicRef)
+		if (detachingSymbolicRef) {
 			refDirUpdate.setDetachingSymbolicRef();
+		}
 		return refDirUpdate;
 	}
 
@@ -600,7 +622,8 @@ public class RefDirectory extends RefDatabase {
 	}
 
 	private void putLooseRef(LooseRef ref) {
-		RefList<LooseRef> cList, nList;
+		RefList<LooseRef> cList;
+		RefList<LooseRef> nList;
 		do {
 			cList = looseRefs.get();
 			nList = cList.put(ref);
@@ -638,12 +661,14 @@ public class RefDirectory extends RefDatabase {
 			}
 		}
 
-		RefList<LooseRef> curLoose, newLoose;
+		RefList<LooseRef> curLoose;
+		RefList<LooseRef> newLoose;
 		do {
 			curLoose = looseRefs.get();
 			int idx = curLoose.find(name);
-			if (idx < 0)
+			if (idx < 0) {
 				break;
+			}
 			newLoose = curLoose.remove(idx);
 		} while (!looseRefs.compareAndSet(curLoose, newLoose));
 
@@ -760,7 +785,8 @@ public class RefDirectory extends RefDatabase {
 						ObjectId clr_oid = currentLooseRef.getObjectId();
 						if (clr_oid != null
 								&& clr_oid.equals(packedRef.getObjectId())) {
-							RefList<LooseRef> curLoose, newLoose;
+							RefList<LooseRef> curLoose;
+							RefList<LooseRef> newLoose;
 							do {
 								curLoose = looseRefs.get();
 								int idx = curLoose.find(refName);
@@ -846,28 +872,32 @@ public class RefDirectory extends RefDatabase {
 		if (ref.isSymbolic()) {
 			Ref dst = ref.getTarget();
 
-			if (MAX_SYMBOLIC_REF_DEPTH <= depth)
+			if (MAX_SYMBOLIC_REF_DEPTH <= depth) {
 				return null; // claim it doesn't exist
 
-			// If the cached value can be assumed to be current due to a
-			// recent scan of the loose directory, use it.
+				// If the cached value can be assumed to be current due to a
+				// recent scan of the loose directory, use it.
+			}
 			if (loose != null && dst.getName().startsWith(prefix)) {
 				int idx;
-				if (0 <= (idx = loose.find(dst.getName())))
+				if (0 <= (idx = loose.find(dst.getName()))) {
 					dst = loose.get(idx);
-				else if (0 <= (idx = packed.find(dst.getName())))
+				} else if (0 <= (idx = packed.find(dst.getName()))) {
 					dst = packed.get(idx);
-				else
+				} else {
 					return ref;
+				}
 			} else {
 				dst = readRef(dst.getName(), packed);
-				if (dst == null)
+				if (dst == null) {
 					return ref;
+				}
 			}
 
 			dst = resolve(dst, depth + 1, prefix, loose, packed);
-			if (dst == null)
+			if (dst == null) {
 				return null;
+			}
 			return new SymbolicRef(ref.getName(), dst);
 		}
 		return ref;
@@ -945,8 +975,9 @@ public class RefDirectory extends RefDatabase {
 			}
 
 			if (p.charAt(0) == '^') {
-				if (last == null)
+				if (last == null) {
 					throw new IOException(JGitText.get().peeledLineBeforeRef);
+				}
 
 				ObjectId id = ObjectId.fromString(p.substring(1));
 				last = new ObjectIdRef.PeeledTag(PACKED, last.getName(), last
@@ -964,18 +995,21 @@ public class RefDirectory extends RefDatabase {
 			ObjectId id = ObjectId.fromString(p.substring(0, sp));
 			String name = copy(p, sp + 1, p.length());
 			ObjectIdRef cur;
-			if (peeled)
+			if (peeled) {
 				cur = new ObjectIdRef.PeeledNonTag(PACKED, name, id);
-			else
+			} else {
 				cur = new ObjectIdRef.Unpeeled(PACKED, name, id);
-			if (last != null && RefComparator.compareTo(last, cur) > 0)
+			}
+			if (last != null && RefComparator.compareTo(last, cur) > 0) {
 				needSort = true;
+			}
 			all.add(cur);
 			last = cur;
 		}
 
-		if (needSort)
+		if (needSort) {
 			all.sort();
+		}
 		return all.toRefList();
 	}
 
@@ -1011,8 +1045,9 @@ public class RefDirectory extends RefDatabase {
 									JGitText.get().interruptedWriting, name),
 							e);
 				}
-				if (!lck.commit())
+				if (!lck.commit()) {
 					throw new ObjectWritingException(MessageFormat.format(JGitText.get().unableToWrite, name));
+				}
 
 				byte[] digest = Constants.newMessageDigest().digest(content);
 				PackedRefList newPackedList = new PackedRefList(
@@ -1049,21 +1084,25 @@ public class RefDirectory extends RefDatabase {
 			final LooseRef o = curList.get(idx);
 			final LooseRef n = scanRef(o, name);
 			if (n == null) {
-				if (looseRefs.compareAndSet(curList, curList.remove(idx)))
+				if (looseRefs.compareAndSet(curList, curList.remove(idx))) {
 					modCnt.incrementAndGet();
+				}
 				return packed.get(name);
 			}
 
-			if (o == n)
+			if (o == n) {
 				return n;
-			if (looseRefs.compareAndSet(curList, curList.set(idx, n)))
+			}
+			if (looseRefs.compareAndSet(curList, curList.set(idx, n))) {
 				modCnt.incrementAndGet();
+			}
 			return n;
 		}
 
 		final LooseRef n = scanRef(null, name);
-		if (n == null)
+		if (n == null) {
 			return packed.get(name);
+		}
 
 		// check whether the found new ref is the an additional ref. These refs
 		// should not go into looseRefs
@@ -1073,8 +1112,9 @@ public class RefDirectory extends RefDatabase {
 			}
 		}
 
-		if (looseRefs.compareAndSet(curList, curList.add(idx, n)))
+		if (looseRefs.compareAndSet(curList, curList.add(idx, n))) {
 			modCnt.incrementAndGet();
+		}
 		return n;
 	}
 
@@ -1084,8 +1124,9 @@ public class RefDirectory extends RefDatabase {
 
 		if (ref != null) {
 			currentSnapshot = ref.getSnapShot();
-			if (!currentSnapshot.isModified(path))
+			if (!currentSnapshot.isModified(path)) {
 				return ref;
+			}
 			name = ref.getName();
 		}
 
@@ -1102,16 +1143,19 @@ public class RefDirectory extends RefDatabase {
 		}
 
 		int n = buf.length;
-		if (n == 0)
+		if (n == 0) {
 			return null; // empty file; not a reference.
 
+		}
 		if (isSymRef(buf, n)) {
-			if (n == limit)
+			if (n == limit) {
 				return null; // possibly truncated ref
 
-			// trim trailing whitespace
-			while (0 < n && Character.isWhitespace(buf[n - 1]))
+				// trim trailing whitespace
+			}
+			while (0 < n && Character.isWhitespace(buf[n - 1])) {
 				n--;
+			}
 			if (n < 6) {
 				String content = RawParseUtils.decode(buf, 0, n);
 				throw new IOException(MessageFormat.format(JGitText.get().notARef, name, content));
@@ -1126,9 +1170,10 @@ public class RefDirectory extends RefDatabase {
 			return newSymbolicRef(otherSnapshot, name, target);
 		}
 
-		if (n < OBJECT_ID_STRING_LENGTH)
+		if (n < OBJECT_ID_STRING_LENGTH) {
 			return null; // impossibly short object identifier; not a reference.
 
+		}
 		final ObjectId id;
 		try {
 			id = ObjectId.fromString(buf, 0);
@@ -1140,8 +1185,9 @@ public class RefDirectory extends RefDatabase {
 			}
 
 		} catch (IllegalArgumentException notRef) {
-			while (0 < n && Character.isWhitespace(buf[n - 1]))
+			while (0 < n && Character.isWhitespace(buf[n - 1])) {
 				n--;
+			}
 			String content = RawParseUtils.decode(buf, 0, n);
 
 			throw new IOException(MessageFormat.format(JGitText.get().notARef,
@@ -1151,8 +1197,9 @@ public class RefDirectory extends RefDatabase {
 	}
 
 	private static boolean isSymRef(byte[] buf, int n) {
-		if (n < 6)
+		if (n < 6) {
 			return false;
+		}
 		return /**/buf[0] == 'r' //
 				&& buf[1] == 'e' //
 				&& buf[2] == 'f' //
@@ -1189,8 +1236,9 @@ public class RefDirectory extends RefDatabase {
 	void fireRefsChanged() {
 		final int last = lastNotifiedModCnt.get();
 		final int curr = modCnt.get();
-		if (last != curr && lastNotifiedModCnt.compareAndSet(last, curr) && last != 0)
+		if (last != curr && lastNotifiedModCnt.compareAndSet(last, curr) && last != 0) {
 			parent.fireEvent(new RefsChangedEvent());
+		}
 	}
 
 	/**
@@ -1225,8 +1273,9 @@ public class RefDirectory extends RefDatabase {
 
 	static int levelsIn(String name) {
 		int count = 0;
-		for (int p = name.indexOf('/'); p >= 0; p = name.indexOf('/', p + 1))
+		for (int p = name.indexOf('/');p >= 0;p = name.indexOf('/', p + 1)) {
 			count++;
+		}
 		return count;
 	}
 
@@ -1318,7 +1367,7 @@ public class RefDirectory extends RefDatabase {
 		}
 	}
 
-	static class PackedRefList extends RefList<Ref> {
+	static final class PackedRefList extends RefList<Ref> {
 
 		private final FileSnapshot snapshot;
 

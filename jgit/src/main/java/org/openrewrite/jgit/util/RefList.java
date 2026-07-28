@@ -83,8 +83,9 @@ public class RefList<T extends Ref> implements Iterable<Ref> {
 
 			@Override
 			public Ref next() {
-				if (idx < cnt)
+				if (idx < cnt) {
 					return list[idx++];
+				}
 				throw new NoSuchElementException();
 			}
 
@@ -134,18 +135,20 @@ public class RefList<T extends Ref> implements Iterable<Ref> {
 	 */
 	public final int find(String name) {
 		int high = cnt;
-		if (high == 0)
+		if (high == 0) {
 			return -1;
+		}
 		int low = 0;
 		do {
 			final int mid = (low + high) >>> 1;
 			final int cmp = RefComparator.compareTo(list[mid], name);
-			if (cmp < 0)
+			if (cmp < 0) {
 				low = mid + 1;
-			else if (cmp == 0)
+			} else if (cmp == 0) {
 				return mid;
-			else
+			} else {
 				high = mid;
+			}
 		} while (low < high);
 		return -(low + 1);
 	}
@@ -235,15 +238,18 @@ public class RefList<T extends Ref> implements Iterable<Ref> {
 	 * @return copy of this list, after making space for and adding {@code ref}.
 	 */
 	public final RefList<T> add(int idx, T ref) {
-		if (idx < 0)
+		if (idx < 0) {
 			idx = -(idx + 1);
+		}
 
 		Ref[] newList = new Ref[cnt + 1];
-		if (0 < idx)
+		if (0 < idx) {
 			System.arraycopy(list, 0, newList, 0, idx);
+		}
 		newList[idx] = ref;
-		if (idx < cnt)
+		if (idx < cnt) {
 			System.arraycopy(list, idx, newList, idx + 1, cnt - idx);
+		}
 		return new RefList<>(newList, cnt + 1);
 	}
 
@@ -258,13 +264,16 @@ public class RefList<T extends Ref> implements Iterable<Ref> {
 	 * @return copy of this list, after making removing the item at {@code idx}.
 	 */
 	public final RefList<T> remove(int idx) {
-		if (cnt == 1)
+		if (cnt == 1) {
 			return emptyList();
+		}
 		Ref[] newList = new Ref[cnt - 1];
-		if (0 < idx)
+		if (0 < idx) {
 			System.arraycopy(list, 0, newList, 0, idx);
-		if (idx + 1 < cnt)
+		}
+		if (idx + 1 < cnt) {
 			System.arraycopy(list, idx + 1, newList, idx, cnt - (idx + 1));
+		}
 		return new RefList<>(newList, cnt - 1);
 	}
 
@@ -281,8 +290,9 @@ public class RefList<T extends Ref> implements Iterable<Ref> {
 	 */
 	public final RefList<T> put(T ref) {
 		int idx = find(ref.getName());
-		if (0 <= idx)
+		if (0 <= idx) {
 			return set(idx, ref);
+		}
 		return add(idx, ref);
 	}
 
@@ -319,7 +329,7 @@ public class RefList<T extends Ref> implements Iterable<Ref> {
 					b.addAll(b1);
 					b.addAll(b2);
 					return b;
-				}, (b) -> {
+				}, b -> {
 					if (mergeFunction != null) {
 						b.sort();
 						b.dedupe(mergeFunction);

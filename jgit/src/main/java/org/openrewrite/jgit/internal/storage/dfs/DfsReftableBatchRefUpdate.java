@@ -10,6 +10,16 @@
 
 package org.openrewrite.jgit.internal.storage.dfs;
 
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.REFTABLE;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 import org.openrewrite.jgit.internal.storage.dfs.DfsObjDatabase.PackSource;
 import org.openrewrite.jgit.internal.storage.io.BlockSource;
 import org.openrewrite.jgit.internal.storage.pack.PackExt;
@@ -20,16 +30,6 @@ import org.openrewrite.jgit.internal.storage.reftable.ReftableReader;
 import org.openrewrite.jgit.internal.storage.reftable.ReftableWriter;
 import org.openrewrite.jgit.lib.Ref;
 import org.openrewrite.jgit.transport.ReceiveCommand;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import static org.openrewrite.jgit.internal.storage.pack.PackExt.REFTABLE;
 
 /**
  * {@link org.openrewrite.jgit.lib.BatchRefUpdate} for

@@ -46,8 +46,9 @@ public abstract class RefRename {
 
 		String cmd = ""; //$NON-NLS-1$
 		if (source.getName().startsWith(Constants.R_HEADS)
-				&& destination.getName().startsWith(Constants.R_HEADS))
+				&& destination.getName().startsWith(Constants.R_HEADS)) {
 			cmd = "Branch: "; //$NON-NLS-1$
+		}
 		setRefLogMessage(cmd + "renamed " //$NON-NLS-1$
 				+ Repository.shortenRefName(source.getName()) + " to " //$NON-NLS-1$
 				+ Repository.shortenRefName(destination.getName()));
@@ -95,10 +96,11 @@ public abstract class RefRename {
 	 *            the message to describe this change.
 	 */
 	public void setRefLogMessage(String msg) {
-		if (msg == null)
+		if (msg == null) {
 			disableRefLog();
-		else
+		} else {
 			destination.setRefLogMessage(msg, false);
+		}
 	}
 
 	/**

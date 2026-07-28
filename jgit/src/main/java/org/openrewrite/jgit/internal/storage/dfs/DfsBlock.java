@@ -89,7 +89,8 @@ final class DfsBlock {
 		// Push all of it in a single invocation to avoid unnecessary loops.
 		//
 		inf.setInput(block, (int) (pos - start), cnt);
-		while (inf.inflate(tmp, 0, tmp.length) > 0)
+		while (inf.inflate(tmp, 0, tmp.length) > 0) {
 			continue;
+		}
 	}
 }

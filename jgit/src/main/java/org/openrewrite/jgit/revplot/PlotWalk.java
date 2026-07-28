@@ -87,9 +87,9 @@ public class PlotWalk extends RevWalk {
 	public void addAdditionalRefs(Iterable<Ref> refs) throws IOException {
 		for (Ref ref : refs) {
 			Set<Ref> set = additionalRefMap.get(ref.getObjectId());
-			if (set == null)
+			if (set == null) {
 				set = Collections.singleton(ref);
-			else {
+			} else {
 				set = new HashSet<>(set);
 				set.add(ref);
 			}
@@ -100,8 +100,9 @@ public class PlotWalk extends RevWalk {
 	/** {@inheritDoc} */
 	@Override
 	public void sort(RevSort s, boolean use) {
-		if (s == RevSort.TOPO && !use)
+		if (s == RevSort.TOPO && !use) {
 			throw new IllegalArgumentException(JGitText.get().topologicalSortRequired);
+		}
 		super.sort(s, use);
 	}
 
@@ -116,8 +117,9 @@ public class PlotWalk extends RevWalk {
 	public RevCommit next() throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {
 		PlotCommit<?> pc = (PlotCommit) super.next();
-		if (pc != null)
+		if (pc != null) {
 			pc.refs = getRefs(pc);
+		}
 		return pc;
 	}
 
@@ -157,23 +159,27 @@ public class PlotWalk extends RevWalk {
 				RevObject obj2 = parseAny(o2.getObjectId());
 				long t1 = timeof(obj1);
 				long t2 = timeof(obj2);
-				if (t1 > t2)
+				if (t1 > t2) {
 					return -1;
-				if (t1 < t2)
+				}
+				if (t1 < t2) {
 					return 1;
+				}
 			} catch (IOException e) {
 				// ignore
 			}
 
 			int cmp = kind(o1) - kind(o2);
-			if (cmp == 0)
+			if (cmp == 0) {
 				cmp = o1.getName().compareTo(o2.getName());
+			}
 			return cmp;
 		}
 
 		long timeof(RevObject o) {
-			if (o instanceof RevCommit)
+			if (o instanceof RevCommit) {
 				return ((RevCommit) o).getCommitTime();
+			}
 			if (o instanceof RevTag) {
 				RevTag tag = (RevTag) o;
 				try {
@@ -188,12 +194,15 @@ public class PlotWalk extends RevWalk {
 		}
 
 		int kind(Ref r) {
-			if (r.getName().startsWith(R_TAGS))
+			if (r.getName().startsWith(R_TAGS)) {
 				return 0;
-			if (r.getName().startsWith(R_HEADS))
+			}
+			if (r.getName().startsWith(R_HEADS)) {
 				return 1;
-			if (r.getName().startsWith(R_REMOTES))
+			}
+			if (r.getName().startsWith(R_REMOTES)) {
 				return 2;
+			}
 			return 3;
 		}
 	}

@@ -60,8 +60,9 @@ public class TransportBundleStream extends Transport implements TransportBundle 
 	/** {@inheritDoc} */
 	@Override
 	public FetchConnection openFetch() throws TransportException {
-		if (src == null)
+		if (src == null) {
 			throw new TransportException(uri, JGitText.get().onlyOneFetchSupported);
+		}
 		try {
 			return new BundleFetchConnection(this, src);
 		} finally {

@@ -64,7 +64,7 @@ public interface WindowCacheStats {
 	 */
 	default double getHitRatio() {
 		long requestCount = getRequestCount();
-		return (requestCount == 0) ? 1.0
+		return requestCount == 0 ? 1.0
 				: (double) getHitCount() / requestCount;
 	}
 
@@ -86,7 +86,7 @@ public interface WindowCacheStats {
 	 */
 	default double getMissRatio() {
 		long requestCount = getRequestCount();
-		return (requestCount == 0) ? 0.0
+		return requestCount == 0 ? 0.0
 				: (double) getMissCount() / requestCount;
 	}
 
@@ -114,7 +114,7 @@ public interface WindowCacheStats {
 	default double getLoadFailureRatio() {
 		long loadFailureCount = getLoadFailureCount();
 		long totalLoadCount = getLoadSuccessCount() + loadFailureCount;
-		return (totalLoadCount == 0) ? 0.0
+		return totalLoadCount == 0 ? 0.0
 				: (double) loadFailureCount / totalLoadCount;
 	}
 
@@ -146,7 +146,7 @@ public interface WindowCacheStats {
 	default double getEvictionRatio() {
 		long evictionCount = getEvictionCount();
 		long requestCount = getRequestCount();
-		return (requestCount == 0) ? 0.0
+		return requestCount == 0 ? 0.0
 				: (double) evictionCount / requestCount;
 	}
 
@@ -168,7 +168,7 @@ public interface WindowCacheStats {
 	 */
 	default double getAverageLoadTime() {
 		long totalLoadCount = getLoadSuccessCount() + getLoadFailureCount();
-		return (totalLoadCount == 0) ? 0.0
+		return totalLoadCount == 0 ? 0.0
 				: (double) getTotalLoadTime() / totalLoadCount;
 	}
 

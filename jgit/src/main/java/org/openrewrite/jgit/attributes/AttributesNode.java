@@ -67,16 +67,18 @@ public class AttributesNode {
 				int patternEndTab = txt.indexOf('\t');
 
 				final int patternEnd;
-				if (patternEndSpace == -1)
+				if (patternEndSpace == -1) {
 					patternEnd = patternEndTab;
-				else if (patternEndTab == -1)
+				} else if (patternEndTab == -1) {
 					patternEnd = patternEndSpace;
-				else
+				} else {
 					patternEnd = Math.min(patternEndSpace, patternEndTab);
+				}
 
-				if (patternEnd > -1)
+				if (patternEnd > -1) {
 					rules.add(new AttributesRule(txt.substring(0, patternEnd),
 							txt.substring(patternEnd + 1).trim()));
+				}
 			}
 		}
 	}

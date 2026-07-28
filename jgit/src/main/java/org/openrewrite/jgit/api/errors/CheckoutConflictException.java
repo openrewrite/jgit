@@ -97,8 +97,9 @@ public class CheckoutConflictException extends GitAPIException {
 	 * @return {@code this}
 	 */
 	CheckoutConflictException addConflictingPath(String conflictingPath) {
-		if (conflictingPaths == null)
+		if (conflictingPaths == null) {
 			conflictingPaths = new LinkedList<>();
+		}
 		conflictingPaths.add(conflictingPath);
 		return this;
 	}

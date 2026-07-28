@@ -93,13 +93,16 @@ public class PlotCommit<L extends PlotLane> extends RevCommit {
 			children = new PlotCommit[] { c };
 			break;
 		case 1:
-			if (!c.getId().equals(children[0].getId()))
-				children = new PlotCommit[] { children[0], c };
+			if (!c.getId().equals(children[0].getId())) {
+				children = new PlotCommit[]{children[0], c};
+			}
 			break;
 		default:
-			for (PlotCommit pc : children)
-				if (c.getId().equals(pc.getId()))
+			for (PlotCommit pc : children) {
+				if (c.getId().equals(pc.getId())) {
 					return;
+				}
+			}
 			final PlotCommit[] n = new PlotCommit[cnt + 1];
 			System.arraycopy(children, 0, n, 0, cnt);
 			n[cnt] = c;
@@ -139,9 +142,11 @@ public class PlotCommit<L extends PlotLane> extends RevCommit {
 	 * @return true if the given commit built on top of this commit.
 	 */
 	public final boolean isChild(PlotCommit c) {
-		for (PlotCommit a : children)
-			if (a == c)
+		for (PlotCommit a : children) {
+			if (a == c) {
 				return true;
+			}
+		}
 		return false;
 	}
 

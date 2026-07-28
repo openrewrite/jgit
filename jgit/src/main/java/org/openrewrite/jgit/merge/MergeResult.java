@@ -39,7 +39,7 @@ public class MergeResult<S extends Sequence> implements Iterable<MergeChunk> {
 
 	final IntList chunks = new IntList();
 
-	private boolean containsConflicts = false;
+	private boolean containsConflicts;
 
 	/**
 	 * Creates a new empty MergeResult
@@ -80,8 +80,9 @@ public class MergeResult<S extends Sequence> implements Iterable<MergeChunk> {
 		chunks.add(srcIdx);
 		chunks.add(begin);
 		chunks.add(end);
-		if (conflictState != ConflictState.NO_CONFLICT)
+		if (conflictState != ConflictState.NO_CONFLICT) {
 			containsConflicts = true;
+		}
 	}
 
 	/**
@@ -105,7 +106,7 @@ public class MergeResult<S extends Sequence> implements Iterable<MergeChunk> {
 
 			@Override
 			public boolean hasNext() {
-				return (idx < chunks.size());
+				return idx < chunks.size();
 			}
 
 			@Override

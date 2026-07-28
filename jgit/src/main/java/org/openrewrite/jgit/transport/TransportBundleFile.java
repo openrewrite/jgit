@@ -48,14 +48,12 @@ class TransportBundleFile extends Transport implements TransportBundle {
 
 		@Override
 		public boolean canHandle(URIish uri, Repository local, String remoteName) {
-			if (uri.getPath() == null
+			return !(uri.getPath() == null
 					|| uri.getPort() > 0
 					|| uri.getUser() != null
 					|| uri.getPass() != null
 					|| uri.getHost() != null
-					|| (uri.getScheme() != null && !getSchemes().contains(uri.getScheme())))
-				return false;
-			return true;
+					|| (uri.getScheme() != null && !getSchemes().contains(uri.getScheme())));
 		}
 
 		@Override

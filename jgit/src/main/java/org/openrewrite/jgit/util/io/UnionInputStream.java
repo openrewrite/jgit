@@ -53,8 +53,9 @@ public class UnionInputStream extends InputStream {
 	 *            streams to be pushed onto this stream.
 	 */
 	public UnionInputStream(InputStream... inputStreams) {
-		for (InputStream i : inputStreams)
+		for (InputStream i : inputStreams) {
 			add(i);
+		}
 	}
 
 	private InputStream head() {
@@ -62,8 +63,9 @@ public class UnionInputStream extends InputStream {
 	}
 
 	private void pop() throws IOException {
-		if (!streams.isEmpty())
+		if (!streams.isEmpty()) {
 			streams.removeFirst().close();
+		}
 	}
 
 	/**
@@ -97,29 +99,32 @@ public class UnionInputStream extends InputStream {
 		for (;;) {
 			final InputStream in = head();
 			final int r = in.read();
-			if (0 <= r)
+			if (0 <= r) {
 				return r;
-			else if (in == EOF)
+			} else if (in == EOF) {
 				return -1;
-			else
+			} else {
 				pop();
+			}
 		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
-		if (len == 0)
+		if (len == 0) {
 			return 0;
+		}
 		for (;;) {
 			final InputStream in = head();
 			final int n = in.read(b, off, len);
-			if (0 < n)
+			if (0 < n) {
 				return n;
-			else if (in == EOF)
+			} else if (in == EOF) {
 				return -1;
-			else
+			} else {
 				pop();
+			}
 		}
 	}
 
@@ -152,8 +157,9 @@ public class UnionInputStream extends InputStream {
 				final int r = in.read();
 				if (r < 0) {
 					pop();
-					if (0 < skipped)
+					if (0 < skipped) {
 						break;
+					}
 				} else {
 					skipped += 1;
 					cnt -= 1;
@@ -177,7 +183,8 @@ public class UnionInputStream extends InputStream {
 			i.remove();
 		}
 
-		if (err != null)
+		if (err != null) {
 			throw err;
+		}
 	}
 }

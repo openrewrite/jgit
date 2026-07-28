@@ -79,8 +79,9 @@ public class TreeFilterMarker {
 			if (filter != null) {
 				try {
 					boolean marked = filter.include(walk);
-					if (marked)
-						marks |= (1 << index);
+					if (marked) {
+						marks |= 1 << index;
+					}
 				} catch (StopWalkException e) {
 					// Don't check tree filter anymore, it will no longer
 					// match

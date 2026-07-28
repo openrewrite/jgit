@@ -49,8 +49,9 @@ class FetchHeadRecord {
 
 		pw.write(newValue.name());
 		pw.write('\t');
-		if (notForMerge)
+		if (notForMerge) {
 			pw.write("not-for-merge"); //$NON-NLS-1$
+		}
 		pw.write('\t');
 		pw.write(type);
 		pw.write(" '"); //$NON-NLS-1$

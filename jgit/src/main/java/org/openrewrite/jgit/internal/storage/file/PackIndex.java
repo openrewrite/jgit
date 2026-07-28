@@ -96,10 +96,9 @@ public abstract class PackIndex
 		IO.readFully(fd, hdr, 0, hdr.length);
 		if (isTOC(hdr)) {
 			final int v = NB.decodeInt32(hdr, 4);
-			switch (v) {
-			case 2:
+			if (v == 2) {
 				return new PackIndexV2(fd);
-			default:
+			} else {
 				throw new UnsupportedPackIndexVersionException(v);
 			}
 		}
@@ -108,9 +107,11 @@ public abstract class PackIndex
 
 	private static boolean isTOC(byte[] h) {
 		final byte[] toc = PackIndexWriter.TOC;
-		for (int i = 0; i < toc.length; i++)
-			if (h[i] != toc[i])
+		for (int i = 0;i < toc.length;i++) {
+			if (h[i] != toc[i]) {
 				return false;
+			}
+		}
 		return true;
 	}
 
@@ -209,8 +210,9 @@ public abstract class PackIndex
 	 * @return the ObjectId for the corresponding entry.
 	 */
 	public final ObjectId getObjectId(int nthPosition) {
-		if (nthPosition >= 0)
+		if (nthPosition >= 0) {
 			return getObjectId((long) nthPosition);
+		}
 		final int u31 = nthPosition >>> 1;
 		final int one = nthPosition & 1;
 		return getObjectId(((long) u31) << 1 | one);
@@ -335,7 +337,7 @@ public abstract class PackIndex
 	abstract class EntriesIterator implements Iterator<MutableEntry> {
 		protected final MutableEntry entry = initEntry();
 
-		protected long returnedNumber = 0;
+		protected long returnedNumber;
 
 		protected abstract MutableEntry initEntry();
 

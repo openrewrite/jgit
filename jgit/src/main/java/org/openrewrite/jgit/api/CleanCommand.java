@@ -43,7 +43,7 @@ public class CleanCommand extends GitCommand<Set<String>> {
 
 	private boolean ignore = true;
 
-	private boolean force = false;
+	private boolean force;
 
 	/**
 	 * Constructor for CleanCommand
@@ -91,15 +91,17 @@ public class CleanCommand extends GitCommand<Set<String>> {
 			Set<String> notIgnoredDirs = filterIgnorePaths(untrackedDirs,
 					status.getIgnoredNotInIndex(), false);
 
-			for (String file : notIgnoredFiles)
+			for (String file : notIgnoredFiles) {
 				if (paths.isEmpty() || paths.contains(file)) {
 					files = cleanPath(file, files);
 				}
+			}
 
-			for (String dir : notIgnoredDirs)
+			for (String dir : notIgnoredDirs) {
 				if (paths.isEmpty() || paths.contains(dir)) {
 					files = cleanPath(dir, files);
 				}
+			}
 		} catch (IOException e) {
 			throw new JGitInternalException(e.getMessage(), e);
 		} finally {
@@ -166,13 +168,15 @@ public class CleanCommand extends GitCommand<Set<String>> {
 			Set<String> ignoredNotInIndex, boolean exact) {
 		if (ignore) {
 			Set<String> filtered = new TreeSet<>(inputPaths);
-			for (String path : inputPaths)
-				for (String ignored : ignoredNotInIndex)
+			for (String path : inputPaths) {
+				for (String ignored : ignoredNotInIndex) {
 					if ((exact && path.equals(ignored))
 							|| (!exact && path.startsWith(ignored))) {
 						filtered.remove(path);
 						break;
 					}
+				}
+			}
 
 			return filtered;
 		}
@@ -182,12 +186,14 @@ public class CleanCommand extends GitCommand<Set<String>> {
 	private Set<String> filterFolders(Set<String> untracked,
 			Set<String> untrackedFolders) {
 		Set<String> filtered = new TreeSet<>(untracked);
-		for (String file : untracked)
-			for (String folder : untrackedFolders)
+		for (String file : untracked) {
+			for (String folder : untrackedFolders) {
 				if (file.startsWith(folder)) {
 					filtered.remove(file);
 					break;
 				}
+			}
+		}
 
 
 		return filtered;

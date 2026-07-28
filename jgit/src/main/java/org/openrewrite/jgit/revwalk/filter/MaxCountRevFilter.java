@@ -21,9 +21,9 @@ import org.openrewrite.jgit.revwalk.RevWalk;
 /**
  * Limits the number of commits output.
  */
-public class MaxCountRevFilter extends RevFilter {
+public final class MaxCountRevFilter extends RevFilter {
 
-	private int maxCount;
+	private final int maxCount;
 
 	private int count;
 
@@ -35,9 +35,10 @@ public class MaxCountRevFilter extends RevFilter {
 	 * @return a new filter
 	 */
 	public static RevFilter create(int maxCount) {
-		if (maxCount < 0)
+		if (maxCount < 0) {
 			throw new IllegalArgumentException(
 					JGitText.get().maxCountMustBeNonNegative);
+		}
 		return new MaxCountRevFilter(maxCount);
 	}
 
@@ -52,8 +53,9 @@ public class MaxCountRevFilter extends RevFilter {
 			throws StopWalkException, MissingObjectException,
 			IncorrectObjectTypeException, IOException {
 		count++;
-		if (count > maxCount)
+		if (count > maxCount) {
 			throw StopWalkException.INSTANCE;
+		}
 		return true;
 	}
 

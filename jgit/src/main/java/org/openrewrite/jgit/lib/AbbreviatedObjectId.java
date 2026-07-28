@@ -41,12 +41,14 @@ public final class AbbreviatedObjectId implements Serializable {
 	 *            the string to test.
 	 * @return true if the string can converted into an AbbreviatedObjectId.
 	 */
-	public static final boolean isId(String id) {
-		if (id.length() < 2 || Constants.OBJECT_ID_STRING_LENGTH < id.length())
+	public static boolean isId(String id) {
+		if (id.length() < 2 || Constants.OBJECT_ID_STRING_LENGTH < id.length()) {
 			return false;
+		}
 		try {
-			for (int i = 0; i < id.length(); i++)
+			for (int i = 0;i < id.length();i++) {
 				RawParseUtils.parseHexInt4((byte) id.charAt(i));
+			}
 			return true;
 		} catch (ArrayIndexOutOfBoundsException e) {
 			return false;
@@ -65,13 +67,14 @@ public final class AbbreviatedObjectId implements Serializable {
 	 *            the length of the string).
 	 * @return the converted object id.
 	 */
-	public static final AbbreviatedObjectId fromString(final byte[] buf,
+	public static AbbreviatedObjectId fromString(final byte[] buf,
 			final int offset, final int end) {
-		if (end - offset > Constants.OBJECT_ID_STRING_LENGTH)
+		if (end - offset > Constants.OBJECT_ID_STRING_LENGTH) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().invalidIdLength,
 					Integer.valueOf(end - offset),
 					Integer.valueOf(Constants.OBJECT_ID_STRING_LENGTH)));
+		}
 		return fromHexString(buf, offset, end);
 	}
 
@@ -86,7 +89,7 @@ public final class AbbreviatedObjectId implements Serializable {
 	 *            the {@link org.openrewrite.jgit.lib.ObjectId} to convert from.
 	 * @return the converted object id.
 	 */
-	public static final AbbreviatedObjectId fromObjectId(AnyObjectId id) {
+	public static AbbreviatedObjectId fromObjectId(AnyObjectId id) {
 		return new AbbreviatedObjectId(Constants.OBJECT_ID_STRING_LENGTH,
 				id.w1, id.w2, id.w3, id.w4, id.w5);
 	}
@@ -98,14 +101,15 @@ public final class AbbreviatedObjectId implements Serializable {
 	 *            the string to read from. Must be &lt;= 40 characters.
 	 * @return the converted object id.
 	 */
-	public static final AbbreviatedObjectId fromString(String str) {
-		if (str.length() > Constants.OBJECT_ID_STRING_LENGTH)
+	public static AbbreviatedObjectId fromString(String str) {
+		if (str.length() > Constants.OBJECT_ID_STRING_LENGTH) {
 			throw new IllegalArgumentException(MessageFormat.format(JGitText.get().invalidId, str));
+		}
 		final byte[] b = Constants.encodeASCII(str);
 		return fromHexString(b, 0, b.length);
 	}
 
-	private static final AbbreviatedObjectId fromHexString(final byte[] bs,
+	private static AbbreviatedObjectId fromHexString(final byte[] bs,
 			int ptr, final int end) {
 		try {
 			final int a = hexUInt32(bs, ptr, end);
@@ -122,11 +126,13 @@ public final class AbbreviatedObjectId implements Serializable {
 		}
 	}
 
-	private static final int hexUInt32(final byte[] bs, int p, final int end) {
-		if (8 <= end - p)
+	private static int hexUInt32(final byte[] bs, int p, final int end) {
+		if (8 <= end - p) {
 			return RawParseUtils.parseHexInt32(bs, p);
+		}
 
-		int r = 0, n = 0;
+		int r = 0;
+		int n = 0;
 		while (n < 8 && p < end) {
 			r <<= 4;
 			r |= RawParseUtils.parseHexInt4(bs[p++]);
@@ -218,20 +224,24 @@ public final class AbbreviatedObjectId implements Serializable {
 		int cmp;
 
 		cmp = NB.compareUInt32(w1, mask(1, other.w1));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w2, mask(2, other.w2));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w3, mask(3, other.w3));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w4, mask(4, other.w4));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		return NB.compareUInt32(w5, mask(5, other.w5));
 	}
@@ -254,20 +264,24 @@ public final class AbbreviatedObjectId implements Serializable {
 		int cmp;
 
 		cmp = NB.compareUInt32(w1, mask(1, NB.decodeInt32(bs, p)));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w2, mask(2, NB.decodeInt32(bs, p + 4)));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w3, mask(3, NB.decodeInt32(bs, p + 8)));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w4, mask(4, NB.decodeInt32(bs, p + 12)));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		return NB.compareUInt32(w5, mask(5, NB.decodeInt32(bs, p + 16)));
 	}
@@ -290,20 +304,24 @@ public final class AbbreviatedObjectId implements Serializable {
 		int cmp;
 
 		cmp = NB.compareUInt32(w1, mask(1, bs[p]));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w2, mask(2, bs[p + 1]));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w3, mask(3, bs[p + 2]));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		cmp = NB.compareUInt32(w4, mask(4, bs[p + 3]));
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 
 		return NB.compareUInt32(w5, mask(5, bs[p + 4]));
 	}
@@ -347,20 +365,24 @@ public final class AbbreviatedObjectId implements Serializable {
 		final char[] b = new char[Constants.OBJECT_ID_STRING_LENGTH];
 
 		AnyObjectId.formatHexChar(b, 0, w1);
-		if (nibbles <= 8)
+		if (nibbles <= 8) {
 			return new String(b, 0, nibbles);
+		}
 
 		AnyObjectId.formatHexChar(b, 8, w2);
-		if (nibbles <= 16)
+		if (nibbles <= 16) {
 			return new String(b, 0, nibbles);
+		}
 
 		AnyObjectId.formatHexChar(b, 16, w3);
-		if (nibbles <= 24)
+		if (nibbles <= 24) {
 			return new String(b, 0, nibbles);
+		}
 
 		AnyObjectId.formatHexChar(b, 24, w4);
-		if (nibbles <= 32)
+		if (nibbles <= 32) {
 			return new String(b, 0, nibbles);
+		}
 
 		AnyObjectId.formatHexChar(b, 32, w5);
 		return new String(b, 0, nibbles);

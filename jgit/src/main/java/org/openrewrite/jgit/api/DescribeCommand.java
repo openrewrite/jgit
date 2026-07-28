@@ -61,7 +61,7 @@ public class DescribeCommand extends GitCommand<String> {
 	 * This can only go up to the number of flags JGit can support in a walk,
 	 * which is 24.
 	 */
-	private int maxCandidates = 10;
+	private final int maxCandidates = 10;
 
 	/**
 	 * Whether to always use long output format or not.
@@ -71,7 +71,7 @@ public class DescribeCommand extends GitCommand<String> {
 	/**
 	 * Pattern matchers to be applied to tags under consideration.
 	 */
-	private List<FileNameMatcher> matchers = new ArrayList<>();
+	private final List<FileNameMatcher> matchers = new ArrayList<>();
 
 	/**
 	 * Whether to use all refs in the refs/ namespace
@@ -136,8 +136,9 @@ public class DescribeCommand extends GitCommand<String> {
 	public DescribeCommand setTarget(String rev) throws IOException,
 			RefNotFoundException {
 		ObjectId id = repo.resolve(rev);
-		if (id == null)
+		if (id == null) {
 			throw new RefNotFoundException(MessageFormat.format(JGitText.get().refNotResolved, rev));
+		}
 		return setTarget(id);
 	}
 
@@ -380,15 +381,17 @@ public class DescribeCommand extends GitCommand<String> {
 				// if the newly discovered commit isn't reachable from a tag that we've seen
 				// it counts toward the total depth.
 				for (Candidate cd : candidates) {
-					if (!cd.reaches(c))
+					if (!cd.reaches(c)) {
 						cd.depth++;
+					}
 				}
 
 				// if we have search going for enough tags, we will start
 				// closing down. JGit can only give us a finite number of bits,
 				// so we can't track all tags even if we wanted to.
-				if (candidates.size() >= maxCandidates)
+				if (candidates.size() >= maxCandidates) {
 					break;
+				}
 
 				// TODO: if all the commits in the queue of RevWalk has allFlags
 				// there's no point in continuing search as we'll not discover any more
@@ -401,12 +404,14 @@ public class DescribeCommand extends GitCommand<String> {
 			while ((c = w.next()) != null) {
 				if (c.hasAll(allFlags)) {
 					// no point in visiting further from here, so cut the search here
-					for (RevCommit p : c.getParents())
+					for (RevCommit p : c.getParents()) {
 						p.add(RevFlag.SEEN);
+					}
 				} else {
 					for (Candidate cd : candidates) {
-						if (!cd.reaches(c))
+						if (!cd.reaches(c)) {
 							cd.depth++;
+						}
 					}
 				}
 			}

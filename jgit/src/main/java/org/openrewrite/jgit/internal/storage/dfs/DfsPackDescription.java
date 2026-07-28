@@ -169,7 +169,7 @@ public class DfsPackDescription {
 			@NonNull PackSource packSource) {
 		this.repoDesc = repoDesc;
 		int dot = name.lastIndexOf('.');
-		this.packName = (dot < 0) ? name : name.substring(0, dot);
+		this.packName = dot < 0 ? name : name.substring(0, dot);
 		this.packSource = packSource;
 
 		int extCnt = PackExt.values().length;

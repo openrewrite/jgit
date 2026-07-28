@@ -41,7 +41,7 @@ public class ObjectId extends AnyObjectId implements Serializable {
 	 *
 	 * @return the all-null ObjectId, often used to stand-in for no object.
 	 */
-	public static final ObjectId zeroId() {
+	public static ObjectId zeroId() {
 		return ZEROID;
 	}
 
@@ -54,12 +54,13 @@ public class ObjectId extends AnyObjectId implements Serializable {
 	 *            the string to test.
 	 * @return true if the string can converted into an ObjectId.
 	 */
-	public static final boolean isId(@Nullable String id) {
+	public static boolean isId(@Nullable String id) {
 		if (id == null) {
 			return false;
 		}
-		if (id.length() != Constants.OBJECT_ID_STRING_LENGTH)
+		if (id.length() != Constants.OBJECT_ID_STRING_LENGTH) {
 			return false;
+		}
 		try {
 			for (int i = 0; i < Constants.OBJECT_ID_STRING_LENGTH; i++) {
 				RawParseUtils.parseHexInt4((byte) id.charAt(i));
@@ -77,7 +78,7 @@ public class ObjectId extends AnyObjectId implements Serializable {
 	 *            the id to convert. May be null.
 	 * @return the hex string conversion of this id's content.
 	 */
-	public static final String toString(ObjectId i) {
+	public static String toString(ObjectId i) {
 		return i != null ? i.name() : ZEROID_STR;
 	}
 
@@ -128,7 +129,7 @@ public class ObjectId extends AnyObjectId implements Serializable {
 	 *            available within this byte array.
 	 * @return the converted object id.
 	 */
-	public static final ObjectId fromRaw(byte[] bs) {
+	public static ObjectId fromRaw(byte[] bs) {
 		return fromRaw(bs, 0);
 	}
 
@@ -142,7 +143,7 @@ public class ObjectId extends AnyObjectId implements Serializable {
 	 *            position to read the first byte of data from.
 	 * @return the converted object id.
 	 */
-	public static final ObjectId fromRaw(byte[] bs, int p) {
+	public static ObjectId fromRaw(byte[] bs, int p) {
 		final int a = NB.decodeInt32(bs, p);
 		final int b = NB.decodeInt32(bs, p + 4);
 		final int c = NB.decodeInt32(bs, p + 8);
@@ -159,7 +160,7 @@ public class ObjectId extends AnyObjectId implements Serializable {
 	 *            be available within this int array.
 	 * @return the converted object id.
 	 */
-	public static final ObjectId fromRaw(int[] is) {
+	public static ObjectId fromRaw(int[] is) {
 		return fromRaw(is, 0);
 	}
 
@@ -173,7 +174,7 @@ public class ObjectId extends AnyObjectId implements Serializable {
 	 *            position to read the first integer of data from.
 	 * @return the converted object id.
 	 */
-	public static final ObjectId fromRaw(int[] is, int p) {
+	public static ObjectId fromRaw(int[] is, int p) {
 		return new ObjectId(is[p], is[p + 1], is[p + 2], is[p + 3], is[p + 4]);
 	}
 
@@ -187,7 +188,7 @@ public class ObjectId extends AnyObjectId implements Serializable {
 	 *            position to read the first character from.
 	 * @return the converted object id.
 	 */
-	public static final ObjectId fromString(byte[] buf, int offset) {
+	public static ObjectId fromString(byte[] buf, int offset) {
 		return fromHexString(buf, offset);
 	}
 
@@ -205,7 +206,7 @@ public class ObjectId extends AnyObjectId implements Serializable {
 		return fromHexString(Constants.encodeASCII(str), 0);
 	}
 
-	private static final ObjectId fromHexString(byte[] bs, int p) {
+	private static ObjectId fromHexString(byte[] bs, int p) {
 		try {
 			final int a = RawParseUtils.parseHexInt32(bs, p);
 			final int b = RawParseUtils.parseHexInt32(bs, p + 8);

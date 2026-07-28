@@ -90,7 +90,7 @@ public class RemoteRefUpdate {
 		/**
 		 * Remote ref was successfully updated.
 		 */
-		OK;
+		OK
 	}
 
 	private ObjectId expectedOldObjectId;
@@ -259,23 +259,27 @@ public class RemoteRefUpdate {
 			final ObjectId srcId, final String remoteName,
 			final boolean forceUpdate, final String localName,
 			final ObjectId expectedOldObjectId) throws IOException {
-		if (remoteName == null)
+		if (remoteName == null) {
 			throw new IllegalArgumentException(JGitText.get().remoteNameCannotBeNull);
-		if (srcId == null && srcRef != null)
+		}
+		if (srcId == null && srcRef != null) {
 			throw new IOException(MessageFormat.format(
 					JGitText.get().sourceRefDoesntResolveToAnyObject, srcRef));
+		}
 
-		if (srcRef != null)
+		if (srcRef != null) {
 			this.srcRef = srcRef;
-		else if (srcId != null && !srcId.equals(ObjectId.zeroId()))
+		} else if (srcId != null && !srcId.equals(ObjectId.zeroId())) {
 			this.srcRef = srcId.name();
-		else
+		} else {
 			this.srcRef = null;
+		}
 
-		if (srcId != null)
+		if (srcId != null) {
 			this.newObjectId = srcId;
-		else
+		} else {
 			this.newObjectId = ObjectId.zeroId();
+		}
 
 		this.remoteName = remoteName;
 		this.forceUpdate = forceUpdate;
@@ -292,8 +296,9 @@ public class RemoteRefUpdate {
 						? localUpdate.getOldObjectId()
 						: ObjectId.zeroId(),
 					newObjectId);
-		} else
+		} else {
 			trackingRefUpdate = null;
+		}
 		this.localDb = localDb;
 		this.expectedOldObjectId = expectedOldObjectId;
 		this.status = Status.NOT_ATTEMPTED;
@@ -319,8 +324,8 @@ public class RemoteRefUpdate {
 	public RemoteRefUpdate(final RemoteRefUpdate base,
 			final ObjectId newExpectedOldObjectId) throws IOException {
 		this(base.localDb, base.srcRef, base.remoteName, base.forceUpdate,
-				(base.trackingRefUpdate == null ? null : base.trackingRefUpdate
-						.getLocalName()), newExpectedOldObjectId);
+				base.trackingRefUpdate == null ? null : base.trackingRefUpdate
+						.getLocalName(), newExpectedOldObjectId);
 	}
 
 	/**
@@ -469,10 +474,11 @@ public class RemoteRefUpdate {
 	 *             when I/O error occurred during update
 	 */
 	protected void updateTrackingRef(RevWalk walk) throws IOException {
-		if (isDelete())
+		if (isDelete()) {
 			trackingRefUpdate.setResult(localUpdate.delete(walk));
-		else
+		} else {
 			trackingRefUpdate.setResult(localUpdate.update(walk));
+		}
 	}
 
 	/** {@inheritDoc} */

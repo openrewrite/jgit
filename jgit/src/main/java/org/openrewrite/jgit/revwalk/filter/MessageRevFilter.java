@@ -20,7 +20,7 @@ import org.openrewrite.jgit.util.RawParseUtils;
 /**
  * Matches only commits whose message matches the pattern.
  */
-public class MessageRevFilter {
+public final class MessageRevFilter {
 	/**
 	 * Create a message filter.
 	 * <p>
@@ -37,10 +37,12 @@ public class MessageRevFilter {
 	 *         message body of the commit.
 	 */
 	public static RevFilter create(String pattern) {
-		if (pattern.length() == 0)
+		if (pattern.length() == 0) {
 			throw new IllegalArgumentException(JGitText.get().cannotMatchOnEmptyString);
-		if (SubStringRevFilter.safe(pattern))
+		}
+		if (SubStringRevFilter.safe(pattern)) {
 			return new SubStringSearch(pattern);
+		}
 		return new PatternSearch(pattern);
 	}
 
@@ -51,8 +53,9 @@ public class MessageRevFilter {
 	static RawCharSequence textFor(RevCommit cmit) {
 		final byte[] raw = cmit.getRawBuffer();
 		final int b = RawParseUtils.commitMessage(raw, 0);
-		if (b < 0)
+		if (b < 0) {
 			return RawCharSequence.EMPTY;
+		}
 		return new RawCharSequence(raw, b, raw.length);
 	}
 

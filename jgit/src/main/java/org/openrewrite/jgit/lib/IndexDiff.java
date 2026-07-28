@@ -169,7 +169,7 @@ public class IndexDiff {
 
 		private final ProgressMonitor monitor;
 
-		private int count = 0;
+		private int count;
 
 		private int stepSize;
 
@@ -179,8 +179,9 @@ public class IndexDiff {
 			this.monitor = monitor;
 			this.total = total;
 			stepSize = total / 100;
-			if (stepSize == 0)
+			if (stepSize == 0) {
 				stepSize = 1000;
+			}
 		}
 
 		@Override
@@ -194,10 +195,12 @@ public class IndexDiff {
 				IncorrectObjectTypeException, IOException {
 			count++;
 			if (count % stepSize == 0) {
-				if (count <= total)
+				if (count <= total) {
 					monitor.update(stepSize);
-				if (monitor.isCancelled())
+				}
+				if (monitor.isCancelled()) {
 					throw StopWalkException.INSTANCE;
+				}
 			}
 			return true;
 		}
@@ -220,7 +223,7 @@ public class IndexDiff {
 
 	private final AnyObjectId tree;
 
-	private TreeFilter filter = null;
+	private TreeFilter filter;
 
 	private final WorkingTreeIterator initialWorkingTreeIterator;
 
@@ -250,7 +253,7 @@ public class IndexDiff {
 
 	private Map<String, IndexDiff> submoduleIndexDiffs = new HashMap<>();
 
-	private IgnoreSubmoduleMode ignoreSubmoduleMode = null;
+	private IgnoreSubmoduleMode ignoreSubmoduleMode;
 
 	private Map<FileMode, Set<String>> fileModes = new HashMap<>();
 
@@ -447,10 +450,11 @@ public class IndexDiff {
 			treeWalk.setOperationType(OperationType.CHECKIN_OP);
 			treeWalk.setRecursive(true);
 			// add the trees (tree, dirchache, workdir)
-			if (tree != null)
+			if (tree != null) {
 				treeWalk.addTree(tree);
-			else
+			} else {
 				treeWalk.addTree(new EmptyTreeIterator());
+			}
 			treeWalk.addTree(new DirCacheIterator(dirCache));
 			treeWalk.addTree(initialWorkingTreeIterator);
 			initialWorkingTreeIterator.setDirCacheIterator(treeWalk, 1);
@@ -459,16 +463,18 @@ public class IndexDiff {
 			if (monitor != null) {
 				// Get the maximum size of the work tree and index
 				// and add some (quite arbitrary)
-				if (estIndexSize == 0)
+				if (estIndexSize == 0) {
 					estIndexSize = dirCache.getEntryCount();
+				}
 				int total = Math.max(estIndexSize * 10 / 9,
 						estWorkTreeSize * 10 / 9);
 				monitor.beginTask(title, total);
 				filters.add(new ProgressReportingFilter(monitor, total));
 			}
 
-			if (filter != null)
+			if (filter != null) {
 				filters.add(filter);
+			}
 			filters.add(new SkipWorkTreeFilter(INDEX));
 			indexDiffFilter = new IndexDiffFilter(INDEX, WORKDIR);
 			filters.add(indexDiffFilter);
@@ -504,23 +510,27 @@ public class IndexDiff {
 							// in repo, in index, content diff => changed
 							if (!isEntryGitLink(treeIterator)
 									|| !isEntryGitLink(dirCacheIterator)
-									|| ignoreSubmoduleMode != IgnoreSubmoduleMode.ALL)
+									|| ignoreSubmoduleMode != IgnoreSubmoduleMode.ALL) {
 								changed.add(treeWalk.getPathString());
+							}
 						}
 					} else {
 						// in repo, not in index => removed
 						if (!isEntryGitLink(treeIterator)
-								|| ignoreSubmoduleMode != IgnoreSubmoduleMode.ALL)
+								|| ignoreSubmoduleMode != IgnoreSubmoduleMode.ALL) {
 							removed.add(treeWalk.getPathString());
-						if (workingTreeIterator != null)
+						}
+						if (workingTreeIterator != null) {
 							untracked.add(treeWalk.getPathString());
+						}
 					}
 				} else {
 					if (dirCacheIterator != null) {
 						// not in repo, in index => added
 						if (!isEntryGitLink(dirCacheIterator)
-								|| ignoreSubmoduleMode != IgnoreSubmoduleMode.ALL)
+								|| ignoreSubmoduleMode != IgnoreSubmoduleMode.ALL) {
 							added.add(treeWalk.getPathString());
+						}
 					} else {
 						// not in repo, not in index => untracked
 						if (workingTreeIterator != null
@@ -550,8 +560,9 @@ public class IndexDiff {
 							if (!isEntryGitLink(dirCacheIterator)
 									|| !isEntryGitLink(workingTreeIterator)
 									|| (ignoreSubmoduleMode != IgnoreSubmoduleMode.ALL
-											&& ignoreSubmoduleMode != IgnoreSubmoduleMode.DIRTY))
+									&& ignoreSubmoduleMode != IgnoreSubmoduleMode.DIRTY)) {
 								modified.add(treeWalk.getPathString());
+							}
 						}
 					}
 				}
@@ -572,11 +583,13 @@ public class IndexDiff {
 				while (smw.next()) {
 					IgnoreSubmoduleMode localIgnoreSubmoduleMode = ignoreSubmoduleMode;
 					try {
-						if (localIgnoreSubmoduleMode == null)
+						if (localIgnoreSubmoduleMode == null) {
 							localIgnoreSubmoduleMode = smw.getModulesIgnore();
+						}
 						if (IgnoreSubmoduleMode.ALL
-								.equals(localIgnoreSubmoduleMode))
+								.equals(localIgnoreSubmoduleMode)) {
 							continue;
+						}
 					} catch (ConfigInvalidException e) {
 						throw new IOException(MessageFormat.format(
 								JGitText.get().invalidIgnoreParamSubmodule,
@@ -643,12 +656,9 @@ public class IndexDiff {
 		}
 
 		ignored = indexDiffFilter.getIgnoredPaths();
-		if (added.isEmpty() && changed.isEmpty() && removed.isEmpty()
+		return !(added.isEmpty() && changed.isEmpty() && removed.isEmpty()
 				&& missing.isEmpty() && modified.isEmpty()
-				&& untracked.isEmpty()) {
-			return false;
-		}
-		return true;
+				&& untracked.isEmpty());
 	}
 
 	private boolean hasFiles(File directory) {
@@ -672,8 +682,8 @@ public class IndexDiff {
 	}
 
 	private boolean isEntryGitLink(AbstractTreeIterator ti) {
-		return ((ti != null) && (ti.getEntryRawMode() == FileMode.GITLINK
-				.getBits()));
+		return (ti != null) && (ti.getEntryRawMode() == FileMode.GITLINK
+				.getBits());
 	}
 
 	private void addConflict(String path, int stage) {
@@ -787,9 +797,11 @@ public class IndexDiff {
 	public Set<String> getAssumeUnchanged() {
 		if (assumeUnchanged == null) {
 			HashSet<String> unchanged = new HashSet<>();
-			for (int i = 0; i < dirCache.getEntryCount(); i++)
-				if (dirCache.getEntry(i).isAssumeValid())
+			for (int i = 0;i < dirCache.getEntryCount();i++) {
+				if (dirCache.getEntry(i).isAssumeValid()) {
 					unchanged.add(dirCache.getEntry(i).getPathString());
+				}
+			}
 			assumeUnchanged = unchanged;
 		}
 		return assumeUnchanged;
@@ -801,8 +813,8 @@ public class IndexDiff {
 	 * @return list of folders containing only untracked files/folders
 	 */
 	public Set<String> getUntrackedFolders() {
-		return ((indexDiffFilter == null) ? Collections.<String> emptySet()
-				: new HashSet<>(indexDiffFilter.getUntrackedFolders()));
+		return indexDiffFilter == null ? Collections.<String> emptySet()
+				: new HashSet<>(indexDiffFilter.getUntrackedFolders());
 	}
 
 	/**
@@ -827,8 +839,9 @@ public class IndexDiff {
 	 */
 	public Set<String> getPathsWithIndexMode(FileMode mode) {
 		Set<String> paths = fileModes.get(mode);
-		if (paths == null)
+		if (paths == null) {
 			paths = new HashSet<>();
+		}
 		return paths;
 	}
 }

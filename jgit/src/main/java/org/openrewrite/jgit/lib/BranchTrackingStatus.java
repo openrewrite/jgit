@@ -21,7 +21,7 @@ import org.openrewrite.jgit.revwalk.filter.RevFilter;
 /**
  * Status of a branch's relation to its remote-tracking branch.
  */
-public class BranchTrackingStatus {
+public final class BranchTrackingStatus {
 
 	/**
 	 * Compute the tracking status for the <code>branchName</code> in
@@ -43,16 +43,19 @@ public class BranchTrackingStatus {
 				shortBranchName);
 
 		String trackingBranch = branchConfig.getTrackingBranch();
-		if (trackingBranch == null)
+		if (trackingBranch == null) {
 			return null;
+		}
 
 		Ref tracking = repository.exactRef(trackingBranch);
-		if (tracking == null)
+		if (tracking == null) {
 			return null;
+		}
 
 		Ref local = repository.exactRef(fullBranchName);
-		if (local == null)
+		if (local == null) {
 			return null;
+		}
 
 		try (RevWalk walk = new RevWalk(repository)) {
 

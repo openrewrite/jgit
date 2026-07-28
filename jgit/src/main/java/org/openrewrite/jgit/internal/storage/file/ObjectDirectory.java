@@ -11,9 +11,9 @@
 package org.openrewrite.jgit.internal.storage.file;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
 import static org.openrewrite.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
 import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -131,8 +131,9 @@ public class ObjectDirectory extends FileObjectDatabase {
 			AlternateHandle[] alt;
 
 			alt = new AlternateHandle[alternatePaths.length];
-			for (int i = 0; i < alternatePaths.length; i++)
+			for (int i = 0;i < alternatePaths.length;i++) {
 				alt[i] = openAlternate(alternatePaths[i]);
+			}
 			alternates.set(alt);
 		}
 	}
@@ -201,8 +202,9 @@ public class ObjectDirectory extends FileObjectDatabase {
 		// Fully close all loaded alternates and clear the alternate list.
 		AlternateHandle[] alt = alternates.get();
 		if (alt != null && alternates.compareAndSet(alt, null)) {
-			for(AlternateHandle od : alt)
+			for (AlternateHandle od : alt) {
 				od.close();
+			}
 		}
 	}
 
@@ -307,11 +309,13 @@ public class ObjectDirectory extends FileObjectDatabase {
 	private void resolve(Set<ObjectId> matches, AbbreviatedObjectId id,
 			Set<AlternateHandle.Id> skips)
 			throws IOException {
-		if (!packed.resolve(matches, id, RESOLVE_ABBREV_LIMIT))
+		if (!packed.resolve(matches, id, RESOLVE_ABBREV_LIMIT)) {
 			return;
+		}
 
-		if (!loose.resolve(matches, id, RESOLVE_ABBREV_LIMIT))
+		if (!loose.resolve(matches, id, RESOLVE_ABBREV_LIMIT)) {
 			return;
+		}
 
 		skips = addMe(skips);
 		for (AlternateHandle alt : myAlternates()) {
@@ -547,8 +551,9 @@ public class ObjectDirectory extends FileObjectDatabase {
 
 	@Override
 	Set<ObjectId> getShallowCommits() throws IOException {
-		if (shallowFile == null || !shallowFile.isFile())
+		if (shallowFile == null || !shallowFile.isFile()) {
 			return Collections.emptySet();
+		}
 
 		if (shallowFileSnapshot == null
 				|| shallowFileSnapshot.isModified(shallowFile)) {

@@ -120,7 +120,7 @@ public final class AwsRequestSignerV4 {
 		// add the 'host' header
 		URL endpointUrl = httpURLConnection.getURL();
 		int port = endpointUrl.getPort();
-		String hostHeader = (port > -1)
+		String hostHeader = port > -1
 				? endpointUrl.getHost().concat(":" + port) //$NON-NLS-1$
 				: endpointUrl.getHost();
 		headers.put("Host", hostHeader); //$NON-NLS-1$
@@ -181,7 +181,7 @@ public final class AwsRequestSignerV4 {
 	 * @return Hex-encoded SHA-256 hash of the provided byte array.
 	 */
 	public static String calculateBodyHash(final byte[] data) {
-		return (data == null || data.length < 1) ? EMPTY_BODY_SHA256
+		return data == null || data.length < 1 ? EMPTY_BODY_SHA256
 				: Hex.toHexString(hash(data));
 	}
 

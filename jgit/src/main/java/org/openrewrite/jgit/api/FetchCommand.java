@@ -54,7 +54,7 @@ import org.openrewrite.jgit.transport.Transport;
 public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 	private String remote = Constants.DEFAULT_REMOTE_NAME;
 
-	private List<RefSpec> refSpecs;
+	private final List<RefSpec> refSpecs;
 
 	private ProgressMonitor monitor = NullProgressMonitor.INSTANCE;
 
@@ -68,7 +68,7 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 
 	private TagOpt tagOption;
 
-	private FetchRecurseSubmodulesMode submoduleRecurseMode = null;
+	private FetchRecurseSubmodulesMode submoduleRecurseMode;
 
 	private Callback callback;
 
@@ -206,8 +206,9 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 			transport.setCheckFetchedObjects(checkFetchedObjects);
 			transport.setRemoveDeletedRefs(isRemoveDeletedRefs());
 			transport.setDryRun(dryRun);
-			if (tagOption != null)
+			if (tagOption != null) {
 				transport.setTagOpt(tagOption);
+			}
 			transport.setFetchThin(thin);
 			configure(transport);
 			FetchResult result = transport.fetch(monitor,
@@ -337,9 +338,8 @@ public class FetchCommand extends TransportCommand<FetchCommand, FetchResult> {
 		StoredConfig config = repo.getConfig();
 		result = config.getBoolean(ConfigConstants.CONFIG_FETCH_SECTION, null,
 				ConfigConstants.CONFIG_KEY_PRUNE, result);
-		result = config.getBoolean(ConfigConstants.CONFIG_REMOTE_SECTION,
+		return config.getBoolean(ConfigConstants.CONFIG_REMOTE_SECTION,
 				remote, ConfigConstants.CONFIG_KEY_PRUNE, result);
-		return result;
 	}
 
 	/**

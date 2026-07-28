@@ -79,7 +79,7 @@ public class FileHeader extends DiffEntry {
 		BINARY,
 
 		/** A Git binary patch, holding pre and post image deltas */
-		GIT_BINARY;
+		GIT_BINARY
 	}
 
 	/** Buffer holding the patch data for this file. */
@@ -212,10 +212,11 @@ public class FileHeader extends DiffEntry {
 			return extractBinaryString(buf, startOffset, endOffset);
 		}
 
-		if (charsetGuess != null && charsetGuess.length != getParentCount() + 1)
+		if (charsetGuess != null && charsetGuess.length != getParentCount() + 1) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().expectedCharacterEncodingGuesses,
 					Integer.valueOf(getParentCount() + 1)));
+		}
 
 		if (trySimpleConversion(charsetGuess)) {
 			Charset cs = charsetGuess != null ? charsetGuess[0] : null;
@@ -244,17 +245,20 @@ public class FileHeader extends DiffEntry {
 
 		final String[] files = extractFileLines(charsetGuess);
 		final int[] offsets = new int[files.length];
-		for (HunkHeader h : getHunks())
+		for (HunkHeader h : getHunks()) {
 			h.extractFileLines(r, files, offsets);
+		}
 		return r.toString();
 	}
 
 	private static boolean trySimpleConversion(Charset[] charsetGuess) {
-		if (charsetGuess == null)
+		if (charsetGuess == null) {
 			return true;
+		}
 		for (int i = 1; i < charsetGuess.length; i++) {
-			if (charsetGuess[i] != charsetGuess[0])
+			if (charsetGuess[i] != charsetGuess[0]) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -262,10 +266,12 @@ public class FileHeader extends DiffEntry {
 	private String[] extractFileLines(Charset[] csGuess) {
 		final TemporaryBuffer[] tmp = new TemporaryBuffer[getParentCount() + 1];
 		try {
-			for (int i = 0; i < tmp.length; i++)
+			for (int i = 0;i < tmp.length;i++) {
 				tmp[i] = new TemporaryBuffer.Heap(Integer.MAX_VALUE);
-			for (HunkHeader h : getHunks())
+			}
+			for (HunkHeader h : getHunks()) {
 				h.extractFileLines(tmp);
+			}
 
 			final String[] r = new String[tmp.length];
 			for (int i = 0; i < tmp.length; i++) {
@@ -305,16 +311,19 @@ public class FileHeader extends DiffEntry {
 	 * @return hunks altering this file; in order of appearance in patch.
 	 */
 	public List<? extends HunkHeader> getHunks() {
-		if (hunks == null)
+		if (hunks == null) {
 			return Collections.emptyList();
+		}
 		return hunks;
 	}
 
 	void addHunk(HunkHeader h) {
-		if (h.getFileHeader() != this)
+		if (h.getFileHeader() != this) {
 			throw new IllegalArgumentException(JGitText.get().hunkBelongsToAnotherFile);
-		if (hunks == null)
+		}
+		if (hunks == null) {
 			hunks = new ArrayList<>();
+		}
 		hunks.add(h);
 	}
 
@@ -351,8 +360,9 @@ public class FileHeader extends DiffEntry {
 	 */
 	public EditList toEditList() {
 		final EditList r = new EditList();
-		for (HunkHeader hunk : hunks)
+		for (HunkHeader hunk : hunks) {
 			r.addAll(hunk.toEditList());
+		}
 		return r;
 	}
 
@@ -380,8 +390,9 @@ public class FileHeader extends DiffEntry {
 		//
 
 		final int aStart = nextLF(buf, ptr, '/');
-		if (aStart >= eol)
+		if (aStart >= eol) {
 			return eol;
+		}
 
 		while (ptr < eol) {
 			final int sp = nextLF(buf, ptr, ' ');
@@ -392,8 +403,9 @@ public class FileHeader extends DiffEntry {
 				return eol;
 			}
 			final int bStart = nextLF(buf, sp, '/');
-			if (bStart >= eol)
+			if (bStart >= eol) {
 				return eol;
+			}
 
 			// If buffer[aStart..sp - 1] = buffer[bStart..eol - 1]
 			// we have a valid split.
@@ -497,14 +509,16 @@ public class FileHeader extends DiffEntry {
 
 	void parseOldName(int ptr, int eol) {
 		oldPath = p1(parseName(oldPath, ptr + OLD_NAME.length, eol));
-		if (oldPath == DEV_NULL)
+		if (oldPath == DEV_NULL) {
 			changeType = ChangeType.ADD;
+		}
 	}
 
 	void parseNewName(int ptr, int eol) {
 		newPath = p1(parseName(newPath, ptr + NEW_NAME.length, eol));
-		if (newPath == DEV_NULL)
+		if (newPath == DEV_NULL) {
 			changeType = ChangeType.DELETE;
+		}
 	}
 
 	void parseNewFileMode(int ptr, int eol) {
@@ -537,8 +551,9 @@ public class FileHeader extends DiffEntry {
 	}
 
 	private String parseName(String expect, int ptr, int end) {
-		if (ptr == end)
+		if (ptr == end) {
 			return expect;
+		}
 
 		String r;
 		if (buf[ptr] == '"') {
@@ -549,18 +564,21 @@ public class FileHeader extends DiffEntry {
 			// Older style GNU diff format, an optional tab ends the name.
 			//
 			int tab = end;
-			while (ptr < tab && buf[tab - 1] != '\t')
+			while (ptr < tab && buf[tab - 1] != '\t') {
 				tab--;
-			if (ptr == tab)
+			}
+			if (ptr == tab) {
 				tab = end;
+			}
 			r = decode(UTF_8, buf, ptr, tab - 1);
 		}
 
 		if (r.endsWith("\r")) {
 			r = r.substring(0, r.length() - 1);
 		}
-		if (r.equals(DEV_NULL))
+		if (DEV_NULL.equals(r)) {
 			r = DEV_NULL;
+		}
 		return r;
 	}
 
@@ -588,8 +606,9 @@ public class FileHeader extends DiffEntry {
 		oldId = AbbreviatedObjectId.fromString(buf, ptr, dot2 - 1);
 		newId = AbbreviatedObjectId.fromString(buf, dot2 + 1, mode - 1);
 
-		if (mode < end)
+		if (mode < end) {
 			newMode = oldMode = parseFileMode(mode, end);
+		}
 	}
 
 	private boolean eq(int aPtr, int aEnd, int bPtr, int bEnd) {
@@ -597,8 +616,9 @@ public class FileHeader extends DiffEntry {
 			return false;
 		}
 		while (aPtr < aEnd) {
-			if (buf[aPtr++] != buf[bPtr++])
+			if (buf[aPtr++] != buf[bPtr++]) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -622,14 +642,18 @@ public class FileHeader extends DiffEntry {
 	 */
 	static int isHunkHdr(byte[] buf, int start, int end) {
 		int ptr = start;
-		while (ptr < end && buf[ptr] == '@')
+		while (ptr < end && buf[ptr] == '@') {
 			ptr++;
-		if (ptr - start < 2)
+		}
+		if (ptr - start < 2) {
 			return 0;
-		if (ptr == end || buf[ptr++] != ' ')
+		}
+		if (ptr == end || buf[ptr++] != ' ') {
 			return 0;
-		if (ptr == end || buf[ptr++] != '-')
+		}
+		if (ptr == end || buf[ptr++] != '-') {
 			return 0;
+		}
 		return (ptr - 3) - start;
 	}
 }

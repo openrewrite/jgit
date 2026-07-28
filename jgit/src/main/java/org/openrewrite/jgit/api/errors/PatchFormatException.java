@@ -23,7 +23,7 @@ import org.openrewrite.jgit.patch.FormatError;
 public class PatchFormatException extends GitAPIException {
 	private static final long serialVersionUID = 1L;
 
-	private List<FormatError> errors;
+	private final List<FormatError> errors;
 
 	/**
 	 * Constructor for PatchFormatException

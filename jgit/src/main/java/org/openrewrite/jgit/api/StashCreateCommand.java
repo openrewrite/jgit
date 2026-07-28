@@ -170,8 +170,9 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 	private CommitBuilder createBuilder() {
 		CommitBuilder builder = new CommitBuilder();
 		PersonIdent author = person;
-		if (author == null)
+		if (author == null) {
 			author = new PersonIdent(repo);
+		}
 		builder.setAuthor(author);
 		builder.setCommitter(author);
 		return builder;
@@ -179,26 +180,29 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 
 	private void updateStashRef(ObjectId commitId, PersonIdent refLogIdent,
 			String refLogMessage) throws IOException {
-		if (ref == null)
+		if (ref == null) {
 			return;
+		}
 		Ref currentRef = repo.findRef(ref);
 		RefUpdate refUpdate = repo.updateRef(ref);
 		refUpdate.setNewObjectId(commitId);
 		refUpdate.setRefLogIdent(refLogIdent);
 		refUpdate.setRefLogMessage(refLogMessage, false);
 		refUpdate.setForceRefLog(true);
-		if (currentRef != null)
+		if (currentRef != null) {
 			refUpdate.setExpectedOldObjectId(currentRef.getObjectId());
-		else
+		} else {
 			refUpdate.setExpectedOldObjectId(ObjectId.zeroId());
+		}
 		refUpdate.forceUpdate();
 	}
 
 	private Ref getHead() throws GitAPIException {
 		try {
 			Ref head = repo.exactRef(Constants.HEAD);
-			if (head == null || head.getObjectId() == null)
+			if (head == null || head.getObjectId() == null) {
 				throw new NoHeadException(JGitText.get().headRequiredToStash);
+			}
 			return head;
 		} catch (IOException e) {
 			throw new JGitInternalException(JGitText.get().stashFailed, e);
@@ -234,8 +238,9 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 						1), new IndexDiffFilter(1, 2)));
 
 				// Return null if no local changes to stash
-				if (!treeWalk.next())
+				if (!treeWalk.next()) {
 					return null;
+				}
 
 				MutableObjectId id = new MutableObjectId();
 				List<PathEdit> wtEdits = new ArrayList<>();
@@ -250,19 +255,23 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 					WorkingTreeIterator wtIter = treeWalk.getTree(2,
 							WorkingTreeIterator.class);
 					if (indexIter != null
-							&& !indexIter.getDirCacheEntry().isMerged())
+							&& !indexIter.getDirCacheEntry().isMerged()) {
 						throw new UnmergedPathsException(
 								new UnmergedPathException(
 										indexIter.getDirCacheEntry()));
+					}
 					if (wtIter != null) {
 						if (indexIter == null && headIter == null
-								&& !includeUntracked)
+								&& !includeUntracked) {
 							continue;
+						}
 						hasChanges = true;
-						if (indexIter != null && wtIter.idEqual(indexIter))
+						if (indexIter != null && wtIter.idEqual(indexIter)) {
 							continue;
-						if (headIter != null && wtIter.idEqual(headIter))
+						}
+						if (headIter != null && wtIter.idEqual(headIter)) {
 							continue;
+						}
 						treeWalk.getObjectId(id, 0);
 						final DirCacheEntry entry = new DirCacheEntry(
 								treeWalk.getRawPath());
@@ -276,23 +285,26 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 									Constants.OBJ_BLOB, contentLength, in));
 						}
 
-						if (indexIter == null && headIter == null)
+						if (indexIter == null && headIter == null) {
 							untracked.add(entry);
-						else
+						} else {
 							wtEdits.add(new PathEdit(entry) {
 								@Override
 								public void apply(DirCacheEntry ent) {
 									ent.copyMetaData(entry);
 								}
 							});
+						}
 					}
 					hasChanges = true;
-					if (wtIter == null && headIter != null)
+					if (wtIter == null && headIter != null) {
 						wtDeletes.add(treeWalk.getPathString());
+					}
 				} while (treeWalk.next());
 
-				if (!hasChanges)
+				if (!hasChanges) {
 					return null;
+				}
 
 				String branch = Repository.shortenRefName(head.getTarget()
 						.getName());
@@ -312,8 +324,9 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 					DirCache untrackedDirCache = DirCache.newInCore();
 					DirCacheBuilder untrackedBuilder = untrackedDirCache
 							.builder();
-					for (DirCacheEntry entry : untracked)
+					for (DirCacheEntry entry : untracked) {
 						untrackedBuilder.add(entry);
+					}
 					untrackedBuilder.finish();
 
 					builder.setParentIds(new ObjectId[0]);
@@ -327,16 +340,19 @@ public class StashCreateCommand extends GitCommand<RevCommit> {
 				// Commit working tree changes
 				if (!wtEdits.isEmpty() || !wtDeletes.isEmpty()) {
 					DirCacheEditor editor = cache.editor();
-					for (PathEdit edit : wtEdits)
+					for (PathEdit edit : wtEdits) {
 						editor.add(edit);
-					for (String path : wtDeletes)
+					}
+					for (String path : wtDeletes) {
 						editor.add(new DeletePath(path));
+					}
 					editor.finish();
 				}
 				builder.setParentId(headCommit);
 				builder.addParentId(indexCommit);
-				if (untrackedCommit != null)
+				if (untrackedCommit != null) {
 					builder.addParentId(untrackedCommit);
+				}
 				builder.setMessage(MessageFormat.format(
 						workingDirectoryMessage, branch,
 						headCommit.abbreviate(7).name(),

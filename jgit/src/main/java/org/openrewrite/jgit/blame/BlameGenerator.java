@@ -152,16 +152,19 @@ public class BlameGenerator implements AutoCloseable {
 	}
 
 	private void initRevPool(boolean reverse) {
-		if (queue != null)
+		if (queue != null) {
 			throw new IllegalStateException();
+		}
 
-		if (revPool != null)
+		if (revPool != null) {
 			revPool.close();
+		}
 
-		if (reverse)
+		if (reverse) {
 			revPool = new ReverseWalk(getRepository());
-		else
+		} else {
 			revPool = new RevWalk(getRepository());
+		}
 
 		SEEN = revPool.newFlag("SEEN"); //$NON-NLS-1$
 		reader = revPool.getObjectReader();
@@ -224,10 +227,11 @@ public class BlameGenerator implements AutoCloseable {
 	 * @return {@code this}
 	 */
 	public BlameGenerator setFollowFileRenames(boolean follow) {
-		if (follow)
+		if (follow) {
 			renameDetector = new RenameDetector(getRepository());
-		else
+		} else {
 			renameDetector = null;
+		}
 		return this;
 	}
 
@@ -282,8 +286,9 @@ public class BlameGenerator implements AutoCloseable {
 	 */
 	public BlameGenerator push(String description, RawText contents)
 			throws IOException {
-		if (description == null)
+		if (description == null) {
 			description = JGitText.get().blameNotCommittedYet;
+		}
 		BlobCandidate c = new BlobCandidate(getRepository(), description,
 				resultPath);
 		c.sourceText = contents;
@@ -414,8 +419,9 @@ public class BlameGenerator implements AutoCloseable {
 			throws IOException {
 		ObjectLoader ldr = reader.open(id);
 		if (ldr.getType() == OBJ_BLOB) {
-			if (description == null)
+			if (description == null) {
 				description = JGitText.get().blameNotCommittedYet;
+			}
 			BlobCandidate c = new BlobCandidate(getRepository(), description,
 					resultPath);
 			c.sourceBlob = id.toObjectId();
@@ -427,8 +433,9 @@ public class BlameGenerator implements AutoCloseable {
 		}
 
 		RevCommit commit = revPool.parseCommit(id);
-		if (!find(commit, resultPath))
+		if (!find(commit, resultPath)) {
 			return this;
+		}
 
 		Candidate c = new Candidate(getRepository(), commit, resultPath);
 		c.sourceBlob = idBuf.toObjectId();
@@ -503,12 +510,14 @@ public class BlameGenerator implements AutoCloseable {
 		initRevPool(true);
 
 		ReverseCommit result = (ReverseCommit) revPool.parseCommit(start);
-		if (!find(result, resultPath))
+		if (!find(result, resultPath)) {
 			return this;
+		}
 
 		revPool.markUninteresting(result);
-		for (ObjectId id : end)
+		for (ObjectId id : end) {
 			revPool.markStart(revPool.parseCommit(id));
+		}
 
 		while (revPool.next() != null) {
 			// just pump the queue
@@ -546,8 +555,9 @@ public class BlameGenerator implements AutoCloseable {
 	public BlameResult computeBlameResult() throws IOException {
 		try {
 			BlameResult r = BlameResult.create(this);
-			if (r != null)
+			if (r != null) {
 				r.computeAll();
+			}
 			return r;
 		} finally {
 			close();
@@ -574,8 +584,9 @@ public class BlameGenerator implements AutoCloseable {
 				return true;
 			}
 
-			if (outCandidate.queueNext != null)
+			if (outCandidate.queueNext != null) {
 				return result(outCandidate.queueNext);
+			}
 
 			outCandidate = null;
 			outRegion = null;
@@ -583,22 +594,26 @@ public class BlameGenerator implements AutoCloseable {
 
 		// If there are no lines remaining, the entire result is done,
 		// even if there are revisions still available for the path.
-		if (remaining == 0)
+		if (remaining == 0) {
 			return done();
+		}
 
 		for (;;) {
 			Candidate n = pop();
-			if (n == null)
+			if (n == null) {
 				return done();
+			}
 
 			int pCnt = n.getParentCount();
 			if (pCnt == 1) {
-				if (processOne(n))
+				if (processOne(n)) {
 					return true;
+				}
 
 			} else if (1 < pCnt) {
-				if (processMerge(n))
+				if (processMerge(n)) {
 					return true;
+				}
 
 			} else if (n instanceof ReverseCandidate) {
 				// Do not generate a tip of a reverse. The region
@@ -696,22 +711,26 @@ public class BlameGenerator implements AutoCloseable {
 
 	private boolean processOne(Candidate n) throws IOException {
 		RevCommit parent = n.getParent(0);
-		if (parent == null)
+		if (parent == null) {
 			return split(n.getNextCandidate(0), n);
+		}
 		revPool.parseHeaders(parent);
 
 		if (find(parent, n.sourcePath)) {
-			if (idBuf.equals(n.sourceBlob))
+			if (idBuf.equals(n.sourceBlob)) {
 				return blameEntireRegionOnParent(n, parent);
+			}
 			return splitBlameWithParent(n, parent);
 		}
 
-		if (n.sourceCommit == null)
+		if (n.sourceCommit == null) {
 			return result(n);
+		}
 
 		DiffEntry r = findRename(parent, n.sourceCommit, n.sourcePath);
-		if (r == null)
+		if (r == null) {
 			return result(n);
+		}
 
 		if (0 == r.getOldId().prefixCompare(n.sourceBlob)) {
 			// A 100% rename without any content change can also
@@ -759,11 +778,13 @@ public class BlameGenerator implements AutoCloseable {
 		}
 
 		parent.takeBlame(editList, source);
-		if (parent.regionList != null)
+		if (parent.regionList != null) {
 			push(parent);
+		}
 		if (source.regionList != null) {
-			if (source instanceof ReverseCandidate)
+			if (source instanceof ReverseCandidate) {
 				return reverseResult(parent, source);
+			}
 			return result(source);
 		}
 		return false;
@@ -778,12 +799,15 @@ public class BlameGenerator implements AutoCloseable {
 		for (int pIdx = 0; pIdx < pCnt; pIdx++) {
 			RevCommit parent = n.getParent(pIdx);
 			revPool.parseHeaders(parent);
-			if (!find(parent, n.sourcePath))
+			if (!find(parent, n.sourcePath)) {
 				continue;
-			if (!(n instanceof ReverseCandidate) && idBuf.equals(n.sourceBlob))
+			}
+			if (!(n instanceof ReverseCandidate) && idBuf.equals(n.sourceBlob)) {
 				return blameEntireRegionOnParent(n, parent);
-			if (ids == null)
+			}
+			if (ids == null) {
 				ids = new ObjectId[pCnt];
+			}
 			ids[pIdx] = idBuf.toObjectId();
 		}
 
@@ -793,16 +817,19 @@ public class BlameGenerator implements AutoCloseable {
 			renames = new DiffEntry[pCnt];
 			for (int pIdx = 0; pIdx < pCnt; pIdx++) {
 				RevCommit parent = n.getParent(pIdx);
-				if (ids != null && ids[pIdx] != null)
+				if (ids != null && ids[pIdx] != null) {
 					continue;
+				}
 
 				DiffEntry r = findRename(parent, n.sourceCommit, n.sourcePath);
-				if (r == null)
+				if (r == null) {
 					continue;
+				}
 
 				if (n instanceof ReverseCandidate) {
-					if (ids == null)
+					if (ids == null) {
 						ids = new ObjectId[pCnt];
+					}
 					ids[pCnt] = r.getOldId().toObjectId();
 				} else if (0 == r.getOldId().prefixCompare(n.sourceBlob)) {
 					// A 100% rename without any content change can also
@@ -891,8 +918,9 @@ public class BlameGenerator implements AutoCloseable {
 
 			for (int pIdx = 0; pIdx < pCnt; pIdx++) {
 				Candidate p = parents[pIdx];
-				if (p == null)
+				if (p == null) {
 					continue;
+				}
 
 				if (p.regionList != null) {
 					Candidate r = p.copy(p.sourceCommit);
@@ -911,19 +939,22 @@ public class BlameGenerator implements AutoCloseable {
 				}
 			}
 
-			if (resultHead != null)
+			if (resultHead != null) {
 				return result(resultHead);
+			}
 			return false;
 		}
 
 		// Push any parents that are still candidates.
 		for (int pIdx = 0; pIdx < pCnt; pIdx++) {
-			if (parents[pIdx] != null)
+			if (parents[pIdx] != null) {
 				push(parents[pIdx]);
+			}
 		}
 
-		if (n.regionList != null)
+		if (n.regionList != null) {
 			return result(n);
+		}
 		return false;
 	}
 
@@ -1098,22 +1129,24 @@ public class BlameGenerator implements AutoCloseable {
 		return false;
 	}
 
-	private static final boolean isFile(int rawMode) {
+	private static boolean isFile(int rawMode) {
 		return (rawMode & TYPE_MASK) == TYPE_FILE;
 	}
 
 	private DiffEntry findRename(RevCommit parent, RevCommit commit,
 			PathFilter path) throws IOException {
-		if (renameDetector == null)
+		if (renameDetector == null) {
 			return null;
+		}
 
 		treeWalk.setFilter(TreeFilter.ANY_DIFF);
 		treeWalk.reset(parent.getTree(), commit.getTree());
 		renameDetector.reset();
 		renameDetector.addAll(DiffEntry.scan(treeWalk));
 		for (DiffEntry ent : renameDetector.compute()) {
-			if (isRename(ent) && ent.getNewPath().equals(path.getPath()))
+			if (isRename(ent) && ent.getNewPath().equals(path.getPath())) {
 				return ent;
+			}
 		}
 		return null;
 	}

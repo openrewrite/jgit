@@ -221,9 +221,10 @@ public class MutableObjectId extends AnyObjectId {
 	 *            the string to read from. Must be 40 characters long.
 	 */
 	public void fromString(String str) {
-		if (str.length() != Constants.OBJECT_ID_STRING_LENGTH)
+		if (str.length() != Constants.OBJECT_ID_STRING_LENGTH) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().invalidId, str));
+		}
 		fromHexString(Constants.encodeASCII(str), 0);
 	}
 

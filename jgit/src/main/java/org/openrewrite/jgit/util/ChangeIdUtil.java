@@ -63,8 +63,9 @@ public class ChangeIdUtil {
 			final ObjectId firstParentId, final PersonIdent author,
 			final PersonIdent committer, final String message) {
 		String cleanMessage = clean(message);
-		if (cleanMessage.length() == 0)
+		if (cleanMessage.length() == 0) {
 			return null;
+		}
 		StringBuilder b = new StringBuilder();
 		b.append("tree "); //$NON-NLS-1$
 		b.append(ObjectId.toString(treeId));
@@ -150,15 +151,16 @@ public class ChangeIdUtil {
 			ret.append(ObjectId.toString(changeId));
 			int indexOfNextLineBreak = message.indexOf('\n',
 					indexOfChangeId);
-			if (indexOfNextLineBreak > 0)
+			if (indexOfNextLineBreak > 0) {
 				ret.append(message.substring(indexOfNextLineBreak));
+			}
 			return ret.toString();
 		}
 
 		String[] lines = message.split("\n"); //$NON-NLS-1$
 		int footerFirstLine = indexOfFirstFooterLine(lines);
 		int insertAfter = footerFirstLine;
-		for (int i = footerFirstLine; i < lines.length; ++i) {
+		for (int i = footerFirstLine;i < lines.length;++i) {
 			if (issuePattern.matcher(lines[i]).matches()) {
 				insertAfter = i + 1;
 				continue;
@@ -167,17 +169,18 @@ public class ChangeIdUtil {
 		}
 		StringBuilder ret = new StringBuilder();
 		int i = 0;
-		for (; i < insertAfter; ++i) {
+		for (;i < insertAfter;++i) {
 			ret.append(lines[i]);
 			ret.append("\n"); //$NON-NLS-1$
 		}
-		if (insertAfter == lines.length && insertAfter == footerFirstLine)
+		if (insertAfter == lines.length && insertAfter == footerFirstLine) {
 			ret.append("\n"); //$NON-NLS-1$
+		}
 		ret.append(CHANGE_ID);
 		ret.append(" I"); //$NON-NLS-1$
 		ret.append(ObjectId.toString(changeId));
 		ret.append("\n"); //$NON-NLS-1$
-		for (; i < lines.length; ++i) {
+		for (;i < lines.length;++i) {
 			ret.append(lines[i]);
 			ret.append("\n"); //$NON-NLS-1$
 		}
@@ -201,24 +204,28 @@ public class ChangeIdUtil {
 	 */
 	public static int indexOfChangeId(String message, String delimiter) {
 		String[] lines = message.split(delimiter);
-		if (lines.length == 0)
+		if (lines.length == 0) {
 			return -1;
+		}
 		int indexOfChangeIdLine = 0;
 		boolean inFooter = false;
 		for (int i = lines.length - 1; i >= 0; --i) {
-			if (!inFooter && isEmptyLine(lines[i]))
+			if (!inFooter && isEmptyLine(lines[i])) {
 				continue;
+			}
 			inFooter = true;
 			if (changeIdPattern.matcher(trimRight(lines[i])).matches()) {
 				indexOfChangeIdLine = i;
 				break;
-			} else if (isEmptyLine(lines[i]) || i == 0)
+			} else if (isEmptyLine(lines[i]) || i == 0) {
 				return -1;
+			}
 		}
 		int indexOfChangeIdLineinString = 0;
-		for (int i = 0; i < indexOfChangeIdLine; ++i)
+		for (int i = 0;i < indexOfChangeIdLine;++i) {
 			indexOfChangeIdLineinString += lines[i].length()
 					+ delimiter.length();
+		}
 		return indexOfChangeIdLineinString
 				+ lines[indexOfChangeIdLine].indexOf(CHANGE_ID);
 	}
@@ -248,8 +255,9 @@ public class ChangeIdUtil {
 				footerFirstLine = i;
 				continue;
 			}
-			if (footerFirstLine != lines.length && lines[i].length() == 0)
+			if (footerFirstLine != lines.length && lines[i].length() == 0) {
 				break;
+			}
 			if (footerFirstLine != lines.length
 					&& includeInFooterPattern.matcher(lines[i]).matches()) {
 				footerFirstLine = i + 1;

@@ -86,8 +86,9 @@ public class DirCache {
 	static final Comparator<DirCacheEntry> ENT_CMP = (DirCacheEntry o1,
 			DirCacheEntry o2) -> {
 		final int cr = cmp(o1, o2);
-		if (cr != 0)
+		if (cr != 0) {
 			return cr;
+		}
 		return o1.getStage() - o2.getStage();
 	};
 
@@ -103,8 +104,9 @@ public class DirCache {
 			final int bLen) {
 		for (int cPos = 0; cPos < aLen && cPos < bLen; cPos++) {
 			final int cmp = (aPath[cPos] & 0xff) - (bPath[cPos] & 0xff);
-			if (cmp != 0)
+			if (cmp != 0) {
 				return cmp;
+			}
 		}
 		return aLen - bLen;
 	}
@@ -218,8 +220,9 @@ public class DirCache {
 	public static DirCache lock(File indexLocation, FS fs)
 			throws CorruptObjectException, IOException {
 		final DirCache c = new DirCache(indexLocation, fs);
-		if (!c.lock())
+		if (!c.lock()) {
 			throw new LockFailedException(indexLocation);
+		}
 
 		try {
 			c.read();
@@ -399,13 +402,14 @@ public class DirCache {
 	 *             library does not support.
 	 */
 	public void read() throws IOException, CorruptObjectException {
-		if (liveFile == null)
+		if (liveFile == null) {
 			throw new IOException(JGitText.get().dirCacheDoesNotHaveABackingFile);
-		if (!liveFile.exists())
+		}
+		if (!liveFile.exists()) {
 			clear();
-		else if (snapshot == null || snapshot.isModified(liveFile)) {
+		} else if (snapshot == null || snapshot.isModified(liveFile)) {
 			try (SilentFileInputStream inStream = new SilentFileInputStream(
-					liveFile)) {
+						 liveFile)) {
 				clear();
 				readFrom(inStream);
 			} catch (FileNotFoundException fnfe) {
@@ -431,8 +435,9 @@ public class DirCache {
 	 * @throws java.io.IOException
 	 */
 	public boolean isOutdated() throws IOException {
-		if (liveFile == null || !liveFile.exists())
+		if (liveFile == null || !liveFile.exists()) {
 			return false;
+		}
 		return snapshot == null || snapshot.isModified(liveFile);
 	}
 
@@ -458,8 +463,9 @@ public class DirCache {
 		final byte[] hdr = new byte[20];
 		IO.readFully(in, hdr, 0, 12);
 		md.update(hdr, 0, 12);
-		if (!is_DIRC(hdr))
+		if (!isDIRC(hdr)) {
 			throw new CorruptObjectException(JGitText.get().notADIRCFile);
+		}
 		int versionCode = NB.decodeInt32(hdr, 4);
 		DirCacheVersion ver = DirCacheVersion.fromInt(versionCode);
 		if (ver == null) {
@@ -481,8 +487,9 @@ public class DirCache {
 		}
 		version = ver;
 		entryCnt = NB.decodeInt32(hdr, 8);
-		if (entryCnt < 0)
+		if (entryCnt < 0) {
 			throw new CorruptObjectException(JGitText.get().DIRCHasTooManyEntries);
+		}
 
 		snapshot = FileSnapshot.save(liveFile);
 		Instant smudge = snapshot.lastModifiedInstant();
@@ -578,12 +585,15 @@ public class DirCache {
 		return "'" + new String(hdr, 0, 4, ISO_8859_1) + "'"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	private static boolean is_DIRC(byte[] hdr) {
-		if (hdr.length < SIG_DIRC.length)
+	private static boolean isDIRC(byte[] hdr) {
+		if (hdr.length < SIG_DIRC.length) {
 			return false;
-		for (int i = 0; i < SIG_DIRC.length; i++)
-			if (hdr[i] != SIG_DIRC[i])
+		}
+		for (int i = 0;i < SIG_DIRC.length;i++) {
+			if (hdr[i] != SIG_DIRC[i]) {
 				return false;
+			}
+		}
 		return true;
 	}
 
@@ -597,8 +607,9 @@ public class DirCache {
 	 *             hold the lock.
 	 */
 	public boolean lock() throws IOException {
-		if (liveFile == null)
+		if (liveFile == null) {
 			throw new IOException(JGitText.get().dirCacheDoesNotHaveABackingFile);
+		}
 		final LockFile tmp = new LockFile(liveFile);
 		if (tmp.lock()) {
 			tmp.setNeedStatInformation(true);
@@ -678,8 +689,9 @@ public class DirCache {
 		// will automatically build it via creating a DirCacheIterator
 		final boolean writeTree = tree != null;
 
-		if (repository != null && entryCnt > 0)
+		if (repository != null && entryCnt > 0) {
 			updateSmudgedEntries();
+		}
 
 		for (int i = 0; i < entryCnt; i++) {
 			final DirCacheEntry e = sortedEntries[i];
@@ -753,11 +765,13 @@ public class DirCache {
 	}
 
 	private void requireLocked(LockFile tmp) {
-		if (liveFile == null)
+		if (liveFile == null) {
 			throw new IllegalStateException(JGitText.get().dirCacheIsNotLocked);
-		if (tmp == null)
+		}
+		if (tmp == null) {
 			throw new IllegalStateException(MessageFormat.format(JGitText.get().dirCacheFileIsNotLocked
-					, liveFile.getAbsolutePath()));
+			, liveFile.getAbsolutePath()));
+		}
 	}
 
 	/**
@@ -816,14 +830,16 @@ public class DirCache {
 		while (low < high) {
 			int mid = (low + high) >>> 1;
 			final int cmp = cmp(p, pLen, sortedEntries[mid]);
-			if (cmp < 0)
+			if (cmp < 0) {
 				high = mid;
-			else if (cmp == 0) {
-				while (mid > 0 && cmp(p, pLen, sortedEntries[mid - 1]) == 0)
+			} else if (cmp == 0) {
+				while (mid > 0 && cmp(p, pLen, sortedEntries[mid - 1]) == 0) {
 					mid--;
+				}
 				return mid;
-			} else
+			} else {
 				low = mid + 1;
+			}
 		}
 		return -(low + 1);
 	}
@@ -844,8 +860,9 @@ public class DirCache {
 		int nextIdx = position + 1;
 		while (nextIdx < entryCnt) {
 			final DirCacheEntry next = sortedEntries[nextIdx];
-			if (cmp(last, next) != 0)
+			if (cmp(last, next) != 0) {
 				break;
+			}
 			last = next;
 			nextIdx++;
 		}
@@ -855,8 +872,9 @@ public class DirCache {
 	int nextEntry(byte[] p, int pLen, int nextIdx) {
 		while (nextIdx < entryCnt) {
 			final DirCacheEntry next = sortedEntries[nextIdx];
-			if (!DirCacheTree.peq(p, next.path, pLen))
+			if (!DirCacheTree.peq(p, next.path, pLen)) {
 				break;
+			}
 			nextIdx++;
 		}
 		return nextIdx;
@@ -915,14 +933,16 @@ public class DirCache {
 			System.arraycopy(sortedEntries, 0, r, 0, entryCnt);
 			return r;
 		}
-		if (!path.endsWith("/")) //$NON-NLS-1$
+		if (!path.endsWith("/")) { //$NON-NLS-1$
 			path += "/"; //$NON-NLS-1$
+		}
 		final byte[] p = Constants.encode(path);
 		final int pLen = p.length;
 
 		int eIdx = findEntry(p, pLen);
-		if (eIdx < 0)
+		if (eIdx < 0) {
 			eIdx = -(eIdx + 1);
+		}
 		final int lastIdx = nextEntry(p, pLen, eIdx);
 		final DirCacheEntry[] r = new DirCacheEntry[lastIdx - eIdx];
 		System.arraycopy(sortedEntries, eIdx, r, 0, r.length);
@@ -948,8 +968,9 @@ public class DirCache {
 	 */
 	public DirCacheTree getCacheTree(boolean build) {
 		if (build) {
-			if (tree == null)
+			if (tree == null) {
 				tree = new DirCacheTree();
+			}
 			tree.validate(sortedEntries, entryCnt, 0, 0);
 		}
 		return tree;
@@ -1006,11 +1027,14 @@ public class DirCache {
 		List<String> paths = new ArrayList<>(128);
 		try (TreeWalk walk = new TreeWalk(repository)) {
 			walk.setOperationType(OperationType.CHECKIN_OP);
-			for (int i = 0; i < entryCnt; i++)
-				if (sortedEntries[i].isSmudged())
+			for (int i = 0;i < entryCnt;i++) {
+				if (sortedEntries[i].isSmudged()) {
 					paths.add(sortedEntries[i].getPathString());
-			if (paths.isEmpty())
+				}
+			}
+			if (paths.isEmpty()) {
 				return;
+			}
 			walk.setFilter(PathFilterGroup.createFromStrings(paths));
 
 			DirCacheIterator iIter = new DirCacheIterator(this);
@@ -1021,11 +1045,13 @@ public class DirCache {
 			walk.setRecursive(true);
 			while (walk.next()) {
 				iIter = walk.getTree(0, DirCacheIterator.class);
-				if (iIter == null)
+				if (iIter == null) {
 					continue;
+				}
 				fIter = walk.getTree(1, FileTreeIterator.class);
-				if (fIter == null)
+				if (fIter == null) {
 					continue;
+				}
 				DirCacheEntry entry = iIter.getDirCacheEntry();
 				if (entry.isSmudged() && iIter.idEqual(fIter)) {
 					entry.setLength(fIter.getEntryLength());

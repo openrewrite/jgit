@@ -134,10 +134,12 @@ public class TransportSftp extends SshTransport implements WalkTransport {
 		private FtpChannel ftp;
 
 		SftpObjectDB(String path) throws TransportException {
-			if (path.startsWith("/~")) //$NON-NLS-1$
+			if (path.startsWith("/~")) { //$NON-NLS-1$
 				path = path.substring(1);
-			if (path.startsWith("~/")) //$NON-NLS-1$
+			}
+			if (path.startsWith("~/")) { //$NON-NLS-1$
 				path = path.substring(2);
+			}
 			try {
 				ftp = newSftp();
 				ftp.cd(path);
@@ -274,10 +276,10 @@ public class TransportSftp extends SshTransport implements WalkTransport {
 			try {
 				return ftp.put(path);
 			} catch (FileNotFoundException e) {
-				mkdir_p(path);
+				mkdirP(path);
 			} catch (FtpChannel.FtpException je) {
 				if (je.getStatus() == FtpChannel.FtpException.NO_SUCH_FILE) {
-					mkdir_p(path);
+					mkdirP(path);
 				} else {
 					err = je;
 				}
@@ -318,10 +320,11 @@ public class TransportSftp extends SshTransport implements WalkTransport {
 			}
 		}
 
-		private void mkdir_p(String path) throws IOException {
+		private void mkdirP(String path) throws IOException {
 			final int s = path.lastIndexOf('/');
-			if (s <= 0)
+			if (s <= 0) {
 				return;
+			}
 
 			path = path.substring(0, s);
 			Throwable err = null;
@@ -329,10 +332,10 @@ public class TransportSftp extends SshTransport implements WalkTransport {
 				ftp.mkdir(path);
 				return;
 			} catch (FileNotFoundException f) {
-				mkdir_p(path);
+				mkdirP(path);
 			} catch (FtpChannel.FtpException je) {
 				if (je.getStatus() == FtpChannel.FtpException.NO_SUCH_FILE) {
-					mkdir_p(path);
+					mkdirP(path);
 				} else {
 					err = je;
 				}
@@ -371,8 +374,9 @@ public class TransportSftp extends SshTransport implements WalkTransport {
 
 			for (FtpChannel.DirEntry ent : list) {
 				String n = ent.getFilename();
-				if (".".equals(n) || "..".equals(n)) //$NON-NLS-1$ //$NON-NLS-2$
+				if (".".equals(n) || "..".equals(n)) { //$NON-NLS-1$ //$NON-NLS-2$
 					continue;
+				}
 
 				String nPath = dir + "/" + n; //$NON-NLS-1$
 				if (ent.isDirectory()) {
@@ -403,10 +407,12 @@ public class TransportSftp extends SshTransport implements WalkTransport {
 			if (line.startsWith("ref: ")) { //$NON-NLS-1$
 				final String target = line.substring("ref: ".length()); //$NON-NLS-1$
 				Ref r = avail.get(target);
-				if (r == null)
+				if (r == null) {
 					r = readRef(avail, ROOT_DIR + target, target);
-				if (r == null)
+				}
+				if (r == null) {
 					r = new ObjectIdRef.Unpeeled(Ref.Storage.NEW, target, null);
+				}
 				r = new SymbolicRef(name, r);
 				avail.put(r.getName(), r);
 				return r;

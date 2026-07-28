@@ -17,10 +17,10 @@ package org.openrewrite.jgit.logging;
  */
 public class PerformanceLogRecord {
 	/** Name of the recorded event. */
-	private String name;
+	private final String name;
 
 	/** Duration of the recorded event in milliseconds. */
-	private long durationMs;
+	private final long durationMs;
 
 	/**
 	 * Create a new performance log record for an event.

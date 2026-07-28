@@ -121,28 +121,32 @@ public class Strings {
 	 */
 	public static List<String> split(String pattern, char slash) {
 		int count = count(pattern, slash, true);
-		if (count < 1)
+		if (count < 1) {
 			throw new IllegalStateException(
 					"Pattern must have at least two segments: " + pattern); //$NON-NLS-1$
+		}
 		List<String> segments = new ArrayList<>(count);
 		int right = 0;
 		while (true) {
 			int left = right;
 			right = pattern.indexOf(slash, right);
 			if (right == -1) {
-				if (left < pattern.length())
+				if (left < pattern.length()) {
 					segments.add(pattern.substring(left));
+				}
 				break;
 			}
-			if (right - left > 0)
-				if (left == 1)
+			if (right - left > 0) {
+				if (left == 1) {
 					// leading slash should remain by the first pattern
 					segments.add(pattern.substring(left - 1, right));
-				else if (right == pattern.length() - 1)
+				} else if (right == pattern.length() - 1) {
 					// trailing slash should remain too
 					segments.add(pattern.substring(left, right + 1));
-				else
+				} else {
 					segments.add(pattern.substring(left, right));
+				}
+			}
 			right++;
 		}
 		return segments;
@@ -182,16 +186,20 @@ public class Strings {
 	}
 
 	static PatternState checkWildCards(String pattern) {
-		if (isComplexWildcard(pattern))
+		if (isComplexWildcard(pattern)) {
 			return PatternState.COMPLEX;
+		}
 		int startIdx = pattern.indexOf('*');
-		if (startIdx < 0)
+		if (startIdx < 0) {
 			return PatternState.NONE;
+		}
 
-		if (startIdx == pattern.length() - 1)
+		if (startIdx == pattern.length() - 1) {
 			return PatternState.TRAILING_ASTERISK_ONLY;
-		if (pattern.lastIndexOf('*') == 0)
+		}
+		if (pattern.lastIndexOf('*') == 0) {
 			return PatternState.LEADING_ASTERISK_ONLY;
+		}
 
 		return PatternState.COMPLEX;
 	}
@@ -244,10 +252,11 @@ public class Strings {
 	 * @throws InvalidPatternException
 	 */
 	static Pattern convertGlob(String pattern) throws InvalidPatternException {
-		if (UNSUPPORTED.matcher(pattern).find())
+		if (UNSUPPORTED.matcher(pattern).find()) {
 			throw new InvalidPatternException(
 					"Collating symbols [[.a.]] or equivalence class expressions [[=a=]] are not supported", //$NON-NLS-1$
 					pattern);
+		}
 
 		StringBuilder sb = new StringBuilder(pattern.length());
 
@@ -258,155 +267,168 @@ public class Strings {
 		// 6 is the length of the longest posix char class "xdigit"
 		char[] charClass = new char[6];
 
-		for (int i = 0; i < pattern.length(); i++) {
+		for (int i = 0;i < pattern.length();i++) {
 			final char c = pattern.charAt(i);
 			switch (c) {
 
-			case '*':
-				if (seenEscape || in_brackets > 0)
-					sb.append(c);
-				else
-					sb.append('.').append(c);
-				break;
-
-			case '(': // fall-through
-			case ')': // fall-through
-			case '{': // fall-through
-			case '}': // fall-through
-			case '+': // fall-through
-			case '$': // fall-through
-			case '^': // fall-through
-			case '|':
-				if (seenEscape || in_brackets > 0)
-					sb.append(c);
-				else
-					sb.append('\\').append(c);
-				break;
-
-			case '.':
-				if (seenEscape)
-					sb.append(c);
-				else
-					sb.append('\\').append('.');
-				break;
-
-			case '?':
-				if (seenEscape || in_brackets > 0)
-					sb.append(c);
-				else
-					sb.append('.');
-				break;
-
-			case ':':
-				if (in_brackets > 0)
-					if (lookBehind(sb) == '['
-							&& isLetter(lookAhead(pattern, i)))
-						in_char_class = true;
-				sb.append(':');
-				break;
-
-			case '-':
-				if (in_brackets > 0) {
-					if (lookAhead(pattern, i) == ']')
-						sb.append('\\').append(c);
-					else
+				case '*':
+					if (seenEscape || in_brackets > 0) {
 						sb.append(c);
-				} else
-					sb.append('-');
-				break;
+					} else {
+						sb.append('.').append(c);
+					}
+					break;
 
-			case '\\':
-				if (in_brackets > 0) {
-					char lookAhead = lookAhead(pattern, i);
-					if (lookAhead == ']' || lookAhead == '[')
+				case '(': // fall-through
+				case ')': // fall-through
+				case '{': // fall-through
+				case '}': // fall-through
+				case '+': // fall-through
+				case '$': // fall-through
+				case '^': // fall-through
+				case '|':
+					if (seenEscape || in_brackets > 0) {
+						sb.append(c);
+					} else {
+						sb.append('\\').append(c);
+					}
+					break;
+
+				case '.':
+					if (seenEscape) {
+						sb.append(c);
+					} else {
+						sb.append('\\').append('.');
+					}
+					break;
+
+				case '?':
+					if (seenEscape || in_brackets > 0) {
+						sb.append(c);
+					} else {
+						sb.append('.');
+					}
+					break;
+
+				case ':':
+					if (in_brackets > 0) {
+						if (lookBehind(sb) == '['
+								&& isLetter(lookAhead(pattern, i))) {
+							in_char_class = true;
+						}
+					}
+					sb.append(':');
+					break;
+
+				case '-':
+					if (in_brackets > 0) {
+						if (lookAhead(pattern, i) == ']') {
+							sb.append('\\').append(c);
+						} else {
+							sb.append(c);
+						}
+					} else {
+						sb.append('-');
+					}
+					break;
+
+				case '\\':
+					if (in_brackets > 0) {
+						char lookAhead = lookAhead(pattern, i);
+						if (lookAhead == ']' || lookAhead == '[') {
+							ignoreLastBracket = true;
+						}
+					} else {
+						//
+						char lookAhead = lookAhead(pattern, i);
+						if (lookAhead != '\\' && lookAhead != '['
+								&& lookAhead != '?' && lookAhead != '*'
+								&& lookAhead != ' ' && lookBehind(sb) != '\\') {
+							break;
+						}
+					}
+					sb.append(c);
+					break;
+
+				case '[':
+					if (in_brackets > 0) {
+						if (!seenEscape) {
+							sb.append('\\');
+						}
+						sb.append('[');
 						ignoreLastBracket = true;
-				} else {
-					//
-					char lookAhead = lookAhead(pattern, i);
-					if (lookAhead != '\\' && lookAhead != '['
-							&& lookAhead != '?' && lookAhead != '*'
-							&& lookAhead != ' ' && lookBehind(sb) != '\\') {
+					} else {
+						if (!seenEscape) {
+							in_brackets++;
+							ignoreLastBracket = false;
+						}
+						sb.append('[');
+					}
+					break;
+
+				case ']':
+					if (seenEscape) {
+						sb.append(']');
+						ignoreLastBracket = true;
 						break;
 					}
-				}
-				sb.append(c);
-				break;
-
-			case '[':
-				if (in_brackets > 0) {
-					if (!seenEscape) {
+					if (in_brackets <= 0) {
+						sb.append('\\').append(']');
+						ignoreLastBracket = true;
+						break;
+					}
+					char lookBehind = lookBehind(sb);
+					if ((lookBehind == '[' && !ignoreLastBracket)
+							|| lookBehind == '^') {
 						sb.append('\\');
-					}
-					sb.append('[');
-					ignoreLastBracket = true;
-				} else {
-					if (!seenEscape) {
-						in_brackets++;
-						ignoreLastBracket = false;
-					}
-					sb.append('[');
-				}
-				break;
-
-			case ']':
-				if (seenEscape) {
-					sb.append(']');
-					ignoreLastBracket = true;
-					break;
-				}
-				if (in_brackets <= 0) {
-					sb.append('\\').append(']');
-					ignoreLastBracket = true;
-					break;
-				}
-				char lookBehind = lookBehind(sb);
-				if ((lookBehind == '[' && !ignoreLastBracket)
-						|| lookBehind == '^') {
-					sb.append('\\');
-					sb.append(']');
-					ignoreLastBracket = true;
-				} else {
-					ignoreLastBracket = false;
-					if (!in_char_class) {
-						in_brackets--;
 						sb.append(']');
+						ignoreLastBracket = true;
 					} else {
-						in_char_class = false;
-						String charCl = checkPosixCharClass(charClass);
-						// delete last \[:: chars and set the pattern
-						if (charCl != null) {
-							sb.setLength(sb.length() - 4);
-							sb.append(charCl);
+						ignoreLastBracket = false;
+						if (!in_char_class) {
+							in_brackets--;
+							sb.append(']');
+						} else {
+							in_char_class = false;
+							String charCl = checkPosixCharClass(charClass);
+							// delete last \[:: chars and set the pattern
+							if (charCl != null) {
+								sb.setLength(sb.length() - 4);
+								sb.append(charCl);
+							}
+							reset(charClass);
 						}
-						reset(charClass);
 					}
-				}
-				break;
+					break;
 
-			case '!':
-				if (in_brackets > 0) {
-					if (lookBehind(sb) == '[')
-						sb.append('^');
-					else
+				case '!':
+					if (in_brackets > 0) {
+						if (lookBehind(sb) == '[') {
+							sb.append('^');
+						} else {
+							sb.append(c);
+						}
+					} else {
 						sb.append(c);
-				} else
-					sb.append(c);
-				break;
+					}
+					break;
 
-			default:
-				if (in_char_class)
-					setNext(charClass, c);
-				else
-					sb.append(c);
-				break;
+				default:
+					if (in_char_class) {
+						setNext(charClass, c);
+					} else {
+						sb.append(c);
+					}
+					break;
 			} // end switch
 
 			seenEscape = c == '\\';
 
 		} // end for
 
-		if (in_brackets > 0)
+		if (in_brackets > 0) {
 			throw new InvalidPatternException("Not closed bracket?", pattern); //$NON-NLS-1$
+		}
 		try {
 			return Pattern.compile(sb.toString(), Pattern.DOTALL);
 		} catch (PatternSyntaxException e) {
@@ -439,29 +461,33 @@ public class Strings {
 	}
 
 	private static void setNext(char[] buffer, char c) {
-		for (int i = 0; i < buffer.length; i++)
+		for (int i = 0;i < buffer.length;i++) {
 			if (buffer[i] == 0) {
 				buffer[i] = c;
 				break;
 			}
+		}
 	}
 
 	private static void reset(char[] buffer) {
-		for (int i = 0; i < buffer.length; i++)
+		for (int i = 0;i < buffer.length;i++) {
 			buffer[i] = 0;
+		}
 	}
 
 	private static String checkPosixCharClass(char[] buffer) {
 		for (int i = 0; i < POSIX_CHAR_CLASSES.size(); i++) {
 			String clazz = POSIX_CHAR_CLASSES.get(i);
 			boolean match = true;
-			for (int j = 0; j < clazz.length(); j++)
+			for (int j = 0;j < clazz.length();j++) {
 				if (buffer[j] != clazz.charAt(j)) {
 					match = false;
 					break;
 				}
-			if (match)
+			}
+			if (match) {
 				return JAVA_CHAR_CLASSES.get(i);
+			}
 		}
 		return null;
 	}

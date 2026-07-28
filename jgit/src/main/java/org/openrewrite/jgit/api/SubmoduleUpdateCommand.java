@@ -60,7 +60,7 @@ public class SubmoduleUpdateCommand extends
 
 	private FetchCommand.Callback fetchCallback;
 
-	private boolean fetch = false;
+	private boolean fetch;
 
 	/**
 	 * <p>
@@ -162,17 +162,20 @@ public class SubmoduleUpdateCommand extends
 		checkCallable();
 
 		try (SubmoduleWalk generator = SubmoduleWalk.forIndex(repo)) {
-			if (!paths.isEmpty())
+			if (!paths.isEmpty()) {
 				generator.setFilter(PathFilterGroup.createFromStrings(paths));
+			}
 			List<String> updated = new ArrayList<>();
 			while (generator.next()) {
 				// Skip submodules not registered in .gitmodules file
-				if (generator.getModulesPath() == null)
+				if (generator.getModulesPath() == null) {
 					continue;
+				}
 				// Skip submodules not registered in parent repository's config
 				String url = generator.getConfigUrl();
-				if (url == null)
+				if (url == null) {
 					continue;
+				}
 
 				try (Repository submoduleRepo = getOrCloneSubmodule(generator,
 						url); RevWalk walk = new RevWalk(submoduleRepo)) {

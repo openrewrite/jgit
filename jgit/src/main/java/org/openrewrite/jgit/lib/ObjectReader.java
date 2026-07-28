@@ -103,8 +103,9 @@ public abstract class ObjectReader implements AutoCloseable {
 	 */
 	public AbbreviatedObjectId abbreviate(AnyObjectId objectId, int len)
 			throws IOException {
-		if (len == Constants.OBJECT_ID_STRING_LENGTH)
+		if (len == Constants.OBJECT_ID_STRING_LENGTH) {
 			return AbbreviatedObjectId.fromObjectId(objectId);
+		}
 
 		AbbreviatedObjectId abbrev = objectId.abbreviate(len);
 		Collection<ObjectId> matches = resolve(abbrev);
@@ -112,13 +113,15 @@ public abstract class ObjectReader implements AutoCloseable {
 			abbrev = objectId.abbreviate(++len);
 			List<ObjectId> n = new ArrayList<>(8);
 			for (ObjectId candidate : matches) {
-				if (abbrev.prefixCompare(candidate) == 0)
+				if (abbrev.prefixCompare(candidate) == 0) {
 					n.add(candidate);
+				}
 			}
-			if (1 < n.size())
+			if (1 < n.size()) {
 				matches = n;
-			else
+			} else {
 				matches = resolve(abbrev);
+			}
 		}
 		return abbrev;
 	}

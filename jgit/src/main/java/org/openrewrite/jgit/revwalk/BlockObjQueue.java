@@ -11,7 +11,7 @@
 package org.openrewrite.jgit.revwalk;
 
 class BlockObjQueue {
-	private BlockFreeList free;
+	private final BlockFreeList free;
 
 	private Block head;
 
@@ -40,14 +40,16 @@ class BlockObjQueue {
 
 	RevObject next() {
 		final Block b = head;
-		if (b == null)
+		if (b == null) {
 			return null;
+		}
 
 		final RevObject c = b.pop();
 		if (b.isEmpty()) {
 			head = b.next;
-			if (head == null)
+			if (head == null) {
 				tail = null;
+			}
 			free.freeBlock(b);
 		}
 		return c;
@@ -58,8 +60,9 @@ class BlockObjQueue {
 
 		Block newBlock() {
 			Block b = next;
-			if (b == null)
+			if (b == null) {
 				return new Block();
+			}
 			next = b.next;
 			b.clear();
 			return b;

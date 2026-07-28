@@ -161,8 +161,9 @@ public class CommitBuilder extends ObjectBuilder {
 	 */
 	public void setParentIds(ObjectId... newParents) {
 		parentIds = new ObjectId[newParents.length];
-		for (int i = 0; i < newParents.length; i++)
+		for (int i = 0;i < newParents.length;i++) {
 			parentIds[i] = newParents[i].copy();
+		}
 	}
 
 	/**
@@ -173,8 +174,9 @@ public class CommitBuilder extends ObjectBuilder {
 	 */
 	public void setParentIds(List<? extends AnyObjectId> newParents) {
 		parentIds = new ObjectId[newParents.size()];
-		for (int i = 0; i < newParents.size(); i++)
+		for (int i = 0;i < newParents.size();i++) {
 			parentIds[i] = newParents.get(i).copy();
+		}
 	}
 
 	/**

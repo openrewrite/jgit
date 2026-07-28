@@ -37,10 +37,10 @@ import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
  */
 public class StatusCommand extends GitCommand<Status> {
 	private WorkingTreeIterator workingTreeIt;
-	private List<String> paths = null;
-	private ProgressMonitor progressMonitor = null;
+	private List<String> paths;
+	private ProgressMonitor progressMonitor;
 
-	private IgnoreSubmoduleMode ignoreSubmoduleMode = null;
+	private IgnoreSubmoduleMode ignoreSubmoduleMode;
 
 	/**
 	 * Constructor for StatusCommand.
@@ -82,8 +82,9 @@ public class StatusCommand extends GitCommand<Status> {
 	 * @since 3.1
 	 */
 	public StatusCommand addPath(String path) {
-		if (paths == null)
+		if (paths == null) {
 			paths = new LinkedList<>();
+		}
 		paths.add(path);
 		return this;
 	}
@@ -109,20 +110,24 @@ public class StatusCommand extends GitCommand<Status> {
 	 */
 	@Override
 	public Status call() throws GitAPIException, NoWorkTreeException {
-		if (workingTreeIt == null)
+		if (workingTreeIt == null) {
 			workingTreeIt = new FileTreeIterator(repo);
+		}
 
 		try {
 			IndexDiff diff = new IndexDiff(repo, Constants.HEAD, workingTreeIt);
-			if (ignoreSubmoduleMode != null)
+			if (ignoreSubmoduleMode != null) {
 				diff.setIgnoreSubmoduleMode(ignoreSubmoduleMode);
-			if (paths != null)
+			}
+			if (paths != null) {
 				diff.setFilter(PathFilterGroup.createFromStrings(paths));
-			if (progressMonitor == null)
-				diff.diff();
-			else
+			}
+			if (progressMonitor == null) {
+				diff.diff(); //$NON-NLS-1$
+			} else {
 				diff.diff(progressMonitor, ProgressMonitor.UNKNOWN,
 						ProgressMonitor.UNKNOWN, ""); //$NON-NLS-1$
+			}
 			return new Status(diff);
 		} catch (IOException e) {
 			throw new JGitInternalException(e.getMessage(), e);

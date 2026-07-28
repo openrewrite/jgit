@@ -10,9 +10,9 @@
 
 package org.openrewrite.jgit.internal.storage.file;
 
-import static org.openrewrite.jgit.lib.Ref.UNDEFINED_UPDATE_INDEX;
 import static org.openrewrite.jgit.lib.Ref.Storage.NEW;
 import static org.openrewrite.jgit.lib.Ref.Storage.PACKED;
+import static org.openrewrite.jgit.lib.Ref.UNDEFINED_UPDATE_INDEX;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class FileReftableDatabase extends RefDatabase {
 		this.reftableStack = new FileReftableStack(refstackName,
 			new File(fileRepository.getDirectory(), Constants.REFTABLE),
 			() -> fileRepository.fireEvent(new RefsChangedEvent()),
-			() -> fileRepository.getConfig());
+			fileRepository::getConfig);
 		this.reftableDatabase = new ReftableDatabase() {
 
 			@Override
@@ -265,15 +265,15 @@ public class FileReftableDatabase extends RefDatabase {
 			}
 
 			if (!destination.getRefLogMessage().isEmpty()) {
-				List<String> refnames = refs.stream().map(r -> r.getName())
+				List<String> refnames = refs.stream().map(Ref::getName)
 						.collect(Collectors.toList());
 				Collections.sort(refnames);
 				for (String s : refnames) {
-					ObjectId old = (Constants.HEAD.equals(s)
-							|| s.equals(source.getName())) ? objId
+					ObjectId old = Constants.HEAD.equals(s)
+							|| s.equals(source.getName()) ? objId
 									: ObjectId.zeroId();
-					ObjectId newId = (Constants.HEAD.equals(s)
-							|| s.equals(destination.getName())) ? objId
+					ObjectId newId = Constants.HEAD.equals(s)
+							|| s.equals(destination.getName()) ? objId
 									: ObjectId.zeroId();
 
 					w.writeLog(s, idx, who, old, newId,
@@ -632,7 +632,7 @@ public class FileReftableDatabase extends RefDatabase {
 			}
 
 			try (FileReftableStack stack = new FileReftableStack(reftableList,
-					reftableDir, null, () -> repo.getConfig())) {
+					reftableDir, null, repo::getConfig)) {
 				stack.addReftable(rw -> writeConvertTable(repo, rw, writeLogs));
 			}
 			reftableList = null;

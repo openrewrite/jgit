@@ -31,7 +31,7 @@ import org.openrewrite.jgit.util.RawParseUtils;
  * @since 3.2
  */
 public class RebaseTodoFile {
-	private Repository repo;
+	private final Repository repo;
 
 	/**
 	 * Constructor for RebaseTodoFile.
@@ -67,26 +67,30 @@ public class RebaseTodoFile {
 			ptr = RawParseUtils.nextLF(buf, ptr);
 			int lineStart = tokenBegin;
 			int lineEnd = ptr - 2;
-			if (lineEnd >= 0 && buf[lineEnd] == '\r')
+			if (lineEnd >= 0 && buf[lineEnd] == '\r') {
 				lineEnd--;
+			}
 			// Handle comments
 			if (buf[tokenBegin] == '#') {
-				if (includeComments)
+				if (includeComments) {
 					parseComments(buf, tokenBegin, r, lineEnd);
+				}
 			} else {
 				// skip leading spaces+tabs+cr
 				tokenBegin = nextParsableToken(buf, tokenBegin, lineEnd);
 				// Handle empty lines (maybe empty after skipping leading
 				// whitespace)
 				if (tokenBegin == -1) {
-					if (includeComments)
+					if (includeComments) {
 						r.add(new RebaseTodoLine(RawParseUtils.decode(buf,
 								lineStart, 1 + lineEnd)));
+					}
 					continue;
 				}
 				RebaseTodoLine line = parseLine(buf, tokenBegin, lineEnd);
-				if (line == null)
+				if (line == null) {
 					continue;
+				}
 				r.add(line);
 			}
 		}
@@ -116,8 +120,9 @@ public class RebaseTodoFile {
 			// parsing as non-comment line failed
 			line = null;
 		} finally {
-			if (line == null)
+			if (line == null) {
 				line = new RebaseTodoLine(commentString);
+			}
 			r.add(line);
 		}
 	}
@@ -134,10 +139,12 @@ public class RebaseTodoFile {
 	 */
 	private static int nextParsableToken(byte[] buf, int tokenBegin, int lineEnd) {
 		while (tokenBegin <= lineEnd
-				&& (buf[tokenBegin] == ' ' || buf[tokenBegin] == '\t' || buf[tokenBegin] == '\r'))
+				&& (buf[tokenBegin] == ' ' || buf[tokenBegin] == '\t' || buf[tokenBegin] == '\r')) {
 			tokenBegin++;
-		if (tokenBegin > lineEnd)
+		}
+		if (tokenBegin > lineEnd) {
 			return -1;
+		}
 		return tokenBegin;
 	}
 
@@ -150,35 +157,37 @@ public class RebaseTodoFile {
 		int tokenCount = 0;
 		while (tokenCount < 3 && nextSpace <= lineEnd) {
 			switch (tokenCount) {
-			case 0:
-				String actionToken = new String(buf, tokenBegin,
-						nextSpace - tokenBegin - 1, UTF_8);
-				tokenBegin = nextSpace;
-				action = RebaseTodoLine.Action.parse(actionToken);
-				if (action == null)
-					return null; // parsing failed
-				break;
-			case 1:
-				nextSpace = RawParseUtils.next(buf, tokenBegin, ' ');
-				String commitToken;
-				if (nextSpace > lineEnd + 1) {
-					commitToken = new String(buf, tokenBegin,
-							lineEnd - tokenBegin + 1, UTF_8);
-				} else {
-					commitToken = new String(buf, tokenBegin,
+				case 0:
+					String actionToken = new String(buf, tokenBegin,
 							nextSpace - tokenBegin - 1, UTF_8);
-				}
-				tokenBegin = nextSpace;
-				commit = AbbreviatedObjectId.fromString(commitToken);
-				break;
-			case 2:
-				return new RebaseTodoLine(action, commit,
-						RawParseUtils.decode(buf, tokenBegin, 1 + lineEnd));
+					tokenBegin = nextSpace;
+					action = RebaseTodoLine.Action.parse(actionToken);
+					if (action == null) {
+						return null;
+					} // parsing failed
+					break;
+				case 1:
+					nextSpace = RawParseUtils.next(buf, tokenBegin, ' ');
+					String commitToken;
+					if (nextSpace > lineEnd + 1) {
+						commitToken = new String(buf, tokenBegin,
+								lineEnd - tokenBegin + 1, UTF_8);
+					} else {
+						commitToken = new String(buf, tokenBegin,
+								nextSpace - tokenBegin - 1, UTF_8);
+					}
+					tokenBegin = nextSpace;
+					commit = AbbreviatedObjectId.fromString(commitToken);
+					break;
+				case 2:
+					return new RebaseTodoLine(action, commit,
+							RawParseUtils.decode(buf, tokenBegin, 1 + lineEnd));
 			}
 			tokenCount++;
 		}
-		if (tokenCount == 2)
+		if (tokenCount == 2) {
 			return new RebaseTodoLine(action, commit, ""); //$NON-NLS-1$
+		}
 		return null;
 	}
 
@@ -201,9 +210,9 @@ public class RebaseTodoFile {
 			StringBuilder sb = new StringBuilder();
 			for (RebaseTodoLine step : steps) {
 				sb.setLength(0);
-				if (RebaseTodoLine.Action.COMMENT.equals(step.action))
+				if (RebaseTodoLine.Action.COMMENT.equals(step.action)) {
 					sb.append(step.getComment());
-				else {
+				} else {
 					sb.append(step.getAction().toToken());
 					sb.append(" "); //$NON-NLS-1$
 					sb.append(step.getCommit().name());

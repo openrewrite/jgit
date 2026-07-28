@@ -51,8 +51,9 @@ class DeltaBaseCache {
 
 	Entry get(Pack pack, long position) {
 		Slot e = cache[hash(position)];
-		if (e == null)
+		if (e == null) {
 			return null;
+		}
 		if (e.provider == pack && e.position == position) {
 			final Entry buf = e.data.get();
 			if (buf != null) {
@@ -65,9 +66,10 @@ class DeltaBaseCache {
 
 	void store(final Pack pack, final long position,
 			final byte[] data, final int objectType) {
-		if (data.length > maxByteCount)
+		if (data.length > maxByteCount) {
 			return; // Too large to cache.
 
+		}
 		Slot e = cache[hash(position)];
 		if (e == null) {
 			e = new Slot();
@@ -95,10 +97,11 @@ class DeltaBaseCache {
 			currOldest.lruPrev = null;
 			currOldest.lruNext = null;
 
-			if (nextOldest == null)
+			if (nextOldest == null) {
 				lruHead = null;
-			else
+			} else {
 				nextOldest.lruNext = null;
+			}
 			lruTail = nextOldest;
 		}
 	}
@@ -107,20 +110,23 @@ class DeltaBaseCache {
 		unlink(e);
 		e.lruPrev = null;
 		e.lruNext = lruHead;
-		if (lruHead != null)
+		if (lruHead != null) {
 			lruHead.lruPrev = e;
-		else
+		} else {
 			lruTail = e;
+		}
 		lruHead = e;
 	}
 
 	private void unlink(Slot e) {
 		final Slot prev = e.lruPrev;
 		final Slot next = e.lruNext;
-		if (prev != null)
+		if (prev != null) {
 			prev.lruNext = next;
-		if (next != null)
+		}
+		if (next != null) {
 			next.lruPrev = prev;
+		}
 	}
 
 	private void clearEntry(Slot e) {

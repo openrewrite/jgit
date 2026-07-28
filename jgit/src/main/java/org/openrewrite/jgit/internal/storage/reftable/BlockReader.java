@@ -523,7 +523,7 @@ class BlockReader {
 			c = buf[ptr++];
 			val++;
 			val <<= 7;
-			val |= (c & 0x7f);
+			val |= c & 0x7f;
 		}
 		return val;
 	}
@@ -535,7 +535,7 @@ class BlockReader {
 			c = buf[ptr++];
 			val++;
 			val <<= 7;
-			val |= (c & 0x7f);
+			val |= c & 0x7f;
 		}
 		return val;
 	}

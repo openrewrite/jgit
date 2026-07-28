@@ -17,9 +17,10 @@ public class LeadingAsteriskMatcher extends NameMatcher {
 	LeadingAsteriskMatcher(String pattern, Character pathSeparator, boolean dirOnly) {
 		super(pattern, pathSeparator, dirOnly, true);
 
-		if (subPattern.charAt(0) != '*')
+		if (subPattern.charAt(0) != '*') {
 			throw new IllegalArgumentException(
 					"Pattern must have leading asterisk: " + pattern); //$NON-NLS-1$
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -31,17 +32,20 @@ public class LeadingAsteriskMatcher extends NameMatcher {
 		// we don't need to count '*' character itself
 		int subLength = s.length() - 1;
 		// simple /*/ pattern
-		if (subLength == 0)
+		if (subLength == 0) {
 			return true;
+		}
 
-		if (subLength > (endExcl - startIncl))
+		if (subLength > (endExcl - startIncl)) {
 			return false;
+		}
 
 		for (int i = subLength, j = endExcl - 1; i > 0; i--, j--) {
 			char c1 = s.charAt(i);
 			char c2 = segment.charAt(j);
-			if (c1 != c2)
+			if (c1 != c2) {
 				return false;
+			}
 		}
 		return true;
 	}

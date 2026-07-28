@@ -125,8 +125,9 @@ public class HistogramDiff extends LowLevelDiffAlgorithm {
 
 		void diffRegion(Edit r) {
 			diffReplace(r);
-			while (!queue.isEmpty())
+			while (!queue.isEmpty()) {
 				diff(queue.remove(queue.size() - 1));
+			}
 		}
 
 		private void diffReplace(Edit r) {
@@ -170,10 +171,11 @@ public class HistogramDiff extends LowLevelDiffAlgorithm {
 				break;
 
 			case REPLACE:
-				if (r.getLengthA() == 1 && r.getLengthB() == 1)
+				if (r.getLengthA() == 1 && r.getLengthB() == 1) {
 					edits.add(r);
-				else
+				} else {
 					diffReplace(r);
+				}
 				break;
 
 			case EMPTY:

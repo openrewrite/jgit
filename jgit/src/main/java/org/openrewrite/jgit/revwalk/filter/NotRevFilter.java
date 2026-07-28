@@ -20,7 +20,7 @@ import org.openrewrite.jgit.revwalk.RevWalk;
 /**
  * Includes a commit only if the subfilter does not include the commit.
  */
-public class NotRevFilter extends RevFilter {
+public final class NotRevFilter extends RevFilter {
 	/**
 	 * Create a filter that negates the result of another filter.
 	 *

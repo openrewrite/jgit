@@ -30,12 +30,10 @@ final class DfsRefRename extends RefRename {
 
 		destination.setExpectedOldObjectId(ObjectId.zeroId());
 		destination.setNewObjectId(source.getRef().getObjectId());
-		switch (destination.update()) {
-		case NEW:
+		if (destination.update() == RefUpdate.Result.NEW) {
 			source.delete();
 			return Result.RENAMED;
-
-		default:
+		} else {
 			return destination.getResult();
 		}
 	}

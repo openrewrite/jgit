@@ -96,7 +96,7 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 
 	Instant packLastModified;
 
-	private PackFileSnapshot fileSnapshot;
+	private final PackFileSnapshot fileSnapshot;
 
 	private volatile boolean invalid;
 
@@ -105,7 +105,7 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 	@Nullable
 	private PackFile bitmapIdxFile;
 
-	private AtomicInteger transientErrorCount = new AtomicInteger();
+	private final AtomicInteger transientErrorCount = new AtomicInteger();
 
 	private byte[] packChecksum;
 
@@ -367,10 +367,11 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 			return null;
 		}
 
-		if (curs.inflate(this, position, dstbuf, false) != sz)
+		if (curs.inflate(this, position, dstbuf, false) != sz) {
 			throw new EOFException(MessageFormat.format(
 					JGitText.get().shortCompressedStreamAt,
 					Long.valueOf(position)));
+		}
 		return dstbuf;
 	}
 
@@ -495,8 +496,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 						readFully(pos, buf, 0, n, curs);
 						crc1.update(buf, 0, n);
 						inf.setInput(buf, 0, n);
-						while (inf.inflate(tmp, 0, tmp.length) > 0)
+						while (inf.inflate(tmp, 0, tmp.length) > 0) {
 							continue;
+						}
 						pos += n;
 						cnt -= n;
 					}
@@ -601,8 +603,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 	private void readFully(final long position, final byte[] dstbuf,
 			int dstoff, final int cnt, final WindowCursor curs)
 			throws IOException {
-		if (curs.copy(this, position, dstbuf, dstoff, cnt) != cnt)
+		if (curs.copy(this, position, dstbuf, dstoff, cnt) != cnt) {
 			throw new EOFException();
+		}
 	}
 
 	private synchronized void beginCopyAsIs(ObjectToPack otp)
@@ -618,14 +621,16 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 	}
 
 	private synchronized void endCopyAsIs() {
-		if (--activeCopyRawData == 0 && activeWindows == 0)
+		if (--activeCopyRawData == 0 && activeWindows == 0) {
 			doClose();
+		}
 	}
 
 	synchronized boolean beginWindowCache() throws IOException {
 		if (++activeWindows == 1) {
-			if (activeCopyRawData == 0)
+			if (activeCopyRawData == 0) {
 				doOpen();
+			}
 			return true;
 		}
 		return false;
@@ -633,8 +638,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 
 	synchronized boolean endWindowCache() {
 		final boolean r = --activeWindows == 0;
-		if (r && activeCopyRawData == 0)
+		if (r && activeCopyRawData == 0) {
 			doClose();
+		}
 		return r;
 	}
 
@@ -708,8 +714,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 				// any failures.
 				throw new PackInvalidException(packFile, invalidatingCause);
 			}
-			if (length < pos + size)
+			if (length < pos + size) {
 				size = (int) (length - pos);
+			}
 			final byte[] buf = new byte[size];
 			fd.seek(pos);
 			fd.readFully(buf, 0, size);
@@ -719,8 +726,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 
 	ByteWindow mmap(long pos, int size) throws IOException {
 		synchronized (readLock) {
-			if (length < pos + size)
+			if (length < pos + size) {
 				size = (int) (length - pos);
+			}
 
 			MappedByteBuffer map;
 			try {
@@ -735,8 +743,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 				map = fd.getChannel().map(MapMode.READ_ONLY, pos, size);
 			}
 
-			if (map.hasArray())
+			if (map.hasArray()) {
 				return new ByteArrayWindow(this, pos, map.array());
+			}
 			return new ByteBufferWindow(this, pos, map);
 		}
 	}
@@ -824,12 +833,13 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 						base += 1;
 						c = ib[p++] & 0xff;
 						base <<= 7;
-						base += (c & 127);
+						base += c & 127;
 					}
 					base = pos - base;
 					delta = new Delta(delta, pos, (int) sz, p, base);
-					if (sz != delta.deltaSize)
+					if (sz != delta.deltaSize) {
 						break SEARCH;
+					}
 
 					DeltaBaseCache.Entry e = curs.getDeltaBaseCache().get(this, base);
 					if (e != null) {
@@ -846,8 +856,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 					readFully(pos + p, ib, 0, 20, curs);
 					long base = findDeltaBase(ObjectId.fromRaw(ib));
 					delta = new Delta(delta, pos, (int) sz, p + 20, base);
-					if (sz != delta.deltaSize)
+					if (sz != delta.deltaSize) {
 						break SEARCH;
+					}
 
 					DeltaBaseCache.Entry e = curs.getDeltaBaseCache().get(this, base);
 					if (e != null) {
@@ -870,16 +881,18 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 			// At this point there is at least one delta to apply to data.
 			// (Whole objects with no deltas to apply return early above.)
 
-			if (data == null)
+			if (data == null) {
 				throw new IOException(JGitText.get().inMemoryBufferLimitExceeded);
+			}
 
 			assert(delta != null);
 			do {
 				// Cache only the base immediately before desired object.
-				if (cached)
+				if (cached) {
 					cached = false;
-				else if (delta.next == null)
+				} else if (delta.next == null) {
 					curs.getDeltaBaseCache().store(this, delta.basePos, data, type);
+				}
 
 				pos = delta.deltaPos;
 
@@ -891,8 +904,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 				}
 
 				final long sz = BinaryDelta.getResultSize(cmds);
-				if (Integer.MAX_VALUE <= sz)
+				if (Integer.MAX_VALUE <= sz) {
 					throw new LargeObjectException.ExceedsByteArrayLimit();
+				}
 
 				final byte[] result;
 				try {
@@ -921,9 +935,10 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 	private long findDeltaBase(ObjectId baseId) throws IOException,
 			MissingObjectException {
 		long ofs = idx().findOffset(baseId);
-		if (ofs < 0)
+		if (ofs < 0) {
 			throw new MissingObjectException(baseId,
 					JGitText.get().missingDeltaBase);
+		}
 		return ofs;
 	}
 
@@ -980,15 +995,16 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 
 			case Constants.OBJ_OFS_DELTA: {
 				int p = 1;
-				while ((c & 0x80) != 0)
+				while ((c & 0x80) != 0) {
 					c = ib[p++] & 0xff;
+				}
 				c = ib[p++] & 0xff;
 				long ofs = c & 127;
 				while ((c & 128) != 0) {
 					ofs += 1;
 					c = ib[p++] & 0xff;
 					ofs <<= 7;
-					ofs += (c & 127);
+					ofs += c & 127;
 				}
 				pos = pos - ofs;
 				continue;
@@ -996,8 +1012,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 
 			case Constants.OBJ_REF_DELTA: {
 				int p = 1;
-				while ((c & 0x80) != 0)
+				while ((c & 0x80) != 0) {
 					c = ib[p++] & 0xff;
+				}
 				readFully(pos + p, ib, 0, 20, curs);
 				pos = findDeltaBase(ObjectId.fromRaw(ib));
 				continue;
@@ -1042,8 +1059,9 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 
 		case Constants.OBJ_OFS_DELTA:
 			c = ib[p++] & 0xff;
-			while ((c & 128) != 0)
+			while ((c & 128) != 0) {
 				c = ib[p++] & 0xff;
+			}
 			deltaAt = pos + p;
 			break;
 
@@ -1068,18 +1086,20 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 	LocalObjectRepresentation representation(final WindowCursor curs,
 			final AnyObjectId objectId) throws IOException {
 		final long pos = idx().findOffset(objectId);
-		if (pos < 0)
+		if (pos < 0) {
 			return null;
+		}
 
 		final byte[] ib = curs.tempId;
 		readFully(pos, ib, 0, 20, curs);
 		int c = ib[0] & 0xff;
 		int p = 1;
 		final int typeCode = (c >> 4) & 7;
-		while ((c & 0x80) != 0)
+		while ((c & 0x80) != 0) {
 			c = ib[p++] & 0xff;
+		}
 
-		long len = (findEndOffset(pos) - pos);
+		long len = findEndOffset(pos) - pos;
 		switch (typeCode) {
 		case Constants.OBJ_COMMIT:
 		case Constants.OBJ_TREE:
@@ -1094,7 +1114,7 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 				ofs += 1;
 				c = ib[p++] & 0xff;
 				ofs <<= 7;
-				ofs += (c & 127);
+				ofs += c & 127;
 			}
 			ofs = pos - ofs;
 			return LocalObjectRepresentation.newDelta(this, pos, len - p, ofs);
@@ -1149,15 +1169,17 @@ public class Pack implements Iterable<PackIndex.MutableEntry> {
 	}
 
 	private synchronized PackReverseIndex getReverseIdx() throws IOException {
-		if (reverseIdx == null)
+		if (reverseIdx == null) {
 			reverseIdx = new PackReverseIndex(idx());
+		}
 		return reverseIdx;
 	}
 
 	private boolean isCorrupt(long offset) {
 		LongList list = corruptObjects;
-		if (list == null)
+		if (list == null) {
 			return false;
+		}
 		synchronized (list) {
 			return list.contains(offset);
 		}

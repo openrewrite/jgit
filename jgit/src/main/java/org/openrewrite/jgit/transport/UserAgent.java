@@ -28,7 +28,7 @@ import org.openrewrite.jgit.util.StringUtils;
  *
  * @since 4.0
  */
-public class UserAgent {
+public final class UserAgent {
 	private static volatile String userAgent = computeUserAgent();
 
 	private static String computeUserAgent() {
@@ -52,8 +52,9 @@ public class UserAgent {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 			if (c <= 32 || c >= 127) {
-				if (b.length() > 0 && b.charAt(b.length() - 1) == '.')
+				if (b.length() > 0 && b.charAt(b.length() - 1) == '.') {
 					continue;
+				}
 				c = '.';
 			}
 			b.append(c);

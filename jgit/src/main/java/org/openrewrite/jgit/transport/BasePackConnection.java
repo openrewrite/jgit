@@ -212,7 +212,7 @@ abstract class BasePackConnection extends BaseConnection {
 				} catch (EOFException e) {
 					throw noRepository(e);
 				}
-				if (line != null && VERSION_1.equals(line)) {
+				if (VERSION_1.equals(line)) {
 					// Same as V0, except for this extra line. We shouldn't get
 					// it since we never request V1.
 					setProtocolVersion(TransferConfig.ProtocolVersion.V0);
@@ -265,14 +265,14 @@ abstract class BasePackConnection extends BaseConnection {
 				throw invalidRefAdvertisementLine(line);
 			}
 			String name = line.substring(41, line.length());
-			if (first && name.equals("capabilities^{}")) { //$NON-NLS-1$
+			if (first && "capabilities^{}".equals(name)) { //$NON-NLS-1$
 				// special line from git-receive-pack (protocol V0) to show
 				// capabilities when there are no refs to advertise
 				continue;
 			}
 
 			final ObjectId id = toId(line, line.substring(0, 40));
-			if (name.equals(".have")) { //$NON-NLS-1$
+			if (".have".equals(name)) { //$NON-NLS-1$
 				additionalHaves.add(id);
 			} else {
 				processLineV1(name, id, avail);
@@ -335,7 +335,7 @@ abstract class BasePackConnection extends BaseConnection {
 			}
 			String name = line.substring(41, line.length());
 			final ObjectId id = toId(line, line.substring(0, 40));
-			if (name.equals(".have")) { //$NON-NLS-1$
+			if (".have".equals(name)) { //$NON-NLS-1$
 				additionalHaves.add(id);
 			} else {
 				processLineV2(line, id, name, avail, symRefs);
@@ -391,7 +391,7 @@ abstract class BasePackConnection extends BaseConnection {
 	}
 
 	private void addCapability(String capability) {
-		String parts[] = capability.split("=", 2); //$NON-NLS-1$
+		String[] parts = capability.split("=", 2); //$NON-NLS-1$
 		if (parts.length == 2) {
 			remoteCapabilities.put(parts[0], parts[1]);
 		}
@@ -596,8 +596,9 @@ abstract class BasePackConnection extends BaseConnection {
 	 * @return {@code true} if the requested option is supported
 	 */
 	protected boolean wantCapability(StringBuilder b, String option) {
-		if (!isCapableOf(option))
+		if (!isCapableOf(option)) {
 			return false;
+		}
 		b.append(' ');
 		b.append(option);
 		return true;

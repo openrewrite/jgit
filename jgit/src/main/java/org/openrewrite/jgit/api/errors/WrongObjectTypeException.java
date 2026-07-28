@@ -24,9 +24,9 @@ public class WrongObjectTypeException extends GitAPIException {
 
 	private static final long serialVersionUID = 1L;
 
-	private String name;
+	private final String name;
 
-	private int type;
+	private final int type;
 
 	/**
 	 * Construct a {@link WrongObjectTypeException} for the specified object id,

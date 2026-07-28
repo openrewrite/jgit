@@ -75,14 +75,12 @@ class TransportLocal extends Transport implements PackTransport {
 
 		@Override
 		public boolean canHandle(URIish uri, Repository local, String remoteName) {
-			if (uri.getPath() == null
+			return !(uri.getPath() == null
 					|| uri.getPort() > 0
 					|| uri.getUser() != null
 					|| uri.getPass() != null
 					|| uri.getHost() != null
-					|| (uri.getScheme() != null && !getSchemes().contains(uri.getScheme())))
-				return false;
-			return true;
+					|| (uri.getScheme() != null && !getSchemes().contains(uri.getScheme())));
 		}
 
 		@Override
@@ -92,12 +90,14 @@ class TransportLocal extends Transport implements PackTransport {
 			File path = local.getFS().resolve(localPath, uri.getPath());
 			// If the reference is to a local file, C Git behavior says
 			// assume this is a bundle, since repositories are directories.
-			if (path.isFile())
+			if (path.isFile()) {
 				return new TransportBundleFile(local, uri, path);
+			}
 
 			File gitDir = RepositoryCache.FileKey.resolve(path, local.getFS());
-			if (gitDir == null)
+			if (gitDir == null) {
 				throw new NoRemoteRepositoryException(uri, JGitText.get().notFound);
+			}
 			return new TransportLocal(local, uri, gitDir);
 		}
 
@@ -107,13 +107,15 @@ class TransportLocal extends Transport implements PackTransport {
 			File path = FS.DETECTED.resolve(new File("."), uri.getPath()); //$NON-NLS-1$
 			// If the reference is to a local file, C Git behavior says
 			// assume this is a bundle, since repositories are directories.
-			if (path.isFile())
+			if (path.isFile()) {
 				return new TransportBundleFile(uri, path);
+			}
 
 			File gitDir = RepositoryCache.FileKey.resolve(path, FS.DETECTED);
-			if (gitDir == null)
+			if (gitDir == null) {
 				throw new NoRemoteRepositoryException(uri,
 						JGitText.get().notFound);
+			}
 			return new TransportLocal(uri, gitDir);
 		}
 	};
@@ -175,8 +177,9 @@ class TransportLocal extends Transport implements PackTransport {
 	public PushConnection openPush() throws TransportException {
 		final String rp = getOptionReceivePack();
 		if (!"git-receive-pack".equals(rp) //$NON-NLS-1$
-				&& !"git receive-pack".equals(rp)) //$NON-NLS-1$
+				&& !"git receive-pack".equals(rp)) { //$NON-NLS-1$
 			return new ForkLocalPushConnection();
+		}
 
 		ReceivePackFactory<Void> rpf = (Void req,
 				Repository db) -> createReceivePack(db);

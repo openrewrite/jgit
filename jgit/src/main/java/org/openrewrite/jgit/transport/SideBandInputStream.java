@@ -50,10 +50,10 @@ public class SideBandInputStream extends InputStream {
 	static final int CH_PROGRESS = 2;
 	static final int CH_ERROR = 3;
 
-	private static Pattern P_UNBOUNDED = Pattern
+	private static final Pattern P_UNBOUNDED = Pattern
 			.compile("^([\\w ]+): +(\\d+)(?:, done\\.)? *[\r\n]$"); //$NON-NLS-1$
 
-	private static Pattern P_BOUNDED = Pattern
+	private static final Pattern P_BOUNDED = Pattern
 			.compile("^([\\w ]+): +\\d+% +\\( *(\\d+)/ *(\\d+)\\)(?:, done\\.)? *[\r\n]$"); //$NON-NLS-1$
 
 	private final InputStream rawIn;
@@ -92,8 +92,9 @@ public class SideBandInputStream extends InputStream {
 	@Override
 	public int read() throws IOException {
 		needDataPacket();
-		if (eof)
+		if (eof) {
 			return -1;
+		}
 		available--;
 		return rawIn.read();
 	}
@@ -104,11 +105,13 @@ public class SideBandInputStream extends InputStream {
 		int r = 0;
 		while (len > 0) {
 			needDataPacket();
-			if (eof)
+			if (eof) {
 				break;
+			}
 			final int n = rawIn.read(b, off, Math.min(len, available));
-			if (n < 0)
+			if (n < 0) {
 				break;
+			}
 			r += n;
 			off += n;
 			len -= n;
@@ -118,8 +121,9 @@ public class SideBandInputStream extends InputStream {
 	}
 
 	private void needDataPacket() throws IOException {
-		if (eof || (channel == CH_DATA && available > 0))
+		if (eof || (channel == CH_DATA && available > 0)) {
 			return;
+		}
 		for (;;) {
 			available = pckIn.readLength();
 			if (available == 0) {
@@ -129,8 +133,9 @@ public class SideBandInputStream extends InputStream {
 
 			channel = rawIn.read() & 0xff;
 			available -= HDR_SIZE; // length header plus channel indicator
-			if (available == 0)
+			if (available == 0) {
 				continue;
+			}
 
 			switch (channel) {
 			case CH_DATA:
@@ -155,14 +160,15 @@ public class SideBandInputStream extends InputStream {
 			final int lf = pkt.indexOf('\n');
 			final int cr = pkt.indexOf('\r');
 			final int s;
-			if (0 <= lf && 0 <= cr)
+			if (0 <= lf && 0 <= cr) {
 				s = Math.min(lf, cr);
-			else if (0 <= lf)
+			} else if (0 <= lf) {
 				s = lf;
-			else if (0 <= cr)
+			} else if (0 <= cr) {
 				s = cr;
-			else
+			} else {
 				break;
+			}
 
 			doProgressLine(pkt.substring(0, s + 1));
 			pkt = pkt.substring(s + 1);
@@ -202,8 +208,9 @@ public class SideBandInputStream extends InputStream {
 		}
 
 		messages.write(msg);
-		if (out != null)
+		if (out != null) {
 			out.write(msg.getBytes(UTF_8));
+		}
 	}
 
 	private void beginTask(int totalWorkUnits) {

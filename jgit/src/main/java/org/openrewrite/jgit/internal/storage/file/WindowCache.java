@@ -106,7 +106,7 @@ import org.openrewrite.jgit.util.Monitoring;
  * especially if the nominated eviction thread is being starved relative to the
  * other threads.
  */
-public class WindowCache {
+public final class WindowCache {
 
 	/**
 	 * Record statistics for a cache
@@ -325,11 +325,13 @@ public class WindowCache {
 		}
 	}
 
-	private static final int bits(int newSize) {
-		if (newSize < 4096)
+	private static int bits(int newSize) {
+		if (newSize < 4096) {
 			throw new IllegalArgumentException(JGitText.get().invalidWindowSize);
-		if (Integer.bitCount(newSize) != 1)
+		}
+		if (Integer.bitCount(newSize) != 1) {
 			throw new IllegalArgumentException(JGitText.get().windowSizeMustBePowerOf2);
+		}
 		return Integer.numberOfTrailingZeros(newSize);
 	}
 
@@ -361,8 +363,9 @@ public class WindowCache {
 	public static void reconfigure(WindowCacheConfig cfg) {
 		final WindowCache nc = new WindowCache(cfg);
 		final WindowCache oc = cache;
-		if (oc != null)
+		if (oc != null) {
 			oc.removeAll();
+		}
 		cache = nc;
 		streamFileThreshold = cfg.getStreamFileThreshold();
 		DeltaBaseCache.reconfigure(cfg);
@@ -379,7 +382,7 @@ public class WindowCache {
 		return cache.publishMBeanIfNeeded();
 	}
 
-	static final ByteWindow get(Pack pack, long offset)
+	static ByteWindow get(Pack pack, long offset)
 			throws IOException {
 		final WindowCache c = cache;
 		final ByteWindow r = c.getOrLoad(pack, c.toStart(offset));
@@ -394,7 +397,7 @@ public class WindowCache {
 		return r;
 	}
 
-	static final void purge(Pack pack) {
+	static void purge(Pack pack) {
 		cache.removeAll(pack);
 	}
 
@@ -435,30 +438,35 @@ public class WindowCache {
 
 	private final AtomicBoolean publishMBean = new AtomicBoolean();
 
-	private boolean useStrongRefs;
+	private final boolean useStrongRefs;
 
 	private WindowCache(WindowCacheConfig cfg) {
 		tableSize = tableSize(cfg);
 		final int lockCount = lockCount(cfg);
-		if (tableSize < 1)
+		if (tableSize < 1) {
 			throw new IllegalArgumentException(JGitText.get().tSizeMustBeGreaterOrEqual1);
-		if (lockCount < 1)
+		}
+		if (lockCount < 1) {
 			throw new IllegalArgumentException(JGitText.get().lockCountMustBeGreaterOrEqual1);
+		}
 
 		clock = new AtomicLong(1);
 		table = new AtomicReferenceArray<>(tableSize);
 		locks = new Lock[lockCount];
-		for (int i = 0; i < locks.length; i++)
+		for (int i = 0;i < locks.length;i++) {
 			locks[i] = new Lock();
+		}
 		evictLock = new ReentrantLock();
 
 		int eb = (int) (tableSize * .1);
-		if (64 < eb)
+		if (64 < eb) {
 			eb = 64;
-		else if (eb < 4)
+		} else if (eb < 4) {
 			eb = 4;
-		if (tableSize < eb)
+		}
+		if (tableSize < eb) {
 			eb = tableSize;
+		}
 		evictBatch = eb;
 
 		maxFiles = cfg.getPackedGitOpenFiles();
@@ -474,10 +482,12 @@ public class WindowCache {
 		statsRecorder = mbean;
 		publishMBean.set(cfg.getExposeStatsViaJmx());
 
-		if (maxFiles < 1)
+		if (maxFiles < 1) {
 			throw new IllegalArgumentException(JGitText.get().openFilesMustBeAtLeast1);
-		if (maxBytes < windowSize)
+		}
+		if (maxBytes < windowSize) {
 			throw new IllegalArgumentException(JGitText.get().windowSizeMustBeLesserThanLimit);
+		}
 	}
 
 	private WindowCache publishMBeanIfNeeded() {
@@ -507,11 +517,13 @@ public class WindowCache {
 
 	private ByteWindow load(Pack pack, long offset) throws IOException {
 		long startTime = System.nanoTime();
-		if (pack.beginWindowCache())
+		if (pack.beginWindowCache()) {
 			statsRecorder.recordOpenFiles(1);
+		}
 		try {
-			if (mmap)
+			if (mmap) {
 				return pack.mmap(offset, windowSize);
+			}
 			ByteArrayWindow w = pack.read(offset, windowSize);
 			statsRecorder.recordLoadSuccess(System.nanoTime() - startTime);
 			return w;
@@ -556,10 +568,12 @@ public class WindowCache {
 	private static int tableSize(WindowCacheConfig cfg) {
 		final int wsz = cfg.getPackedGitWindowSize();
 		final long limit = cfg.getPackedGitLimit();
-		if (wsz <= 0)
+		if (wsz <= 0) {
 			throw new IllegalArgumentException(JGitText.get().invalidWindowSize);
-		if (limit < wsz)
+		}
+		if (limit < wsz) {
 			throw new IllegalArgumentException(JGitText.get().windowSizeMustBeLesserThanLimit);
+		}
 		return (int) Math.min(5 * (limit / wsz) / 2, 2000000000);
 	}
 
@@ -604,8 +618,9 @@ public class WindowCache {
 			hit(ref);
 			for (;;) {
 				final Entry n = new Entry(clean(e2), ref);
-				if (table.compareAndSet(slot, e2, n))
+				if (table.compareAndSet(slot, e2, n)) {
 					break;
+				}
 				e2 = table.get(slot);
 			}
 		}
@@ -657,11 +672,13 @@ public class WindowCache {
 			Entry old = null;
 			int slot = 0;
 			for (int b = evictBatch - 1; b >= 0; b--, ptr++) {
-				if (tableSize <= ptr)
+				if (tableSize <= ptr) {
 					ptr = 0;
+				}
 				for (Entry e = table.get(ptr); e != null; e = e.next) {
-					if (e.dead)
+					if (e.dead) {
 						continue;
+					}
 					if (old == null || e.ref.getLastAccess() < old.ref
 							.getLastAccess()) {
 						old = e;
@@ -693,8 +710,9 @@ public class WindowCache {
 			Entry e1;
 			do {
 				e1 = table.get(s);
-				for (Entry e = e1; e != null; e = e.next)
+				for (Entry e = e1;e != null;e = e.next) {
 					e.kill();
+				}
 			} while (!table.compareAndSet(s, e1, null));
 		}
 		gc();
@@ -719,11 +737,13 @@ public class WindowCache {
 				if (e.ref.getPack() == pack) {
 					e.kill();
 					hasDead = true;
-				} else if (e.dead)
+				} else if (e.dead) {
 					hasDead = true;
+				}
 			}
-			if (hasDead)
+			if (hasDead) {
 				table.compareAndSet(s, e1, clean(e1));
+			}
 		}
 		gc();
 	}
@@ -745,8 +765,9 @@ public class WindowCache {
 			top.ref.kill();
 			top = top.next;
 		}
-		if (top == null)
+		if (top == null) {
 			return null;
+		}
 		final Entry n = clean(top.next);
 		return n == top.next ? top : new Entry(n, top.ref);
 	}

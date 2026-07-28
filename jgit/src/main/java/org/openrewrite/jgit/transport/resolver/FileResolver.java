@@ -64,8 +64,9 @@ public class FileResolver<C> implements RepositoryResolver<C> {
 	@Override
 	public Repository open(C req, String name)
 			throws RepositoryNotFoundException, ServiceNotEnabledException {
-		if (isUnreasonableName(name))
+		if (isUnreasonableName(name)) {
 			throw new RepositoryNotFoundException(name);
+		}
 
 		Repository db = exports.get(nameWithDotGit(name));
 		if (db != null) {
@@ -75,8 +76,9 @@ public class FileResolver<C> implements RepositoryResolver<C> {
 
 		for (File base : exportBase) {
 			File dir = FileKey.resolve(new File(base, name), FS.DETECTED);
-			if (dir == null)
+			if (dir == null) {
 				continue;
+			}
 
 			try {
 				FileKey key = FileKey.exact(dir, FS.DETECTED);
@@ -189,38 +191,47 @@ public class FileResolver<C> implements RepositoryResolver<C> {
 	 */
 	protected boolean isExportOk(C req, String repositoryName, Repository db)
 			throws IOException {
-		if (isExportAll())
+		if (isExportAll()) {
 			return true;
-		else if (db.getDirectory() != null)
+		} else if (db.getDirectory() != null) {
 			return new File(db.getDirectory(), "git-daemon-export-ok").exists(); //$NON-NLS-1$
-		else
+		} else {
 			return false;
+		}
 	}
 
 	private static String nameWithDotGit(String name) {
-		if (name.endsWith(Constants.DOT_GIT_EXT))
+		if (name.endsWith(Constants.DOT_GIT_EXT)) {
 			return name;
+		}
 		return name + Constants.DOT_GIT_EXT;
 	}
 
 	private static boolean isUnreasonableName(String name) {
-		if (name.length() == 0)
+		if (name.length() == 0) {
 			return true; // no empty paths
 
-		if (name.indexOf('\\') >= 0)
+		}
+		if (name.indexOf('\\') >= 0) {
 			return true; // no windows/dos style paths
-		if (new File(name).isAbsolute())
+		}
+		if (new File(name).isAbsolute()) {
 			return true; // no absolute paths
 
-		if (name.startsWith("../")) //$NON-NLS-1$
+		}
+		if (name.startsWith("../")) { //$NON-NLS-1$
 			return true; // no "l../etc/passwd"
-		if (name.contains("/../")) //$NON-NLS-1$
+		}
+		if (name.contains("/../")) { //$NON-NLS-1$
 			return true; // no "foo/../etc/passwd"
-		if (name.contains("/./")) //$NON-NLS-1$
+		}
+		if (name.contains("/./")) { //$NON-NLS-1$
 			return true; // "foo/./foo" is insane to ask
-		if (name.contains("//")) //$NON-NLS-1$
+		}
+		if (name.contains("//")) { //$NON-NLS-1$
 			return true; // double slashes is sloppy, don't use it
 
+		}
 		return false; // is a reasonable name
 	}
 }

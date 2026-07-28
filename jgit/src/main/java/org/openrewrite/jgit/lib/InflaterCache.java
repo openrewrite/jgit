@@ -16,7 +16,7 @@ import java.util.zip.Inflater;
 /**
  * Creates zlib based inflaters as necessary for object decompression.
  */
-public class InflaterCache {
+public final class InflaterCache {
 	private static final int SZ = 4;
 
 	private static final Inflater[] inflaterCache;
@@ -59,8 +59,9 @@ public class InflaterCache {
 	public static void release(Inflater i) {
 		if (i != null) {
 			i.reset();
-			if (releaseImpl(i))
+			if (releaseImpl(i)) {
 				i.end();
+			}
 		}
 	}
 

@@ -12,9 +12,8 @@ package org.openrewrite.jgit.lib;
 
 import java.util.Iterator;
 
-import org.openrewrite.jgit.internal.storage.file.PackBitmapIndex;
-
 import com.googlecode.javaewah.EWAHCompressedBitmap;
+import org.openrewrite.jgit.internal.storage.file.PackBitmapIndex;
 
 /**
  * A compressed bitmap representation of the entire object graph.

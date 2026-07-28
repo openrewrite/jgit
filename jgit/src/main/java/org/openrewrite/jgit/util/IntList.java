@@ -54,9 +54,11 @@ public class IntList {
 	 * @since 4.9
 	 */
 	public boolean contains(int value) {
-		for (int i = 0; i < count; i++)
-			if (entries[i] == value)
+		for (int i = 0;i < count;i++) {
+			if (entries[i] == value) {
 				return true;
+			}
+		}
 		return false;
 	}
 
@@ -70,8 +72,9 @@ public class IntList {
 	 *             the index outside the valid range
 	 */
 	public int get(int i) {
-		if (count <= i)
+		if (count <= i) {
 			throw new ArrayIndexOutOfBoundsException(i);
+		}
 		return entries[i];
 	}
 
@@ -89,8 +92,9 @@ public class IntList {
 	 *            the number to add.
 	 */
 	public void add(int n) {
-		if (count == entries.length)
+		if (count == entries.length) {
 			grow();
+		}
 		entries[count++] = n;
 	}
 
@@ -103,12 +107,13 @@ public class IntList {
 	 *            value to store at the position.
 	 */
 	public void set(int index, int n) {
-		if (count < index)
+		if (count < index) {
 			throw new ArrayIndexOutOfBoundsException(index);
-		else if (count == index)
+		} else if (count == index) {
 			add(n);
-		else
+		} else {
 			entries[index] = n;
+		}
 	}
 
 	/**
@@ -122,8 +127,9 @@ public class IntList {
 	 *            value to insert into padded positions.
 	 */
 	public void fillTo(int toIndex, int val) {
-		while (count < toIndex)
+		while (count < toIndex) {
 			add(val);
+		}
 	}
 
 	private void grow() {
@@ -138,8 +144,9 @@ public class IntList {
 		final StringBuilder r = new StringBuilder();
 		r.append('[');
 		for (int i = 0; i < count; i++) {
-			if (i > 0)
+			if (i > 0) {
 				r.append(", "); //$NON-NLS-1$
+			}
 			r.append(entries[i]);
 		}
 		r.append(']');

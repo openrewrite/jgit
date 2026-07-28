@@ -121,8 +121,9 @@ public class EmptyTreeIterator extends AbstractTreeIterator {
 	/** {@inheritDoc} */
 	@Override
 	public void stopWalk() {
-		if (parent != null)
+		if (parent != null) {
 			parent.stopWalk();
+		}
 	}
 
 	/** {@inheritDoc} */

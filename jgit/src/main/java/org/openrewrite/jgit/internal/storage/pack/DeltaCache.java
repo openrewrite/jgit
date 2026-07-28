@@ -35,8 +35,9 @@ class DeltaCache {
 		//
 		if (0 < size && size < used + length) {
 			checkForGarbageCollectedObjects();
-			if (0 < size && size < used + length)
+			if (0 < size && size < used + length) {
 				return false;
+			}
 		}
 
 		if (length < entryLimit) {
@@ -88,8 +89,9 @@ class DeltaCache {
 
 	private void checkForGarbageCollectedObjects() {
 		Ref r;
-		while ((r = (Ref) queue.poll()) != null)
+		while ((r = (Ref) queue.poll()) != null) {
 			used -= r.cost;
+		}
 	}
 
 	static class Ref extends SoftReference<byte[]> {

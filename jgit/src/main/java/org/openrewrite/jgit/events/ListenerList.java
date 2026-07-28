@@ -96,8 +96,9 @@ public class ListenerList {
 	public void dispatch(RepositoryEvent event) {
 		List<ListenerHandle> list = lists.get(event.getListenerType());
 		if (list != null) {
-			for (ListenerHandle handle : list)
+			for (ListenerHandle handle : list) {
 				event.dispatch(handle.listener);
+			}
 		}
 	}
 
@@ -108,15 +109,17 @@ public class ListenerList {
 
 			newList = new CopyOnWriteArrayList<>();
 			list = lists.putIfAbsent(handle.type, newList);
-			if (list == null)
+			if (list == null) {
 				list = newList;
+			}
 		}
 		list.add(handle);
 	}
 
 	void remove(ListenerHandle handle) {
 		List<ListenerHandle> list = lists.get(handle.type);
-		if (list != null)
+		if (list != null) {
 			list.remove(handle);
+		}
 	}
 }

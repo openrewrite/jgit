@@ -109,13 +109,15 @@ public class PushCommand extends
 			}
 			if (refSpecs.isEmpty()) {
 				Ref head = repo.exactRef(Constants.HEAD);
-				if (head != null && head.isSymbolic())
+				if (head != null && head.isSymbolic()) {
 					refSpecs.add(new RefSpec(head.getLeaf().getName()));
+				}
 			}
 
 			if (force) {
-				for (int i = 0; i < refSpecs.size(); i++)
+				for (int i = 0;i < refSpecs.size();i++) {
 					refSpecs.set(i, refSpecs.get(i).setForceUpdate(true));
+				}
 			}
 
 			final List<Transport> transports;
@@ -124,8 +126,9 @@ public class PushCommand extends
 					final Transport transport : transports) {
 				transport.setPushThin(thin);
 				transport.setPushAtomic(atomic);
-				if (receivePack != null)
+				if (receivePack != null) {
 					transport.setOptionReceivePack(receivePack);
+				}
 				transport.setDryRun(dryRun);
 				transport.setPushOptions(pushOptions);
 				configure(transport);
@@ -388,8 +391,9 @@ public class PushCommand extends
 						JGitText.get().exceptionCaughtDuringExecutionOfPushCommand,
 						e);
 			}
-			if (src != null)
+			if (src != null) {
 				add(src);
+			}
 		}
 		return this;
 	}

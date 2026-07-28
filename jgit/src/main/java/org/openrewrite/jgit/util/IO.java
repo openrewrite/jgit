@@ -30,7 +30,7 @@ import org.openrewrite.jgit.util.io.SilentFileInputStream;
 /**
  * Input/Output utilities
  */
-public class IO {
+public final class IO {
 
 	/**
 	 * Read an entire local file into memory as a byte array.
@@ -43,7 +43,7 @@ public class IO {
 	 * @throws java.io.IOException
 	 *             the file exists, but its contents cannot be read.
 	 */
-	public static final byte[] readFully(File path)
+	public static byte[] readFully(File path)
 			throws FileNotFoundException, IOException {
 		return IO.readFully(path, Integer.MAX_VALUE);
 	}
@@ -63,19 +63,21 @@ public class IO {
 	 * @throws java.io.IOException
 	 *             the file exists, but its contents cannot be read.
 	 */
-	public static final byte[] readSome(File path, int limit)
+	public static byte[] readSome(File path, int limit)
 			throws FileNotFoundException, IOException {
 		try (SilentFileInputStream in = new SilentFileInputStream(path)) {
 			byte[] buf = new byte[limit];
 			int cnt = 0;
 			for (;;) {
 				int n = in.read(buf, cnt, buf.length - cnt);
-				if (n <= 0)
+				if (n <= 0) {
 					break;
+				}
 				cnt += n;
 			}
-			if (cnt == buf.length)
+			if (cnt == buf.length) {
 				return buf;
+			}
 			byte[] res = new byte[cnt];
 			System.arraycopy(buf, 0, res, 0, cnt);
 			return res;
@@ -96,13 +98,14 @@ public class IO {
 	 * @throws java.io.IOException
 	 *             the file exists, but its contents cannot be read.
 	 */
-	public static final byte[] readFully(File path, int max)
+	public static byte[] readFully(File path, int max)
 			throws FileNotFoundException, IOException {
 		try (SilentFileInputStream in = new SilentFileInputStream(path)) {
 			long sz = Math.max(path.length(), 1);
-			if (sz > max)
+			if (sz > max) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().fileIsTooLarge, path));
+			}
 
 			byte[] buf = new byte[(int) sz];
 			int valid = 0;
@@ -110,8 +113,9 @@ public class IO {
 				if (buf.length == valid) {
 					if (buf.length == max) {
 						int next = in.read();
-						if (next < 0)
+						if (next < 0) {
 							break;
+						}
 
 						throw new IOException(MessageFormat.format(
 								JGitText.get().fileIsTooLarge, path));
@@ -122,8 +126,9 @@ public class IO {
 					buf = nb;
 				}
 				int n = in.read(buf, valid, buf.length - valid);
-				if (n < 0)
+				if (n < 0) {
 					break;
+				}
 				valid += n;
 			}
 			if (valid < buf.length) {
@@ -161,14 +166,16 @@ public class IO {
 		int pos = 0;
 		while (pos < out.length) {
 			int read = in.read(out, pos, out.length - pos);
-			if (read < 0)
+			if (read < 0) {
 				return ByteBuffer.wrap(out, 0, pos);
+			}
 			pos += read;
 		}
 
 		int last = in.read();
-		if (last < 0)
+		if (last < 0) {
 			return ByteBuffer.wrap(out, 0, pos);
+		}
 
 		try (TemporaryBuffer.Heap tmp = new TemporaryBuffer.Heap(
 				Integer.MAX_VALUE)) {
@@ -199,8 +206,9 @@ public class IO {
 			int off, int len) throws IOException {
 		while (len > 0) {
 			final int r = fd.read(dst, off, len);
-			if (r <= 0)
+			if (r <= 0) {
 				throw new EOFException(JGitText.get().shortReadOfBlock);
+			}
 			off += r;
 			len -= r;
 		}
@@ -223,13 +231,15 @@ public class IO {
 	 */
 	public static int read(ReadableByteChannel channel, byte[] dst, int off,
 			int len) throws IOException {
-		if (len == 0)
+		if (len == 0) {
 			return 0;
+		}
 		int cnt = 0;
 		while (0 < len) {
 			int r = channel.read(ByteBuffer.wrap(dst, off, len));
-			if (r <= 0)
+			if (r <= 0) {
 				break;
+			}
 			off += r;
 			len -= r;
 			cnt += r;
@@ -283,8 +293,9 @@ public class IO {
 			throws IOException {
 		while (toSkip > 0) {
 			final long r = fd.skip(toSkip);
-			if (r <= 0)
+			if (r <= 0) {
 				throw new EOFException(JGitText.get().shortSkipOfBlock);
+			}
 			toSkip -= r;
 		}
 	}

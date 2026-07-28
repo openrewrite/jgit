@@ -77,8 +77,9 @@ public class SymbolicRef implements Ref {
 	@NonNull
 	public Ref getLeaf() {
 		Ref dst = getTarget();
-		while (dst.isSymbolic())
+		while (dst.isSymbolic()) {
 			dst = dst.getTarget();
+		}
 		return dst;
 	}
 

@@ -37,13 +37,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import org.openrewrite.jgit.errors.TransportException;
-import org.openrewrite.jgit.internal.transport.jsch.JSchText;
-import org.openrewrite.jgit.util.FS;
-import org.openrewrite.jgit.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.jcraft.jsch.ConfigRepository;
 import com.jcraft.jsch.ConfigRepository.Config;
 import com.jcraft.jsch.HostKey;
@@ -51,6 +44,12 @@ import com.jcraft.jsch.HostKeyRepository;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.transport.jsch.JSchText;
+import org.openrewrite.jgit.util.FS;
+import org.openrewrite.jgit.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The base session factory that loads known hosts and private keys from
@@ -97,14 +96,17 @@ public class JschConfigSessionFactory extends SshSessionFactory {
 		int port = uri.getPort();
 
 		try {
-			if (config == null)
+			if (config == null) {
 				config = OpenSshConfig.get(fs);
+			}
 
 			final OpenSshConfig.Host hc = config.lookup(host);
-			if (port <= 0)
+			if (port <= 0) {
 				port = hc.getPort();
-			if (user == null)
+			}
+			if (user == null) {
 				user = hc.getUser();
+			}
 
 			Session session = createSession(credentialsProvider, fs, user,
 					pass, host, port, hc);
@@ -130,8 +132,9 @@ public class JschConfigSessionFactory extends SshSessionFactory {
 							credentialsProvider.reset(uri);
 							session = createSession(credentialsProvider, fs,
 									user, pass, host, port, hc);
-						} else
+						} else {
 							throw e;
+						}
 					} else if (retries >= hc.getConnectionAttempts()) {
 						throw e;
 					} else {
@@ -171,11 +174,11 @@ public class JschConfigSessionFactory extends SshSessionFactory {
 	}
 
 	private static boolean isAuthenticationFailed(JSchException e) {
-		return e.getCause() == null && e.getMessage().equals("Auth fail"); //$NON-NLS-1$
+		return e.getCause() == null && "Auth fail".equals(e.getMessage()); //$NON-NLS-1$
 	}
 
 	private static boolean isAuthenticationCanceled(JSchException e) {
-		return e.getCause() == null && e.getMessage().equals("Auth cancel"); //$NON-NLS-1$
+		return e.getCause() == null && "Auth cancel".equals(e.getMessage()); //$NON-NLS-1$
 	}
 
 	// Package visibility for tests
@@ -193,16 +196,19 @@ public class JschConfigSessionFactory extends SshSessionFactory {
 		// We retry already in getSession() method. JSch must not retry
 		// on its own.
 		session.setConfig("MaxAuthTries", "1"); //$NON-NLS-1$ //$NON-NLS-2$
-		if (pass != null)
+		if (pass != null) {
 			session.setPassword(pass);
+		}
 		final String strictHostKeyCheckingPolicy = hc
 				.getStrictHostKeyChecking();
-		if (strictHostKeyCheckingPolicy != null)
+		if (strictHostKeyCheckingPolicy != null) {
 			session.setConfig("StrictHostKeyChecking", //$NON-NLS-1$
 					strictHostKeyCheckingPolicy);
+		}
 		final String pauth = hc.getPreferredAuthentications();
-		if (pauth != null)
+		if (pauth != null) {
 			session.setConfig("PreferredAuthentications", pauth); //$NON-NLS-1$
+		}
 		if (credentialsProvider != null
 				&& (!hc.isBatchMode() || !credentialsProvider.isInteractive())) {
 			session.setUserInfo(new CredentialsProviderUserInfo(session,
@@ -364,13 +370,15 @@ public class JschConfigSessionFactory extends SshSessionFactory {
 				defaultJSch.setConfigRepository(
 						new JschBugFixingConfigRepository(config));
 			}
-			for (Object name : defaultJSch.getIdentityNames())
+			for (Object name : defaultJSch.getIdentityNames()) {
 				byIdentityFile.put((String) name, defaultJSch);
+			}
 		}
 
 		final File identityFile = hc.getIdentityFile();
-		if (identityFile == null)
+		if (identityFile == null) {
 			return defaultJSch;
+		}
 
 		final String identityKey = identityFile.getAbsolutePath();
 		JSch jsch = byIdentityFile.get(identityKey);
@@ -421,8 +429,9 @@ public class JschConfigSessionFactory extends SshSessionFactory {
 
 	private static void knownHosts(JSch sch, FS fs) throws JSchException {
 		final File home = fs.userHome();
-		if (home == null)
+		if (home == null) {
 			return;
+		}
 		final File known_hosts = new File(new File(home, ".ssh"), "known_hosts"); //$NON-NLS-1$ //$NON-NLS-2$
 		try (FileInputStream in = new FileInputStream(known_hosts)) {
 			sch.setKnownHosts(in);
@@ -435,8 +444,9 @@ public class JschConfigSessionFactory extends SshSessionFactory {
 
 	private static void identities(JSch sch, FS fs) {
 		final File home = fs.userHome();
-		if (home == null)
+		if (home == null) {
 			return;
+		}
 		final File sshdir = new File(home, ".ssh"); //$NON-NLS-1$
 		if (sshdir.isDirectory()) {
 			loadIdentity(sch, new File(sshdir, "identity")); //$NON-NLS-1$

@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.googlecode.javaewah.EWAHCompressedBitmap;
 import org.openrewrite.jgit.internal.JGitText;
 import org.openrewrite.jgit.internal.storage.pack.BitmapCommit;
 import org.openrewrite.jgit.internal.storage.pack.ObjectToPack;
@@ -25,8 +26,6 @@ import org.openrewrite.jgit.lib.Constants;
 import org.openrewrite.jgit.lib.ObjectId;
 import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
 import org.openrewrite.jgit.util.BlockList;
-
-import com.googlecode.javaewah.EWAHCompressedBitmap;
 
 /**
  * Helper for constructing
@@ -58,7 +57,7 @@ public class PackBitmapIndexBuilder extends BasePackBitmapIndex {
 	 *            ObjectId (name); it will be resorted in place.
 	 */
 	public PackBitmapIndexBuilder(List<ObjectToPack> objects) {
-		super(new ObjectIdOwnerMap<StoredBitmap>());
+		super(new ObjectIdOwnerMap<>());
 		byOffset = new BlockList<>(objects.size());
 		sortByOffsetAndIndex(byOffset, positionEntries, objects);
 
@@ -191,10 +190,8 @@ public class PackBitmapIndexBuilder extends BasePackBitmapIndex {
 			throw new IllegalStateException();
 		}
 		bestBitmap.trim();
-		StoredEntry result = new StoredEntry(entry.namePosition, bestBitmap,
+		return new StoredEntry(entry.namePosition, bestBitmap,
 				bestXorOffset, bitmapToWrite.getFlags());
-
-		return result;
 	}
 
 	/**
@@ -235,8 +232,9 @@ public class PackBitmapIndexBuilder extends BasePackBitmapIndex {
 	@Override
 	public int findPosition(AnyObjectId objectId) {
 		PositionEntry entry = positionEntries.get(objectId);
-		if (entry == null)
+		if (entry == null) {
 			return -1;
+		}
 		return entry.offsetPosition;
 	}
 
@@ -244,8 +242,9 @@ public class PackBitmapIndexBuilder extends BasePackBitmapIndex {
 	@Override
 	public ObjectId getObject(int position) throws IllegalArgumentException {
 		ObjectId objectId = byOffset.get(position);
-		if (objectId == null)
+		if (objectId == null) {
 			throw new IllegalArgumentException();
+		}
 		return objectId;
 	}
 

@@ -51,10 +51,10 @@ import org.openrewrite.jgit.util.RawParseUtils;
 public class ObjectWalk extends RevWalk {
 	private static final int ID_SZ = 20;
 	private static final int TYPE_SHIFT = 12;
-	private static final int TYPE_TREE = 0040000 >>> TYPE_SHIFT;
-	private static final int TYPE_SYMLINK = 0120000 >>> TYPE_SHIFT;
-	private static final int TYPE_FILE = 0100000 >>> TYPE_SHIFT;
-	private static final int TYPE_GITLINK = 0160000 >>> TYPE_SHIFT;
+	private static final int TYPE_TREE = 16384 >>> TYPE_SHIFT;
+	private static final int TYPE_SYMLINK = 40960 >>> TYPE_SHIFT;
+	private static final int TYPE_FILE = 32768 >>> TYPE_SHIFT;
+	private static final int TYPE_GITLINK = 57344 >>> TYPE_SHIFT;
 
 	/**
 	 * Indicates a non-RevCommit is in {@link #pendingObjects}.
@@ -228,10 +228,11 @@ public class ObjectWalk extends RevWalk {
 			parseHeaders(o);
 		}
 
-		if (o instanceof RevCommit)
+		if (o instanceof RevCommit) {
 			super.markStart((RevCommit) o);
-		else
+		} else {
 			addObject(o);
+		}
 	}
 
 	/**
@@ -279,21 +280,24 @@ public class ObjectWalk extends RevWalk {
 			IncorrectObjectTypeException, IOException {
 		while (o instanceof RevTag) {
 			o.flags |= UNINTERESTING;
-			if (boundary)
+			if (boundary) {
 				addObject(o);
+			}
 			o = ((RevTag) o).getObject();
 			parseHeaders(o);
 		}
 
-		if (o instanceof RevCommit)
+		if (o instanceof RevCommit) {
 			super.markUninteresting((RevCommit) o);
-		else if (o instanceof RevTree)
+		} else if (o instanceof RevTree) {
 			markTreeUninteresting((RevTree) o);
-		else
+		} else {
 			o.flags |= UNINTERESTING;
+		}
 
-		if (o.getType() != OBJ_COMMIT && boundary)
+		if (o.getType() != OBJ_COMMIT && boundary) {
 			addObject(o);
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -424,8 +428,9 @@ public class ObjectWalk extends RevWalk {
 				}
 
 				RevObject obj = objects.get(idBuffer);
-				if (obj != null && !visitationPolicy.shouldVisit(obj))
+				if (obj != null && !visitationPolicy.shouldVisit(obj)) {
 					continue;
+				}
 
 				int mode = parseMode(buf, startPtr, ptr, tv);
 				switch (mode >>> TYPE_SHIFT) {
@@ -437,13 +442,16 @@ public class ObjectWalk extends RevWalk {
 						objects.add(obj);
 						return obj;
 					}
-					if (!(obj instanceof RevBlob))
+					if (!(obj instanceof RevBlob)) {
 						throw new IncorrectObjectTypeException(obj, OBJ_BLOB);
+					}
 					visitationPolicy.visited(obj);
-					if ((obj.flags & UNINTERESTING) == 0)
+					if ((obj.flags & UNINTERESTING) == 0) {
 						return obj;
-					if (boundary)
+					}
+					if (boundary) {
 						return obj;
+					}
 					continue;
 
 				case TYPE_TREE:
@@ -453,13 +461,16 @@ public class ObjectWalk extends RevWalk {
 						objects.add(obj);
 						return pushTree(obj);
 					}
-					if (!(obj instanceof RevTree))
+					if (!(obj instanceof RevTree)) {
 						throw new IncorrectObjectTypeException(obj, OBJ_TREE);
+					}
 					visitationPolicy.visited(obj);
-					if ((obj.flags & UNINTERESTING) == 0)
+					if ((obj.flags & UNINTERESTING) == 0) {
 						return pushTree(obj);
-					if (boundary)
+					}
+					if (boundary) {
 						return pushTree(obj);
+					}
 					continue;
 
 				case TYPE_GITLINK:
@@ -506,25 +517,57 @@ public class ObjectWalk extends RevWalk {
 		// Skip over the mode and name until the NUL before the ObjectId
 		// can be located. Skip the NUL as the function returns.
 		for (;;) {
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
 
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
 
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
 
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
-			if (buf[++ptr] == 0) return ++ptr;
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
+			if (buf[++ptr] == 0) {
+				return ++ptr;
+			}
 		}
 	}
 
@@ -532,44 +575,51 @@ public class ObjectWalk extends RevWalk {
 		int mode = buf[startPtr] - '0';
 		for (;;) {
 			byte c = buf[++startPtr];
-			if (' ' == c)
+			if (' ' == c) {
 				break;
+			}
 			mode <<= 3;
 			mode += c - '0';
 
 			c = buf[++startPtr];
-			if (' ' == c)
+			if (' ' == c) {
 				break;
+			}
 			mode <<= 3;
 			mode += c - '0';
 
 			c = buf[++startPtr];
-			if (' ' == c)
+			if (' ' == c) {
 				break;
+			}
 			mode <<= 3;
 			mode += c - '0';
 
 			c = buf[++startPtr];
-			if (' ' == c)
+			if (' ' == c) {
 				break;
+			}
 			mode <<= 3;
 			mode += c - '0';
 
 			c = buf[++startPtr];
-			if (' ' == c)
+			if (' ' == c) {
 				break;
+			}
 			mode <<= 3;
 			mode += c - '0';
 
 			c = buf[++startPtr];
-			if (' ' == c)
+			if (' ' == c) {
 				break;
+			}
 			mode <<= 3;
 			mode += c - '0';
 
 			c = buf[++startPtr];
-			if (' ' == c)
+			if (' ' == c) {
 				break;
+			}
 			mode <<= 3;
 			mode += c - '0';
 		}
@@ -606,15 +656,18 @@ public class ObjectWalk extends RevWalk {
 			IncorrectObjectTypeException, IOException {
 		for (;;) {
 			final RevCommit c = next();
-			if (c == null)
+			if (c == null) {
 				break;
+			}
 		}
 		for (;;) {
 			final RevObject o = nextObject();
-			if (o == null)
+			if (o == null) {
 				break;
-			if (o instanceof RevBlob && !reader.has(o))
+			}
+			if (o instanceof RevBlob && !reader.has(o)) {
 				throw new MissingObjectException(o, OBJ_BLOB);
+			}
 		}
 	}
 
@@ -634,8 +687,9 @@ public class ObjectWalk extends RevWalk {
 	public String getPathString() {
 		if (pathLen == 0) {
 			pathLen = updatePathBuf(currVisit);
-			if (pathLen == 0)
+			if (pathLen == 0) {
 				return null;
+			}
 		}
 		return RawParseUtils.decode(pathBuf, 0, pathLen);
 	}
@@ -661,8 +715,9 @@ public class ObjectWalk extends RevWalk {
 	 */
 	public int getPathHashCode() {
 		TreeVisit tv = currVisit;
-		if (tv == null)
+		if (tv == null) {
 			return 0;
+		}
 
 		int nameEnd = tv.nameEnd;
 		if (nameEnd == 0) {
@@ -671,8 +726,9 @@ public class ObjectWalk extends RevWalk {
 			// parent tree. If there is no parent, this is a root tree with
 			// a hash code of 0.
 			tv = tv.parent;
-			if (tv == null)
+			if (tv == null) {
 				return 0;
+			}
 			nameEnd = tv.nameEnd;
 		}
 
@@ -695,8 +751,9 @@ public class ObjectWalk extends RevWalk {
 		int hash = 0;
 		for (; ptr < nameEnd; ptr++) {
 			byte c = buf[ptr];
-			if (c != ' ')
+			if (c != ' ') {
 				hash = (hash >>> 2) + (c << 24);
+			}
 		}
 		return hash;
 	}
@@ -707,8 +764,9 @@ public class ObjectWalk extends RevWalk {
 	 * @return the internal buffer holding the current path.
 	 */
 	public byte[] getPathBuffer() {
-		if (pathLen == 0)
+		if (pathLen == 0) {
 			pathLen = updatePathBuf(currVisit);
+		}
 		return pathBuf;
 	}
 
@@ -718,36 +776,42 @@ public class ObjectWalk extends RevWalk {
 	 * @return length of the path in {@link #getPathBuffer()}.
 	 */
 	public int getPathLength() {
-		if (pathLen == 0)
+		if (pathLen == 0) {
 			pathLen = updatePathBuf(currVisit);
+		}
 		return pathLen;
 	}
 
 	private int updatePathBuf(TreeVisit tv) {
-		if (tv == null)
+		if (tv == null) {
 			return 0;
+		}
 
 		// If nameEnd == 0 this tree has not yet contributed an entry.
 		// Update only for the parent, which if null will be empty.
 		int nameEnd = tv.nameEnd;
-		if (nameEnd == 0)
+		if (nameEnd == 0) {
 			return updatePathBuf(tv.parent);
+		}
 
 		int ptr = tv.pathLen;
 		if (ptr == 0) {
 			ptr = updatePathBuf(tv.parent);
-			if (ptr == pathBuf.length)
+			if (ptr == pathBuf.length) {
 				growPathBuf(ptr);
-			if (ptr != 0)
+			}
+			if (ptr != 0) {
 				pathBuf[ptr++] = '/';
+			}
 			tv.pathLen = ptr;
 		}
 
 		int namePtr = tv.namePtr;
 		int nameLen = nameEnd - namePtr;
 		int end = ptr + nameLen;
-		while (pathBuf.length < end)
+		while (pathBuf.length < end) {
 			growPathBuf(ptr);
+		}
 		System.arraycopy(tv.buf, namePtr, pathBuf, ptr, nameLen);
 		return end;
 	}
@@ -772,8 +836,9 @@ public class ObjectWalk extends RevWalk {
 	protected void reset(int retainFlags) {
 		super.reset(retainFlags);
 
-		for (RevObject obj : rootObjects)
+		for (RevObject obj : rootObjects) {
 			obj.flags &= ~IN_PENDING;
+		}
 
 		rootObjects = new ArrayList<>();
 		pendingObjects = new BlockObjQueue();
@@ -792,8 +857,9 @@ public class ObjectWalk extends RevWalk {
 	private void markTreeUninteresting(RevTree tree)
 			throws MissingObjectException, IncorrectObjectTypeException,
 			IOException {
-		if ((tree.flags & UNINTERESTING) != 0)
+		if ((tree.flags & UNINTERESTING) != 0) {
 			return;
+		}
 		tree.flags |= UNINTERESTING;
 
 		byte[] raw = reader.open(tree, OBJ_TREE).getCachedBytes();
@@ -802,8 +868,9 @@ public class ObjectWalk extends RevWalk {
 			int mode = c - '0';
 			for (;;) {
 				c = raw[++ptr];
-				if (' ' == c)
+				if (' ' == c) {
 					break;
+				}
 				mode <<= 3;
 				mode += c - '0';
 			}

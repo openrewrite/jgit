@@ -19,9 +19,9 @@ import org.openrewrite.jgit.lib.ReflogEntry;
 public class CheckoutEntryImpl implements CheckoutEntry {
 	static final String CHECKOUT_MOVING_FROM = "checkout: moving from "; //$NON-NLS-1$
 
-	private String from;
+	private final String from;
 
-	private String to;
+	private final String to;
 
 	CheckoutEntryImpl(ReflogEntry reflogEntry) {
 		String comment = reflogEntry.getComment();

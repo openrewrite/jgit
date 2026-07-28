@@ -172,7 +172,7 @@ public final class PackOutputStream extends OutputStream {
 		}
 	}
 
-	private static final int objectHeader(long len, int type, byte[] buf) {
+	private static int objectHeader(long len, int type, byte[] buf) {
 		byte b = (byte) ((type << 4) | (len & 0x0F));
 		int n = 0;
 		for (len >>>= 4; len != 0; len >>>= 7) {
@@ -183,19 +183,21 @@ public final class PackOutputStream extends OutputStream {
 		return n;
 	}
 
-	private static final int ofsDelta(long diff, byte[] buf, int p) {
+	private static int ofsDelta(long diff, byte[] buf, int p) {
 		p += ofsDeltaVarIntLength(diff);
 		int n = p;
 		buf[--n] = (byte) (diff & 0x7F);
-		while ((diff >>>= 7) != 0)
+		while ((diff >>>= 7) != 0) {
 			buf[--n] = (byte) (0x80 | (--diff & 0x7F));
+		}
 		return p;
 	}
 
-	private static final int ofsDeltaVarIntLength(long v) {
+	private static int ofsDeltaVarIntLength(long v) {
 		int n = 1;
-		for (; (v >>>= 7) != 0; n++)
+		for (;(v >>>= 7) != 0;n++) {
 			--v;
+		}
 		return n;
 	}
 

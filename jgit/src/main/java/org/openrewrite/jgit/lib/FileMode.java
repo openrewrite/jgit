@@ -32,22 +32,22 @@ public abstract class FileMode {
 	 * @see #TYPE_GITLINK
 	 * @see #TYPE_MISSING
 	 */
-	public static final int TYPE_MASK = 0170000;
+	public static final int TYPE_MASK = 61440;
 
 	/** Bit pattern for {@link #TYPE_MASK} matching {@link #TREE}. */
-	public static final int TYPE_TREE = 0040000;
+	public static final int TYPE_TREE = 16384;
 
 	/** Bit pattern for {@link #TYPE_MASK} matching {@link #SYMLINK}. */
-	public static final int TYPE_SYMLINK = 0120000;
+	public static final int TYPE_SYMLINK = 40960;
 
 	/** Bit pattern for {@link #TYPE_MASK} matching {@link #REGULAR_FILE}. */
-	public static final int TYPE_FILE = 0100000;
+	public static final int TYPE_FILE = 32768;
 
 	/** Bit pattern for {@link #TYPE_MASK} matching {@link #GITLINK}. */
-	public static final int TYPE_GITLINK = 0160000;
+	public static final int TYPE_GITLINK = 57344;
 
 	/** Bit pattern for {@link #TYPE_MASK} matching {@link #MISSING}. */
-	public static final int TYPE_MISSING = 0000000;
+	public static final int TYPE_MISSING = 0;
 
 	/**
 	 * Mode indicating an entry is a tree (aka directory).
@@ -72,22 +72,22 @@ public abstract class FileMode {
 	};
 
 	/** Mode indicating an entry is a non-executable file. */
-	public static final FileMode REGULAR_FILE = new FileMode(0100644,
+	public static final FileMode REGULAR_FILE = new FileMode(33188,
 			Constants.OBJ_BLOB) {
 		@Override
 		@SuppressWarnings("NonOverridingEquals")
 		public boolean equals(int modeBits) {
-			return (modeBits & TYPE_MASK) == TYPE_FILE && (modeBits & 0111) == 0;
+			return (modeBits & TYPE_MASK) == TYPE_FILE && (modeBits & 73) == 0;
 		}
 	};
 
 	/** Mode indicating an entry is an executable file. */
-	public static final FileMode EXECUTABLE_FILE = new FileMode(0100755,
+	public static final FileMode EXECUTABLE_FILE = new FileMode(33261,
 			Constants.OBJ_BLOB) {
 		@Override
 		@SuppressWarnings("NonOverridingEquals")
 		public boolean equals(int modeBits) {
-			return (modeBits & TYPE_MASK) == TYPE_FILE && (modeBits & 0111) != 0;
+			return (modeBits & TYPE_MASK) == TYPE_FILE && (modeBits & 73) != 0;
 		}
 	};
 
@@ -118,17 +118,19 @@ public abstract class FileMode {
 	 *            the mode bits the caller has somehow obtained.
 	 * @return the FileMode instance that represents the given bits.
 	 */
-	public static final FileMode fromBits(int bits) {
+	public static FileMode fromBits(int bits) {
 		switch (bits & TYPE_MASK) {
 		case TYPE_MISSING:
-			if (bits == 0)
+			if (bits == 0) {
 				return MISSING;
+			}
 			break;
 		case TYPE_TREE:
 			return TREE;
 		case TYPE_FILE:
-			if ((bits & 0111) != 0)
+			if ((bits & 73) != 0) {
 				return EXECUTABLE_FILE;
+			}
 			return REGULAR_FILE;
 		case TYPE_SYMLINK:
 			return SYMLINK;
@@ -159,7 +161,7 @@ public abstract class FileMode {
 			int p = tmp.length;
 
 			while (mode != 0) {
-				tmp[--p] = (byte) ('0' + (mode & 07));
+				tmp[--p] = (byte) ('0' + (mode & 7));
 				mode >>= 3;
 			}
 

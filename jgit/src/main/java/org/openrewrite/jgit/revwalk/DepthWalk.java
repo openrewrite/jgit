@@ -164,8 +164,9 @@ public interface DepthWalk {
 		 */
 		public void markRoot(RevCommit c) throws MissingObjectException,
 				IncorrectObjectTypeException, IOException {
-			if (c instanceof Commit)
+			if (c instanceof Commit) {
 				((Commit) c).depth = 0;
+			}
 			super.markStart(c);
 		}
 
@@ -299,8 +300,9 @@ public interface DepthWalk {
 				c = ((RevTag) c).getObject();
 				parseHeaders(c);
 			}
-			if (c instanceof Commit)
+			if (c instanceof Commit) {
 				((Commit) c).depth = 0;
+			}
 			super.markStart(o);
 		}
 
@@ -318,8 +320,9 @@ public interface DepthWalk {
 		 */
 		public void markUnshallow(RevObject c) throws MissingObjectException,
 				IncorrectObjectTypeException, IOException {
-			if (c instanceof RevCommit)
+			if (c instanceof RevCommit) {
 				c.add(UNSHALLOW);
+			}
 			super.markStart(c);
 		}
 

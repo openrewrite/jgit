@@ -92,7 +92,7 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 	private final boolean atomic;
 
 	/** A list of option strings associated with this push. */
-	private List<String> pushOptions;
+	private final List<String> pushOptions;
 
 	private boolean capableAtomic;
 	private boolean capableDeleteRefs;
@@ -113,7 +113,7 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 	 * @param packTransport
 	 *            the transport.
 	 */
-	public BasePackPushConnection(PackTransport packTransport) {
+	protected BasePackPushConnection(PackTransport packTransport) {
 		super(packTransport);
 		thinPack = transport.isPushThin();
 		atomic = transport.isPushAtomic();
@@ -180,13 +180,16 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 		try {
 			writeCommands(refUpdates.values(), monitor, outputStream);
 
-			if (pushOptions != null && capablePushOptions)
+			if (pushOptions != null && capablePushOptions) {
 				transmitOptions();
-			if (writePack)
+			}
+			if (writePack) {
 				writePack(refUpdates, monitor);
+			}
 			if (sentCommand) {
-				if (capableReport)
+				if (capableReport) {
 					readStatusReport(refUpdates);
+				}
 				if (capableSideBand) {
 					// Ensure the data channel is at EOF, so we know we have
 					// read all side-band data from all channels and have a
@@ -194,10 +197,11 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 					// the other data channels.
 					//
 					int b = in.read();
-					if (0 <= b)
+					if (0 <= b) {
 						throw new TransportException(uri, MessageFormat.format(
 								JGitText.get().expectedEOFReceived,
 								Character.valueOf((char) b)));
+					}
 				}
 			}
 		} catch (TransportException e) {
@@ -250,12 +254,14 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 
 			pckOut.writeString(sb.toString());
 			rru.setStatus(Status.AWAITING_REPORT);
-			if (!rru.isDelete())
+			if (!rru.isDelete()) {
 				writePack = true;
+			}
 		}
 
-		if (monitor.isCancelled())
+		if (monitor.isCancelled()) {
 			throw new TransportException(uri, JGitText.get().pushCancelled);
+		}
 		pckOut.end();
 		outNeedsEnd = false;
 	}
@@ -271,8 +277,9 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 	private String enableCapabilities(final ProgressMonitor monitor,
 			OutputStream outputStream) {
 		final StringBuilder line = new StringBuilder();
-		if (atomic)
+		if (atomic) {
 			capableAtomic = wantCapability(line, CAPABILITY_ATOMIC);
+		}
 		capableReport = wantCapability(line, CAPABILITY_REPORT_STATUS);
 		capableDeleteRefs = wantCapability(line, CAPABILITY_DELETE_REFS);
 		capableOfsDelta = wantCapability(line, CAPABILITY_OFS_DELTA);
@@ -289,8 +296,9 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 		}
 		addUserAgentCapability(line);
 
-		if (line.length() > 0)
+		if (line.length() > 0) {
 			line.setCharAt(0, '\0');
+		}
 		return line.toString();
 	}
 
@@ -305,13 +313,15 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 			for (Ref r : getRefs()) {
 				// only add objects that we actually have
 				ObjectId oid = r.getObjectId();
-				if (local.getObjectDatabase().has(oid))
+				if (local.getObjectDatabase().has(oid)) {
 					remoteObjects.add(oid);
+				}
 			}
 			remoteObjects.addAll(additionalHaves);
 			for (RemoteRefUpdate r : refUpdates.values()) {
-				if (!ObjectId.zeroId().equals(r.getNewObjectId()))
+				if (!ObjectId.zeroId().equals(r.getNewObjectId())) {
 					newObjects.add(r.getNewObjectId());
+				}
 			}
 
 			writer.setIndexDisabled(true);
@@ -335,9 +345,10 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 	private void readStatusReport(Map<String, RemoteRefUpdate> refUpdates)
 			throws IOException {
 		final String unpackLine = readStringLongTimeout();
-		if (!unpackLine.startsWith("unpack ")) //$NON-NLS-1$
+		if (!unpackLine.startsWith("unpack ")) { //$NON-NLS-1$
 			throw new PackProtocolException(uri, MessageFormat
 					.format(JGitText.get().unexpectedReportLine, unpackLine));
+		}
 		final String unpackStatus = unpackLine.substring("unpack ".length()); //$NON-NLS-1$
 		if (unpackStatus.startsWith("error Pack exceeds the limit of")) {//$NON-NLS-1$
 			throw new TooLargePackException(uri,
@@ -345,7 +356,7 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 		} else if (unpackStatus.startsWith("error Object too large")) {//$NON-NLS-1$
 			throw new TooLargeObjectInPackException(uri,
 					unpackStatus.substring("error ".length())); //$NON-NLS-1$
-		} else if (!unpackStatus.equals("ok")) { //$NON-NLS-1$
+		} else if (!"ok".equals(unpackStatus)) { //$NON-NLS-1$
 			throw new TransportException(uri, MessageFormat.format(
 					JGitText.get().errorOccurredDuringUnpackingOnTheRemoteEnd, unpackStatus));
 		}
@@ -360,16 +371,18 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 				ok = false;
 				refNameEnd = refLine.indexOf(' ', 3);
 			}
-			if (refNameEnd == -1)
+			if (refNameEnd == -1) {
 				throw new PackProtocolException(MessageFormat.format(JGitText.get().unexpectedReportLine2
-						, uri, refLine));
+				, uri, refLine));
+			}
 			final String refName = refLine.substring(3, refNameEnd);
-			final String message = (ok ? null : refLine
-					.substring(refNameEnd + 1));
+			final String message = ok ? null : refLine
+					.substring(refNameEnd + 1);
 
 			final RemoteRefUpdate rru = refUpdates.get(refName);
-			if (rru == null)
+			if (rru == null) {
 				throw new PackProtocolException(MessageFormat.format(JGitText.get().unexpectedRefReport, uri, refName));
+			}
 			if (ok) {
 				rru.setStatus(Status.OK);
 			} else {
@@ -378,15 +391,17 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 			}
 		}
 		for (RemoteRefUpdate rru : refUpdates.values()) {
-			if (rru.getStatus() == Status.AWAITING_REPORT)
+			if (rru.getStatus() == Status.AWAITING_REPORT) {
 				throw new PackProtocolException(MessageFormat.format(
-						JGitText.get().expectedReportForRefNotReceived , uri, rru.getRemoteName()));
+						JGitText.get().expectedReportForRefNotReceived, uri, rru.getRemoteName()));
+			}
 		}
 	}
 
 	private String readStringLongTimeout() throws IOException {
-		if (timeoutIn == null)
+		if (timeoutIn == null) {
 			return pckIn.readString();
+		}
 
 		// The remote side may need a lot of time to choke down the pack
 		// we just sent them. There may be many deltas that need to be
@@ -400,7 +415,7 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 		final int sendTime = (int) Math.min(packTransferTime, 28800000L);
 		try {
 			int timeout = 10 * Math.max(sendTime, oldTimeout);
-			timeoutIn.setTimeout((timeout < 0) ? Integer.MAX_VALUE : timeout);
+			timeoutIn.setTimeout(timeout < 0 ? Integer.MAX_VALUE : timeout);
 			return pckIn.readString();
 		} finally {
 			timeoutIn.setTimeout(oldTimeout);

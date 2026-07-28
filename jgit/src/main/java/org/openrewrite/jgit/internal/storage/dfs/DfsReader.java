@@ -93,8 +93,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	}
 
 	DeltaBaseCache getDeltaBaseCache() {
-		if (baseCache == null)
+		if (baseCache == null) {
 			baseCache = new DeltaBaseCache(this);
+		}
 		return baseCache;
 	}
 
@@ -115,8 +116,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	public BitmapIndex getBitmapIndex() throws IOException {
 		for (DfsPackFile pack : db.getPacks()) {
 			PackBitmapIndex bitmapIndex = pack.getBitmapIndex(this);
-			if (bitmapIndex != null)
+			if (bitmapIndex != null) {
 				return new BitmapIndexImpl(bitmapIndex);
+			}
 		}
 		return null;
 	}
@@ -127,9 +129,10 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 		BitmapBuilder needBitmap) throws IOException {
 		for (DfsPackFile pack : db.getPacks()) {
 			PackBitmapIndex bitmapIndex = pack.getBitmapIndex(this);
-			if (needBitmap.removeAllOrNone(bitmapIndex))
-				return Collections.<CachedPack> singletonList(
+			if (needBitmap.removeAllOrNone(bitmapIndex)) {
+				return Collections.<CachedPack>singletonList(
 						new DfsCachedPack(pack));
+			}
 		}
 		return Collections.emptyList();
 	}
@@ -138,8 +141,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	@Override
 	public Collection<ObjectId> resolve(AbbreviatedObjectId id)
 			throws IOException {
-		if (id.isComplete())
+		if (id.isComplete()) {
 			return Collections.singleton(id.toObjectId());
+		}
 		HashSet<ObjectId> matches = new HashSet<>(4);
 		PackList packList = db.getPackList();
 		resolveImpl(packList, id, matches);
@@ -168,8 +172,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	public boolean has(AnyObjectId objectId) throws IOException {
 		if (last != null
 				&& !skipGarbagePack(last)
-				&& last.hasObject(this, objectId))
+				&& last.hasObject(this, objectId)) {
 			return true;
+		}
 		PackList packList = db.getPackList();
 		if (hasImpl(packList, objectId)) {
 			return true;
@@ -183,8 +188,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	private boolean hasImpl(PackList packList, AnyObjectId objectId)
 			throws IOException {
 		for (DfsPackFile pack : packList.packs) {
-			if (pack == last || skipGarbagePack(pack))
+			if (pack == last || skipGarbagePack(pack)) {
 				continue;
+			}
 			if (pack.hasObject(this, objectId)) {
 				last = pack;
 				return true;
@@ -219,9 +225,10 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 			}
 		}
 
-		if (typeHint == OBJ_ANY)
+		if (typeHint == OBJ_ANY) {
 			throw new MissingObjectException(objectId.copy(),
 					JGitText.get().unknownObjectType2);
+		}
 		throw new MissingObjectException(objectId.copy(), typeHint);
 	}
 
@@ -257,8 +264,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	private static final Comparator<FoundObject<?>> FOUND_OBJECT_SORT = (
 			FoundObject<?> a, FoundObject<?> b) -> {
 		int cmp = a.packIndex - b.packIndex;
-		if (cmp == 0)
+		if (cmp == 0) {
 			cmp = Long.signum(a.offset - b.offset);
+		}
 		return cmp;
 	};
 
@@ -329,11 +337,13 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 			}
 
 			for (int i = 0; i < packs.length; i++) {
-				if (i == lastIdx)
+				if (i == lastIdx) {
 					continue;
+				}
 				DfsPackFile pack = packs[i];
-				if (skipGarbagePack(pack))
+				if (skipGarbagePack(pack)) {
 					continue;
+				}
 				try {
 					long p = pack.findOffset(this, t);
 					if (0 < p) {
@@ -398,9 +408,10 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 
 			@Override
 			public ObjectLoader open() throws IOException {
-				if (cur.pack == null)
+				if (cur.pack == null) {
 					throw new MissingObjectException(cur.id,
 							JGitText.get().unknownObjectType2);
+				}
 				return cur.pack.load(DfsReader.this, cur.offset);
 			}
 
@@ -439,9 +450,10 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 			public boolean next() throws MissingObjectException, IOException {
 				if (idItr.hasNext()) {
 					cur = idItr.next();
-					if (cur.pack == null)
+					if (cur.pack == null) {
 						throw new MissingObjectException(cur.id,
 								JGitText.get().unknownObjectType2);
+					}
 					sz = cur.pack.getObjectSize(DfsReader.this, cur.offset);
 					return true;
 				} else if (findAllError != null) {
@@ -554,8 +566,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 			List<DfsPackFile> packs, boolean skipFound) throws IOException {
 		for (DfsPackFile pack : packs) {
 			List<DfsObjectToPack> tmp = findAllFromPack(pack, objects, skipFound);
-			if (tmp.isEmpty())
+			if (tmp.isEmpty()) {
 				continue;
+			}
 			Collections.sort(tmp, OFFSET_SORT);
 			PackReverseIndex rev = pack.getReverseIdx(this);
 			DfsObjectRepresentation rep = new DfsObjectRepresentation(pack);
@@ -641,8 +654,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	@Override
 	public void writeObjects(PackOutputStream out, List<ObjectToPack> list)
 			throws IOException {
-		for (ObjectToPack otp : list)
+		for (ObjectToPack otp : list) {
 			out.writeObject(otp);
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -676,12 +690,14 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	 */
 	int copy(BlockBasedFile file, long position, byte[] dstbuf, int dstoff,
 			int cnt) throws IOException {
-		if (cnt == 0)
+		if (cnt == 0) {
 			return 0;
+		}
 
 		long length = file.length;
-		if (0 <= length && length <= position)
+		if (0 <= length && length <= position) {
 			return 0;
+		}
 
 		int need = cnt;
 		do {
@@ -690,8 +706,9 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 			position += r;
 			dstoff += r;
 			need -= r;
-			if (length < 0)
+			if (length < 0) {
 				length = file.length;
+			}
 		} while (0 < need && position < length);
 		return cnt - need;
 	}
@@ -733,16 +750,18 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 			} else if (inf.needsInput()) {
 				pin(pack, position);
 				position += block.setInput(position, inf);
-			} else if (n == 0)
+			} else if (n == 0) {
 				throw new DataFormatException();
+			}
 		}
 	}
 
 	DfsBlock quickCopy(DfsPackFile p, long pos, long cnt)
 			throws IOException {
 		pin(p, pos);
-		if (block.contains(p.key, pos + (cnt - 1)))
+		if (block.contains(p.key, pos + (cnt - 1))) {
 			return block;
+		}
 		return null;
 	}
 
@@ -752,10 +771,11 @@ public class DfsReader extends ObjectReader implements ObjectReuseAsIs {
 	}
 
 	private void prepareInflater() {
-		if (inf == null)
+		if (inf == null) {
 			inf = InflaterCache.get();
-		else
+		} else {
 			inf.reset();
+		}
 	}
 
 	void pin(BlockBasedFile file, long position) throws IOException {

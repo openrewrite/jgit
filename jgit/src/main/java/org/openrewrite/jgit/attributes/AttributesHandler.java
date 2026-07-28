@@ -141,7 +141,7 @@ public class AttributesHandler {
 	 */
 	public Attributes getAttributes() throws IOException {
 		String entryPath = treeWalk.getPathString();
-		boolean isDirectory = (treeWalk.getFileMode() == FileMode.TREE);
+		boolean isDirectory = treeWalk.getFileMode() == FileMode.TREE;
 		Attributes attributes = new Attributes();
 
 		// Gets the info attributes
@@ -161,8 +161,9 @@ public class AttributesHandler {
 		// now after all attributes are collected - in the correct hierarchy
 		// order - remove all unspecified entries (the ! marker)
 		for (Attribute a : attributes.getAll()) {
-			if (a.getState() == State.UNSPECIFIED)
+			if (a.getState() == State.UNSPECIFIED) {
 				attributes.remove(a.getKey());
+			}
 		}
 
 		return attributes;
@@ -264,8 +265,9 @@ public class AttributesHandler {
 	protected void mergeAttributes(@Nullable AttributesNode node,
 			String entryPath,
 			boolean isDirectory, Attributes result) {
-		if (node == null)
+		if (node == null) {
 			return;
+		}
 		List<AttributesRule> rules = node.getRules();
 		// Parse rules in the reverse order that they were read since the last
 		// entry should be used
@@ -296,8 +298,9 @@ public class AttributesHandler {
 	 */
 	protected void expandMacro(Attribute attr, Attributes result) {
 		// loop detection = exists check
-		if (result.containsKey(attr.getKey()))
+		if (result.containsKey(attr.getKey())) {
 			return;
+		}
 
 		// also add macro to result set, same does native git
 		result.put(attr);
@@ -419,7 +422,9 @@ public class AttributesHandler {
 	}
 
 	private static <T extends AbstractTreeIterator> T parentOf(@Nullable T node) {
-		if(node==null) return null;
+		if (node == null) {
+			return null;
+		}
 		@SuppressWarnings("unchecked")
 		Class<T> type = (Class<T>) node.getClass();
 		AbstractTreeIterator parent = node.parent;
@@ -431,7 +436,9 @@ public class AttributesHandler {
 
 	private static <T extends AbstractTreeIterator> T rootOf(
 			@Nullable T node) {
-		if(node==null) return null;
+		if (node == null) {
+			return null;
+		}
 		AbstractTreeIterator t=node;
 		while (t!= null && t.parent != null) {
 			t= t.parent;

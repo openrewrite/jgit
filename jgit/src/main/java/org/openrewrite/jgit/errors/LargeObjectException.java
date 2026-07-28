@@ -68,8 +68,9 @@ public class LargeObjectException extends RuntimeException {
 	 * @return either the hex encoded name of the object, or 'unknown object'
 	 */
 	protected String getObjectName() {
-		if (getObjectId() != null)
+		if (getObjectId() != null) {
 			return getObjectId().name();
+		}
 		return JGitText.get().unknownObject;
 	}
 
@@ -80,8 +81,9 @@ public class LargeObjectException extends RuntimeException {
 	 *            the id of the object that is too large to process.
 	 */
 	public void setObjectId(AnyObjectId id) {
-		if (objectId == null)
+		if (objectId == null) {
 			objectId = id.copy();
+		}
 	}
 
 	/** {@inheritDoc} */

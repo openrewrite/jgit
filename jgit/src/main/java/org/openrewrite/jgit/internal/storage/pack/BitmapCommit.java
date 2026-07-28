@@ -86,7 +86,7 @@ public final class BitmapCommit extends ObjectId {
 	/**
 	 * Builder of BitmapCommit.
 	 */
-	public static class Builder {
+	public static final class Builder {
 		private AnyObjectId objectId;
 
 		private boolean reuseWalker;

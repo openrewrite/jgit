@@ -172,7 +172,7 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 		@SuppressWarnings("resource") // Closed by caller
 		Repository repository = init();
 		FetchResult fetchResult = null;
-		Thread cleanupHook = new Thread(() -> cleanup());
+		Thread cleanupHook = new Thread(this::cleanup);
 		try {
 			Runtime.getRuntime().addShutdownHook(cleanupHook);
 		} catch (IllegalStateException e) {
@@ -347,22 +347,26 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 			IOException, GitAPIException {
 
 		Ref head = null;
-		if (branch.equals(Constants.HEAD)) {
+		if (Constants.HEAD.equals(branch)) {
 			Ref foundBranch = findBranchToCheckout(result);
-			if (foundBranch != null)
+			if (foundBranch != null) {
 				head = foundBranch;
+			}
 		}
 		if (head == null) {
 			head = result.getAdvertisedRef(branch);
-			if (head == null)
+			if (head == null) {
 				head = result.getAdvertisedRef(Constants.R_HEADS + branch);
-			if (head == null)
+			}
+			if (head == null) {
 				head = result.getAdvertisedRef(Constants.R_TAGS + branch);
+			}
 		}
 
-		if (head == null || head.getObjectId() == null)
+		if (head == null || head.getObjectId() == null) {
 			return; // TODO throw exception?
 
+		}
 		if (head.getName().startsWith(Constants.R_HEADS)) {
 			final RefUpdate newHead = clonedRepo.updateRef(Constants.HEAD);
 			newHead.disableRefLog();
@@ -383,8 +387,9 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 					commit.getTree());
 			co.setProgressMonitor(monitor);
 			co.checkout();
-			if (cloneSubmodules)
+			if (cloneSubmodules) {
 				cloneSubmodules(clonedRepo);
+			}
 		}
 	}
 
@@ -436,8 +441,9 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 		Ref foundBranch = null;
 		for (Ref r : result.getAdvertisedRefs()) {
 			final String n = r.getName();
-			if (!n.startsWith(Constants.R_HEADS))
+			if (!n.startsWith(Constants.R_HEADS)) {
 				continue;
+			}
 			if (headId.equals(r.getObjectId())) {
 				foundBranch = r;
 				break;
@@ -457,10 +463,11 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 				ConfigConstants.CONFIG_BRANCH_SECTION, null,
 				ConfigConstants.CONFIG_KEY_AUTOSETUPREBASE);
 		if (ConfigConstants.CONFIG_KEY_ALWAYS.equals(autosetupRebase)
-				|| ConfigConstants.CONFIG_KEY_REMOTE.equals(autosetupRebase))
+				|| ConfigConstants.CONFIG_KEY_REMOTE.equals(autosetupRebase)) {
 			clonedRepo.getConfig().setEnum(
 					ConfigConstants.CONFIG_BRANCH_SECTION, branchName,
 					ConfigConstants.CONFIG_KEY_REBASE, BranchRebaseMode.REBASE);
+		}
 		clonedRepo.getConfig().save();
 	}
 
@@ -750,15 +757,17 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 						gitDir));
 			}
 			if (bare) {
-				if (gitDir != null && !gitDir.equals(directory))
+				if (gitDir != null && !gitDir.equals(directory)) {
 					throw new IllegalStateException(MessageFormat.format(
 							JGitText.get().initFailedBareRepoDifferentDirs,
 							gitDir, directory));
+				}
 			} else {
-				if (gitDir != null && gitDir.equals(directory))
+				if (gitDir != null && gitDir.equals(directory)) {
 					throw new IllegalStateException(MessageFormat.format(
 							JGitText.get().initFailedNonBareRepoSameDirs,
 							gitDir, directory));
+				}
 			}
 		}
 	}

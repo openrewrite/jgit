@@ -49,8 +49,9 @@ class UnpackedObjectCache {
 	}
 
 	void remove(AnyObjectId objectId) {
-		if (isUnpacked(objectId))
+		if (isUnpacked(objectId)) {
 			clear();
+		}
 	}
 
 	void clear() {
@@ -76,21 +77,24 @@ class UnpackedObjectCache {
 			int i = index(toFind);
 			for (int n = 0; n < MAX_CHAIN; n++) {
 				ObjectId obj = ids.get(i);
-				if (obj == null)
+				if (obj == null) {
 					break;
+				}
 
-				if (AnyObjectId.isEqual(obj, toFind))
+				if (AnyObjectId.isEqual(obj, toFind)) {
 					return true;
+				}
 
-				if (++i == ids.length())
+				if (++i == ids.length()) {
 					i = 0;
+				}
 			}
 			return false;
 		}
 
 		boolean add(AnyObjectId toAdd) {
 			int i = index(toAdd);
-			for (int n = 0; n < MAX_CHAIN;) {
+			for (int n = 0; n < MAX_CHAIN; n++) {
 				ObjectId obj = ids.get(i);
 				if (obj == null) {
 					if (ids.compareAndSet(i, null, toAdd.copy())) {
@@ -106,7 +110,6 @@ class UnpackedObjectCache {
 				if (++i == ids.length()) {
 					i = 0;
 				}
-				n++;
 			}
 			return false;
 		}

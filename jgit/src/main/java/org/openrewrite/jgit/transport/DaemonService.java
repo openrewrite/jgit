@@ -133,8 +133,9 @@ public abstract class DaemonService {
 	}
 
 	private boolean isEnabledFor(Repository db) {
-		if (isOverridable())
+		if (isOverridable()) {
 			return db.getConfig().get(configKey).enabled;
+		}
 		return isEnabled();
 	}
 

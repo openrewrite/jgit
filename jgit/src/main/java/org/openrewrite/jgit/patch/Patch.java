@@ -141,8 +141,9 @@ public class Patch {
 	 *            be parsed is <code>end - ptr</code>.
 	 */
 	public void parse(byte[] buf, int ptr, int end) {
-		while (ptr < end)
+		while (ptr < end) {
 			ptr = parseFile(buf, ptr, end);
+		}
 	}
 
 	private int parseFile(byte[] buf, int c, int end) {
@@ -159,12 +160,15 @@ public class Patch {
 
 			// Valid git style patch?
 			//
-			if (match(buf, c, DIFF_GIT) >= 0)
+			if (match(buf, c, DIFF_GIT) >= 0) {
 				return parseDiffGit(buf, c, end);
-			if (match(buf, c, DIFF_CC) >= 0)
+			}
+			if (match(buf, c, DIFF_CC) >= 0) {
 				return parseDiffCombined(DIFF_CC, buf, c, end);
-			if (match(buf, c, DIFF_COMBINED) >= 0)
+			}
+			if (match(buf, c, DIFF_COMBINED) >= 0) {
 				return parseDiffCombined(DIFF_COMBINED, buf, c, end);
+			}
 
 			// Junk between files? Leading junk? Traditional
 			// (non-git generated) patch?
@@ -190,10 +194,12 @@ public class Patch {
 				// a "@@ -0,0" smelling line next. We only check the "@@ -".
 				//
 				final int f = nextLF(buf, n);
-				if (f >= end)
+				if (f >= end) {
 					return end;
-				if (isHunkHdr(buf, f, end) == 1)
+				}
+				if (isHunkHdr(buf, f, end) == 1) {
 					return parseTraditionalPatch(buf, c, end);
+				}
 			}
 
 			c = n;
@@ -204,8 +210,9 @@ public class Patch {
 	private int parseDiffGit(byte[] buf, int start, int end) {
 		final FileHeader fh = new FileHeader(buf, start);
 		int ptr = fh.parseGitFileName(start + DIFF_GIT.length, end);
-		if (ptr < 0)
+		if (ptr < 0) {
 			return skipFile(buf, start);
+		}
 
 		ptr = fh.parseGitHeaders(ptr, end);
 		ptr = parseHunks(fh, ptr, end);
@@ -218,8 +225,9 @@ public class Patch {
 			final int start, final int end) {
 		final CombinedFileHeader fh = new CombinedFileHeader(buf, start);
 		int ptr = fh.parseGitFileName(start + hdr.length, end);
-		if (ptr < 0)
+		if (ptr < 0) {
 			return skipFile(buf, start);
+		}
 
 		ptr = fh.parseGitHeaders(ptr, end);
 		ptr = parseHunks(fh, ptr, end);
@@ -240,8 +248,9 @@ public class Patch {
 
 	private static int skipFile(byte[] buf, int ptr) {
 		ptr = nextLF(buf, ptr);
-		if (match(buf, ptr, OLD_NAME) >= 0)
+		if (match(buf, ptr, OLD_NAME) >= 0) {
 			ptr = nextLF(buf, ptr);
+		}
 		return ptr;
 	}
 
@@ -252,16 +261,21 @@ public class Patch {
 			// hunks for our current file. We should stop and report back
 			// with this position so it can be parsed again later.
 			//
-			if (match(buf, c, DIFF_GIT) >= 0)
+			if (match(buf, c, DIFF_GIT) >= 0) {
 				break;
-			if (match(buf, c, DIFF_CC) >= 0)
+			}
+			if (match(buf, c, DIFF_CC) >= 0) {
 				break;
-			if (match(buf, c, DIFF_COMBINED) >= 0)
+			}
+			if (match(buf, c, DIFF_COMBINED) >= 0) {
 				break;
-			if (match(buf, c, OLD_NAME) >= 0)
+			}
+			if (match(buf, c, OLD_NAME) >= 0) {
 				break;
-			if (match(buf, c, NEW_NAME) >= 0)
+			}
+			if (match(buf, c, NEW_NAME) >= 0) {
 				break;
+			}
 
 			if (isHunkHdr(buf, c, end) == fh.getParentCount()) {
 				final HunkHeader h = fh.newHunkHeader(c);
@@ -276,8 +290,9 @@ public class Patch {
 					case '\n':
 						break;
 					default:
-						if (match(buf, c, SIG_FOOTER) < 0)
+						if (match(buf, c, SIG_FOOTER) < 0) {
 							warn(buf, c, JGitText.get().unexpectedHunkTrailer);
+						}
 					}
 				}
 				continue;
@@ -351,8 +366,9 @@ public class Patch {
 	private static boolean matchAny(final byte[] buf, final int c,
 			final byte[][] srcs) {
 		for (byte[] s : srcs) {
-			if (match(buf, c, s) >= 0)
+			if (match(buf, c, s) >= 0) {
 				return true;
+			}
 		}
 		return false;
 	}

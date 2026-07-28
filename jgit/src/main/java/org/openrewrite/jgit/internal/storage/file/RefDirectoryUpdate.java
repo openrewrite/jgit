@@ -49,8 +49,9 @@ class RefDirectoryUpdate extends RefUpdate {
 	protected boolean tryLock(boolean deref) throws IOException {
 		shouldDeref = deref;
 		Ref dst = getRef();
-		if (deref)
+		if (deref) {
 			dst = dst.getLeaf();
+		}
 		String name = dst.getName();
 		lock = new LockFile(database.fileFor(name));
 		if (lock.lock()) {
@@ -85,16 +86,18 @@ class RefDirectoryUpdate extends RefUpdate {
 			if (isRefLogIncludingResult()) {
 				String strResult = toResultString(status);
 				if (strResult != null) {
-					if (msg.length() > 0)
+					if (msg.length() > 0) {
 						msg = msg + ": " + strResult; //$NON-NLS-1$
-					else
+					} else {
 						msg = strResult;
+					}
 				}
 			}
 			database.log(isForceRefLog(), this, msg, shouldDeref);
 		}
-		if (!lock.commit())
+		if (!lock.commit()) {
 			return Result.LOCK_FAILURE;
+		}
 		database.stored(this, lock.getCommitSnapshot());
 		return status;
 	}
@@ -115,8 +118,9 @@ class RefDirectoryUpdate extends RefUpdate {
 	/** {@inheritDoc} */
 	@Override
 	protected Result doDelete(Result status) throws IOException {
-		if (getRef().getStorage() != Ref.Storage.NEW)
+		if (getRef().getStorage() != Ref.Storage.NEW) {
 			database.delete(this);
+		}
 		return status;
 	}
 
@@ -131,14 +135,17 @@ class RefDirectoryUpdate extends RefUpdate {
 		lock.write(encode(RefDirectory.SYMREF + target + '\n'));
 
 		String msg = getRefLogMessage();
-		if (msg != null)
+		if (msg != null) {
 			database.log(isForceRefLog(), this, msg, false);
-		if (!lock.commit())
+		}
+		if (!lock.commit()) {
 			return Result.LOCK_FAILURE;
+		}
 		database.storedSymbolicRef(this, lock.getCommitSnapshot(), target);
 
-		if (getRef().getStorage() == Ref.Storage.NEW)
+		if (getRef().getStorage() == Ref.Storage.NEW) {
 			return Result.NEW;
+		}
 		return Result.FORCED;
 	}
 }

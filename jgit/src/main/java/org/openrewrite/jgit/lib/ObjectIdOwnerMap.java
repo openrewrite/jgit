@@ -87,8 +87,9 @@ public class ObjectIdOwnerMap<V extends ObjectIdOwnerMap.Entry>
 		size = 0;
 
 		for (V[] tbl : directory) {
-			if (tbl == null)
+			if (tbl == null) {
 				break;
+			}
 			Arrays.fill(tbl, null);
 		}
 	}
@@ -107,9 +108,11 @@ public class ObjectIdOwnerMap<V extends ObjectIdOwnerMap.Entry>
 		}
 		int h = toFind.w1;
 		V obj = directory[h & mask][h >>> SEGMENT_SHIFT];
-		for (; obj != null; obj = (V) obj.next)
-			if (equals(obj, toFind))
+		for (;obj != null;obj = (V) obj.next) {
+			if (equals(obj, toFind)) {
 				return obj;
+			}
+		}
 		return null;
 	}
 
@@ -134,8 +137,9 @@ public class ObjectIdOwnerMap<V extends ObjectIdOwnerMap.Entry>
 	 *            the object to store.
 	 */
 	public <Q extends V> void add(Q newValue) {
-		if (++size == grow)
+		if (++size == grow) {
 			grow();
+		}
 
 		int h = newValue.w1;
 		V[] table = directory[h & mask];
@@ -169,15 +173,18 @@ public class ObjectIdOwnerMap<V extends ObjectIdOwnerMap.Entry>
 		V[] table = directory[h & mask];
 		h >>>= SEGMENT_SHIFT;
 
-		for (V obj = table[h]; obj != null; obj = (V) obj.next)
-			if (equals(obj, newValue))
+		for (V obj = table[h];obj != null;obj = (V) obj.next) {
+			if (equals(obj, newValue)) {
 				return obj;
+			}
+		}
 
 		newValue.next = table[h];
 		table[h] = newValue;
 
-		if (++size == grow)
+		if (++size == grow) {
 			grow();
+		}
 		return newValue;
 	}
 
@@ -215,22 +222,25 @@ public class ObjectIdOwnerMap<V extends ObjectIdOwnerMap.Entry>
 
 			@Override
 			public V next() {
-				if (next != null)
+				if (next != null) {
 					return found(next);
+				}
 
 				for (;;) {
 					V[] table = directory[dirIdx];
 					if (tblIdx == table.length) {
-						if (++dirIdx >= (1 << bits))
+						if (++dirIdx >= (1 << bits)) {
 							throw new NoSuchElementException();
+						}
 						table = directory[dirIdx];
 						tblIdx = 0;
 					}
 
 					while (tblIdx < table.length) {
 						V v = table[tblIdx++];
-						if (v != null)
+						if (v != null) {
 							return found(v);
+						}
 					}
 				}
 			}
@@ -308,11 +318,11 @@ public class ObjectIdOwnerMap<V extends ObjectIdOwnerMap.Entry>
 		return (V[]) new Entry[1 << SEGMENT_BITS];
 	}
 
-	private static final int computeGrowAt(int bits) {
+	private static int computeGrowAt(int bits) {
 		return 1 << (bits + SEGMENT_BITS);
 	}
 
-	private static final boolean equals(AnyObjectId firstObjectId,
+	private static boolean equals(AnyObjectId firstObjectId,
 			AnyObjectId secondObjectId) {
 		return firstObjectId.w2 == secondObjectId.w2
 				&& firstObjectId.w3 == secondObjectId.w3
@@ -331,7 +341,7 @@ public class ObjectIdOwnerMap<V extends ObjectIdOwnerMap.Entry>
 		 * @param id
 		 *            the id the entry represents.
 		 */
-		public Entry(AnyObjectId id) {
+		protected Entry(AnyObjectId id) {
 			super(id);
 		}
 	}

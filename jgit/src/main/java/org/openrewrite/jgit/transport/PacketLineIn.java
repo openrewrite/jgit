@@ -72,7 +72,7 @@ public class PacketLineIn {
 		/** ACK + common */
 		ACK_COMMON,
 		/** ACK + ready */
-		ACK_READY;
+		ACK_READY
 	}
 
 	private final byte[] lineBuffer = new byte[SideBandOutputStream.SMALL_BUF];
@@ -137,14 +137,17 @@ public class PacketLineIn {
 
 	AckNackResult readACK(MutableObjectId returnedId) throws IOException {
 		final String line = readString();
-		if (line.length() == 0)
+		if (line.length() == 0) {
 			throw new PackProtocolException(JGitText.get().expectedACKNAKFoundEOF);
-		if ("NAK".equals(line)) //$NON-NLS-1$
+		}
+		if ("NAK".equals(line)) { //$NON-NLS-1$
 			return AckNackResult.NAK;
+		}
 		if (line.startsWith("ACK ")) { //$NON-NLS-1$
 			returnedId.fromString(line.substring(4, 44));
-			if (line.length() == 44)
+			if (line.length() == 44) {
 				return AckNackResult.ACK;
+			}
 
 			final String arg = line.substring(44);
 			switch (arg) {
@@ -158,8 +161,9 @@ public class PacketLineIn {
 				break;
 			}
 		}
-		if (line.startsWith("ERR ")) //$NON-NLS-1$
+		if (line.startsWith("ERR ")) { //$NON-NLS-1$
 			throw new PackProtocolException(line.substring(4));
+		}
 		throw new PackProtocolException(MessageFormat.format(JGitText.get().expectedACKNAKGot, line));
 	}
 
@@ -194,14 +198,16 @@ public class PacketLineIn {
 		}
 
 		byte[] raw;
-		if (len <= lineBuffer.length)
+		if (len <= lineBuffer.length) {
 			raw = lineBuffer;
-		else
+		} else {
 			raw = new byte[len];
+		}
 
 		IO.readFully(in, raw, 0, len);
-		if (raw[len - 1] == '\n')
+		if (raw[len - 1] == '\n') {
 			len--;
+		}
 
 		String s = RawParseUtils.decode(UTF_8, raw, 0, len);
 		log.debug("git< " + s); //$NON-NLS-1$
@@ -242,10 +248,11 @@ public class PacketLineIn {
 		len -= 4; // length header (4 bytes)
 
 		byte[] raw;
-		if (len <= lineBuffer.length)
+		if (len <= lineBuffer.length) {
 			raw = lineBuffer;
-		else
+		} else {
 			raw = new byte[len];
+		}
 
 		IO.readFully(in, raw, 0, len);
 

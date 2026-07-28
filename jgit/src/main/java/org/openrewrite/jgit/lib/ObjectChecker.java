@@ -539,33 +539,39 @@ public class ObjectChecker {
 		for (;;) {
 			int nextMode = 0;
 			for (;;) {
-				if (nextPtr >= sz)
+				if (nextPtr >= sz) {
 					return false;
+				}
 				final byte c = raw[nextPtr++];
-				if (' ' == c)
+				if (' ' == c) {
 					break;
+				}
 				nextMode <<= 3;
 				nextMode += c - '0';
 			}
 
 			final int nextNamePos = nextPtr;
 			for (;;) {
-				if (nextPtr == sz)
+				if (nextPtr == sz) {
 					return false;
+				}
 				final byte c = raw[nextPtr++];
-				if (c == 0)
+				if (c == 0) {
 					break;
+				}
 			}
-			if (nextNamePos + 1 == nextPtr)
+			if (nextNamePos + 1 == nextPtr) {
 				return false;
+			}
 
 			int cmp = compareSameName(
 					raw, thisNamePos, thisNameEnd,
 					raw, nextNamePos, nextPtr - 1, nextMode);
-			if (cmp < 0)
+			if (cmp < 0) {
 				return false;
-			else if (cmp == 0)
+			} else if (cmp == 0) {
 				return true;
+			}
 
 			nextPtr += Constants.OBJECT_ID_LENGTH;
 		}
@@ -598,7 +604,9 @@ public class ObjectChecker {
 			throws CorruptObjectException {
 		final int sz = raw.length;
 		int ptr = 0;
-		int lastNameB = 0, lastNameE = 0, lastMode = 0;
+		int lastNameB = 0;
+		int lastNameE = 0;
+		int lastMode = 0;
 		Set<String> normalized = windows || macosx
 				? new HashSet<>()
 				: null;
@@ -611,8 +619,9 @@ public class ObjectChecker {
 							JGitText.get().corruptObjectTruncatedInMode);
 				}
 				final byte c = raw[ptr++];
-				if (' ' == c)
+				if (' ' == c) {
 					break;
+				}
 				if (c < '0' || c > '7') {
 					throw new CorruptObjectException(
 							JGitText.get().corruptObjectInvalidModeChar);
@@ -786,9 +795,10 @@ public class ObjectChecker {
 	public void checkPathSegment(byte[] raw, int ptr, int end)
 			throws CorruptObjectException {
 		int e = scanPathSegment(raw, ptr, end, null);
-		if (e < end && raw[e] == 0)
+		if (e < end && raw[e] == 0) {
 			throw new CorruptObjectException(
 					JGitText.get().corruptObjectNameContainsNullByte);
+		}
 		checkPathSegment2(raw, ptr, end, null);
 	}
 
@@ -840,7 +850,7 @@ public class ObjectChecker {
 			if (raw[end - 1] == ' ' || raw[end - 1] == '.') {
 				report(WIN32_BAD_NAME, id, String.format(
 						JGitText.get().corruptObjectInvalidNameEnd,
-						Character.valueOf(((char) raw[end - 1]))));
+						Character.valueOf((char) raw[end - 1])));
 			}
 			if (end - ptr >= 3) {
 				checkNotWindowsDevice(raw, ptr, end, id);
@@ -916,10 +926,7 @@ public class ObjectChecker {
 				}
 			}
 		}
-		if (g == path.length && ignorable) {
-			return true;
-		}
-		return false;
+		return g == path.length && ignorable;
 	}
 
 	private boolean isMacHFSGit(byte[] raw, int ptr, int end,
@@ -946,8 +953,9 @@ public class ObjectChecker {
 
 	private static String toHexString(byte[] raw, int ptr, int end) {
 		StringBuilder b = new StringBuilder("0x"); //$NON-NLS-1$
-		for (int i = ptr; i < end; i++)
+		for (int i = ptr;i < end;i++) {
 			b.append(String.format("%02x", Byte.valueOf(raw[i]))); //$NON-NLS-1$
+		}
 		return b.toString();
 	}
 
@@ -979,7 +987,7 @@ public class ObjectChecker {
 					&& (end - ptr == 4 || raw[ptr + 4] == '.')) {
 				report(WIN32_BAD_NAME, id, String.format(
 						JGitText.get().corruptObjectInvalidNameCom,
-						Character.valueOf(((char) raw[ptr + 3]))));
+						Character.valueOf((char) raw[ptr + 3])));
 			}
 			break;
 
@@ -991,7 +999,7 @@ public class ObjectChecker {
 					&& (end - ptr == 4 || raw[ptr + 4] == '.')) {
 				report(WIN32_BAD_NAME, id, String.format(
 						JGitText.get().corruptObjectInvalidNameLpt,
-						Character.valueOf(((char) raw[ptr + 3]))));
+						Character.valueOf((char) raw[ptr + 3])));
 			}
 			break;
 
@@ -1129,7 +1137,7 @@ public class ObjectChecker {
 			return false;
 		}
 		start++;
-		for (; start != end; start++) {
+		for (; start < end; start++) {
 			if (buf[start] < '0' || buf[start] > '9') {
 				return false;
 			}
@@ -1138,8 +1146,9 @@ public class ObjectChecker {
 	}
 
 	private static boolean isGitTilde1(byte[] buf, int p, int end) {
-		if (end - p != 5)
+		if (end - p != 5) {
 			return false;
+		}
 		return toLower(buf[p]) == 'g' && toLower(buf[p + 1]) == 'i'
 				&& toLower(buf[p + 2]) == 't' && buf[p + 3] == '~'
 				&& buf[p + 4] == '1';
@@ -1151,12 +1160,13 @@ public class ObjectChecker {
 			boolean space = false;
 			int p = end - 1;
 			for (; (ptr + 2) < p; p--) {
-				if (raw[p] == '.')
+				if (raw[p] == '.') {
 					dots++;
-				else if (raw[p] == ' ')
+				} else if (raw[p] == ' ') {
 					space = true;
-				else
+				} else {
 					break;
+				}
 			}
 			return p == ptr + 2 && (dots == 1 || space);
 		}
@@ -1173,8 +1183,9 @@ public class ObjectChecker {
 	}
 
 	private static char toLower(byte b) {
-		if ('A' <= b && b <= 'Z')
+		if ('A' <= b && b <= 'Z') {
 			return (char) (b + ('a' - 'A'));
+		}
 		return (char) b;
 	}
 

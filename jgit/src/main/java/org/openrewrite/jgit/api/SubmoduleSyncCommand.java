@@ -85,14 +85,16 @@ public class SubmoduleSyncCommand extends GitCommand<Map<String, String>> {
 		checkCallable();
 
 		try (SubmoduleWalk generator = SubmoduleWalk.forIndex(repo)) {
-			if (!paths.isEmpty())
+			if (!paths.isEmpty()) {
 				generator.setFilter(PathFilterGroup.createFromStrings(paths));
+			}
 			Map<String, String> synced = new HashMap<>();
 			StoredConfig config = repo.getConfig();
 			while (generator.next()) {
 				String remoteUrl = generator.getRemoteUrl();
-				if (remoteUrl == null)
+				if (remoteUrl == null) {
 					continue;
+				}
 
 				String path = generator.getPath();
 				config.setString(ConfigConstants.CONFIG_SUBMODULE_SECTION,
@@ -126,8 +128,9 @@ public class SubmoduleSyncCommand extends GitCommand<Map<String, String>> {
 					subConfig.save();
 				}
 			}
-			if (!synced.isEmpty())
+			if (!synced.isEmpty()) {
 				config.save();
+			}
 			return synced;
 		} catch (IOException | ConfigInvalidException e) {
 			throw new JGitInternalException(e.getMessage(), e);

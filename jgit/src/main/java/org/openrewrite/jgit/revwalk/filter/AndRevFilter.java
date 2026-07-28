@@ -40,10 +40,12 @@ public abstract class AndRevFilter extends RevFilter {
 	 * @return a filter that must match both input filters.
 	 */
 	public static RevFilter create(RevFilter a, RevFilter b) {
-		if (a == ALL)
+		if (a == ALL) {
 			return b;
-		if (b == ALL)
+		}
+		if (b == ALL) {
 			return a;
+		}
 		return new Binary(a, b);
 	}
 
@@ -56,10 +58,12 @@ public abstract class AndRevFilter extends RevFilter {
 	 * @return a filter that must match all input filters.
 	 */
 	public static RevFilter create(RevFilter[] list) {
-		if (list.length == 2)
+		if (list.length == 2) {
 			return create(list[0], list[1]);
-		if (list.length < 2)
+		}
+		if (list.length < 2) {
 			throw new IllegalArgumentException(JGitText.get().atLeastTwoFiltersNeeded);
+		}
 		final RevFilter[] subfilters = new RevFilter[list.length];
 		System.arraycopy(list, 0, subfilters, 0, list.length);
 		return new List(subfilters);
@@ -74,12 +78,14 @@ public abstract class AndRevFilter extends RevFilter {
 	 * @return a filter that must match all input filters.
 	 */
 	public static RevFilter create(Collection<RevFilter> list) {
-		if (list.size() < 2)
+		if (list.size() < 2) {
 			throw new IllegalArgumentException(JGitText.get().atLeastTwoFiltersNeeded);
+		}
 		final RevFilter[] subfilters = new RevFilter[list.size()];
 		list.toArray(subfilters);
-		if (subfilters.length == 2)
+		if (subfilters.length == 2) {
 			return create(subfilters[0], subfilters[1]);
+		}
 		return new List(subfilters);
 	}
 
@@ -130,8 +136,9 @@ public abstract class AndRevFilter extends RevFilter {
 			subfilters = list;
 
 			boolean rcb = false;
-			for (RevFilter filter : subfilters)
+			for (RevFilter filter : subfilters) {
 				rcb |= filter.requiresCommitBody();
+			}
 			requiresCommitBody = rcb;
 		}
 
@@ -140,8 +147,9 @@ public abstract class AndRevFilter extends RevFilter {
 				throws MissingObjectException, IncorrectObjectTypeException,
 				IOException {
 			for (RevFilter f : subfilters) {
-				if (!f.include(walker, c))
+				if (!f.include(walker, c)) {
 					return false;
+				}
 			}
 			return true;
 		}
@@ -154,8 +162,9 @@ public abstract class AndRevFilter extends RevFilter {
 		@Override
 		public RevFilter clone() {
 			final RevFilter[] s = new RevFilter[subfilters.length];
-			for (int i = 0; i < s.length; i++)
+			for (int i = 0;i < s.length;i++) {
 				s[i] = subfilters[i].clone();
+			}
 			return new List(s);
 		}
 
@@ -165,8 +174,9 @@ public abstract class AndRevFilter extends RevFilter {
 			final StringBuilder r = new StringBuilder();
 			r.append("(");
 			for (int i = 0; i < subfilters.length; i++) {
-				if (i > 0)
+				if (i > 0) {
 					r.append(" AND ");
+				}
 				r.append(subfilters[i].toString());
 			}
 			r.append(")");

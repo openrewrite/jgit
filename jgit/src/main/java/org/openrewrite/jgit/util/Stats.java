@@ -17,7 +17,7 @@ package org.openrewrite.jgit.util;
  * @since 5.1.9
  */
 public class Stats {
-	private int n = 0;
+	private int n;
 
 	private double avg = 0.0;
 

@@ -29,7 +29,7 @@ import org.openrewrite.jgit.util.IO;
  *
  * @since 4.11
  */
-public class ObjectIdSerializer {
+public final class ObjectIdSerializer {
 	/*
 	 * Marker to indicate a null ObjectId instance.
 	 */

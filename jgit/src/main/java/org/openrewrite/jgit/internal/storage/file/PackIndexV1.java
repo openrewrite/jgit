@@ -36,7 +36,7 @@ class PackIndexV1 extends PackIndex {
 
 	byte[][] idxdata;
 
-	private long objectCnt;
+	private final long objectCnt;
 
 	PackIndexV1(final InputStream fd, final byte[] hdr)
 			throws CorruptObjectException, IOException {
@@ -45,8 +45,9 @@ class PackIndexV1 extends PackIndex {
 		IO.readFully(fd, fanoutTable, hdr.length, IDX_HDR_LEN - hdr.length);
 
 		idxHeader = new long[256]; // really unsigned 32-bit...
-		for (int k = 0; k < idxHeader.length; k++)
+		for (int k = 0;k < idxHeader.length;k++) {
 			idxHeader[k] = NB.decodeUInt32(fanoutTable, k * 4);
+		}
 		idxdata = new byte[idxHeader.length][];
 		for (int k = 0; k < idxHeader.length; k++) {
 			long n;
@@ -57,8 +58,9 @@ class PackIndexV1 extends PackIndex {
 			}
 			if (n > 0) {
 				final long len = n * (Constants.OBJECT_ID_LENGTH + 4);
-				if (len > Integer.MAX_VALUE - 8) // http://stackoverflow.com/a/8381338
+				if (len > Integer.MAX_VALUE - 8) { // http://stackoverflow.com/a/8381338
 					throw new IOException(JGitText.get().indexFileIsTooLargeForJgit);
+				}
 
 				idxdata[k] = new byte[(int) len];
 				IO.readFully(fd, idxdata[k], 0, idxdata[k].length);
@@ -81,8 +83,9 @@ class PackIndexV1 extends PackIndex {
 	public long getOffset64Count() {
 		long n64 = 0;
 		for (MutableEntry e : this) {
-			if (e.getOffset() >= Integer.MAX_VALUE)
+			if (e.getOffset() >= Integer.MAX_VALUE) {
 				n64++;
+			}
 		}
 		return n64;
 	}
@@ -94,8 +97,9 @@ class PackIndexV1 extends PackIndex {
 			// any bucket before it which has the same object count.
 			//
 			long base = idxHeader[levelOne];
-			while (levelOne > 0 && base == idxHeader[levelOne - 1])
+			while (levelOne > 0 && base == idxHeader[levelOne - 1]) {
 				levelOne--;
+			}
 		} else {
 			// The item is in the bucket we would insert it into.
 			//
@@ -131,24 +135,26 @@ class PackIndexV1 extends PackIndex {
 	public long findOffset(AnyObjectId objId) {
 		final int levelOne = objId.getFirstByte();
 		byte[] data = idxdata[levelOne];
-		if (data == null)
+		if (data == null) {
 			return -1;
+		}
 		int high = data.length / (4 + Constants.OBJECT_ID_LENGTH);
 		int low = 0;
 		do {
 			final int mid = (low + high) >>> 1;
 			final int pos = idOffset(mid);
 			final int cmp = objId.compareTo(data, pos);
-			if (cmp < 0)
+			if (cmp < 0) {
 				high = mid;
-			else if (cmp == 0) {
+			} else if (cmp == 0) {
 				int b0 = data[pos - 4] & 0xff;
 				int b1 = data[pos - 3] & 0xff;
 				int b2 = data[pos - 2] & 0xff;
 				int b3 = data[pos - 1] & 0xff;
-				return (((long) b0) << 24) | (b1 << 16) | (b2 << 8) | (b3);
-			} else
+				return (((long) b0) << 24) | (b1 << 16) | (b2 << 8) | b3;
+			} else {
 				low = mid + 1;
+			}
 		} while (low < high);
 		return -1;
 	}
@@ -176,30 +182,34 @@ class PackIndexV1 extends PackIndex {
 	public void resolve(Set<ObjectId> matches, AbbreviatedObjectId id,
 			int matchLimit) throws IOException {
 		byte[] data = idxdata[id.getFirstByte()];
-		if (data == null)
+		if (data == null) {
 			return;
+		}
 		int max = data.length / (4 + Constants.OBJECT_ID_LENGTH);
 		int high = max;
 		int low = 0;
 		do {
 			int p = (low + high) >>> 1;
 			final int cmp = id.prefixCompare(data, idOffset(p));
-			if (cmp < 0)
+			if (cmp < 0) {
 				high = p;
-			else if (cmp == 0) {
+			} else if (cmp == 0) {
 				// We may have landed in the middle of the matches.  Move
 				// backwards to the start of matches, then walk forwards.
 				//
-				while (0 < p && id.prefixCompare(data, idOffset(p - 1)) == 0)
+				while (0 < p && id.prefixCompare(data, idOffset(p - 1)) == 0) {
 					p--;
-				for (; p < max && id.prefixCompare(data, idOffset(p)) == 0; p++) {
+				}
+				for (;p < max && id.prefixCompare(data, idOffset(p)) == 0;p++) {
 					matches.add(ObjectId.fromRaw(data, idOffset(p)));
-					if (matches.size() > matchLimit)
+					if (matches.size() > matchLimit) {
 						break;
+					}
 				}
 				return;
-			} else
+			} else {
 				low = p + 1;
+			}
 		} while (low < high);
 	}
 
@@ -226,8 +236,9 @@ class PackIndexV1 extends PackIndex {
 		@Override
 		public MutableEntry next() {
 			for (; levelOne < idxdata.length; levelOne++) {
-				if (idxdata[levelOne] == null)
+				if (idxdata[levelOne] == null) {
 					continue;
+				}
 				if (levelTwo < idxdata[levelOne].length) {
 					entry.offset = NB.decodeUInt32(idxdata[levelOne], levelTwo);
 					levelTwo += Constants.OBJECT_ID_LENGTH + 4;

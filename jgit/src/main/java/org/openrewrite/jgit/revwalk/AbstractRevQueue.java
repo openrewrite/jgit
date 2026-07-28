@@ -113,7 +113,7 @@ abstract class AbstractRevQueue extends Generator {
 		s.append('\n');
 	}
 
-	private static class AlwaysEmptyQueue extends AbstractRevQueue {
+	private static final class AlwaysEmptyQueue extends AbstractRevQueue {
 		private AlwaysEmptyQueue() {
 			super(false);
 		}

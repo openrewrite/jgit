@@ -75,7 +75,7 @@ public abstract class PackParser {
 		INPUT,
 
 		/** Data is read back from the database's buffers. */
-		DATABASE;
+		DATABASE
 	}
 
 	/** Object database used for loading existing objects. */
@@ -83,9 +83,9 @@ public abstract class PackParser {
 
 	private InflaterStream inflater;
 
-	private byte[] tempBuffer;
+	private final byte[] tempBuffer;
 
-	private byte[] hdrBuf;
+	private final byte[] hdrBuf;
 
 	private final SHA1 objectHasher = SHA1.newInstance();
 	private final MutableObjectId tempObjectId;
@@ -249,10 +249,11 @@ public abstract class PackParser {
 	 *            {@code true} to enable keeping track of new objects.
 	 */
 	public void setNeedNewObjectIds(boolean b) {
-		if (b)
+		if (b) {
 			newObjectIds = new ObjectIdSubclassMap<>();
-		else
+		} else {
 			newObjectIds = null;
+		}
 	}
 
 	private boolean needNewObjectIds() {
@@ -320,8 +321,9 @@ public abstract class PackParser {
 	 * @return the new objects that were sent by the user
 	 */
 	public ObjectIdSubclassMap<ObjectId> getNewObjectIds() {
-		if (newObjectIds != null)
+		if (newObjectIds != null) {
 			return newObjectIds;
+		}
 		return new ObjectIdSubclassMap<>();
 	}
 
@@ -331,8 +333,9 @@ public abstract class PackParser {
 	 * @return set of objects the incoming pack assumed for delta purposes
 	 */
 	public ObjectIdSubclassMap<ObjectId> getBaseObjectIds() {
-		if (baseObjectIds != null)
+		if (baseObjectIds != null) {
 			return baseObjectIds;
+		}
 		return new ObjectIdSubclassMap<>();
 	}
 
@@ -449,8 +452,9 @@ public abstract class PackParser {
 			Comparator<PackedObjectInfo> cmp) {
 		Arrays.sort(entries, 0, entryCount, cmp);
 		List<PackedObjectInfo> list = Arrays.asList(entries);
-		if (entryCount < entries.length)
+		if (entryCount < entries.length) {
 			list = list.subList(0, entryCount);
+		}
 		return list;
 	}
 
@@ -513,13 +517,16 @@ public abstract class PackParser {
 	 */
 	public PackLock parse(ProgressMonitor receiving, ProgressMonitor resolving)
 			throws IOException {
-		if (receiving == null)
+		if (receiving == null) {
 			receiving = NullProgressMonitor.INSTANCE;
-		if (resolving == null)
+		}
+		if (resolving == null) {
 			resolving = NullProgressMonitor.INSTANCE;
+		}
 
-		if (receiving == resolving)
+		if (receiving == resolving) {
 			receiving.start(2 /* tasks */);
+		}
 		try {
 			readPackHeader();
 
@@ -534,8 +541,9 @@ public abstract class PackParser {
 				for (int done = 0; done < expectedObjectCount; done++) {
 					indexOneObject();
 					receiving.update(1);
-					if (receiving.isCancelled())
+					if (receiving.isCancelled()) {
 						throw new IOException(JGitText.get().downloadCancelled);
+					}
 				}
 				readPackFooter();
 				endInput();
@@ -556,8 +564,9 @@ public abstract class PackParser {
 			baseByPos = null;
 		} finally {
 			try {
-				if (readCurs != null)
+				if (readCurs != null) {
 					readCurs.close();
+				}
 			} finally {
 				readCurs = null;
 			}
@@ -601,17 +610,19 @@ public abstract class PackParser {
 		final int last = entryCount;
 		for (int i = 0; i < last; i++) {
 			resolveDeltas(entries[i], progress);
-			if (progress.isCancelled())
+			if (progress.isCancelled()) {
 				throw new IOException(
 						JGitText.get().downloadCancelledDuringIndexing);
+			}
 		}
 	}
 
 	private void resolveDeltas(final PackedObjectInfo oe,
 			ProgressMonitor progress) throws IOException {
 		UnresolvedDelta children = firstChildOf(oe);
-		if (children == null)
+		if (children == null) {
 			return;
+		}
 
 		DeltaVisit visit = new DeltaVisit();
 		visit.nextChild = children;
@@ -664,10 +675,11 @@ public abstract class PackParser {
 			visit.data = BinaryDelta.apply(visit.parent.data, delta);
 			delta = null;
 
-			if (!checkCRC(visit.delta.crc))
+			if (!checkCRC(visit.delta.crc)) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().corruptionDetectedReReadingAt,
 						Long.valueOf(visit.delta.position)));
+			}
 
 			SHA1 objectDigest = objectHasher.reset();
 			objectDigest.update(Constants.encodedTypeString(type));
@@ -807,10 +819,12 @@ public abstract class PackParser {
 		UnresolvedDelta a = reverse(removeBaseById(oe));
 		UnresolvedDelta b = reverse(baseByPos.remove(oe.getOffset()));
 
-		if (a == null)
+		if (a == null) {
 			return b;
-		if (b == null)
+		}
+		if (b == null) {
 			return a;
+		}
 
 		UnresolvedDelta first = null;
 		UnresolvedDelta last = null;
@@ -823,10 +837,11 @@ public abstract class PackParser {
 				curr = b;
 				b = b.next;
 			}
-			if (last != null)
+			if (last != null) {
 				last.next = curr;
-			else
+			} else {
 				first = curr;
+			}
 			last = curr;
 			curr.next = null;
 		}
@@ -837,16 +852,19 @@ public abstract class PackParser {
 			throws IOException {
 		growEntries(baseById.size());
 
-		if (needBaseObjectIds)
+		if (needBaseObjectIds) {
 			baseObjectIds = new ObjectIdSubclassMap<>();
+		}
 
 		final List<DeltaChain> missing = new ArrayList<>(64);
 		for (DeltaChain baseId : baseById) {
-			if (baseId.head == null)
+			if (baseId.head == null) {
 				continue;
+			}
 
-			if (needBaseObjectIds)
+			if (needBaseObjectIds) {
 				baseObjectIds.add(baseId);
+			}
 
 			final ObjectLoader ldr;
 			try {
@@ -862,20 +880,23 @@ public abstract class PackParser {
 			final int typeCode = ldr.getType();
 			final PackedObjectInfo oe = newInfo(baseId, null, null);
 			oe.setType(typeCode);
-			if (onAppendBase(typeCode, visit.data, oe))
+			if (onAppendBase(typeCode, visit.data, oe)) {
 				entries[entryCount++] = oe;
+			}
 			visit.nextChild = firstChildOf(oe);
 			resolveDeltas(visit.next(), typeCode,
 					new ObjectTypeAndSize(), progress);
 
-			if (progress.isCancelled())
+			if (progress.isCancelled()) {
 				throw new IOException(
 						JGitText.get().downloadCancelledDuringIndexing);
+			}
 		}
 
 		for (DeltaChain base : missing) {
-			if (base.head != null)
+			if (base.head != null) {
 				throw new MissingObjectException(base, "delta base"); //$NON-NLS-1$
+			}
 		}
 
 		onEndThinPack();
@@ -891,22 +912,26 @@ public abstract class PackParser {
 
 	private void readPackHeader() throws IOException {
 		if (expectDataAfterPackFooter) {
-			if (!in.markSupported())
+			if (!in.markSupported()) {
 				throw new IOException(
 						JGitText.get().inputStreamMustSupportMark);
+			}
 			in.mark(buf.length);
 		}
 
 		final int hdrln = Constants.PACK_SIGNATURE.length + 4 + 4;
 		final int p = fill(Source.INPUT, hdrln);
-		for (int k = 0; k < Constants.PACK_SIGNATURE.length; k++)
-			if (buf[p + k] != Constants.PACK_SIGNATURE[k])
+		for (int k = 0;k < Constants.PACK_SIGNATURE.length;k++) {
+			if (buf[p + k] != Constants.PACK_SIGNATURE[k]) {
 				throw new IOException(JGitText.get().notAPACKFile);
+			}
+		}
 
 		final long vers = NB.decodeUInt32(buf, p + 4);
-		if (vers != 2 && vers != 3)
+		if (vers != 2 && vers != 3) {
 			throw new IOException(MessageFormat.format(
 					JGitText.get().unsupportedPackVersion, Long.valueOf(vers)));
+		}
 		final long objectCount = NB.decodeUInt32(buf, p + 8);
 		use(hdrln);
 		setExpectedObjectCount(objectCount);
@@ -922,24 +947,27 @@ public abstract class PackParser {
 		System.arraycopy(buf, c, srcHash, 0, 20);
 		use(20);
 
-		if (bAvail != 0 && !expectDataAfterPackFooter)
+		if (bAvail != 0 && !expectDataAfterPackFooter) {
 			throw new CorruptObjectException(MessageFormat.format(
 					JGitText.get().expectedEOFReceived,
 					"\\x" + Integer.toHexString(buf[bOffset] & 0xff))); //$NON-NLS-1$
+		}
 		if (isCheckEofAfterPackFooter()) {
 			int eof = in.read();
-			if (0 <= eof)
+			if (0 <= eof) {
 				throw new CorruptObjectException(MessageFormat.format(
 						JGitText.get().expectedEOFReceived,
 						"\\x" + Integer.toHexString(eof))); //$NON-NLS-1$
+			}
 		} else if (bAvail > 0 && expectDataAfterPackFooter) {
 			in.reset();
 			IO.skipFully(in, bOffset);
 		}
 
-		if (!Arrays.equals(actHash, srcHash))
+		if (!Arrays.equals(actHash, srcHash)) {
 			throw new CorruptObjectException(
 					JGitText.get().corruptObjectPackfileChecksumIncorrect);
+		}
 
 		onPackFooter(srcHash);
 	}
@@ -991,7 +1019,7 @@ public abstract class PackParser {
 				c = readFrom(Source.INPUT);
 				hdrBuf[hdrPtr++] = (byte) c;
 				ofs <<= 7;
-				ofs += (c & 127);
+				ofs += c & 127;
 			}
 			final long base = streamPosition - ofs;
 			onBeginOfsDelta(streamPosition, base, sz);
@@ -1057,8 +1085,9 @@ public abstract class PackParser {
 			try (InputStream inf = inflate(Source.INPUT, sz)) {
 				while (cnt < sz) {
 					int r = inf.read(readBuffer);
-					if (r <= 0)
+					if (r <= 0) {
 						break;
+					}
 					objectDigest.update(readBuffer, 0, r);
 					checker.update(readBuffer, 0, r);
 					cnt += r;
@@ -1080,8 +1109,9 @@ public abstract class PackParser {
 		obj.setType(type);
 		obj.setSize(sizeBeforeInflating);
 		onEndWholeObject(obj);
-		if (data != null)
+		if (data != null) {
 			onInflatedObjectData(obj, type, data);
+		}
 		addObjectAndTrack(obj);
 
 		if (isCheckObjectCollisions()) {
@@ -1201,8 +1231,9 @@ public abstract class PackParser {
 
 	// Consume exactly one byte from the buffer and return it.
 	private int readFrom(Source src) throws IOException {
-		if (bAvail == 0)
+		if (bAvail == 0) {
 			fill(src, 1);
+		}
 		bAvail--;
 		return buf[bOffset++] & 0xff;
 	}
@@ -1219,30 +1250,26 @@ public abstract class PackParser {
 			int next = bOffset + bAvail;
 			int free = buf.length - next;
 			if (free + bAvail < need) {
-				switch (src) {
-				case INPUT:
+				if (src == PackParser.Source.INPUT) {
 					sync();
-					break;
-				case DATABASE:
-					if (bAvail > 0)
+				} else if (src == PackParser.Source.DATABASE) {
+					if (bAvail > 0) {
 						System.arraycopy(buf, bOffset, buf, 0, bAvail);
+					}
 					bOffset = 0;
-					break;
 				}
 				next = bAvail;
 				free = buf.length - next;
 			}
-			switch (src) {
-			case INPUT:
+			if (src == PackParser.Source.INPUT) {
 				next = in.read(buf, next, free);
-				break;
-			case DATABASE:
+			} else if (src == PackParser.Source.DATABASE) {
 				next = readDatabase(buf, next, free);
-				break;
 			}
-			if (next <= 0)
+			if (next <= 0) {
 				throw new EOFException(
 						JGitText.get().packfileIsTruncatedNoParam);
+			}
 			bAvail += next;
 		}
 		return bOffset;
@@ -1259,8 +1286,9 @@ public abstract class PackParser {
 				bAvail = 0;
 			}
 			in.mark(buf.length);
-		} else if (bAvail > 0)
+		} else if (bAvail > 0) {
 			System.arraycopy(buf, bOffset, buf, 0, bAvail);
+		}
 		bBase += bOffset;
 		bOffset = 0;
 	}
@@ -1291,8 +1319,9 @@ public abstract class PackParser {
 	protected PackedObjectInfo newInfo(AnyObjectId id, UnresolvedDelta delta,
 			ObjectId deltaBase) {
 		PackedObjectInfo oe = new PackedObjectInfo(id);
-		if (delta != null)
+		if (delta != null) {
 			oe.setCRC(delta.crc);
+		}
 		return oe;
 	}
 
@@ -1643,8 +1672,9 @@ public abstract class PackParser {
 
 		UnresolvedDelta remove() {
 			final UnresolvedDelta r = head;
-			if (r != null)
+			if (r != null) {
 				head = null;
+			}
 			return r;
 		}
 
@@ -1711,21 +1741,24 @@ public abstract class PackParser {
 				parent = parent.parent;
 			}
 
-			if (nextChild != null)
+			if (nextChild != null) {
 				return new DeltaVisit(this);
+			}
 
 			// If we have no child ourselves, our parent must (if it exists),
 			// due to the discard rule above. With no parent, we are done.
-			if (parent != null)
+			if (parent != null) {
 				return new DeltaVisit(parent);
+			}
 			return null;
 		}
 	}
 
 	private void addObjectAndTrack(PackedObjectInfo oe) {
 		entries[entryCount++] = oe;
-		if (needNewObjectIds())
+		if (needNewObjectIds()) {
 			newObjectIds.add(oe);
+		}
 	}
 
 	private class InflaterStream extends InputStream {
@@ -1766,8 +1799,9 @@ public abstract class PackParser {
 			while (n < toSkip) {
 				final int cnt = (int) Math.min(skipBuffer.length, toSkip - n);
 				final int r = read(skipBuffer, 0, cnt);
-				if (r <= 0)
+				if (r <= 0) {
 					break;
+				}
 				n += r;
 			}
 			return n;
@@ -1786,8 +1820,9 @@ public abstract class PackParser {
 				while (n < cnt) {
 					int r = inf.inflate(dst, pos + n, cnt - n);
 					n += r;
-					if (inf.finished())
+					if (inf.finished()) {
 						break;
+					}
 					if (inf.needsInput()) {
 						onObjectData(src, buf, p, bAvail);
 						use(bAvail);

@@ -161,7 +161,7 @@ public class ReceivePack {
 	 */
 	private boolean atomic;
 
-	private boolean allowOfsDelta;
+	private final boolean allowOfsDelta;
 
 	private boolean allowQuiet = true;
 
@@ -211,14 +211,14 @@ public class ReceivePack {
 	private Map<String, Ref> refs;
 
 	/** All SHA-1s shown to the client, which can be possible edges. */
-	private Set<ObjectId> advertisedHaves;
+	private final Set<ObjectId> advertisedHaves;
 
 	/** Capabilities requested by the client. */
 	private Set<String> enabledCapabilities;
 
 	String userAgent;
 
-	private Set<ObjectId> clientShallowCommits;
+	private final Set<ObjectId> clientShallowCommits;
 
 	private List<ReceiveCommand> commands;
 
@@ -582,10 +582,11 @@ public class ReceivePack {
 	 * @see #setObjectChecker(ObjectChecker)
 	 */
 	public void setCheckReceivedObjects(boolean check) {
-		if (check && objectChecker == null)
+		if (check && objectChecker == null) {
 			setObjectChecker(new ObjectChecker());
-		else if (!check && objectChecker != null)
+		} else if (!check && objectChecker != null) {
 			setObjectChecker(null);
+		}
 	}
 
 	/**
@@ -768,10 +769,11 @@ public class ReceivePack {
 	 *            the hook; may be null to show all refs.
 	 */
 	public void setAdvertiseRefsHook(AdvertiseRefsHook advertiseRefsHook) {
-		if (advertiseRefsHook != null)
+		if (advertiseRefsHook != null) {
 			this.advertiseRefsHook = advertiseRefsHook;
-		else
+		} else {
 			this.advertiseRefsHook = AdvertiseRefsHook.DEFAULT;
+		}
 	}
 
 	/**
@@ -864,10 +866,11 @@ public class ReceivePack {
 	 * @since 3.3
 	 */
 	public void setMaxPackSizeLimit(long limit) {
-		if (limit < 0)
+		if (limit < 0) {
 			throw new IllegalArgumentException(
 					MessageFormat.format(JGitText.get().receivePackInvalidLimit,
 							Long.valueOf(limit)));
+		}
 		maxPackSizeLimit = limit;
 	}
 
@@ -1035,8 +1038,9 @@ public class ReceivePack {
 	 */
 	public void sendError(String what) {
 		if (refs == null) {
-			if (advertiseError == null)
+			if (advertiseError == null) {
 				advertiseError = new StringBuilder();
+			}
 			advertiseError.append(what).append('\n');
 		} else {
 			msgOutWrapper.write(Constants.encode("error: " + what + "\n")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1104,8 +1108,9 @@ public class ReceivePack {
 	 * @since 3.3
 	 */
 	public long getPackSize() {
-		if (packSize != null)
+		if (packSize != null) {
 			return packSize.longValue();
+		}
 		throw new IllegalStateException(JGitText.get().packSizeNotSetYet);
 	}
 
@@ -1190,8 +1195,9 @@ public class ReceivePack {
 	 * @return advertised refs, or the default if not explicitly advertised.
 	 */
 	private Map<String, Ref> getAdvertisedOrDefaultRefs() {
-		if (refs == null)
+		if (refs == null) {
 			setAdvertisedRefs(null, null);
+		}
 		return refs;
 	}
 
@@ -1264,25 +1270,30 @@ public class ReceivePack {
 		adv.advertiseCapability(CAPABILITY_SIDE_BAND_64K);
 		adv.advertiseCapability(CAPABILITY_DELETE_REFS);
 		adv.advertiseCapability(CAPABILITY_REPORT_STATUS);
-		if (allowQuiet)
+		if (allowQuiet) {
 			adv.advertiseCapability(CAPABILITY_QUIET);
+		}
 		String nonce = getPushCertificateParser().getAdvertiseNonce();
 		if (nonce != null) {
 			adv.advertiseCapability(nonce);
 		}
-		if (db.getRefDatabase().performsAtomicTransactions())
+		if (db.getRefDatabase().performsAtomicTransactions()) {
 			adv.advertiseCapability(CAPABILITY_ATOMIC);
-		if (allowOfsDelta)
+		}
+		if (allowOfsDelta) {
 			adv.advertiseCapability(CAPABILITY_OFS_DELTA);
+		}
 		if (allowPushOptions) {
 			adv.advertiseCapability(CAPABILITY_PUSH_OPTIONS);
 		}
 		adv.advertiseCapability(OPTION_AGENT, UserAgent.get());
 		adv.send(getAdvertisedOrDefaultRefs().values());
-		for (ObjectId obj : advertisedHaves)
+		for (ObjectId obj : advertisedHaves) {
 			adv.advertiseHave(obj);
-		if (adv.isEmpty())
+		}
+		if (adv.isEmpty()) {
 			adv.advertiseId(ObjectId.zeroId(), "capabilities^{}"); //$NON-NLS-1$
+		}
 		adv.end();
 	}
 
@@ -1330,8 +1341,9 @@ public class ReceivePack {
 				try {
 					line = pck.readString();
 				} catch (EOFException eof) {
-					if (commands.isEmpty())
+					if (commands.isEmpty()) {
 						return;
+					}
 					throw eof;
 				}
 				if (PacketLineIn.isEnd(line)) {
@@ -1350,19 +1362,19 @@ public class ReceivePack {
 					line = firstLine.getLine();
 					enableCapabilities();
 
-					if (line.equals(GitProtocolConstants.OPTION_PUSH_CERT)) {
+					if (GitProtocolConstants.OPTION_PUSH_CERT.equals(line)) {
 						certParser.receiveHeader(pck, !isBiDirectionalPipe());
 						continue;
 					}
 				}
 
-				if (line.equals(PushCertificateParser.BEGIN_SIGNATURE)) {
+				if (PushCertificateParser.BEGIN_SIGNATURE.equals(line)) {
 					certParser.receiveSignature(pck);
 					continue;
 				}
 
 				ReceiveCommand cmd = parseCommand(line);
-				if (cmd.getRefName().equals(Constants.HEAD)) {
+				if (Constants.HEAD.equals(cmd.getRefName())) {
 					cmd.setResult(Result.REJECTED_CURRENT_BRANCH);
 				} else {
 					cmd.setRef(refs.get(cmd.getRefName()));
@@ -1457,8 +1469,9 @@ public class ReceivePack {
 	}
 
 	private void checkRequestWasRead() {
-		if (enabledCapabilities == null)
+		if (enabledCapabilities == null) {
 			throw new RequestNotYetReadException();
+		}
 	}
 
 	/**
@@ -1468,8 +1481,9 @@ public class ReceivePack {
 	 */
 	private boolean needPack() {
 		for (ReceiveCommand cmd : commands) {
-			if (cmd.getType() != ReceiveCommand.Type.DELETE)
+			if (cmd.getType() != ReceiveCommand.Type.DELETE) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -1485,19 +1499,22 @@ public class ReceivePack {
 		// to send to us. We should increase our timeout so we don't
 		// abort while the client is computing.
 		//
-		if (timeoutIn != null)
+		if (timeoutIn != null) {
 			timeoutIn.setTimeout(10 * timeout * 1000);
+		}
 
 		ProgressMonitor receiving = NullProgressMonitor.INSTANCE;
 		ProgressMonitor resolving = NullProgressMonitor.INSTANCE;
-		if (sideBand && !quiet)
+		if (sideBand && !quiet) {
 			resolving = new SideBandProgressMonitor(msgOut);
+		}
 
 		try (ObjectInserter ins = db.newObjectInserter()) {
 			String lockMsg = "jgit receive-pack"; //$NON-NLS-1$
-			if (getRefLogIdent() != null)
+			if (getRefLogIdent() != null) {
 				lockMsg += " from " + getRefLogIdent().toExternalString(); //$NON-NLS-1$
 
+			}
 			parser = ins.newPackParser(packInputStream());
 			parser.setAllowThin(true);
 			parser.setNeedNewObjectIds(checkReferencedAreReachable);
@@ -1514,8 +1531,9 @@ public class ReceivePack {
 			ins.flush();
 		}
 
-		if (timeoutIn != null)
+		if (timeoutIn != null) {
 			timeoutIn.setTimeout(timeout * 1000);
+		}
 	}
 
 	private InputStream packInputStream() {
@@ -1580,8 +1598,9 @@ public class ReceivePack {
 	private void validateCommands() {
 		for (ReceiveCommand cmd : commands) {
 			final Ref ref = cmd.getRef();
-			if (cmd.getResult() != Result.NOT_ATTEMPTED)
+			if (cmd.getResult() != Result.NOT_ATTEMPTED) {
 				continue;
+			}
 
 			if (cmd.getType() == ReceiveCommand.Type.DELETE) {
 				if (!isAllowDeletes()) {
@@ -1665,7 +1684,8 @@ public class ReceivePack {
 
 				// Is this possibly a non-fast-forward style update?
 				//
-				RevObject oldObj, newObj;
+				RevObject oldObj;
+				RevObject newObj;
 				try {
 					oldObj = walk.parseAny(cmd.getOldId());
 				} catch (IOException e) {
@@ -1722,8 +1742,9 @@ public class ReceivePack {
 	private boolean anyRejects() {
 		for (ReceiveCommand cmd : commands) {
 			if (cmd.getResult() != Result.NOT_ATTEMPTED
-					&& cmd.getResult() != Result.OK)
+					&& cmd.getResult() != Result.OK) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -1755,8 +1776,9 @@ public class ReceivePack {
 	 */
 	protected void executeCommands() {
 		List<ReceiveCommand> toApply = filterCommands(Result.NOT_ATTEMPTED);
-		if (toApply.isEmpty())
+		if (toApply.isEmpty()) {
 			return;
+		}
 
 		ProgressMonitor updating = NullProgressMonitor.INSTANCE;
 		if (sideBand) {
@@ -1833,9 +1855,9 @@ public class ReceivePack {
 				}
 
 				if (cmd.getResult() == Result.REJECTED_MISSING_OBJECT) {
-					if (cmd.getMessage() == null)
+					if (cmd.getMessage() == null) {
 						r.append("missing object(s)"); //$NON-NLS-1$
-					else if (cmd.getMessage()
+					} else if (cmd.getMessage()
 							.length() == Constants.OBJECT_ID_STRING_LENGTH) {
 						// TODO: Using get/setMessage to store an OID is a
 						// misuse. The caller should set a full error message.
@@ -1923,8 +1945,9 @@ public class ReceivePack {
 			// the caller. For smart HTTP we don't do this flush and
 			// instead let the higher level HTTP servlet code do it.
 			//
-			if (!sideBand && msgOut != null)
+			if (!sideBand && msgOut != null) {
 				msgOut.flush();
+			}
 			rawOut.flush();
 		}
 	}
@@ -2193,10 +2216,12 @@ public class ReceivePack {
 		if (isBiDirectionalPipe()) {
 			sendAdvertisedRefs(new PacketLineOutRefAdvertiser(pckOut));
 			pckOut.flush();
-		} else
+		} else {
 			getAdvertisedOrDefaultRefs();
-		if (hasError())
+		}
+		if (hasError()) {
 			return;
+		}
 
 		recvCommands();
 
@@ -2254,7 +2279,8 @@ public class ReceivePack {
 		}
 		String oldStr = line.substring(0, 40);
 		String newStr = line.substring(41, 81);
-		ObjectId oldId, newId;
+		ObjectId oldId;
+		ObjectId newId;
 		try {
 			oldId = ObjectId.fromString(oldStr);
 			newId = ObjectId.fromString(newStr);

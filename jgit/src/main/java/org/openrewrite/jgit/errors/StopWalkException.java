@@ -16,7 +16,7 @@ package org.openrewrite.jgit.errors;
  *
  * @see org.openrewrite.jgit.revwalk.filter.RevFilter
  */
-public class StopWalkException extends RuntimeException {
+public final class StopWalkException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	/** Singleton instance for throwing within a filter. */

@@ -62,9 +62,10 @@ class RefDirectoryRename extends RefRename {
 	/** {@inheritDoc} */
 	@Override
 	protected Result doRename() throws IOException {
-		if (source.getRef().isSymbolic())
+		if (source.getRef().isSymbolic()) {
 			return Result.IO_FAILURE; // not supported
 
+		}
 		objId = source.getOldObjectId();
 		boolean updateHEAD = needToUpdateHEAD();
 		tmp = refdb.newTemporaryUpdate();
@@ -74,18 +75,19 @@ class RefDirectoryRename extends RefRename {
 			tmp.setForceUpdate(true);
 			tmp.disableRefLog();
 			switch (tmp.update(rw)) {
-			case NEW:
-			case FORCED:
-			case NO_CHANGE:
-				break;
-			default:
-				return tmp.getResult();
+				case NEW:
+				case FORCED:
+				case NO_CHANGE:
+					break;
+				default:
+					return tmp.getResult();
 			}
 
 			// Save the source's log under the temporary name, we must do
 			// this before we delete the source, otherwise we lose the log.
-			if (!renameLog(source, tmp))
+			if (!renameLog(source, tmp)) {
 				return Result.IO_FAILURE;
+			}
 
 			// If HEAD has to be updated, link it now to destination.
 			// We have to link before we delete, otherwise the delete
@@ -109,8 +111,9 @@ class RefDirectoryRename extends RefRename {
 			source.disableRefLog();
 			if (source.delete(rw) != Result.FORCED) {
 				renameLog(tmp, source);
-				if (updateHEAD)
+				if (updateHEAD) {
 					linkHEAD(source);
+				}
 				return source.getResult();
 			}
 
@@ -120,8 +123,9 @@ class RefDirectoryRename extends RefRename {
 				source.setExpectedOldObjectId(ObjectId.zeroId());
 				source.setNewObjectId(objId);
 				source.update(rw);
-				if (updateHEAD)
+				if (updateHEAD) {
 					linkHEAD(source);
+				}
 				return Result.IO_FAILURE;
 			}
 
@@ -131,13 +135,15 @@ class RefDirectoryRename extends RefRename {
 			if (dst.update(rw) != Result.NEW) {
 				// If we didn't create the destination we have to undo
 				// our work. Put the log back and restore source.
-				if (renameLog(destination, tmp))
+				if (renameLog(destination, tmp)) {
 					renameLog(tmp, source);
+				}
 				source.setExpectedOldObjectId(ObjectId.zeroId());
 				source.setNewObjectId(objId);
 				source.update(rw);
-				if (updateHEAD)
+				if (updateHEAD) {
 					linkHEAD(source);
+				}
 				return dst.getResult();
 			}
 
@@ -156,11 +162,13 @@ class RefDirectoryRename extends RefRename {
 		File srcLog = refdb.logFor(src.getName());
 		File dstLog = refdb.logFor(dst.getName());
 
-		if (!srcLog.exists())
+		if (!srcLog.exists()) {
 			return true;
+		}
 
-		if (!rename(srcLog, dstLog))
+		if (!rename(srcLog, dstLog)) {
 			return false;
+		}
 
 		try {
 			final int levels = RefDirectory.levelsIn(src.getName()) - 2;
@@ -183,8 +191,9 @@ class RefDirectoryRename extends RefRename {
 		}
 
 		File dir = dst.getParentFile();
-		if ((dir.exists() || !dir.mkdirs()) && !dir.isDirectory())
+		if ((dir.exists() || !dir.mkdirs()) && !dir.isDirectory()) {
 			return false;
+		}
 		try {
 			FileUtils.rename(src, dst, StandardCopyOption.ATOMIC_MOVE);
 			return true;

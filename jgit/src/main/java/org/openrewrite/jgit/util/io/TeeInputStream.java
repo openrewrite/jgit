@@ -28,9 +28,9 @@ import java.io.OutputStream;
 public class TeeInputStream extends InputStream {
 	private byte[] skipBuffer;
 
-	private InputStream src;
+	private final InputStream src;
 
-	private OutputStream dst;
+	private final OutputStream dst;
 
 	/**
 	 * Initialize a tee input stream.
@@ -62,8 +62,9 @@ public class TeeInputStream extends InputStream {
 		final byte[] b = skipBuffer();
 		while (0 < cnt) {
 			final int n = src.read(b, 0, (int) Math.min(b.length, cnt));
-			if (n <= 0)
+			if (n <= 0) {
 				break;
+			}
 			dst.write(b, 0, n);
 			skipped += n;
 			cnt -= n;
@@ -74,12 +75,14 @@ public class TeeInputStream extends InputStream {
 	/** {@inheritDoc} */
 	@Override
 	public int read(byte[] b, int off, int len) throws IOException {
-		if (len == 0)
+		if (len == 0) {
 			return 0;
+		}
 
 		int n = src.read(b, off, len);
-		if (0 < n)
+		if (0 < n) {
 			dst.write(b, off, n);
+		}
 		return n;
 	}
 
@@ -89,8 +92,9 @@ public class TeeInputStream extends InputStream {
 		byte[] b = skipBuffer();
 		for (;;) {
 			int n = src.read(b);
-			if (n <= 0)
+			if (n <= 0) {
 				break;
+			}
 			dst.write(b, 0, n);
 		}
 		dst.close();
@@ -98,8 +102,9 @@ public class TeeInputStream extends InputStream {
 	}
 
 	private byte[] skipBuffer() {
-		if (skipBuffer == null)
+		if (skipBuffer == null) {
 			skipBuffer = new byte[2048];
+		}
 		return skipBuffer;
 	}
 }

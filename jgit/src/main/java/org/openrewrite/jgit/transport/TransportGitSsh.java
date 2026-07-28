@@ -161,8 +161,9 @@ public class TransportGitSsh extends SshTransport implements PackTransport {
 
 	String commandFor(String exe) {
 		String path = uri.getPath();
-		if (uri.getScheme() != null && uri.getPath().startsWith("/~")) //$NON-NLS-1$
-			path = (uri.getPath().substring(1));
+		if (uri.getScheme() != null && uri.getPath().startsWith("/~")) { //$NON-NLS-1$
+			path = uri.getPath().substring(1);
+		}
 
 		final StringBuilder cmd = new StringBuilder();
 		cmd.append(exe);
@@ -175,8 +176,9 @@ public class TransportGitSsh extends SshTransport implements PackTransport {
 			throws TransportException {
 		if (status == 127) {
 			IOException cause = null;
-			if (why != null && why.length() > 0)
+			if (why != null && why.length() > 0) {
 				cause = new IOException(why);
+			}
 			throw new TransportException(uri, MessageFormat.format(
 					JGitText.get().cannotExecute, commandFor(exe)), cause);
 		}
@@ -184,19 +186,22 @@ public class TransportGitSsh extends SshTransport implements PackTransport {
 
 	NoRemoteRepositoryException cleanNotFound(NoRemoteRepositoryException nf,
 			String why) {
-		if (why == null || why.length() == 0)
+		if (why == null || why.length() == 0) {
 			return nf;
+		}
 
 		String path = uri.getPath();
-		if (uri.getScheme() != null && uri.getPath().startsWith("/~")) //$NON-NLS-1$
+		if (uri.getScheme() != null && uri.getPath().startsWith("/~")) { //$NON-NLS-1$
 			path = uri.getPath().substring(1);
+		}
 
 		final StringBuilder pfx = new StringBuilder();
 		pfx.append("fatal: "); //$NON-NLS-1$
 		pfx.append(QuotedString.BOURNE.quote(path));
 		pfx.append(": "); //$NON-NLS-1$
-		if (why.startsWith(pfx.toString()))
+		if (why.startsWith(pfx.toString())) {
 			why = why.substring(pfx.length());
+		}
 
 		return new NoRemoteRepositoryException(uri, why);
 	}

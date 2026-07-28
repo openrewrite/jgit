@@ -20,14 +20,14 @@ import java.text.MessageFormat;
 import org.openrewrite.jgit.annotations.NonNull;
 import org.openrewrite.jgit.dircache.DirCacheCheckout.CheckoutMetadata;
 import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
+import org.openrewrite.jgit.lib.CoreConfig.SymLinks;
 import org.openrewrite.jgit.lib.FileMode;
 import org.openrewrite.jgit.lib.FileModeCache;
+import org.openrewrite.jgit.lib.FileModeCache.CacheItem;
 import org.openrewrite.jgit.lib.ObjectLoader;
 import org.openrewrite.jgit.lib.ObjectReader;
 import org.openrewrite.jgit.lib.Repository;
-import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
-import org.openrewrite.jgit.lib.CoreConfig.SymLinks;
-import org.openrewrite.jgit.lib.FileModeCache.CacheItem;
 import org.openrewrite.jgit.treewalk.WorkingTreeOptions;
 import org.openrewrite.jgit.util.FS;
 import org.openrewrite.jgit.util.FileUtils;
@@ -209,11 +209,13 @@ public class Checkout {
 
 		if (options.isFileMode() && fs.supportsExecute()) {
 			if (FileMode.EXECUTABLE_FILE.equals(entry.getRawMode())) {
-				if (!fs.canExecute(tmpFile))
+				if (!fs.canExecute(tmpFile)) {
 					fs.setExecute(tmpFile, true);
+				}
 			} else {
-				if (fs.canExecute(tmpFile))
+				if (fs.canExecute(tmpFile)) {
 					fs.setExecute(tmpFile, false);
+				}
 			}
 		}
 		try {

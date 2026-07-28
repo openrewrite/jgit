@@ -112,10 +112,11 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 		raw = treeData;
 		prevPtr = -1;
 		currPtr = 0;
-		if (eof())
+		if (eof()) {
 			nextPtr = 0;
-		else
+		} else {
 			parseEntry();
+		}
 	}
 
 	/**
@@ -139,8 +140,9 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 			final AnyObjectId id) throws IncorrectObjectTypeException,
 			IOException {
 		CanonicalTreeParser p = this;
-		while (p.parent != null)
+		while (p.parent != null) {
 			p = (CanonicalTreeParser) p.parent;
+		}
 		p.reset(reader, id);
 		return p;
 	}
@@ -255,8 +257,9 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 	/** {@inheritDoc} */
 	@Override
 	public void reset() {
-		if (!first())
+		if (!first()) {
 			reset(raw);
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -279,8 +282,9 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 			//
 			prevPtr = currPtr;
 			currPtr = nextPtr;
-			if (!eof())
+			if (!eof()) {
 				parseEntry();
+			}
 			return;
 		}
 
@@ -290,15 +294,18 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 		int ptr = nextPtr;
 		while (--delta > 0 && ptr != end) {
 			prevPtr = ptr;
-			while (raw[ptr] != 0)
+			while (raw[ptr] != 0) {
 				ptr++;
+			}
 			ptr += OBJECT_ID_LENGTH + 1;
 		}
-		if (delta != 0)
+		if (delta != 0) {
 			throw new ArrayIndexOutOfBoundsException(delta);
+		}
 		currPtr = ptr;
-		if (!eof())
+		if (!eof()) {
 			parseEntry();
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -310,11 +317,13 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 			//
 			currPtr = prevPtr;
 			prevPtr = -1;
-			if (!eof())
+			if (!eof()) {
 				parseEntry();
+			}
 			return;
-		} else if (delta <= 0)
+		} else if (delta <= 0) {
 			throw new ArrayIndexOutOfBoundsException(delta);
+		}
 
 		// Fast skip through the records, from the beginning of the tree.
 		// There is no reliable way to read the tree backwards, so we must
@@ -327,12 +336,14 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 		while (ptr != currPtr) {
 			System.arraycopy(trace, 1, trace, 0, delta);
 			trace[delta] = ptr;
-			while (raw[ptr] != 0)
+			while (raw[ptr] != 0) {
 				ptr++;
+			}
 			ptr += OBJECT_ID_LENGTH + 1;
 		}
-		if (trace[1] == -1)
+		if (trace[1] == -1) {
 			throw new ArrayIndexOutOfBoundsException(delta);
+		}
 		prevPtr = trace[0];
 		currPtr = trace[1];
 		parseEntry();
@@ -344,8 +355,9 @@ public class CanonicalTreeParser extends AbstractTreeIterator {
 		int tmp = c - '0';
 		for (;;) {
 			c = raw[ptr++];
-			if (' ' == c)
+			if (' ' == c) {
 				break;
+			}
 			tmp <<= 3;
 			tmp += c - '0';
 		}

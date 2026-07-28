@@ -24,7 +24,7 @@ public class GpgSignature implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private byte[] signature;
+	private final byte[] signature;
 
 	/**
 	 * Creates a new instance with the specified signature

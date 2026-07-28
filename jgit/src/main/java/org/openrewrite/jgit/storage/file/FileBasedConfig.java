@@ -222,8 +222,9 @@ public class FileBasedConfig extends StoredConfig {
 			}
 			lf.setNeedSnapshotNoConfig(true);
 			lf.write(out);
-			if (!lf.commit())
+			if (!lf.commit()) {
 				throw new IOException(MessageFormat.format(JGitText.get().cannotCommitWriteTo, getFile()));
+			}
 		} finally {
 			lf.unlock();
 		}

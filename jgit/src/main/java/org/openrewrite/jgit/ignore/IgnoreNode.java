@@ -52,7 +52,7 @@ public class IgnoreNode {
 		 *
 		 * @since 3.6
 		 */
-		CHECK_PARENT_NEGATE_FIRST_MATCH;
+		CHECK_PARENT_NEGATE_FIRST_MATCH
 	}
 
 	/** The rules that have been parsed into this node. */
@@ -105,7 +105,7 @@ public class IgnoreNode {
 		String txt;
 		int lineNumber = 1;
 		while ((txt = br.readLine()) != null) {
-			if (txt.length() > 0 && !txt.startsWith("#") && !txt.equals("/")) { //$NON-NLS-1$ //$NON-NLS-2$
+			if (txt.length() > 0 && !txt.startsWith("#") && !"/".equals(txt)) { //$NON-NLS-1$ //$NON-NLS-2$
 				FastIgnoreRule rule = new FastIgnoreRule();
 				try {
 					rule.parse(txt);

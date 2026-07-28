@@ -14,7 +14,7 @@ package org.openrewrite.jgit.events;
  * Describes a change to one or more paths in the index file.
  */
 public class IndexChangedEvent extends RepositoryEvent<IndexChangedListener> {
-	private boolean internal;
+	private final boolean internal;
 
 	/**
 	 * Notify that the index changed

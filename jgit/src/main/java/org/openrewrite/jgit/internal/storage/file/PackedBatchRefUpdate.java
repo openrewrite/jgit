@@ -85,7 +85,7 @@ import org.openrewrite.jgit.util.RefList;
  * packed-refs protocol.
  */
 class PackedBatchRefUpdate extends BatchRefUpdate {
-	private RefDirectory refdb;
+	private final RefDirectory refdb;
 
 	PackedBatchRefUpdate(RefDirectory refdb) {
 		super(refdb);
@@ -353,8 +353,8 @@ class PackedBatchRefUpdate extends BatchRefUpdate {
 		int refIdx = 0;
 		int cmdIdx = 0;
 		while (refIdx < refs.size() || cmdIdx < commands.size()) {
-			Ref ref = (refIdx < refs.size()) ? refs.get(refIdx) : null;
-			ReceiveCommand cmd = (cmdIdx < commands.size())
+			Ref ref = refIdx < refs.size() ? refs.get(refIdx) : null;
+			ReceiveCommand cmd = cmdIdx < commands.size()
 					? commands.get(cmdIdx)
 					: null;
 			int cmp = 0;

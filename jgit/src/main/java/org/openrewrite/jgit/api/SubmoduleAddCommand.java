@@ -138,10 +138,12 @@ public class SubmoduleAddCommand extends
 	@Override
 	public Repository call() throws GitAPIException {
 		checkCallable();
-		if (path == null || path.length() == 0)
+		if (path == null || path.length() == 0) {
 			throw new IllegalArgumentException(JGitText.get().pathNotConfigured);
-		if (uri == null || uri.length() == 0)
+		}
+		if (uri == null || uri.length() == 0) {
 			throw new IllegalArgumentException(JGitText.get().uriNotConfigured);
+		}
 		if (name == null || name.length() == 0) {
 			// Use the path as the default.
 			name = path;
@@ -156,9 +158,10 @@ public class SubmoduleAddCommand extends
 		}
 
 		try {
-			if (submoduleExists())
+			if (submoduleExists()) {
 				throw new JGitInternalException(MessageFormat.format(
 						JGitText.get().submoduleExists, path));
+			}
 		} catch (IOException e) {
 			throw new JGitInternalException(e.getMessage(), e);
 		}
@@ -177,8 +180,9 @@ public class SubmoduleAddCommand extends
 		clone.setGitDir(new File(new File(repo.getDirectory(),
 				Constants.MODULES), path));
 		clone.setURI(resolvedUri);
-		if (monitor != null)
+		if (monitor != null) {
 			clone.setProgressMonitor(monitor);
+		}
 		Repository subRepo = null;
 		try (Git git = clone.call()) {
 			subRepo = git.getRepository();

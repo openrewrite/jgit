@@ -55,8 +55,8 @@ public class BlockList<T> extends AbstractList<T> {
 	 * Initialize an empty list.
 	 */
 	public BlockList() {
-		directory = BlockList.<T> newDirectory(256);
-		directory[0] = BlockList.<T> newBlock();
+		directory = BlockList. newDirectory(256);
+		directory[0] = BlockList. newBlock();
 		tailBlock = directory[0];
 	}
 
@@ -68,10 +68,11 @@ public class BlockList<T> extends AbstractList<T> {
 	 */
 	public BlockList(int capacity) {
 		int dirSize = toDirectoryIndex(capacity);
-		if ((capacity & BLOCK_MASK) != 0 || dirSize == 0)
+		if ((capacity & BLOCK_MASK) != 0 || dirSize == 0) {
 			dirSize++;
-		directory = BlockList.<T> newDirectory(dirSize);
-		directory[0] = BlockList.<T> newBlock();
+		}
+		directory = BlockList. newDirectory(dirSize);
+		directory[0] = BlockList. newBlock();
 		tailBlock = directory[0];
 	}
 
@@ -85,8 +86,9 @@ public class BlockList<T> extends AbstractList<T> {
 	@Override
 	public void clear() {
 		for (T[] block : directory) {
-			if (block != null)
+			if (block != null) {
 				Arrays.fill(block, null);
+			}
 		}
 		size = 0;
 		tailDirIdx = 0;
@@ -97,16 +99,18 @@ public class BlockList<T> extends AbstractList<T> {
 	/** {@inheritDoc} */
 	@Override
 	public T get(int index) {
-		if (index < 0 || size <= index)
+		if (index < 0 || size <= index) {
 			throw new IndexOutOfBoundsException(String.valueOf(index));
+		}
 		return directory[toDirectoryIndex(index)][toBlockIndex(index)];
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public T set(int index, T element) {
-		if (index < 0 || size <= index)
+		if (index < 0 || size <= index) {
 			throw new IndexOutOfBoundsException(String.valueOf(index));
+		}
 		T[] blockRef = directory[toDirectoryIndex(index)];
 		int blockIdx = toBlockIndex(index);
 		T old = blockRef[blockIdx];
@@ -121,14 +125,17 @@ public class BlockList<T> extends AbstractList<T> {
 	 *            the list to copy elements from.
 	 */
 	public void addAll(BlockList<T> src) {
-		if (src.size == 0)
+		if (src.size == 0) {
 			return;
+		}
 
 		int srcDirIdx = 0;
-		for (; srcDirIdx < src.tailDirIdx; srcDirIdx++)
+		for (;srcDirIdx < src.tailDirIdx;srcDirIdx++) {
 			addAll(src.directory[srcDirIdx], 0, BLOCK_SIZE);
-		if (src.tailBlkIdx != 0)
+		}
+		if (src.tailBlkIdx != 0) {
 			addAll(src.tailBlock, 0, src.tailBlkIdx);
+		}
 	}
 
 	/**
@@ -174,14 +181,14 @@ public class BlockList<T> extends AbstractList<T> {
 
 		// Slow path: Move to the next block, expanding if necessary.
 		if (++tailDirIdx == directory.length) {
-			T[][] newDir = BlockList.<T> newDirectory(directory.length << 1);
+			T[][] newDir = BlockList. newDirectory(directory.length << 1);
 			System.arraycopy(directory, 0, newDir, 0, directory.length);
 			directory = newDir;
 		}
 
 		T[] blockRef = directory[tailDirIdx];
 		if (blockRef == null) {
-			blockRef = BlockList.<T> newBlock();
+			blockRef = BlockList. newBlock();
 			directory[tailDirIdx] = blockRef;
 		}
 		blockRef[0] = element;
@@ -207,8 +214,9 @@ public class BlockList<T> extends AbstractList<T> {
 			// this class by entering this code path.
 			//
 			add(null); // expand the list by one
-			for (int oldIdx = size - 2; index <= oldIdx; oldIdx--)
+			for (int oldIdx = size - 2;index <= oldIdx;oldIdx--) {
 				set(oldIdx + 1, get(oldIdx));
+			}
 			set(index, element);
 		}
 	}
@@ -223,10 +231,11 @@ public class BlockList<T> extends AbstractList<T> {
 			T old = blockRef[blockIdx];
 			blockRef[blockIdx] = null;
 			size--;
-			if (0 < tailBlkIdx)
+			if (0 < tailBlkIdx) {
 				tailBlkIdx--;
-			else
+			} else {
 				resetTailBlock();
+			}
 			return old;
 
 		} else if (index < 0 || size <= index) {
@@ -238,8 +247,9 @@ public class BlockList<T> extends AbstractList<T> {
 			// this class by entering this code path.
 			//
 			T old = get(index);
-			for (; index < size - 1; index++)
+			for (;index < size - 1;index++) {
 				set(index, get(index + 1));
+			}
 			set(size - 1, null);
 			size--;
 			resetTailBlock();
@@ -259,11 +269,11 @@ public class BlockList<T> extends AbstractList<T> {
 		return new MyIterator();
 	}
 
-	static final int toDirectoryIndex(int index) {
+	static int toDirectoryIndex(int index) {
 		return index >>> BLOCK_BITS;
 	}
 
-	static final int toBlockIndex(int index) {
+	static int toBlockIndex(int index) {
 		return index & BLOCK_MASK;
 	}
 
@@ -293,15 +303,17 @@ public class BlockList<T> extends AbstractList<T> {
 
 		@Override
 		public T next() {
-			if (size <= index)
+			if (size <= index) {
 				throw new NoSuchElementException();
+			}
 
 			T res = block[blkIdx];
 			if (++blkIdx == BLOCK_SIZE) {
-				if (++dirIdx < directory.length)
+				if (++dirIdx < directory.length) {
 					block = directory[dirIdx];
-				else
+				} else {
 					block = null;
+				}
 				blkIdx = 0;
 			}
 			index++;
@@ -310,8 +322,9 @@ public class BlockList<T> extends AbstractList<T> {
 
 		@Override
 		public void remove() {
-			if (index == 0)
+			if (index == 0) {
 				throw new IllegalStateException();
+			}
 
 			BlockList.this.remove(--index);
 

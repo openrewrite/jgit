@@ -22,7 +22,7 @@ import org.openrewrite.jgit.lib.Config.SectionParser;
 /**
  * This class keeps git repository core parameters.
  */
-public class CoreConfig {
+public final class CoreConfig {
 	/** Key for {@link Config#get(SectionParser)}. */
 	public static final Config.SectionParser<CoreConfig> KEY = CoreConfig::new;
 
@@ -35,7 +35,7 @@ public class CoreConfig {
 		TRUE,
 
 		/** CRLF-&gt;LF performed, but no LF-&gt;CRLF. */
-		INPUT;
+		INPUT
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class CoreConfig {
 		LF,
 
 		/** Use the platform's native line ending. */
-		NATIVE;
+		NATIVE
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class CoreConfig {
 		AUTO_LF,
 
 		/** Do not convert. */
-		DIRECT;
+		DIRECT
 	}
 
 	/**

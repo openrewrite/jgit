@@ -314,7 +314,7 @@ public class PackStatistics {
 		}
 	}
 
-	private Accumulator statistics;
+	private final Accumulator statistics;
 
 	/**
 	 * Creates a new {@link org.openrewrite.jgit.storage.pack.PackStatistics} object

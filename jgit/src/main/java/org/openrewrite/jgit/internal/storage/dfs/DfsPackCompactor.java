@@ -71,7 +71,7 @@ public class DfsPackCompactor {
 	private PackStatistics newStats;
 	private DfsPackDescription outDesc;
 
-	private int autoAddSize;
+	private final int autoAddSize;
 	private ReftableConfig reftableConfig;
 
 	private RevWalk rw;
@@ -148,10 +148,11 @@ public class DfsPackCompactor {
 		DfsObjDatabase objdb = repo.getObjectDatabase();
 		for (DfsPackFile pack : objdb.getPacks()) {
 			DfsPackDescription d = pack.getPackDescription();
-			if (d.getFileSize(PACK) < autoAddSize)
+			if (d.getFileSize(PACK) < autoAddSize) {
 				add(pack);
-			else
+			} else {
 				exclude(pack);
+			}
 		}
 
 		if (reftableConfig != null) {
@@ -389,24 +390,27 @@ public class DfsPackCompactor {
 		pm.beginTask(JGitText.get().countingObjects, ProgressMonitor.UNKNOWN);
 		for (DfsPackFile src : srcPacks) {
 			List<ObjectIdWithOffset> want = toInclude(src, ctx);
-			if (want.isEmpty())
+			if (want.isEmpty()) {
 				continue;
+			}
 
 			PackReverseIndex rev = src.getReverseIdx(ctx);
 			DfsObjectRepresentation rep = new DfsObjectRepresentation(src);
 			for (ObjectIdWithOffset id : want) {
 				int type = src.getObjectType(ctx, id.offset);
 				RevObject obj = rw.lookupAny(id, type);
-				if (obj.has(added))
+				if (obj.has(added)) {
 					continue;
+				}
 
 				pm.update(1);
 				pw.addObject(obj);
 				obj.add(added);
 
 				src.representation(rep, id.offset, ctx, rev);
-				if (rep.getFormat() != PACK_DELTA)
+				if (rep.getFormat() != PACK_DELTA) {
 					continue;
+				}
 
 				RevObject base = rw.lookupAny(rep.getDeltaBase(), type);
 				if (!base.has(added) && !base.has(isBase)) {
@@ -433,11 +437,14 @@ public class DfsPackCompactor {
 		SCAN: for (PackIndex.MutableEntry ent : srcIdx) {
 			ObjectId id = ent.toObjectId();
 			RevObject obj = rw.lookupOrNull(id);
-			if (obj != null && (obj.has(added) || obj.has(isBase)))
+			if (obj != null && (obj.has(added) || obj.has(isBase))) {
 				continue;
-			for (ObjectIdSet e : exclude)
-				if (e.contains(id))
+			}
+			for (ObjectIdSet e : exclude) {
+				if (e.contains(id)) {
 					continue SCAN;
+				}
+			}
 			want.add(new ObjectIdWithOffset(id, ent.getOffset()));
 		}
 		Collections.sort(want, (ObjectIdWithOffset a,

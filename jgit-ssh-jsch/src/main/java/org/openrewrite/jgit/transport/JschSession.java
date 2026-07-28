@@ -28,16 +28,15 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import org.openrewrite.jgit.errors.TransportException;
-import org.openrewrite.jgit.internal.transport.jsch.JSchText;
-import org.openrewrite.jgit.util.io.IsolatedOutputStream;
-
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
+import org.openrewrite.jgit.errors.TransportException;
+import org.openrewrite.jgit.internal.transport.jsch.JSchText;
+import org.openrewrite.jgit.util.io.IsolatedOutputStream;
 
 /**
  * Run remote commands using Jsch.
@@ -80,8 +79,9 @@ public class JschSession implements RemoteSession2 {
 	/** {@inheritDoc} */
 	@Override
 	public void disconnect() {
-		if (sock.isConnected())
+		if (sock.isConnected()) {
 			sock.disconnect();
+		}
 	}
 
 	/**
@@ -214,8 +214,9 @@ public class JschSession implements RemoteSession2 {
 
 		@Override
 		public int exitValue() {
-			if (isRunning())
+			if (isRunning()) {
 				throw new IllegalThreadStateException();
+			}
 			return channel.getExitStatus();
 		}
 
@@ -225,15 +226,17 @@ public class JschSession implements RemoteSession2 {
 
 		@Override
 		public void destroy() {
-			if (channel.isConnected())
+			if (channel.isConnected()) {
 				channel.disconnect();
+			}
 			closeOutputStream();
 		}
 
 		@Override
 		public int waitFor() throws InterruptedException {
-			while (isRunning())
+			while (isRunning()) {
 				Thread.sleep(100);
+			}
 			return exitValue();
 		}
 	}

@@ -195,11 +195,13 @@ public class AutoLFInputStream extends InputStream {
 	@Override
 	public int read(byte[] bs, int off, int len)
 			throws IOException {
-		if (len == 0)
+		if (len == 0) {
 			return 0;
+		}
 
-		if (cnt == -1)
+		if (cnt == -1) {
 			return -1;
+		}
 
 		int i = off;
 		final int end = off + len;
@@ -224,8 +226,9 @@ public class AutoLFInputStream extends InputStream {
 			if (buf[ptr] == '\n') {
 				bs[i++] = '\n';
 				ptr++;
-			} else
+			} else {
 				bs[i++] = '\r';
+			}
 		}
 
 		return i == off ? -1 : i - off;

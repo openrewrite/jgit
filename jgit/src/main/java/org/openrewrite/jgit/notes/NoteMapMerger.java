@@ -140,10 +140,12 @@ public class NoteMapMerger {
 	}
 
 	private FanoutBucket asFanout(InMemoryNoteBucket bucket) {
-		if (bucket == null)
+		if (bucket == null) {
 			return EMPTY_FANOUT;
-		if (bucket instanceof FanoutBucket)
+		}
+		if (bucket instanceof FanoutBucket) {
 			return (FanoutBucket) bucket;
+		}
 		return ((LeafBucket) bucket).split();
 	}
 
@@ -161,16 +163,13 @@ public class NoteMapMerger {
 			NoteBucket o = ours.getBucket(i);
 			NoteBucket t = theirs.getBucket(i);
 
-			if (equals(o, t))
+			if (equals(o, t)) {
 				addIfNotNull(result, i, o);
-
-			else if (equals(b, o))
+			} else if (equals(b, o)) {
 				addIfNotNull(result, i, t);
-
-			else if (equals(b, t))
+			} else if (equals(b, t)) {
 				addIfNotNull(result, i, o);
-
-			else {
+			} else {
 				objectIdPrefix.setByte(treeDepth, i);
 				InMemoryNoteBucket mergedBucket = merge(treeDepth + 1,
 						FanoutBucket.loadIfLazy(b, objectIdPrefix, reader),
@@ -183,19 +182,22 @@ public class NoteMapMerger {
 	}
 
 	private static boolean equals(NoteBucket a, NoteBucket b) {
-		if (a == null && b == null)
+		if (a == null && b == null) {
 			return true;
+		}
 		return a != null && b != null && a.getTreeId().equals(b.getTreeId());
 	}
 
 	private void addIfNotNull(FanoutBucket b, int cell, NoteBucket child)
 			throws IOException {
-		if (child == null)
+		if (child == null) {
 			return;
-		if (child instanceof InMemoryNoteBucket)
+		}
+		if (child instanceof InMemoryNoteBucket) {
 			b.setBucket(cell, ((InMemoryNoteBucket) child).writeTree(inserter));
-		else
+		} else {
 			b.setBucket(cell, child.getTreeId());
+		}
 	}
 
 	private InMemoryNoteBucket mergeLeafBucket(int treeDepth, LeafBucket bb,
@@ -206,34 +208,39 @@ public class NoteMapMerger {
 		tb = notNullOrEmpty(tb);
 
 		InMemoryNoteBucket result = new LeafBucket(treeDepth * 2);
-		int bi = 0, oi = 0, ti = 0;
+		int bi = 0;
+		int oi = 0;
+		int ti = 0;
 		while (bi < bb.size() || oi < ob.size() || ti < tb.size()) {
-			Note b = get(bb, bi), o = get(ob, oi), t = get(tb, ti);
+			Note b = get(bb, bi);
+			Note o = get(ob, oi);
+			Note t = get(tb, ti);
 			Note min = min(b, o, t);
 
 			b = sameNoteOrNull(min, b);
 			o = sameNoteOrNull(min, o);
 			t = sameNoteOrNull(min, t);
 
-			if (sameContent(o, t))
+			if (sameContent(o, t)) {
 				result = addIfNotNull(result, o);
-
-			else if (sameContent(b, o))
+			} else if (sameContent(b, o)) {
 				result = addIfNotNull(result, t);
-
-			else if (sameContent(b, t))
+			} else if (sameContent(b, t)) {
 				result = addIfNotNull(result, o);
-
-			else
+			} else {
 				result = addIfNotNull(result,
 						noteMerger.merge(b, o, t, reader, inserter));
+			}
 
-			if (b != null)
+			if (b != null) {
 				bi++;
-			if (o != null)
+			}
+			if (o != null) {
 				oi++;
-			if (t != null)
+			}
+			if (t != null) {
 				ti++;
+			}
 		}
 		return result;
 	}
@@ -248,10 +255,12 @@ public class NoteMapMerger {
 
 	private static Note min(Note b, Note o, Note t) {
 		Note min = b;
-		if (min == null || (o != null && o.compareTo(min) < 0))
+		if (min == null || (o != null && o.compareTo(min) < 0)) {
 			min = o;
-		if (min == null || (t != null && t.compareTo(min) < 0))
+		}
+		if (min == null || (t != null && t.compareTo(min) < 0)) {
 			min = t;
+		}
 		return min;
 	}
 
@@ -260,14 +269,16 @@ public class NoteMapMerger {
 	}
 
 	private static boolean sameNote(Note a, Note b) {
-		if (a == null && b == null)
+		if (a == null && b == null) {
 			return true;
+		}
 		return a != null && b != null && AnyObjectId.isEqual(a, b);
 	}
 
 	private static boolean sameContent(Note a, Note b) {
-		if (a == null && b == null)
+		if (a == null && b == null) {
 			return true;
+		}
 		return a != null && b != null
 				&& AnyObjectId.isEqual(a.getData(), b.getData());
 	}
@@ -282,8 +293,9 @@ public class NoteMapMerger {
 
 	private NonNoteEntry mergeNonNotes(NonNoteEntry baseList,
 			NonNoteEntry oursList, NonNoteEntry theirsList) throws IOException {
-		if (baseList == null && oursList == null && theirsList == null)
+		if (baseList == null && oursList == null && theirsList == null) {
 			return null;
+		}
 
 		ObjectId baseId = write(baseList);
 		ObjectId oursId = write(oursList);
@@ -291,11 +303,13 @@ public class NoteMapMerger {
 		inserter.flush();
 
 		Merger m = nonNotesMergeStrategy.newMerger(db, true);
-		if (m instanceof ThreeWayMerger)
+		if (m instanceof ThreeWayMerger) {
 			((ThreeWayMerger) m).setBase(baseId);
-		if (!m.merge(oursId, theirsId))
+		}
+		if (!m.merge(oursId, theirsId)) {
 			throw new NotesMergeConflictException(baseList, oursList,
 					theirsList);
+		}
 		ObjectId resultTreeId = m.getResultTreeId();
 		AbbreviatedObjectId none = AbbreviatedObjectId.fromString(""); //$NON-NLS-1$
 		return NoteParser.parse(none, resultTreeId, reader).nonNotes;

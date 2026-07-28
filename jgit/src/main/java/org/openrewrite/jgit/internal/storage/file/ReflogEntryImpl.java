@@ -27,20 +27,21 @@ import org.openrewrite.jgit.util.RawParseUtils;
 public class ReflogEntryImpl implements Serializable, ReflogEntry {
 	private static final long serialVersionUID = 1L;
 
-	private ObjectId oldId;
+	private final ObjectId oldId;
 
-	private ObjectId newId;
+	private final ObjectId newId;
 
-	private PersonIdent who;
+	private final PersonIdent who;
 
 	private String comment;
 
 	ReflogEntryImpl(byte[] raw, int pos) {
 		oldId = ObjectId.fromString(raw, pos);
 		pos += Constants.OBJECT_ID_STRING_LENGTH;
-		if (raw[pos++] != ' ')
+		if (raw[pos++] != ' ') {
 			throw new IllegalArgumentException(
 					JGitText.get().rawLogMessageDoesNotParseAsLogEntry);
+		}
 		newId = ObjectId.fromString(raw, pos);
 		pos += Constants.OBJECT_ID_STRING_LENGTH;
 		if (raw[pos++] != ' ') {
@@ -49,9 +50,9 @@ public class ReflogEntryImpl implements Serializable, ReflogEntry {
 		}
 		who = RawParseUtils.parsePersonIdentOnly(raw, pos);
 		int p0 = RawParseUtils.next(raw, pos, '\t');
-		if (p0 >= raw.length)
+		if (p0 >= raw.length) {
 			comment = ""; // personident has no \t, no comment present //$NON-NLS-1$
-		else {
+		} else {
 			int p1 = RawParseUtils.nextLF(raw, p0);
 			comment = p1 > p0 ? RawParseUtils.decode(raw, p0, p1 - 1) : ""; //$NON-NLS-1$
 		}

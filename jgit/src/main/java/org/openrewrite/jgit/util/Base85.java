@@ -90,7 +90,7 @@ public final class Base85 {
 				if (in < end) {
 					accumulator |= (data[in++] & 0xFF) << 8;
 					if (in < end) {
-						accumulator |= (data[in++] & 0xFF);
+						accumulator |= data[in++] & 0xFF;
 					}
 				}
 			}

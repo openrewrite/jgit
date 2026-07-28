@@ -15,9 +15,9 @@ import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_DELTA_BASE_CAC
 import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_LIMIT;
 import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_MMAP;
 import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_OPENFILES;
+import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_USE_STRONGREFS;
 import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_WINDOWSIZE;
 import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_STREAM_FILE_TRESHOLD;
-import static org.openrewrite.jgit.lib.ConfigConstants.CONFIG_KEY_PACKED_GIT_USE_STRONGREFS;
 
 import org.openrewrite.jgit.internal.storage.file.WindowCache;
 import org.openrewrite.jgit.lib.Config;

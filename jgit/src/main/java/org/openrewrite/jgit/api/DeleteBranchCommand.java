@@ -67,8 +67,9 @@ public class DeleteBranchCommand extends GitCommand<List<String>> {
 			NotMergedException, CannotDeleteCurrentBranchException {
 		checkCallable();
 		List<String> result = new ArrayList<>();
-		if (branchNames.isEmpty())
+		if (branchNames.isEmpty()) {
 			return result;
+		}
 		try {
 			String currentBranch = repo.getFullBranch();
 			if (!force) {
@@ -78,11 +79,13 @@ public class DeleteBranchCommand extends GitCommand<List<String>> {
 					RevCommit tip = walk
 							.parseCommit(repo.resolve(Constants.HEAD));
 					for (String branchName : branchNames) {
-						if (branchName == null)
+						if (branchName == null) {
 							continue;
+						}
 						Ref currentRef = repo.findRef(branchName);
-						if (currentRef == null)
+						if (currentRef == null) {
 							continue;
+						}
 
 						RevCommit base = walk
 								.parseCommit(repo.resolve(branchName));
@@ -94,18 +97,21 @@ public class DeleteBranchCommand extends GitCommand<List<String>> {
 			}
 			setCallable(false);
 			for (String branchName : branchNames) {
-				if (branchName == null)
+				if (branchName == null) {
 					continue;
+				}
 				Ref currentRef = repo.findRef(branchName);
-				if (currentRef == null)
+				if (currentRef == null) {
 					continue;
+				}
 				String fullName = currentRef.getName();
-				if (fullName.equals(currentBranch))
+				if (fullName.equals(currentBranch)) {
 					throw new CannotDeleteCurrentBranchException(
 							MessageFormat
 									.format(
 											JGitText.get().cannotDeleteCheckedOutBranch,
 											branchName));
+				}
 				RefUpdate update = repo.updateRef(fullName);
 				update.setRefLogMessage("branch deleted", false); //$NON-NLS-1$
 				update.setForceUpdate(true);
@@ -134,10 +140,11 @@ public class DeleteBranchCommand extends GitCommand<List<String>> {
 								shortenedName);
 						cfg.save();
 					}
-				} else
+				} else {
 					throw new JGitInternalException(MessageFormat.format(
 							JGitText.get().deleteBranchUnexpectedResult,
 							deleteResult.name()));
+				}
 			}
 			return result;
 		} catch (IOException ioe) {

@@ -64,8 +64,9 @@ public final class RawCharSequence implements CharSequence {
 	public String toString() {
 		final int n = length();
 		final StringBuilder b = new StringBuilder(n);
-		for (int i = 0; i < n; i++)
+		for (int i = 0;i < n;i++) {
 			b.append(charAt(i));
+		}
 		return b.toString();
 	}
 }

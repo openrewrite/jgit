@@ -57,8 +57,9 @@ final class DeltaTask implements Callable<Object> {
 
 		int cost() {
 			int d = (int) (totalWeight / bytesPerUnit);
-			if (totalWeight % bytesPerUnit != 0)
+			if (totalWeight % bytesPerUnit != 0) {
 				d++;
+			}
 			return d;
 		}
 
@@ -103,7 +104,7 @@ final class DeltaTask implements Callable<Object> {
 
 				// Assign the task thread ~average weight.
 				int s = i;
-				for (; w < weightPerThread && i < endIndex;) {
+				while (w < weightPerThread && i < endIndex) {
 					if (nextTop < topPaths.size()
 							&& i == topPaths.get(nextTop).slice.beginIndex) {
 						if (s < i) {

@@ -50,15 +50,17 @@ public abstract class BatchingProgressMonitor implements ProgressMonitor {
 	public void beginTask(String title, int work) {
 		endTask();
 		task = new Task(title, work);
-		if (delayStartTime != 0)
+		if (delayStartTime != 0) {
 			task.delay(delayStartTime, delayStartUnit);
+		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public void update(int completed) {
-		if (task != null)
+		if (task != null) {
 			task.update(this, completed);
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -205,8 +207,9 @@ public abstract class BatchingProgressMonitor implements ProgressMonitor {
 					pm.onEndTask(taskName, lastWork, totalWork, pDone);
 				}
 			}
-			if (timerFuture != null)
+			if (timerFuture != null) {
 				timerFuture.cancel(false /* no interrupt */);
+			}
 		}
 	}
 }

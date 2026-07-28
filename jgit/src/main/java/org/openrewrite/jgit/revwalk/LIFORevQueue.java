@@ -51,8 +51,9 @@ public class LIFORevQueue extends BlockRevQueue {
 	@Override
 	public RevCommit next() {
 		final Block b = head;
-		if (b == null)
+		if (b == null) {
 			return null;
+		}
 
 		final RevCommit c = b.pop();
 		if (b.isEmpty()) {
@@ -72,9 +73,11 @@ public class LIFORevQueue extends BlockRevQueue {
 	@Override
 	boolean everbodyHasFlag(int f) {
 		for (Block b = head; b != null; b = b.next) {
-			for (int i = b.headIndex; i < b.tailIndex; i++)
-				if ((b.commits[i].flags & f) == 0)
+			for (int i = b.headIndex;i < b.tailIndex;i++) {
+				if ((b.commits[i].flags & f) == 0) {
 					return false;
+				}
+			}
 		}
 		return true;
 	}
@@ -82,9 +85,11 @@ public class LIFORevQueue extends BlockRevQueue {
 	@Override
 	boolean anybodyHasFlag(int f) {
 		for (Block b = head; b != null; b = b.next) {
-			for (int i = b.headIndex; i < b.tailIndex; i++)
-				if ((b.commits[i].flags & f) != 0)
+			for (int i = b.headIndex;i < b.tailIndex;i++) {
+				if ((b.commits[i].flags & f) != 0) {
 					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -94,8 +99,9 @@ public class LIFORevQueue extends BlockRevQueue {
 	public String toString() {
 		final StringBuilder s = new StringBuilder();
 		for (Block q = head; q != null; q = q.next) {
-			for (int i = q.headIndex; i < q.tailIndex; i++)
+			for (int i = q.headIndex;i < q.tailIndex;i++) {
 				describe(s, q.commits[i]);
+			}
 		}
 		return s.toString();
 	}

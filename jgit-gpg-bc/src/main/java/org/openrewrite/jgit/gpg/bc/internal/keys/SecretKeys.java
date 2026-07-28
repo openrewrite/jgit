@@ -136,7 +136,7 @@ public final class SecretKeys {
 				}
 				// An encrypted key from a key-value file. Most likely AES/OCB
 				// encrypted.
-				boolean isOCB[] = { false };
+				boolean[] isOCB = { false };
 				byte[] sExp = convertSexpression(rawData, isOCB);
 				PBEProtectionRemoverFactory decryptor;
 				if (isOCB[0]) {
@@ -581,7 +581,7 @@ public final class SecretKeys {
 	}
 
 	private static boolean isOctal(int ch) {
-		return (ch >= '0' && ch <= '7');
+		return ch >= '0' && ch <= '7';
 	}
 
 	private static int nibble(int ch) {

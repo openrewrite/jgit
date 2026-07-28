@@ -58,10 +58,10 @@ import org.openrewrite.jgit.treewalk.filter.PathFilterGroup;
  */
 public class RmCommand extends GitCommand<DirCache> {
 
-	private Collection<String> filepatterns;
+	private final Collection<String> filepatterns;
 
 	/** Only remove files from index, not from working directory */
-	private boolean cached = false;
+	private boolean cached;
 
 	/**
 	 * Constructor for RmCommand.
@@ -115,8 +115,9 @@ public class RmCommand extends GitCommand<DirCache> {
 	public DirCache call() throws GitAPIException,
 			NoFilepatternException {
 
-		if (filepatterns.isEmpty())
+		if (filepatterns.isEmpty()) {
 			throw new NoFilepatternException(JGitText.get().atLeastOnePatternIsRequired);
+		}
 		checkCallable();
 		DirCache dc = null;
 

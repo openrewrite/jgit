@@ -65,9 +65,9 @@ import org.openrewrite.jgit.treewalk.filter.TreeFilter;
  *      >Git documentation about Log</a>
  */
 public class LogCommand extends GitCommand<Iterable<RevCommit>> {
-	private RevWalk walk;
+	private final RevWalk walk;
 
-	private boolean startSpecified = false;
+	private boolean startSpecified;
 
 	private RevFilter revFilter;
 
@@ -117,19 +117,21 @@ public class LogCommand extends GitCommand<Iterable<RevCommit>> {
 			walk.setTreeFilter(AndTreeFilter.create(filters));
 
 		}
-		if (skip > -1 && maxCount > -1)
+		if (skip > -1 && maxCount > -1) {
 			walk.setRevFilter(AndRevFilter.create(SkipRevFilter.create(skip),
 					MaxCountRevFilter.create(maxCount)));
-		else if (skip > -1)
+		} else if (skip > -1) {
 			walk.setRevFilter(SkipRevFilter.create(skip));
-		else if (maxCount > -1)
+		} else if (maxCount > -1) {
 			walk.setRevFilter(MaxCountRevFilter.create(maxCount));
+		}
 		if (!startSpecified) {
 			try {
 				ObjectId headId = repo.resolve(Constants.HEAD);
-				if (headId == null)
+				if (headId == null) {
 					throw new NoHeadException(
 							JGitText.get().noHEADExistsAndNoExplicitStartingRevisionWasSpecified);
+				}
 				add(headId);
 			} catch (IOException e) {
 				// all exceptions thrown by add() shouldn't occur and represent
@@ -254,12 +256,14 @@ public class LogCommand extends GitCommand<Iterable<RevCommit>> {
 	 */
 	public LogCommand all() throws IOException {
 		for (Ref ref : getRepository().getRefDatabase().getRefs()) {
-			if(!ref.isPeeled())
+			if (!ref.isPeeled()) {
 				ref = getRepository().getRefDatabase().peel(ref);
+			}
 
 			ObjectId objectId = ref.getPeeledObjectId();
-			if (objectId == null)
+			if (objectId == null) {
 				objectId = ref.getObjectId();
+			}
 			RevCommit commit = null;
 			try {
 				commit = walk.parseCommit(objectId);
@@ -269,8 +273,9 @@ public class LogCommand extends GitCommand<Iterable<RevCommit>> {
 				// - the ref points to an object that is not a commit (e.g. a
 				// tree or a blob)
 			}
-			if (commit != null)
+			if (commit != null) {
 				add(commit);
+			}
 		}
 		return this;
 	}
@@ -342,8 +347,9 @@ public class LogCommand extends GitCommand<Iterable<RevCommit>> {
 			if (include) {
 				walk.markStart(walk.lookupCommit(start));
 				startSpecified = true;
-			} else
+			} else {
 				walk.markUninteresting(walk.lookupCommit(start));
+			}
 			return this;
 		} catch (MissingObjectException | IncorrectObjectTypeException e) {
 			throw e;

@@ -152,9 +152,10 @@ public class RefSpec implements Serializable {
 				wildcard = true;
 			} else if (isWildcard(src) || isWildcard(dst)) {
 				wildcard = true;
-				if (mode == WildcardMode.REQUIRE_MATCH)
+				if (mode == WildcardMode.REQUIRE_MATCH) {
 					throw new IllegalArgumentException(MessageFormat
 							.format(JGitText.get().invalidWildcards, spec));
+				}
 			}
 			srcName = checkValid(src);
 			dstName = checkValid(dst);
@@ -264,10 +265,12 @@ public class RefSpec implements Serializable {
 	public RefSpec setSource(String source) {
 		final RefSpec r = new RefSpec(this);
 		r.srcName = checkValid(source);
-		if (isWildcard(r.srcName) && r.dstName == null)
+		if (isWildcard(r.srcName) && r.dstName == null) {
 			throw new IllegalStateException(JGitText.get().destinationIsNotAWildcard);
-		if (isWildcard(r.srcName) != isWildcard(r.dstName))
+		}
+		if (isWildcard(r.srcName) != isWildcard(r.dstName)) {
 			throw new IllegalStateException(JGitText.get().sourceDestinationMustMatch);
+		}
 		return r;
 	}
 
@@ -303,10 +306,12 @@ public class RefSpec implements Serializable {
 	public RefSpec setDestination(String destination) {
 		final RefSpec r = new RefSpec(this);
 		r.dstName = checkValid(destination);
-		if (isWildcard(r.dstName) && r.srcName == null)
+		if (isWildcard(r.dstName) && r.srcName == null) {
 			throw new IllegalStateException(JGitText.get().sourceIsNotAWildcard);
-		if (isWildcard(r.srcName) != isWildcard(r.dstName))
+		}
+		if (isWildcard(r.srcName) != isWildcard(r.dstName)) {
 			throw new IllegalStateException(JGitText.get().sourceDestinationMustMatch);
+		}
 		return r;
 	}
 
@@ -324,8 +329,9 @@ public class RefSpec implements Serializable {
 	 */
 	public RefSpec setSourceDestination(final String source,
 			final String destination) {
-		if (isWildcard(source) != isWildcard(destination))
+		if (isWildcard(source) != isWildcard(destination)) {
 			throw new IllegalStateException(JGitText.get().sourceDestinationMustMatch);
+		}
 		final RefSpec r = new RefSpec(this);
 		r.wildcard = isWildcard(source);
 		r.srcName = source;
@@ -402,7 +408,8 @@ public class RefSpec implements Serializable {
 	}
 
 	private RefSpec expandFromSourceImp(String name) {
-		final String psrc = srcName, pdst = dstName;
+		final String psrc = srcName;
+		final String pdst = dstName;
 		wildcard = false;
 		srcName = name;
 		dstName = expandWildcard(name, psrc, pdst);
@@ -454,7 +461,8 @@ public class RefSpec implements Serializable {
 	}
 
 	private RefSpec expandFromDstImp(String name) {
-		final String psrc = srcName, pdst = dstName;
+		final String psrc = srcName;
+		final String pdst = dstName;
 		wildcard = false;
 		srcName = expandWildcard(name, pdst, psrc);
 		dstName = name;
@@ -481,8 +489,9 @@ public class RefSpec implements Serializable {
 	}
 
 	private boolean match(String name, String s) {
-		if (s == null)
+		if (s == null) {
 			return false;
+		}
 		if (isWildcard(s)) {
 			int wildcardIndex = s.indexOf('*');
 			String prefix = s.substring(0, wildcardIndex);
@@ -503,23 +512,28 @@ public class RefSpec implements Serializable {
 	}
 
 	private static String checkValid(String spec) {
-		if (spec != null && !isValid(spec))
+		if (spec != null && !isValid(spec)) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().invalidRefSpec, spec));
+		}
 		return spec;
 	}
 
 	private static boolean isValid(String s) {
-		if (s.startsWith("/")) //$NON-NLS-1$
+		if (s.startsWith("/")) { //$NON-NLS-1$
 			return false;
-		if (s.contains("//")) //$NON-NLS-1$
+		}
+		if (s.contains("//")) { //$NON-NLS-1$
 			return false;
-		if (s.endsWith("/")) //$NON-NLS-1$
+		}
+		if (s.endsWith("/")) { //$NON-NLS-1$
 			return false;
+		}
 		int i = s.indexOf('*');
 		if (i != -1) {
-			if (s.indexOf('*', i + 1) > i)
+			if (s.indexOf('*', i + 1) > i) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -528,36 +542,41 @@ public class RefSpec implements Serializable {
 	@Override
 	public int hashCode() {
 		int hc = 0;
-		if (getSource() != null)
+		if (getSource() != null) {
 			hc = hc * 31 + getSource().hashCode();
-		if (getDestination() != null)
+		}
+		if (getDestination() != null) {
 			hc = hc * 31 + getDestination().hashCode();
+		}
 		return hc;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof RefSpec))
+		if (!(obj instanceof RefSpec)) {
 			return false;
+		}
 		final RefSpec b = (RefSpec) obj;
-		if (isForceUpdate() != b.isForceUpdate())
+		if (isForceUpdate() != b.isForceUpdate()) {
 			return false;
-		if (isWildcard() != b.isWildcard())
+		}
+		if (isWildcard() != b.isWildcard()) {
 			return false;
-		if (!eq(getSource(), b.getSource()))
+		}
+		if (!eq(getSource(), b.getSource())) {
 			return false;
-		if (!eq(getDestination(), b.getDestination()))
-			return false;
-		return true;
+		}
+		return eq(getDestination(), b.getDestination());
 	}
 
 	private static boolean eq(String a, String b) {
 		if (References.isSameObject(a, b)) {
 			return true;
 		}
-		if (a == null || b == null)
+		if (a == null || b == null) {
 			return false;
+		}
 		return a.equals(b);
 	}
 
@@ -565,10 +584,12 @@ public class RefSpec implements Serializable {
 	@Override
 	public String toString() {
 		final StringBuilder r = new StringBuilder();
-		if (isForceUpdate())
+		if (isForceUpdate()) {
 			r.append('+');
-		if (getSource() != null)
+		}
+		if (getSource() != null) {
 			r.append(getSource());
+		}
 		if (getDestination() != null) {
 			r.append(':');
 			r.append(getDestination());

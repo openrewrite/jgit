@@ -40,8 +40,9 @@ public class SkipWorkTreeFilter extends TreeFilter {
 	@Override
 	public boolean include(TreeWalk walker) {
 		DirCacheIterator i = walker.getTree(treeIdx, DirCacheIterator.class);
-		if (i == null)
+		if (i == null) {
 			return true;
+		}
 
 		DirCacheEntry e = i.getDirCacheEntry();
 		return e == null || !e.isSkipWorkTree();

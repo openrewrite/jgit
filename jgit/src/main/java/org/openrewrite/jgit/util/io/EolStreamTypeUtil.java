@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.util.EnumSet;
 
 import org.openrewrite.jgit.attributes.Attributes;
+import org.openrewrite.jgit.lib.CoreConfig;
 import org.openrewrite.jgit.lib.CoreConfig.EolStreamType;
 import org.openrewrite.jgit.treewalk.TreeWalk.OperationType;
 import org.openrewrite.jgit.treewalk.WorkingTreeOptions;
@@ -257,11 +258,9 @@ public final class EolStreamTypeUtil {
 			}
 		}
 
-		switch (options.getAutoCRLF()) {
-		case TRUE:
+		if (options.getAutoCRLF() == CoreConfig.AutoCRLF.TRUE) {
 			return EolStreamType.AUTO_CRLF;
-		default:
-			// no decision
+		} else {// no decision
 		}
 
 		return EolStreamType.DIRECT;

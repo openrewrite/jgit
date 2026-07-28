@@ -31,12 +31,13 @@ class IntSet {
 
 		do {
 			int p = (low + high) >>> 1;
-			if (key < set[p])
+			if (key < set[p]) {
 				high = p;
-			else if (key == set[p])
+			} else if (key == set[p]) {
 				return false;
-			else
+			} else {
 				low = p + 1;
+			}
 		} while (low < high);
 
 		if (cnt == set.length) {
@@ -45,8 +46,9 @@ class IntSet {
 			set = n;
 		}
 
-		if (low < cnt)
+		if (low < cnt) {
 			System.arraycopy(set, low, set, low + 1, cnt - low);
+		}
 		set[low] = key;
 		cnt++;
 		return true;

@@ -19,7 +19,7 @@ import java.util.List;
  * <p>
  * Hooks are run in the order passed to the constructor.
  */
-public class PostReceiveHookChain implements PostReceiveHook {
+public final class PostReceiveHookChain implements PostReceiveHook {
 	private final PostReceiveHook[] hooks;
 	private final int count;
 
@@ -34,9 +34,11 @@ public class PostReceiveHookChain implements PostReceiveHook {
 			List<? extends PostReceiveHook> hooks) {
 		PostReceiveHook[] newHooks = new PostReceiveHook[hooks.size()];
 		int i = 0;
-		for (PostReceiveHook hook : hooks)
-			if (hook != PostReceiveHook.NULL)
+		for (PostReceiveHook hook : hooks) {
+			if (hook != PostReceiveHook.NULL) {
 				newHooks[i++] = hook;
+			}
+		}
 		switch (i) {
 		case 0:
 			return PostReceiveHook.NULL;
@@ -51,8 +53,9 @@ public class PostReceiveHookChain implements PostReceiveHook {
 	@Override
 	public void onPostReceive(ReceivePack rp,
 			Collection<ReceiveCommand> commands) {
-		for (int i = 0; i < count; i++)
+		for (int i = 0;i < count;i++) {
 			hooks[i].onPostReceive(rp, commands);
+		}
 	}
 
 	private PostReceiveHookChain(PostReceiveHook[] hooks, int count) {

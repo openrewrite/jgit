@@ -39,7 +39,7 @@ public class ReftableCompactor {
 	private final ArrayDeque<ReftableReader> tables = new ArrayDeque<>();
 
 	private boolean includeDeletes;
-	private long reflogExpireMinUpdateIndex = 0;
+	private long reflogExpireMinUpdateIndex;
 	private long reflogExpireMaxUpdateIndex = Long.MAX_VALUE;
 	private long reflogExpireOldestReflogTimeMillis;
 	private Stats stats;

@@ -198,9 +198,9 @@ public class BatchRefUpdate {
 	 * @return {@code this}.
 	 */
 	public BatchRefUpdate setRefLogMessage(String msg, boolean appendStatus) {
-		if (msg == null && !appendStatus)
+		if (msg == null && !appendStatus) {
 			disableRefLog();
-		else if (msg == null && appendStatus) {
+		} else if (msg == null && appendStatus) {
 			refLogMessage = ""; //$NON-NLS-1$
 			refLogIncludeResult = true;
 		} else {
@@ -637,8 +637,9 @@ public class BatchRefUpdate {
 		ru.setPushCertificate(pushCert);
 		switch (cmd.getType()) {
 		case DELETE:
-			if (!ObjectId.zeroId().equals(cmd.getOldId()))
+			if (!ObjectId.zeroId().equals(cmd.getOldId())) {
 				ru.setExpectedOldObjectId(cmd.getOldId());
+			}
 			ru.setForceUpdate(true);
 			return ru;
 
@@ -714,8 +715,9 @@ public class BatchRefUpdate {
 	public String toString() {
 		StringBuilder r = new StringBuilder();
 		r.append(getClass().getSimpleName()).append('[');
-		if (commands.isEmpty())
+		if (commands.isEmpty()) {
 			return r.append(']').toString();
+		}
 
 		r.append('\n');
 		for (ReceiveCommand cmd : commands) {

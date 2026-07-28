@@ -35,7 +35,7 @@ import org.openrewrite.jgit.errors.TranslationStringMissingException;
  * TransportText t = NLS.getBundleFor(TransportText.class);
  * </pre>
  */
-public class NLS {
+public final class NLS {
 	/**
 	 * The root locale constant. It is defined here because the Locale.ROOT is
 	 * not defined in Java 5
@@ -126,8 +126,9 @@ public class NLS {
 			// There is a small opportunity for a race, which we may
 			// lose. Accept defeat and return the winner's instance.
 			TranslationBundle old = map.putIfAbsent(type, bundle);
-			if (old != null)
+			if (old != null) {
 				bundle = old;
+			}
 		}
 		return (T) bundle;
 	}

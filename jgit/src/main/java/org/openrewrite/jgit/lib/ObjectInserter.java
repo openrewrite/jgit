@@ -181,8 +181,9 @@ public abstract class ObjectInserter implements AutoCloseable {
 	 */
 	protected byte[] buffer() {
 		byte[] b = tempBuffer;
-		if (b == null)
+		if (b == null) {
 			tempBuffer = b = new byte[8192];
+		}
 		return b;
 	}
 
@@ -256,8 +257,9 @@ public abstract class ObjectInserter implements AutoCloseable {
 		byte[] buf = buffer();
 		while (length > 0) {
 			int n = in.read(buf, 0, (int) Math.min(length, buf.length));
-			if (n < 0)
+			if (n < 0) {
 				throw new EOFException(JGitText.get().unexpectedEndOfInput);
+			}
 			md.update(buf, 0, n);
 			length -= n;
 		}

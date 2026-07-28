@@ -114,8 +114,9 @@ public class DirCacheTree {
 		if (nameLen > 0) {
 			encodedName = new byte[nameLen];
 			System.arraycopy(in, off.value, encodedName, 0, nameLen);
-		} else
+		} else {
 			encodedName = NO_NAME;
+		}
 
 		entrySpan = RawParseUtils.parseBase10(in, ptr, off);
 		final int subcnt = RawParseUtils.parseBase10(in, off.value, off);
@@ -141,11 +142,13 @@ public class DirCacheTree {
 				// created by us, and be sorted the way we want.
 				//
 				if (alreadySorted && i > 0
-						&& TREE_CMP.compare(children[i - 1], children[i]) > 0)
+						&& TREE_CMP.compare(children[i - 1], children[i]) > 0) {
 					alreadySorted = false;
+				}
 			}
-			if (!alreadySorted)
+			if (!alreadySorted) {
 				Arrays.sort(children, 0, subcnt, TREE_CMP);
+			}
 		} else {
 			// Leaf level trees have no children, only (file) entries.
 			//
@@ -168,8 +171,9 @@ public class DirCacheTree {
 			id.copyRawTo(tmp, 0);
 			os.write(tmp, 0, Constants.OBJECT_ID_LENGTH);
 		}
-		for (int i = 0; i < childCnt; i++)
+		for (int i = 0;i < childCnt;i++) {
 			children[i].write(tmp, os);
+		}
 	}
 
 	/**
@@ -333,8 +337,9 @@ public class DirCacheTree {
 
 		while (entryIdx < endIdx) {
 			final DirCacheEntry e = cache[entryIdx];
-			if (e.getStage() != 0)
+			if (e.getStage() != 0) {
 				throw new UnmergedPathException(e);
+			}
 
 			final byte[] ep = e.path;
 			if (childIdx < childCnt) {
@@ -376,11 +381,14 @@ public class DirCacheTree {
 	final boolean contains(byte[] a, int aOff, int aLen) {
 		final byte[] e = encodedName;
 		final int eLen = e.length;
-		for (int eOff = 0; eOff < eLen && aOff < aLen; eOff++, aOff++)
-			if (e[eOff] != a[aOff])
+		for (int eOff = 0;eOff < eLen && aOff < aLen;eOff++, aOff++) {
+			if (e[eOff] != a[aOff]) {
 				return false;
-		if (aOff >= aLen)
+			}
+		}
+		if (aOff >= aLen) {
 			return false;
+		}
 		return a[aOff] == '/';
 	}
 
@@ -468,15 +476,17 @@ public class DirCacheTree {
 		// None of our remaining children can be in this tree
 		// as the current cache entry is after our own name.
 		//
-		while (stIdx < childCnt)
+		while (stIdx < childCnt) {
 			removeChild(childCnt - 1);
+		}
 	}
 
 	private void insertChild(int stIdx, DirCacheTree st) {
 		final DirCacheTree[] c = children;
 		if (childCnt + 1 <= c.length) {
-			if (stIdx < childCnt)
+			if (stIdx < childCnt) {
 				System.arraycopy(c, stIdx, c, stIdx + 1, childCnt - stIdx);
+			}
 			c[stIdx] = st;
 			childCnt++;
 			return;
@@ -484,53 +494,64 @@ public class DirCacheTree {
 
 		final int n = c.length;
 		final DirCacheTree[] a = new DirCacheTree[n + 1];
-		if (stIdx > 0)
+		if (stIdx > 0) {
 			System.arraycopy(c, 0, a, 0, stIdx);
+		}
 		a[stIdx] = st;
-		if (stIdx < n)
+		if (stIdx < n) {
 			System.arraycopy(c, stIdx, a, stIdx + 1, n - stIdx);
+		}
 		children = a;
 		childCnt++;
 	}
 
 	private void removeChild(int stIdx) {
 		final int n = --childCnt;
-		if (stIdx < n)
+		if (stIdx < n) {
 			System.arraycopy(children, stIdx + 1, children, stIdx, n - stIdx);
+		}
 		children[n] = null;
 	}
 
 	static boolean peq(byte[] a, byte[] b, int aLen) {
-		if (b.length < aLen)
+		if (b.length < aLen) {
 			return false;
-		for (aLen--; aLen >= 0; aLen--)
-			if (a[aLen] != b[aLen])
+		}
+		for (aLen--;aLen >= 0;aLen--) {
+			if (a[aLen] != b[aLen]) {
 				return false;
+			}
+		}
 		return true;
 	}
 
 	private static int namecmp(byte[] a, int aPos, DirCacheTree ct) {
-		if (ct == null)
+		if (ct == null) {
 			return -1;
+		}
 		final byte[] b = ct.encodedName;
 		final int aLen = a.length;
 		final int bLen = b.length;
 		int bPos = 0;
 		for (; aPos < aLen && bPos < bLen; aPos++, bPos++) {
 			final int cmp = (a[aPos] & 0xff) - (b[bPos] & 0xff);
-			if (cmp != 0)
+			if (cmp != 0) {
 				return cmp;
+			}
 		}
-		if (bPos == bLen)
+		if (bPos == bLen) {
 			return a[aPos] == '/' ? 0 : -1;
+		}
 		return aLen - bLen;
 	}
 
 	private static int slash(byte[] a, int aPos) {
 		final int aLen = a.length;
-		for (; aPos < aLen; aPos++)
-			if (a[aPos] == '/')
+		for (;aPos < aLen;aPos++) {
+			if (a[aPos] == '/') {
 				return aPos;
+			}
+		}
 		return -1;
 	}
 

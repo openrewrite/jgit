@@ -124,9 +124,10 @@ public class StashApplyCommand extends GitCommand<ObjectId> {
 			throw new InvalidRefNameException(MessageFormat.format(
 					JGitText.get().stashResolveFailed, revision), e);
 		}
-		if (stashId == null)
+		if (stashId == null) {
 			throw new InvalidRefNameException(MessageFormat.format(
 					JGitText.get().stashResolveFailed, revision));
+		}
 		return stashId;
 	}
 
@@ -142,34 +143,38 @@ public class StashApplyCommand extends GitCommand<ObjectId> {
 		checkCallable();
 
 		if (!ignoreRepositoryState
-				&& repo.getRepositoryState() != RepositoryState.SAFE)
+				&& repo.getRepositoryState() != RepositoryState.SAFE) {
 			throw new WrongRepositoryStateException(MessageFormat.format(
 					JGitText.get().stashApplyOnUnsafeRepository,
 					repo.getRepositoryState()));
+		}
 
 		try (ObjectReader reader = repo.newObjectReader();
 				RevWalk revWalk = new RevWalk(reader)) {
 
 			ObjectId headCommit = repo.resolve(Constants.HEAD);
-			if (headCommit == null)
+			if (headCommit == null) {
 				throw new NoHeadException(JGitText.get().stashApplyWithoutHead);
+			}
 
 			final ObjectId stashId = getStashId();
 			RevCommit stashCommit = revWalk.parseCommit(stashId);
 			if (stashCommit.getParentCount() < 2
-					|| stashCommit.getParentCount() > 3)
+					|| stashCommit.getParentCount() > 3) {
 				throw new JGitInternalException(MessageFormat.format(
 						JGitText.get().stashCommitIncorrectNumberOfParents,
 						stashId.name(),
 						Integer.valueOf(stashCommit.getParentCount())));
+			}
 
 			ObjectId headTree = repo.resolve(Constants.HEAD + "^{tree}"); //$NON-NLS-1$
 			ObjectId stashIndexCommit = revWalk.parseCommit(stashCommit
 					.getParent(1));
 			ObjectId stashHeadCommit = stashCommit.getParent(0);
 			ObjectId untrackedCommit = null;
-			if (restoreUntracked && stashCommit.getParentCount() == 3)
+			if (restoreUntracked && stashCommit.getParentCount() == 3) {
 				untrackedCommit = revWalk.parseCommit(stashCommit.getParent(2));
+			}
 
 			Merger merger = strategy.newMerger(repo);
 			boolean mergeSucceeded;
@@ -253,8 +258,6 @@ public class StashApplyCommand extends GitCommand<ObjectId> {
 			}
 			return stashId;
 
-		} catch (JGitInternalException e) {
-			throw e;
 		} catch (IOException e) {
 			throw new JGitInternalException(JGitText.get().stashApplyFailed, e);
 		}
@@ -395,9 +398,10 @@ public class StashApplyCommand extends GitCommand<ObjectId> {
 			while (walk.next()) {
 				final AbstractTreeIterator cIter = walk.getTree(0,
 						AbstractTreeIterator.class);
-				if (cIter == null)
+				if (cIter == null) {
 					// Not in commit, don't create untracked
 					continue;
+				}
 
 				final EolStreamType eolStreamType = walk
 						.getEolStreamType(CHECKOUT_OP);

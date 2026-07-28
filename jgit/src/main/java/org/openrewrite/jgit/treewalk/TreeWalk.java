@@ -285,7 +285,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	AbstractTreeIterator currentHead;
 
 	/** Cached attribute for the current entry */
-	private Attributes attrs = null;
+	private Attributes attrs;
 
 	/** Cached attributes handler */
 	private AttributesHandler attributesHandler;
@@ -556,8 +556,9 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 */
 	@Override
 	public Attributes getAttributes() {
-		if (attrs != null)
+		if (attrs != null) {
 			return attrs;
+		}
 
 		if (attributesNodeProvider == null) {
 			// The work tree should have a AttributesNodeProvider to be able to
@@ -595,8 +596,9 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 */
 	@Nullable
 	public EolStreamType getEolStreamType(OperationType opType) {
-		if (attributesNodeProvider == null || config == null)
+		if (attributesNodeProvider == null || config == null) {
 			return null;
+		}
 		return EolStreamTypeUtil.detectStreamType(
 				opType != null ? opType : operationType,
 					config.get(WorkingTreeOptions.KEY), getAttributes());
@@ -635,8 +637,9 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 			IncorrectObjectTypeException, CorruptObjectException, IOException {
 		if (trees.length == 1) {
 			AbstractTreeIterator o = trees[0];
-			while (o.parent != null)
+			while (o.parent != null) {
 				o = o.parent;
+			}
 			if (o instanceof CanonicalTreeParser) {
 				o.matches = null;
 				o.matchShift = 0;
@@ -683,8 +686,9 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 
 			if (i < oldLen) {
 				o = trees[i];
-				while (o.parent != null)
+				while (o.parent != null) {
 					o = o.parent;
+				}
 				if (o instanceof CanonicalTreeParser && o.pathOffset == 0) {
 					o.matches = null;
 					o.matchShift = 0;
@@ -965,10 +969,11 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	 */
 	public void getObjectId(MutableObjectId out, int nth) {
 		final AbstractTreeIterator t = trees[nth];
-		if (t.matches == currentHead)
+		if (t.matches == currentHead) {
 			t.getEntryObjectId(out);
-		else
+		} else {
 			out.clear();
+		}
 	}
 
 	/**
@@ -993,10 +998,12 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 			//
 			return true;
 		}
-		if (!a.hasId() || !b.hasId())
+		if (!a.hasId() || !b.hasId()) {
 			return false;
-		if (a.matches == ch && b.matches == ch)
+		}
+		if (a.matches == ch && b.matches == ch) {
 			return a.idEqual(b);
+		}
 		return false;
 	}
 
@@ -1141,8 +1148,9 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 
 		for (ci = 0; ci < cLen && ci < pLen; ci++) {
 			final int c_value = (c[ci] & 0xff) - (p[ci] & 0xff);
-			if (c_value != 0)
+			if (c_value != 0) {
 				return c_value;
+			}
 		}
 
 		if (ci < cLen) {
@@ -1190,11 +1198,13 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 
 		for (int i = 1; i <= pLen; i++) {
 			// Pattern longer than current path
-			if (i > cLen)
+			if (i > cLen) {
 				return false;
+			}
 			// Current path doesn't match pattern
-			if (c[cLen - i] != p[pLen - i])
+			if (c[cLen - i] != p[pLen - i]) {
 				return false;
+			}
 		}
 
 		// Whole pattern tested -> matches
@@ -1266,10 +1276,11 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 			// entry should be treated as a TREE
 			if (t.matches == ch && !t.eof() &&
 					(FileMode.TREE.equals(t.mode)
-							|| (FileMode.GITLINK.equals(t.mode) && t.isWorkTree())))
+							|| (FileMode.GITLINK.equals(t.mode) && t.isWorkTree()))) {
 				n = t.createSubtreeIterator(reader, idBuffer);
-			else
+			} else {
 				n = t.createEmptyTreeIterator();
+			}
 			tmp[i] = n;
 		}
 		depth++;
@@ -1281,16 +1292,19 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 	AbstractTreeIterator min() throws CorruptObjectException {
 		int i = 0;
 		AbstractTreeIterator minRef = trees[i];
-		while (minRef.eof() && ++i < trees.length)
+		while (minRef.eof() && ++i < trees.length) {
 			minRef = trees[i];
-		if (minRef.eof())
+		}
+		if (minRef.eof()) {
 			return minRef;
+		}
 
 		minRef.matches = minRef;
 		while (++i < trees.length) {
 			final AbstractTreeIterator t = trees[i];
-			if (t.eof())
+			if (t.eof()) {
 				continue;
+			}
 			final int cmp = t.pathCompare(minRef);
 			if (cmp < 0) {
 				t.matches = t;
@@ -1325,15 +1339,18 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 
 	void exitSubtree() {
 		depth--;
-		for (int i = 0; i < trees.length; i++)
+		for (int i = 0;i < trees.length;i++) {
 			trees[i] = trees[i].parent;
+		}
 
 		AbstractTreeIterator minRef = null;
 		for (AbstractTreeIterator t : trees) {
-			if (t.matches != t)
+			if (t.matches != t) {
 				continue;
-			if (minRef == null || t.pathCompare(minRef) < 0)
+			}
+			if (minRef == null || t.pathCompare(minRef) < 0) {
 				minRef = t;
+			}
 		}
 		currentHead = minRef;
 	}
@@ -1403,7 +1420,7 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 		}
 		return filterCommand.replaceAll("%f", //$NON-NLS-1$
 				Matcher.quoteReplacement(
-						QuotedString.BOURNE.quote((getPathString()))));
+						QuotedString.BOURNE.quote(getPathString())));
 	}
 
 	/**
@@ -1426,8 +1443,9 @@ public class TreeWalk implements AutoCloseable, AttributesProvider {
 			String filterCommandType) {
 		String key = filterDriverName + "." + filterCommandType; //$NON-NLS-1$
 		String filterCommand = filterCommandsByNameDotType.get(key);
-		if (filterCommand != null)
+		if (filterCommand != null) {
 			return filterCommand;
+		}
 		filterCommand = config.getString(ConfigConstants.CONFIG_FILTER_SECTION,
 				filterDriverName, filterCommandType);
 		boolean useBuiltin = config.getBoolean(

@@ -52,15 +52,17 @@ final class DelayRevQueue extends Generator {
 			IncorrectObjectTypeException, IOException {
 		while (size < OVER_SCAN) {
 			final RevCommit c = pending.next();
-			if (c == null)
+			if (c == null) {
 				break;
+			}
 			delay.add(c);
 			size++;
 		}
 
 		final RevCommit c = delay.next();
-		if (c == null)
+		if (c == null) {
 			return null;
+		}
 		size--;
 		return c;
 	}

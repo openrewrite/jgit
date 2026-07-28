@@ -55,11 +55,11 @@ import org.openrewrite.jgit.treewalk.FileTreeIterator;
  *      >Git documentation about revert</a>
  */
 public class RevertCommand extends GitCommand<RevCommit> {
-	private List<Ref> commits = new LinkedList<>();
+	private final List<Ref> commits = new LinkedList<>();
 
-	private String ourCommitName = null;
+	private String ourCommitName;
 
-	private List<Ref> revertedRefs = new LinkedList<>();
+	private final List<Ref> revertedRefs = new LinkedList<>();
 
 	private MergeResult failingResult;
 
@@ -100,9 +100,10 @@ public class RevertCommand extends GitCommand<RevCommit> {
 
 			// get the head commit
 			Ref headRef = repo.exactRef(Constants.HEAD);
-			if (headRef == null)
+			if (headRef == null) {
 				throw new NoHeadException(
 						JGitText.get().commitOnRepoWithoutHEADCurrentlyNotSupported);
+			}
 			RevCommit headCommit = revWalk.parseCommit(headRef.getObjectId());
 
 			newHead = headCommit;
@@ -112,17 +113,19 @@ public class RevertCommand extends GitCommand<RevCommit> {
 				// get the commit to be reverted
 				// handle annotated tags
 				ObjectId srcObjectId = src.getPeeledObjectId();
-				if (srcObjectId == null)
+				if (srcObjectId == null) {
 					srcObjectId = src.getObjectId();
+				}
 				RevCommit srcCommit = revWalk.parseCommit(srcObjectId);
 
 				// get the parent of the commit to revert
-				if (srcCommit.getParentCount() != 1)
+				if (srcCommit.getParentCount() != 1) {
 					throw new MultipleParentsNotAllowedException(
 							MessageFormat.format(
 									JGitText.get().canOnlyRevertCommitsWithOneParent,
 									srcCommit.name(),
 									Integer.valueOf(srcCommit.getParentCount())));
+				}
 
 				RevCommit srcParent = srcCommit.getParent(0);
 				revWalk.parseHeaders(srcParent);
@@ -148,8 +151,9 @@ public class RevertCommand extends GitCommand<RevCommit> {
 								merger.getModifiedFiles(), null));
 					}
 					if (AnyObjectId.isEqual(headCommit.getTree().getId(),
-							merger.getResultTreeId()))
+							merger.getResultTreeId())) {
 						continue;
+					}
 					DirCacheCheckout dco = new DirCacheCheckout(repo,
 							headCommit.getTree(), repo.lockDirCache(),
 							merger.getResultTreeId());
@@ -167,20 +171,21 @@ public class RevertCommand extends GitCommand<RevCommit> {
 					unmergedPaths = merger.getUnmergedPaths();
 					Map<String, MergeFailureReason> failingPaths = merger
 							.getFailingPaths();
-					if (failingPaths != null)
+					if (failingPaths != null) {
 						failingResult = new MergeResult(null,
 								merger.getBaseCommitId(),
-								new ObjectId[] { headCommit.getId(),
-										srcParent.getId() },
+								new ObjectId[]{headCommit.getId(),
+										srcParent.getId()},
 								MergeStatus.FAILED, strategy,
 								merger.getMergeResults(), failingPaths, null);
-					else
+					} else {
 						failingResult = new MergeResult(null,
 								merger.getBaseCommitId(),
-								new ObjectId[] { headCommit.getId(),
-										srcParent.getId() },
+								new ObjectId[]{headCommit.getId(),
+										srcParent.getId()},
 								MergeStatus.CONFLICTING, strategy,
 								merger.getMergeResults(), failingPaths, null);
+					}
 					if (!merger.failed() && !unmergedPaths.isEmpty()) {
 						String message = new MergeMessageFormatter()
 						.formatWithConflicts(newMessage,
@@ -252,12 +257,12 @@ public class RevertCommand extends GitCommand<RevCommit> {
 	}
 
 	private String calculateOurName(Ref headRef) {
-		if (ourCommitName != null)
+		if (ourCommitName != null) {
 			return ourCommitName;
+		}
 
 		String targetRefName = headRef.getTarget().getName();
-		String headName = Repository.shortenRefName(targetRefName);
-		return headName;
+		return Repository.shortenRefName(targetRefName);
 	}
 
 	/**

@@ -113,15 +113,17 @@ public class AddNoteCommand extends GitCommand<Note> {
 		builder.setAuthor(new PersonIdent(r));
 		builder.setCommitter(builder.getAuthor());
 		builder.setMessage(msg);
-		if (notesCommit != null)
+		if (notesCommit != null) {
 			builder.setParentIds(notesCommit);
+		}
 		ObjectId commit = inserter.insert(builder);
 		inserter.flush();
 		RefUpdate refUpdate = r.updateRef(ref);
-		if (notesCommit != null)
+		if (notesCommit != null) {
 			refUpdate.setExpectedOldObjectId(notesCommit);
-		else
+		} else {
 			refUpdate.setExpectedOldObjectId(ObjectId.zeroId());
+		}
 		refUpdate.setNewObjectId(commit);
 		refUpdate.update(walk);
 	}

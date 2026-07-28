@@ -81,7 +81,7 @@ class Candidate {
 	int renameScore;
 
 	/** repository used for LFS blob handling */
-	private Repository sourceRepository;
+	private final Repository sourceRepository;
 
 	Candidate(Repository repo, RevCommit commit, PathFilter path) {
 		sourceRepository = repo;
@@ -156,12 +156,13 @@ class Candidate {
 		Region aTail = null;
 		Region bTail = null;
 
-		for (int eIdx = 0; eIdx < editList.size();) {
+		for (int eIdx = 0; eIdx < editList.size(); eIdx++) {
 			// If there are no more regions left, neither side has any
 			// more responsibility for the result. Remaining edits can
 			// be safely ignored.
-			if (r == null)
+			if (r == null) {
 				return;
+			}
 
 			Edit e = editList.get(eIdx);
 
@@ -204,8 +205,9 @@ class Candidate {
 				Region next = r.next;
 				bTail = add(bTail, b, r);
 				r = next;
-				if (rEnd == e.getEndB())
+				if (rEnd == e.getEndB()) {
 					eIdx++;
+				}
 				continue;
 			}
 
@@ -214,24 +216,26 @@ class Candidate {
 			int len = e.getEndB() - r.sourceStart;
 			bTail = add(bTail, b, r.splitFirst(r.sourceStart, len));
 			r.slideAndShrink(len);
-			eIdx++;
 		}
 
-		if (r == null)
+		if (r == null) {
 			return;
+		}
 
 		// For any remaining region, pass the blame onto A after shifting
 		// the source start to account for the difference between the two.
 		Edit e = editList.get(editList.size() - 1);
 		int endB = e.getEndB();
 		int d = endB - e.getEndA();
-		if (aTail == null)
+		if (aTail == null) {
 			a.regionList = r;
-		else
+		} else {
 			aTail.next = r;
+		}
 		do {
-			if (endB <= r.sourceStart)
+			if (endB <= r.sourceStart) {
 				r.sourceStart -= d;
+			}
 			r = r.next;
 		} while (r != null);
 	}
@@ -311,10 +315,12 @@ class Candidate {
 		StringBuilder r = new StringBuilder();
 		r.append("Candidate[");
 		r.append(sourcePath.getPath());
-		if (sourceCommit != null)
+		if (sourceCommit != null) {
 			r.append(" @ ").append(sourceCommit.abbreviate(6).name());
-		if (regionList != null)
+		}
+		if (regionList != null) {
 			r.append(" regions:").append(regionList);
+		}
 		r.append("]");
 		return r.toString();
 	}

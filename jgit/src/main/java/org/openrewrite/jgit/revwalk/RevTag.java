@@ -125,8 +125,9 @@ public class RevTag extends RevObject {
 			IncorrectObjectTypeException, IOException {
 		if (buffer == null) {
 			buffer = walk.getCachedBytes(this);
-			if ((flags & PARSED) == 0)
+			if ((flags & PARSED) == 0) {
 				parseCanonical(walk, buffer);
+			}
 		}
 	}
 
@@ -144,8 +145,9 @@ public class RevTag extends RevObject {
 		final int nameEnd = RawParseUtils.nextLF(rawTag, p) - 1;
 		tagName = RawParseUtils.decode(UTF_8, rawTag, p, nameEnd);
 
-		if (walk.isRetainBody())
+		if (walk.isRetainBody()) {
 			buffer = rawTag;
+		}
 		flags |= PARSED;
 	}
 
@@ -172,8 +174,9 @@ public class RevTag extends RevObject {
 	public final PersonIdent getTaggerIdent() {
 		final byte[] raw = buffer;
 		final int nameB = RawParseUtils.tagger(raw, 0);
-		if (nameB < 0)
+		if (nameB < 0) {
 			return null;
+		}
 		return RawParseUtils.parsePersonIdent(raw, nameB);
 	}
 

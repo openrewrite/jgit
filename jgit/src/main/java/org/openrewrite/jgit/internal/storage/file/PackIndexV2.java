@@ -37,7 +37,7 @@ class PackIndexV2 extends PackIndex {
 
 	private static final byte[] NO_BYTES = {};
 
-	private long objectCnt;
+	private final long objectCnt;
 
 	private final long[] fanoutTable;
 
@@ -48,7 +48,7 @@ class PackIndexV2 extends PackIndex {
 	byte[][] offset32;
 
 	/** 256 arrays of the CRC-32 of objects, matching {@link #names}. */
-	private byte[][] crc32;
+	private final byte[][] crc32;
 
 	/** 64 bit offset table. */
 	byte[] offset64;
@@ -57,8 +57,9 @@ class PackIndexV2 extends PackIndex {
 		final byte[] fanoutRaw = new byte[4 * FANOUT];
 		IO.readFully(fd, fanoutRaw, 0, fanoutRaw.length);
 		fanoutTable = new long[FANOUT];
-		for (int k = 0; k < FANOUT; k++)
+		for (int k = 0;k < FANOUT;k++) {
 			fanoutTable[k] = NB.decodeUInt32(fanoutRaw, k * 4);
+		}
 		objectCnt = fanoutTable[FANOUT - 1];
 
 		names = new int[FANOUT][];
@@ -71,31 +72,35 @@ class PackIndexV2 extends PackIndex {
 		//
 		for (int k = 0; k < FANOUT; k++) {
 			final long bucketCnt;
-			if (k == 0)
+			if (k == 0) {
 				bucketCnt = fanoutTable[k];
-			else
+			} else {
 				bucketCnt = fanoutTable[k] - fanoutTable[k - 1];
+			}
 
 			if (bucketCnt == 0) {
 				names[k] = NO_INTS;
 				offset32[k] = NO_BYTES;
 				crc32[k] = NO_BYTES;
 				continue;
-			} else if (bucketCnt < 0)
+			} else if (bucketCnt < 0) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().indexFileCorruptedNegativeBucketCount,
 						Long.valueOf(bucketCnt)));
+			}
 
 			final long nameLen = bucketCnt * Constants.OBJECT_ID_LENGTH;
-			if (nameLen > Integer.MAX_VALUE - 8) // see http://stackoverflow.com/a/8381338
+			if (nameLen > Integer.MAX_VALUE - 8) { // see http://stackoverflow.com/a/8381338
 				throw new IOException(JGitText.get().indexFileIsTooLargeForJgit);
+			}
 
 			final int intNameLen = (int) nameLen;
 			final byte[] raw = new byte[intNameLen];
 			final int[] bin = new int[intNameLen >>> 2];
 			IO.readFully(fd, raw, 0, raw.length);
-			for (int i = 0; i < bin.length; i++)
+			for (int i = 0;i < bin.length;i++) {
 				bin[i] = NB.decodeInt32(raw, i << 2);
+			}
 
 			names[k] = bin;
 			offset32[k] = new byte[(int) (bucketCnt * 4)];
@@ -103,8 +108,9 @@ class PackIndexV2 extends PackIndex {
 		}
 
 		// CRC32 table.
-		for (int k = 0; k < FANOUT; k++)
+		for (int k = 0;k < FANOUT;k++) {
 			IO.readFully(fd, crc32[k], 0, crc32[k].length);
+		}
 
 		// 32 bit offset table. Any entries with the most significant bit
 		// set require a 64 bit offset entry in another table.
@@ -113,9 +119,11 @@ class PackIndexV2 extends PackIndex {
 		for (int k = 0; k < FANOUT; k++) {
 			final byte[] ofs = offset32[k];
 			IO.readFully(fd, ofs, 0, ofs.length);
-			for (int p = 0; p < ofs.length; p += 4)
-				if (ofs[p] < 0)
+			for (int p = 0;p < ofs.length;p += 4) {
+				if (ofs[p] < 0) {
 					o64cnt++;
+				}
+			}
 		}
 
 		// 64 bit offset table. Most objects should not require an entry.
@@ -150,8 +158,9 @@ class PackIndexV2 extends PackIndex {
 			// any bucket before it which has the same object count.
 			//
 			long base = fanoutTable[levelOne];
-			while (levelOne > 0 && base == fanoutTable[levelOne - 1])
+			while (levelOne > 0 && base == fanoutTable[levelOne - 1]) {
 				levelOne--;
+			}
 		} else {
 			// The item is in the bucket we would insert it into.
 			//
@@ -187,15 +196,17 @@ class PackIndexV2 extends PackIndex {
 	public long findOffset(AnyObjectId objId) {
 		final int levelOne = objId.getFirstByte();
 		final int levelTwo = binarySearchLevelTwo(objId, levelOne);
-		if (levelTwo == -1)
+		if (levelTwo == -1) {
 			return -1;
+		}
 		return getOffset(levelOne, levelTwo);
 	}
 
 	private long getOffset(int levelOne, int levelTwo) {
 		final long p = NB.decodeUInt32(offset32[levelOne], levelTwo << 2);
-		if ((p & IS_O64) != 0)
-			return NB.decodeUInt64(offset64, (8 * (int) (p & ~IS_O64)));
+		if ((p & IS_O64) != 0) {
+			return NB.decodeUInt64(offset64, 8 * (int) (p & ~IS_O64));
+		}
 		return p;
 	}
 
@@ -204,8 +215,9 @@ class PackIndexV2 extends PackIndex {
 	public long findCRC32(AnyObjectId objId) throws MissingObjectException {
 		final int levelOne = objId.getFirstByte();
 		final int levelTwo = binarySearchLevelTwo(objId, levelOne);
-		if (levelTwo == -1)
+		if (levelTwo == -1) {
 			throw new MissingObjectException(objId.copy(), "unknown"); //$NON-NLS-1$
+		}
 		return NB.decodeUInt32(crc32[levelOne], levelTwo << 2);
 	}
 
@@ -228,28 +240,32 @@ class PackIndexV2 extends PackIndex {
 		int[] data = names[id.getFirstByte()];
 		int max = offset32[id.getFirstByte()].length >>> 2;
 		int high = max;
-		if (high == 0)
+		if (high == 0) {
 			return;
+		}
 		int low = 0;
 		do {
 			int p = (low + high) >>> 1;
 			final int cmp = id.prefixCompare(data, idOffset(p));
-			if (cmp < 0)
+			if (cmp < 0) {
 				high = p;
-			else if (cmp == 0) {
+			} else if (cmp == 0) {
 				// We may have landed in the middle of the matches.  Move
 				// backwards to the start of matches, then walk forwards.
 				//
-				while (0 < p && id.prefixCompare(data, idOffset(p - 1)) == 0)
+				while (0 < p && id.prefixCompare(data, idOffset(p - 1)) == 0) {
 					p--;
-				for (; p < max && id.prefixCompare(data, idOffset(p)) == 0; p++) {
+				}
+				for (;p < max && id.prefixCompare(data, idOffset(p)) == 0;p++) {
 					matches.add(ObjectId.fromRaw(data, idOffset(p)));
-					if (matches.size() > matchLimit)
+					if (matches.size() > matchLimit) {
 						break;
+					}
 				}
 				return;
-			} else
+			} else {
 				low = p + 1;
+			}
 		} while (low < high);
 	}
 
@@ -260,8 +276,9 @@ class PackIndexV2 extends PackIndex {
 	private int binarySearchLevelTwo(AnyObjectId objId, int levelOne) {
 		final int[] data = names[levelOne];
 		int high = offset32[levelOne].length >>> 2;
-		if (high == 0)
+		if (high == 0) {
 			return -1;
+		}
 		int low = 0;
 		do {
 			final int mid = (low + high) >>> 1;
@@ -269,12 +286,13 @@ class PackIndexV2 extends PackIndex {
 			final int cmp;
 
 			cmp = objId.compareTo(data, mid4 + mid); // mid * 5
-			if (cmp < 0)
+			if (cmp < 0) {
 				high = mid;
-			else if (cmp == 0) {
+			} else if (cmp == 0) {
 				return mid;
-			} else
+			} else {
 				low = mid + 1;
+			}
 		} while (low < high);
 		return -1;
 	}
@@ -302,7 +320,7 @@ class PackIndexV2 extends PackIndex {
 					int idx = levelTwo / (Constants.OBJECT_ID_LENGTH / 4) * 4;
 					long offset = NB.decodeUInt32(offset32[levelOne], idx);
 					if ((offset & IS_O64) != 0) {
-						idx = (8 * (int) (offset & ~IS_O64));
+						idx = 8 * (int) (offset & ~IS_O64);
 						offset = NB.decodeUInt64(offset64, idx);
 					}
 					entry.offset = offset;

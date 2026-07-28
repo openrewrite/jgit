@@ -182,9 +182,9 @@ public abstract class SystemReader {
 	public static void setInstance(SystemReader newReader) {
 		isMacOS = null;
 		isWindows = null;
-		if (newReader == null)
+		if (newReader == null) {
 			INSTANCE = DEFAULT;
-		else {
+		} else {
 			newReader.init();
 			INSTANCE = newReader;
 		}
@@ -192,17 +192,18 @@ public abstract class SystemReader {
 
 	private ObjectChecker platformChecker;
 
-	private AtomicReference<FileBasedConfig> systemConfig = new AtomicReference<>();
+	private final AtomicReference<FileBasedConfig> systemConfig = new AtomicReference<>();
 
-	private AtomicReference<FileBasedConfig> userConfig = new AtomicReference<>();
+	private final AtomicReference<FileBasedConfig> userConfig = new AtomicReference<>();
 
-	private AtomicReference<FileBasedConfig> jgitConfig = new AtomicReference<>();
+	private final AtomicReference<FileBasedConfig> jgitConfig = new AtomicReference<>();
 
 	private void init() {
 		// Creating ObjectChecker must be deferred. Unit tests change
 		// behavior of is{Windows,MacOS} in constructor of subclass.
-		if (platformChecker == null)
+		if (platformChecker == null) {
 			setPlatformChecker();
+		}
 	}
 
 	/**

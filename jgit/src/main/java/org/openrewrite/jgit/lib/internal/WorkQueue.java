@@ -58,6 +58,7 @@ public class WorkQueue {
 			@Override
 			protected void finalize() {
 				executor.shutdownNow();
+				super.finalize();
 			}
 		};
 	}

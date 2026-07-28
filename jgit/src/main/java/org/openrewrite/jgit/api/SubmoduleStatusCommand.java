@@ -67,8 +67,9 @@ public class SubmoduleStatusCommand extends
 		checkCallable();
 
 		try (SubmoduleWalk generator = SubmoduleWalk.forIndex(repo)) {
-			if (!paths.isEmpty())
+			if (!paths.isEmpty()) {
 				generator.setFilter(PathFilterGroup.createFromStrings(paths));
+			}
 			Map<String, SubmoduleStatus> statuses = new HashMap<>();
 			while (generator.next()) {
 				SubmoduleStatus status = getStatus(generator);
@@ -86,13 +87,15 @@ public class SubmoduleStatusCommand extends
 		String path = generator.getPath();
 
 		// Report missing if no path in .gitmodules file
-		if (generator.getModulesPath() == null)
+		if (generator.getModulesPath() == null) {
 			return new SubmoduleStatus(SubmoduleStatusType.MISSING, path, id);
+		}
 
 		// Report uninitialized if no URL in config file
-		if (generator.getConfigUrl() == null)
+		if (generator.getConfigUrl() == null) {
 			return new SubmoduleStatus(SubmoduleStatusType.UNINITIALIZED, path,
 					id);
+		}
 
 		// Report uninitialized if no submodule repository
 		ObjectId headId = null;
@@ -106,14 +109,16 @@ public class SubmoduleStatusCommand extends
 		}
 
 		// Report uninitialized if no HEAD commit in submodule repository
-		if (headId == null)
+		if (headId == null) {
 			return new SubmoduleStatus(SubmoduleStatusType.UNINITIALIZED, path,
 					id, headId);
+		}
 
 		// Report checked out if HEAD commit is different than index commit
-		if (!headId.equals(id))
+		if (!headId.equals(id)) {
 			return new SubmoduleStatus(SubmoduleStatusType.REV_CHECKED_OUT,
 					path, id, headId);
+		}
 
 		// Report initialized if HEAD commit is the same as the index commit
 		return new SubmoduleStatus(SubmoduleStatusType.INITIALIZED, path, id,

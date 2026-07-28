@@ -340,10 +340,7 @@ public class FileSnapshot {
 			return true;
 		}
 		lastModifiedChanged = isModified(currLastModified);
-		if (lastModifiedChanged) {
-			return true;
-		}
-		return false;
+		return lastModifiedChanged;
 	}
 
 	/**

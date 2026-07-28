@@ -324,10 +324,10 @@ public class FileReftableStack implements AutoCloseable {
 	}
 
 	private long nextUpdateIndex() throws IOException {
-		return stack.size() > 0
-				? stack.get(stack.size() - 1).reftableReader.maxUpdateIndex()
-						+ 1
-				: 1;
+		return stack.isEmpty()
+				? 1
+				: stack.get(stack.size() - 1).reftableReader.maxUpdateIndex()
+						+ 1;
 	}
 
 	private String filename(long low, long high) {
@@ -690,7 +690,7 @@ public class FileReftableStack implements AutoCloseable {
 	}
 
 	// 68b footer, 24b header = 92.
-	private static long OVERHEAD = 91;
+	private static final long OVERHEAD = 91;
 
 	private long[] tableSizes() throws IOException {
 		long[] sizes = new long[stack.size()];

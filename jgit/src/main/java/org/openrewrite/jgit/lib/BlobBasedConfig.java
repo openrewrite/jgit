@@ -120,9 +120,10 @@ public class BlobBasedConfig extends Config {
 			IOException {
 		try (ObjectReader or = db.newObjectReader()) {
 			TreeWalk tree = TreeWalk.forPath(or, path, asTree(or, treeish));
-			if (tree == null)
+			if (tree == null) {
 				throw new FileNotFoundException(MessageFormat.format(JGitText
 						.get().entryNotFoundByPath, path));
+			}
 			return read(or, tree.getObjectId(0));
 		}
 	}
@@ -130,12 +131,14 @@ public class BlobBasedConfig extends Config {
 	private static AnyObjectId asTree(ObjectReader or, AnyObjectId treeish)
 			throws MissingObjectException, IncorrectObjectTypeException,
 			IOException {
-		if (treeish instanceof RevTree)
+		if (treeish instanceof RevTree) {
 			return treeish;
+		}
 
 		if (treeish instanceof RevCommit
-				&& ((RevCommit) treeish).getTree() != null)
+				&& ((RevCommit) treeish).getTree() != null) {
 			return ((RevCommit) treeish).getTree();
+		}
 
 		try (RevWalk rw = new RevWalk(or)) {
 			return rw.parseTree(treeish).getId();

@@ -409,10 +409,12 @@ public class ResolveMerger extends ThreeWayMerger {
 		for (int i = toBeDeleted.size() - 1; i >= 0; i--) {
 			String fileName = toBeDeleted.get(i);
 			File f = new File(nonNullRepo().getWorkTree(), fileName);
-			if (!f.delete())
-				if (!f.isDirectory())
+			if (!f.delete()) {
+				if (!f.isDirectory()) {
 					failingPaths.put(fileName,
 							MergeFailureReason.COULD_NOT_DELETE);
+				}
+			}
 			modifiedFiles.add(fileName);
 		}
 		for (Map.Entry<String, DirCacheEntry> entry : toBeCheckedOut
@@ -630,12 +632,14 @@ public class ResolveMerger extends ThreeWayMerger {
 		final int modeB = tw.getRawMode(T_BASE);
 		boolean gitLinkMerging = isGitLink(modeO) || isGitLink(modeT)
 				|| isGitLink(modeB);
-		if (modeO == 0 && modeT == 0 && modeB == 0)
+		if (modeO == 0 && modeT == 0 && modeB == 0) {
 			// File is either untracked or new, staged but uncommitted
 			return true;
+		}
 
-		if (isIndexDirty())
+		if (isIndexDirty()) {
 			return false;
+		}
 
 		DirCacheEntry ourDce = null;
 
@@ -703,8 +707,9 @@ public class ResolveMerger extends ThreeWayMerger {
 		if (modeB == modeT && tw.idEqual(T_BASE, T_THEIRS)) {
 			// THEIRS was not changed compared to BASE. All changes must be in
 			// OURS. OURS is chosen. We can keep the existing entry.
-			if (ourDce != null)
+			if (ourDce != null) {
 				keep(ourDce);
+			}
 			// no checkout needed!
 			return true;
 		}
@@ -714,8 +719,9 @@ public class ResolveMerger extends ThreeWayMerger {
 			// THEIRS. THEIRS is chosen.
 
 			// Check worktree before checking out THEIRS
-			if (isWorktreeDirty(work, ourDce))
+			if (isWorktreeDirty(work, ourDce)) {
 				return false;
+			}
 			if (nonTree(modeT)) {
 				// we know about length and lastMod only after we have written
 				// the new content.
@@ -756,12 +762,15 @@ public class ResolveMerger extends ThreeWayMerger {
 					enterSubtree = false;
 					return true;
 				}
-				if (nonTree(modeB))
+				if (nonTree(modeB)) {
 					add(tw.getRawPath(), base, DirCacheEntry.STAGE_1, EPOCH, 0);
-				if (nonTree(modeO))
+				}
+				if (nonTree(modeO)) {
 					add(tw.getRawPath(), ours, DirCacheEntry.STAGE_2, EPOCH, 0);
-				if (nonTree(modeT))
+				}
+				if (nonTree(modeT)) {
 					add(tw.getRawPath(), theirs, DirCacheEntry.STAGE_3, EPOCH, 0);
+				}
 				unmergedPaths.add(tw.getPathString());
 				enterSubtree = false;
 				return true;
@@ -771,8 +780,9 @@ public class ResolveMerger extends ThreeWayMerger {
 			// tells us we are in a subtree because of index or working-dir).
 			// If they are both folders no content-merge is required - we can
 			// return here.
-			if (!nonTree(modeO))
+			if (!nonTree(modeO)) {
 				return true;
+			}
 
 			// ours and theirs are both files, just fall out of the if block
 			// and do the content merge
@@ -860,8 +870,8 @@ public class ResolveMerger extends ThreeWayMerger {
 			addCheckoutMetadata(currentPath, attributes);
 		} else if (modeO != modeT) {
 			// OURS or THEIRS has been deleted
-			if (((modeO != 0 && !tw.idEqual(T_BASE, T_OURS)) || (modeT != 0 && !tw
-					.idEqual(T_BASE, T_THEIRS)))) {
+			if ((modeO != 0 && !tw.idEqual(T_BASE, T_OURS)) || (modeT != 0 && !tw
+					.idEqual(T_BASE, T_THEIRS))) {
 				if (gitLinkMerging && ignoreConflicts) {
 					add(tw.getRawPath(), ours, DirCacheEntry.STAGE_0, EPOCH, 0);
 				} else if (gitLinkMerging) {
@@ -968,8 +978,9 @@ public class ResolveMerger extends ThreeWayMerger {
 	}
 
 	private boolean isIndexDirty() {
-		if (inCore)
+		if (inCore) {
 			return false;
+		}
 
 		final int modeI = tw.getRawMode(T_INDEX);
 		final int modeO = tw.getRawMode(T_OURS);
@@ -977,37 +988,42 @@ public class ResolveMerger extends ThreeWayMerger {
 		// Index entry has to match ours to be considered clean
 		final boolean isDirty = nonTree(modeI)
 				&& !(modeO == modeI && tw.idEqual(T_INDEX, T_OURS));
-		if (isDirty)
+		if (isDirty) {
 			failingPaths
 					.put(tw.getPathString(), MergeFailureReason.DIRTY_INDEX);
+		}
 		return isDirty;
 	}
 
 	private boolean isWorktreeDirty(WorkingTreeIterator work,
 			DirCacheEntry ourDce) throws IOException {
-		if (work == null)
+		if (work == null) {
 			return false;
+		}
 
 		final int modeF = tw.getRawMode(T_FILE);
 		final int modeO = tw.getRawMode(T_OURS);
 
 		// Worktree entry has to match ours to be considered clean
 		boolean isDirty;
-		if (ourDce != null)
+		if (ourDce != null) {
 			isDirty = work.isModified(ourDce, true, reader);
-		else {
+		} else {
 			isDirty = work.isModeDifferent(modeO);
-			if (!isDirty && nonTree(modeF))
+			if (!isDirty && nonTree(modeF)) {
 				isDirty = !tw.idEqual(T_FILE, T_OURS);
+			}
 		}
 
 		// Ignore existing empty directories
 		if (isDirty && modeF == FileMode.TYPE_TREE
-				&& modeO == FileMode.TYPE_MISSING)
+				&& modeO == FileMode.TYPE_MISSING) {
 			isDirty = false;
-		if (isDirty)
+		}
+		if (isDirty) {
 			failingPaths.put(tw.getPathString(),
 					MergeFailureReason.DIRTY_WORKTREE);
+		}
 		return isDirty;
 	}
 
@@ -1144,22 +1160,26 @@ public class ResolveMerger extends ThreeWayMerger {
 	 *         conflict
 	 */
 	private int mergeFileModes(int modeB, int modeO, int modeT) {
-		if (modeO == modeT)
+		if (modeO == modeT) {
 			return modeO;
-		if (modeB == modeO)
+		}
+		if (modeB == modeO) {
 			// Base equal to Ours -> chooses Theirs if that is not missing
-			return (modeT == FileMode.MISSING.getBits()) ? modeO : modeT;
-		if (modeB == modeT)
+			return modeT == FileMode.MISSING.getBits() ? modeO : modeT;
+		}
+		if (modeB == modeT) {
 			// Base equal to Theirs -> chooses Ours if that is not missing
-			return (modeO == FileMode.MISSING.getBits()) ? modeT : modeO;
+			return modeO == FileMode.MISSING.getBits() ? modeT : modeO;
+		}
 		return FileMode.MISSING.getBits();
 	}
 
 	private RawText getRawText(ObjectId id,
 			Attributes attributes)
 			throws IOException, BinaryBlobException {
-		if (id.equals(ObjectId.zeroId()))
-			return new RawText(new byte[] {});
+		if (id.equals(ObjectId.zeroId())) {
+			return new RawText(new byte[]{});
+		}
 
 		ObjectLoader loader = LfsFactory.getInstance().applySmudgeFilter(
 				getRepository(), reader.open(id, OBJ_BLOB),
@@ -1179,7 +1199,7 @@ public class ResolveMerger extends ThreeWayMerger {
 	/** {@inheritDoc} */
 	@Override
 	public ObjectId getResultTreeId() {
-		return (resultTree == null) ? null : resultTree.toObjectId();
+		return resultTree == null ? null : resultTree.toObjectId();
 	}
 
 	/**
@@ -1422,8 +1442,9 @@ public class ResolveMerger extends ThreeWayMerger {
 				cleanUp();
 				return false;
 			}
-			if (treeWalk.isSubtree() && enterSubtree)
+			if (treeWalk.isSubtree() && enterSubtree) {
 				treeWalk.enterSubtree();
+			}
 		}
 		return true;
 	}

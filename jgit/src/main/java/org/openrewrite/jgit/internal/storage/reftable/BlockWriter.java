@@ -65,10 +65,6 @@ class BlockWriter {
 			int blockLimitBytes) {
 		double avgBytesPerEntry;
 		switch (blockType) {
-		case REF_BLOCK_TYPE:
-		default:
-			avgBytesPerEntry = 35.31;
-			break;
 
 		case OBJ_BLOCK_TYPE:
 			avgBytesPerEntry = 4.19;
@@ -80,16 +76,19 @@ class BlockWriter {
 
 		case INDEX_BLOCK_TYPE:
 			switch (keyType) {
-			case REF_BLOCK_TYPE:
-			case LOG_BLOCK_TYPE:
-			default:
-				avgBytesPerEntry = 27.44;
-				break;
 
 			case OBJ_BLOCK_TYPE:
 				avgBytesPerEntry = 11.57;
 				break;
+			case REF_BLOCK_TYPE:
+			case LOG_BLOCK_TYPE:
+			default:
+				avgBytesPerEntry = 27.44;
 			}
+  break;
+		case REF_BLOCK_TYPE:
+		default:
+			avgBytesPerEntry = 35.31;
 		}
 
 		int cnt = (int) (Math.ceil(blockLimitBytes / avgBytesPerEntry));

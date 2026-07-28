@@ -70,10 +70,11 @@ public class DirCacheBuilder extends BaseDirCacheEditor {
 	 *             If the FileMode of the entry was not set by the caller.
 	 */
 	public void add(DirCacheEntry newEntry) {
-		if (newEntry.getRawMode() == 0)
+		if (newEntry.getRawMode() == 0) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().fileModeNotSetForPath,
 					newEntry.getPathString()));
+		}
 		beforeAdd(newEntry);
 		fastAdd(newEntry);
 	}
@@ -189,8 +190,9 @@ public class DirCacheBuilder extends BaseDirCacheEditor {
 	/** {@inheritDoc} */
 	@Override
 	public void finish() {
-		if (!sorted)
+		if (!sorted) {
 			resort();
+		}
 		replace();
 	}
 
@@ -210,12 +212,15 @@ public class DirCacheBuilder extends BaseDirCacheEditor {
 				//
 				final int peStage = lastEntry.getStage();
 				final int dceStage = newEntry.getStage();
-				if (peStage == dceStage)
+				if (peStage == dceStage) {
 					throw bad(newEntry, JGitText.get().duplicateStagesNotAllowed);
-				if (peStage == 0 || dceStage == 0)
+				}
+				if (peStage == 0 || dceStage == 0) {
 					throw bad(newEntry, JGitText.get().mixedStagesNotAllowed);
-				if (peStage > dceStage)
+				}
+				if (peStage > dceStage) {
 					sorted = false;
+				}
 			}
 		}
 	}
@@ -233,10 +238,12 @@ public class DirCacheBuilder extends BaseDirCacheEditor {
 				//
 				final int peStage = pe.getStage();
 				final int ceStage = ce.getStage();
-				if (peStage == ceStage)
+				if (peStage == ceStage) {
 					throw bad(ce, JGitText.get().duplicateStagesNotAllowed);
-				if (peStage == 0 || ceStage == 0)
+				}
+				if (peStage == 0 || ceStage == 0) {
 					throw bad(ce, JGitText.get().mixedStagesNotAllowed);
+				}
 			}
 		}
 

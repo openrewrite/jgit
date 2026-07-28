@@ -125,8 +125,9 @@ public class GarbageCollectCommand extends GitCommand<Properties> {
 					ConfigConstants.CONFIG_KEY_AGGRESSIVE_DEPTH,
 					DEFAULT_GC_AGGRESSIVE_DEPTH));
 			pconfig.setReuseObjects(false);
-		} else
+		} else {
 			pconfig = new PackConfig(repo);
+		}
 		return this;
 	}
 
@@ -139,8 +140,9 @@ public class GarbageCollectCommand extends GitCommand<Properties> {
 	 * @return this instance
 	 */
 	public GarbageCollectCommand setPreserveOldPacks(boolean preserveOldPacks) {
-		if (pconfig == null)
+		if (pconfig == null) {
 			pconfig = new PackConfig(repo);
+		}
 
 		pconfig.setPreserveOldPacks(preserveOldPacks);
 		return this;
@@ -155,8 +157,9 @@ public class GarbageCollectCommand extends GitCommand<Properties> {
 	 * @return this instance
 	 */
 	public GarbageCollectCommand setPrunePreserved(boolean prunePreserved) {
-		if (pconfig == null)
+		if (pconfig == null) {
 			pconfig = new PackConfig(repo);
+		}
 
 		pconfig.setPrunePreserved(prunePreserved);
 		return this;
@@ -172,8 +175,9 @@ public class GarbageCollectCommand extends GitCommand<Properties> {
 				GC gc = new GC((FileRepository) repo);
 				gc.setPackConfig(pconfig);
 				gc.setProgressMonitor(monitor);
-				if (this.expire != null)
+				if (this.expire != null) {
 					gc.setExpire(expire);
+				}
 
 				try {
 					gc.gc();

@@ -243,10 +243,11 @@ class ObjectDirectoryInserter extends ObjectInserter {
 	}
 
 	DeflaterOutputStream compress(OutputStream out) {
-		if (deflate == null)
+		if (deflate == null) {
 			deflate = new Deflater(config.getCompression());
-		else
+		} else {
 			deflate.reset();
+		}
 		return new DeflaterOutputStream(out, deflate, 8192);
 	}
 

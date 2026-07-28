@@ -53,7 +53,7 @@ public class DiffEntry {
 		RENAME,
 
 		/** Copy an existing file to a new location, keeping the original */
-		COPY;
+		COPY
 	}
 
 	/** Specify the old or new side for more generalized access. */
@@ -62,7 +62,7 @@ public class DiffEntry {
 		OLD,
 
 		/** The new side of a DiffEntry. */
-		NEW;
+		NEW
 	}
 
 	/**
@@ -137,18 +137,21 @@ public class DiffEntry {
 	public static List<DiffEntry> scan(TreeWalk walk, boolean includeTrees,
 			TreeFilter[] markTreeFilters)
 			throws IOException {
-		if (walk.getTreeCount() != 2)
+		if (walk.getTreeCount() != 2) {
 			throw new IllegalArgumentException(
 					JGitText.get().treeWalkMustHaveExactlyTwoTrees);
-		if (includeTrees && walk.isRecursive())
+		}
+		if (includeTrees && walk.isRecursive()) {
 			throw new IllegalArgumentException(
 					JGitText.get().cannotBeRecursiveWhenTreesAreIncluded);
+		}
 
 		TreeFilterMarker treeFilterMarker;
-		if (markTreeFilters != null && markTreeFilters.length > 0)
+		if (markTreeFilters != null && markTreeFilters.length > 0) {
 			treeFilterMarker = new TreeFilterMarker(markTreeFilters);
-		else
+		} else {
 			treeFilterMarker = null;
+		}
 
 		List<DiffEntry> r = new ArrayList<>();
 		MutableObjectId idBuf = new MutableObjectId();
@@ -170,8 +173,9 @@ public class DiffEntry {
 						.get(Constants.ATTR_DIFF);
 			}
 
-			if (treeFilterMarker != null)
+			if (treeFilterMarker != null) {
 				entry.treeFilterMarks = treeFilterMarker.getMarks(walk);
+			}
 
 			if (entry.oldMode == FileMode.MISSING) {
 				entry.oldPath = DiffEntry.DEV_NULL;
@@ -185,17 +189,19 @@ public class DiffEntry {
 
 			} else if (!entry.oldId.equals(entry.newId)) {
 				entry.changeType = ChangeType.MODIFY;
-				if (RenameDetector.sameType(entry.oldMode, entry.newMode))
+				if (RenameDetector.sameType(entry.oldMode, entry.newMode)) {
 					r.add(entry);
-				else
+				} else {
 					r.addAll(breakModify(entry));
+				}
 			} else if (entry.oldMode != entry.newMode) {
 				entry.changeType = ChangeType.MODIFY;
 				r.add(entry);
 			}
 
-			if (includeTrees && walk.isSubtree())
+			if (includeTrees && walk.isSubtree()) {
 				walk.enterSubtree();
+			}
 		}
 		return r;
 	}
@@ -327,7 +333,7 @@ public class DiffEntry {
 	 * Bitset for marked flags of tree filters passed to
 	 * {@link #scan(TreeWalk, boolean, TreeFilter...)}
 	 */
-	private int treeFilterMarks = 0;
+	private int treeFilterMarks;
 
 	/**
 	 * Get the old name associated with this file.
@@ -519,7 +525,7 @@ public class DiffEntry {
 			buf.append(newPath);
 			break;
 		case COPY:
-			buf.append(oldPath + "->" + newPath);
+			buf.append(oldPath + "->").append(newPath);
 			break;
 		case DELETE:
 			buf.append(oldPath);
@@ -528,7 +534,7 @@ public class DiffEntry {
 			buf.append(oldPath);
 			break;
 		case RENAME:
-			buf.append(oldPath + "->" + newPath);
+			buf.append(oldPath + "->").append(newPath);
 			break;
 		}
 		buf.append("]");

@@ -44,7 +44,7 @@ import org.openrewrite.jgit.revwalk.RevWalk;
 public class CreateBranchCommand extends GitCommand<Ref> {
 	private String name;
 
-	private boolean force = false;
+	private boolean force;
 
 	private SetupUpstreamMode upstreamMode;
 
@@ -69,7 +69,7 @@ public class CreateBranchCommand extends GitCommand<Ref> {
 		/**
 		 * Corresponds to the --set-upstream option
 		 */
-		SET_UPSTREAM;
+		SET_UPSTREAM
 	}
 
 	/**
@@ -92,16 +92,18 @@ public class CreateBranchCommand extends GitCommand<Ref> {
 			Ref refToCheck = repo.findRef(name);
 			boolean exists = refToCheck != null
 					&& refToCheck.getName().startsWith(R_HEADS);
-			if (!force && exists)
+			if (!force && exists) {
 				throw new RefAlreadyExistsException(MessageFormat.format(
 						JGitText.get().refAlreadyExists1, name));
+			}
 
 			ObjectId startAt = getStartPointObjectId();
 			String startPointFullName = null;
 			if (startPoint != null) {
 				Ref baseRef = repo.findRef(startPoint);
-				if (baseRef != null)
+				if (baseRef != null) {
 					startPointFullName = baseRef.getName();
+				}
 			}
 
 			// determine whether we are based on a commit,
@@ -110,45 +112,50 @@ public class CreateBranchCommand extends GitCommand<Ref> {
 			String baseBranch = ""; //$NON-NLS-1$
 			if (startPointFullName == null) {
 				String baseCommit;
-				if (startCommit != null)
+				if (startCommit != null) {
 					baseCommit = startCommit.getShortMessage();
-				else {
+				} else {
 					RevCommit commit = revWalk.parseCommit(repo
 							.resolve(getStartPointOrHead()));
 					baseCommit = commit.getShortMessage();
 				}
-				if (exists)
+				if (exists) {
 					refLogMessage = "branch: Reset start-point to commit " //$NON-NLS-1$
-							+ baseCommit;
-				else
+							+ baseCommit; //$NON-NLS-1$
+
+				} else {
 					refLogMessage = "branch: Created from commit " + baseCommit; //$NON-NLS-1$
 
+				}
 			} else if (startPointFullName.startsWith(R_HEADS)
 					|| startPointFullName.startsWith(Constants.R_REMOTES)) {
 				baseBranch = startPointFullName;
-				if (exists)
+				if (exists) {
 					refLogMessage = "branch: Reset start-point to branch " //$NON-NLS-1$
 							+ startPointFullName; // TODO
-				else
+				} else {
 					refLogMessage = "branch: Created from branch " + baseBranch; //$NON-NLS-1$
+				}
 			} else {
 				startAt = revWalk.peel(revWalk.parseAny(startAt));
-				if (exists)
+				if (exists) {
 					refLogMessage = "branch: Reset start-point to tag " //$NON-NLS-1$
 							+ startPointFullName;
-				else
+				} else {
 					refLogMessage = "branch: Created from tag " //$NON-NLS-1$
 							+ startPointFullName;
+				}
 			}
 
 			RefUpdate updateRef = repo.updateRef(R_HEADS + name);
 			updateRef.setNewObjectId(startAt);
 			updateRef.setRefLogMessage(refLogMessage, false);
 			Result updateResult;
-			if (exists && force)
+			if (exists && force) {
 				updateResult = updateRef.forceUpdate();
-			else
+			} else {
 				updateResult = updateRef.update();
+			}
 
 			setCallable(false);
 
@@ -166,15 +173,17 @@ public class CreateBranchCommand extends GitCommand<Ref> {
 				break;
 			}
 
-			if (!ok)
+			if (!ok) {
 				throw new JGitInternalException(MessageFormat.format(JGitText
 						.get().createBranchUnexpectedResult, updateResult
 						.name()));
+			}
 
 			Ref result = repo.findRef(name);
-			if (result == null)
+			if (result == null) {
 				throw new JGitInternalException(
 						JGitText.get().createBranchFailedUnknownReason);
+			}
 
 			if (baseBranch.length() == 0) {
 				return result;
@@ -185,13 +194,13 @@ public class CreateBranchCommand extends GitCommand<Ref> {
 			// whether the setting was done explicitly
 			boolean doConfigure;
 			if (upstreamMode == SetupUpstreamMode.SET_UPSTREAM
-					|| upstreamMode == SetupUpstreamMode.TRACK)
+					|| upstreamMode == SetupUpstreamMode.TRACK) {
 				// explicitly set to configure
 				doConfigure = true;
-			else if (upstreamMode == SetupUpstreamMode.NOTRACK)
+			} else if (upstreamMode == SetupUpstreamMode.NOTRACK) {
 				// explicitly set to not configure
 				doConfigure = false;
-			else {
+			} else {
 				// if there was no explicit setting, check the configuration
 				String autosetupflag = repo.getConfig().getString(
 						ConfigConstants.CONFIG_BRANCH_SECTION, null,
@@ -238,13 +247,15 @@ public class CreateBranchCommand extends GitCommand<Ref> {
 
 	private ObjectId getStartPointObjectId() throws AmbiguousObjectException,
 			RefNotFoundException, IOException {
-		if (startCommit != null)
+		if (startCommit != null) {
 			return startCommit.getId();
+		}
 		String startPointOrHead = getStartPointOrHead();
 		ObjectId result = repo.resolve(startPointOrHead);
-		if (result == null)
+		if (result == null) {
 			throw new RefNotFoundException(MessageFormat.format(
 					JGitText.get().refNotResolved, startPointOrHead));
+		}
 		return result;
 	}
 
@@ -255,9 +266,10 @@ public class CreateBranchCommand extends GitCommand<Ref> {
 	private void processOptions() throws InvalidRefNameException {
 		if (name == null
 				|| !Repository.isValidRefName(R_HEADS + name)
-				|| !isValidBranchName(name))
+				|| !isValidBranchName(name)) {
 			throw new InvalidRefNameException(MessageFormat.format(JGitText
 					.get().branchNameInvalid, name == null ? "<null>" : name)); //$NON-NLS-1$
+		}
 	}
 
 	/**

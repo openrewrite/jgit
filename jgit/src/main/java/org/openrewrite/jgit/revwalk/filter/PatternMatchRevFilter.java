@@ -39,11 +39,12 @@ public abstract class PatternMatchRevFilter extends RevFilter {
 	 * @return same pattern, but re-encoded to match our funny raw UTF-8
 	 *         character sequence {@link org.openrewrite.jgit.util.RawCharSequence}.
 	 */
-	protected static final String forceToRaw(String patternText) {
+	protected static String forceToRaw(String patternText) {
 		final byte[] b = Constants.encode(patternText);
 		final StringBuilder needle = new StringBuilder(b.length);
-		for (byte element : b)
+		for (byte element : b) {
 			needle.append((char) (element & 0xff));
+		}
 		return needle.toString();
 	}
 
@@ -70,15 +71,18 @@ public abstract class PatternMatchRevFilter extends RevFilter {
 	 */
 	protected PatternMatchRevFilter(String pattern, final boolean innerString,
 			final boolean rawEncoding, final int flags) {
-		if (pattern.length() == 0)
+		if (pattern.length() == 0) {
 			throw new IllegalArgumentException(JGitText.get().cannotMatchOnEmptyString);
+		}
 		patternText = pattern;
 
 		if (innerString) {
-			if (!pattern.startsWith("^") && !pattern.startsWith(".*")) //$NON-NLS-1$ //$NON-NLS-2$
+			if (!pattern.startsWith("^") && !pattern.startsWith(".*")) { //$NON-NLS-1$ //$NON-NLS-2$
 				pattern = ".*" + pattern; //$NON-NLS-1$
-			if (!pattern.endsWith("$") && !pattern.endsWith(".*")) //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			if (!pattern.endsWith("$") && !pattern.endsWith(".*")) { //$NON-NLS-1$ //$NON-NLS-2$
 				pattern = pattern + ".*"; //$NON-NLS-1$
+			}
 		}
 		final String p = rawEncoding ? forceToRaw(pattern) : pattern;
 		compiledPattern = Pattern.compile(p, flags).matcher(""); //$NON-NLS-1$

@@ -89,12 +89,14 @@ public final class RevWalkUtils {
 			IOException {
 		walk.reset();
 		walk.markStart(start);
-		if (end != null)
+		if (end != null) {
 			walk.markUninteresting(end);
+		}
 
 		List<RevCommit> commits = new ArrayList<>();
-		for (RevCommit c : walk)
+		for (RevCommit c : walk) {
 			commits.add(c);
+		}
 		return commits;
 	}
 
@@ -166,15 +168,17 @@ public final class RevWalkUtils {
 
 		for (Ref ref : refs) {
 			RevObject maybehead = revWalk.parseAny(ref.getObjectId());
-			if (!(maybehead instanceof RevCommit))
+			if (!(maybehead instanceof RevCommit)) {
 				continue;
+			}
 			RevCommit headCommit = (RevCommit) maybehead;
 
 			// if commit is in the ref branch, then the tip of ref should be
 			// newer than the commit we are looking for. Allow for a large
 			// clock skew.
-			if (headCommit.getCommitTime() + SKEW < commit.getCommitTime())
+			if (headCommit.getCommitTime() + SKEW < commit.getCommitTime()) {
 				continue;
+			}
 
 			filteredRefs.add(ref);
 		}

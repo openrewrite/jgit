@@ -15,7 +15,7 @@ package org.openrewrite.jgit.lib;
 /**
  * A NullProgressMonitor does not report progress anywhere.
  */
-public class NullProgressMonitor implements ProgressMonitor {
+public final class NullProgressMonitor implements ProgressMonitor {
 	/** Immutable instance of a null progress monitor. */
 	public static final NullProgressMonitor INSTANCE = new NullProgressMonitor();
 

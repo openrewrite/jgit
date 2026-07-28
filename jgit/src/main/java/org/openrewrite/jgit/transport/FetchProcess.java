@@ -114,19 +114,16 @@ class FetchProcess {
 		if (StringUtils.isEmptyOrNull(initialBranch) || refsMap.isEmpty()) {
 			return false;
 		}
-		if (refsMap.containsKey(initialBranch)
+		return !(refsMap.containsKey(initialBranch)
 				|| refsMap.containsKey(Constants.R_HEADS + initialBranch)
-				|| refsMap.containsKey(Constants.R_TAGS + initialBranch)) {
-			return false;
-		}
-		return true;
+				|| refsMap.containsKey(Constants.R_TAGS + initialBranch));
 	}
 
 	private void executeImp(final ProgressMonitor monitor,
 			final FetchResult result, String initialBranch)
 			throws NotSupportedException, TransportException {
 		final TagOpt tagopt = transport.getTagOpt();
-		String getTags = (tagopt == TagOpt.NO_TAGS) ? null : Constants.R_TAGS;
+		String getTags = tagopt == TagOpt.NO_TAGS ? null : Constants.R_TAGS;
 		String getHead = null;
 		try {
 			// If we don't have a HEAD yet, we're cloning and need to get the
@@ -150,21 +147,24 @@ class FetchProcess {
 			result.peerUserAgent = conn.getPeerUserAgent();
 			final Set<Ref> matched = new HashSet<>();
 			for (RefSpec spec : toFetch) {
-				if (spec.getSource() == null)
+				if (spec.getSource() == null) {
 					throw new TransportException(MessageFormat.format(
 							JGitText.get().sourceRefNotSpecifiedForRefspec, spec));
+				}
 
-				if (spec.isWildcard())
+				if (spec.isWildcard()) {
 					expandWildcard(spec, matched);
-				else
+				} else {
 					expandSingle(spec, matched);
+				}
 			}
 
 			Collection<Ref> additionalTags = Collections.<Ref> emptyList();
-			if (tagopt == TagOpt.AUTO_FOLLOW)
+			if (tagopt == TagOpt.AUTO_FOLLOW) {
 				additionalTags = expandAutoFollowTags();
-			else if (tagopt == TagOpt.FETCH_TAGS)
+			} else if (tagopt == TagOpt.FETCH_TAGS) {
 				expandFetchTags();
+			}
 
 			final boolean includedTags;
 			if (!askFor.isEmpty() && !askForIsComplete()) {
@@ -187,16 +187,19 @@ class FetchProcess {
 				askFor.clear();
 				for (Ref r : additionalTags) {
 					ObjectId id = r.getPeeledObjectId();
-					if (id == null)
+					if (id == null) {
 						id = r.getObjectId();
-					if (localHasObject(id))
+					}
+					if (localHasObject(id)) {
 						wantTag(r);
+					}
 				}
 
 				if (!askFor.isEmpty() && (!includedTags || !askForIsComplete())) {
 					reopenConnection();
-					if (!askFor.isEmpty())
+					if (!askFor.isEmpty()) {
 						fetchObjects(monitor);
+					}
 				}
 			}
 		} finally {
@@ -221,13 +224,15 @@ class FetchProcess {
 				cmd.updateType(walk);
 				if (cmd.getType() == UPDATE_NONFASTFORWARD
 						&& cmd instanceof TrackingRefUpdate.Command
-						&& !((TrackingRefUpdate.Command) cmd).canForceUpdate())
+						&& !((TrackingRefUpdate.Command) cmd).canForceUpdate()) {
 					cmd.setResult(REJECTED_NONFASTFORWARD);
+				}
 			}
 			if (transport.isDryRun()) {
 				for (ReceiveCommand cmd : batch.getCommands()) {
-					if (cmd.getResult() == NOT_ATTEMPTED)
+					if (cmd.getResult() == NOT_ATTEMPTED) {
 						cmd.setResult(OK);
+					}
 				}
 			} else {
 				batch.execute(walk, monitor);
@@ -242,7 +247,7 @@ class FetchProcess {
 
 		if (!fetchHeadUpdates.isEmpty()) {
 			try {
-				updateFETCH_HEAD(result);
+				updateFETCHHEAD(result);
 			} catch (IOException err) {
 				throw new TransportException(MessageFormat.format(
 						JGitText.get().failureUpdatingFETCH_HEAD, err.getMessage()), err);
@@ -276,9 +281,10 @@ class FetchProcess {
 			packLocks.addAll(conn.getPackLocks());
 		}
 		if (transport.isCheckFetchedObjects()
-				&& !conn.didFetchTestConnectivity() && !askForIsComplete())
+				&& !conn.didFetchTestConnectivity() && !askForIsComplete()) {
 			throw new TransportException(transport.getURI(),
 					JGitText.get().peerDidNotSupplyACompleteObjectGraph);
+		}
 	}
 
 	private void closeConnection(FetchResult result) {
@@ -291,8 +297,9 @@ class FetchProcess {
 
 	private void reopenConnection() throws NotSupportedException,
 			TransportException {
-		if (conn != null)
+		if (conn != null) {
 			return;
+		}
 
 		// Build prefixes
 		Set<String> prefixes = new HashSet<>();
@@ -315,8 +322,9 @@ class FetchProcess {
 		// new connection has offered to us.
 		//
 		final HashMap<ObjectId, Ref> avail = new HashMap<>();
-		for (Ref r : conn.getRefs())
+		for (Ref r : conn.getRefs()) {
 			avail.put(r.getObjectId(), r);
+		}
 
 		final Collection<Ref> wants = new ArrayList<>(askFor.values());
 		askFor.clear();
@@ -335,8 +343,9 @@ class FetchProcess {
 		final Iterator<TrackingRefUpdate> i = localUpdates.iterator();
 		while (i.hasNext()) {
 			final TrackingRefUpdate u = i.next();
-			if (u.getNewObjectId().equals(want))
+			if (u.getNewObjectId().equals(want)) {
 				i.remove();
+			}
 		}
 	}
 
@@ -344,15 +353,17 @@ class FetchProcess {
 		final Iterator<FetchHeadRecord> i = fetchHeadUpdates.iterator();
 		while (i.hasNext()) {
 			final FetchHeadRecord fh = i.next();
-			if (fh.newValue.equals(want))
+			if (fh.newValue.equals(want)) {
 				i.remove();
+			}
 		}
 	}
 
-	private void updateFETCH_HEAD(FetchResult result) throws IOException {
+	private void updateFETCHHEAD(FetchResult result) throws IOException {
 		File meta = transport.local.getDirectory();
-		if (meta == null)
+		if (meta == null) {
 			return;
+		}
 		final LockFile lock = new LockFile(new File(meta, "FETCH_HEAD")); //$NON-NLS-1$
 		try {
 			if (lock.lock()) {
@@ -373,10 +384,12 @@ class FetchProcess {
 	private boolean askForIsComplete() throws TransportException {
 		try {
 			try (ObjectWalk ow = new ObjectWalk(transport.local)) {
-				for (ObjectId want : askFor.keySet())
+				for (ObjectId want : askFor.keySet()) {
 					ow.markStart(ow.parseAny(want));
-				for (Ref ref : localRefs().values())
+				}
+				for (Ref ref : localRefs().values()) {
 					ow.markUninteresting(ow.parseAny(ref.getObjectId()));
+				}
 				ow.checkConnectivity();
 			}
 			return true;
@@ -390,8 +403,9 @@ class FetchProcess {
 	private void expandWildcard(RefSpec spec, Set<Ref> matched)
 			throws TransportException {
 		for (Ref src : conn.getRefs()) {
-			if (spec.matchSource(src) && matched.add(src))
+			if (spec.matchSource(src) && matched.add(src)) {
 				want(src, spec.expandFromSource(src));
+			}
 		}
 	}
 
@@ -428,23 +442,27 @@ class FetchProcess {
 		final Collection<Ref> additionalTags = new ArrayList<>();
 		final Map<String, Ref> haveRefs = localRefs();
 		for (Ref r : conn.getRefs()) {
-			if (!isTag(r))
+			if (!isTag(r)) {
 				continue;
+			}
 
 			Ref local = haveRefs.get(r.getName());
-			if (local != null)
+			if (local != null) {
 				// We already have a tag with this name, don't fetch it (even if
 				// the local is different).
 				continue;
+			}
 
 			ObjectId obj = r.getPeeledObjectId();
-			if (obj == null)
+			if (obj == null) {
 				obj = r.getObjectId();
+			}
 
-			if (askFor.containsKey(obj) || localHasObject(obj))
+			if (askFor.containsKey(obj) || localHasObject(obj)) {
 				wantTag(r);
-			else
+			} else {
 				additionalTags.add(r);
+			}
 		}
 		return additionalTags;
 	}
@@ -481,8 +499,9 @@ class FetchProcess {
 		}
 		if (spec.getDestination() != null) {
 			final TrackingRefUpdate tru = createUpdate(spec, newId);
-			if (newId.equals(tru.getOldObjectId()))
+			if (newId.equals(tru.getOldObjectId())) {
 				return;
+			}
 			localUpdates.add(tru);
 		}
 
@@ -549,8 +568,9 @@ class FetchProcess {
 
 	private void deleteTrackingRef(final FetchResult result,
 			final BatchRefUpdate batch, final RefSpec spec, final Ref localRef) {
-		if (localRef.getObjectId() == null)
+		if (localRef.getObjectId() == null) {
 			return;
+		}
 		TrackingRefUpdate update = new TrackingRefUpdate(
 				true,
 				spec.getSource(),
@@ -571,8 +591,9 @@ class FetchProcess {
 
 	private static String getFirstFailedRefName(BatchRefUpdate batch) {
 		for (ReceiveCommand cmd : batch.getCommands()) {
-			if (cmd.getResult() != ReceiveCommand.Result.OK)
+			if (cmd.getResult() != ReceiveCommand.Result.OK) {
 				return cmd.getRefName();
+			}
 		}
 		return ""; //$NON-NLS-1$
 	}

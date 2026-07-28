@@ -88,11 +88,13 @@ public class BranchConfig {
 	public String getTrackingBranch() {
 		String remote = getRemoteOrDefault();
 		String mergeRef = getMerge();
-		if (remote == null || mergeRef == null)
+		if (remote == null || mergeRef == null) {
 			return null;
+		}
 
-		if (isRemoteLocal())
+		if (isRemoteLocal()) {
 			return mergeRef;
+		}
 
 		return findRemoteTrackingBranch(remote, mergeRef);
 	}
@@ -107,8 +109,9 @@ public class BranchConfig {
 	public String getRemoteTrackingBranch() {
 		String remote = getRemoteOrDefault();
 		String mergeRef = getMerge();
-		if (remote == null || mergeRef == null)
+		if (remote == null || mergeRef == null) {
 			return null;
+		}
 
 		return findRemoteTrackingBranch(remote, mergeRef);
 	}

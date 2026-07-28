@@ -10,8 +10,8 @@
 
 package org.openrewrite.jgit.transport;
 
-import static org.openrewrite.jgit.transport.ReceivePack.parseCommand;
 import static org.openrewrite.jgit.transport.GitProtocolConstants.CAPABILITY_PUSH_CERT;
+import static org.openrewrite.jgit.transport.ReceivePack.parseCommand;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class PushCertificateParser {
 		String read() throws EOFException, IOException;
 	}
 
-	private static class PacketLineReader implements StringReader {
+	private static final class PacketLineReader implements StringReader {
 		private final PacketLineIn pckIn;
 
 		private PacketLineReader(PacketLineIn pckIn) {
@@ -77,7 +77,7 @@ public class PushCertificateParser {
 		}
 	}
 
-	private static class StreamReader implements StringReader {
+	private static final class StreamReader implements StringReader {
 		private final Reader reader;
 
 		private StreamReader(Reader reader) {
@@ -223,7 +223,7 @@ public class PushCertificateParser {
 		String line;
 		try {
 			while (!(line = reader.read()).isEmpty()) {
-				if (line.equals(BEGIN_SIGNATURE)) {
+				if (BEGIN_SIGNATURE.equals(line)) {
 					receiveSignature(reader);
 					break;
 				}
@@ -346,7 +346,7 @@ public class PushCertificateParser {
 				return;
 			}
 			received = true;
-			if (!version.equals(VERSION_0_1)) {
+			if (!VERSION_0_1.equals(version)) {
 				throw new PackProtocolException(MessageFormat.format(
 						JGitText.get().pushCertificateInvalidFieldValue, VERSION, version));
 			}
@@ -396,7 +396,7 @@ public class PushCertificateParser {
 	public void receiveSignature(PacketLineIn pckIn) throws IOException {
 		StringReader reader = new PacketLineReader(pckIn);
 		receiveSignature(reader);
-		if (!reader.read().equals(END_CERT)) {
+		if (!END_CERT.equals(reader.read())) {
 			throw new PackProtocolException(
 					JGitText.get().pushCertificateInvalidSignature);
 		}

@@ -43,7 +43,7 @@ public abstract class FilterCommand {
 	 * @param out
 	 *            The {@link java.io.OutputStream} this command should write to
 	 */
-	public FilterCommand(InputStream in, OutputStream out) {
+	protected FilterCommand(InputStream in, OutputStream out) {
 		this.in = in;
 		this.out = out;
 	}

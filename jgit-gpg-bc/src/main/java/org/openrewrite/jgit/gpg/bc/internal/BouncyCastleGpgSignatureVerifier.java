@@ -68,9 +68,9 @@ public class BouncyCastleGpgSignatureVerifier implements GpgSignatureVerifier {
 
 	private static final Object NO_KEY = new Object();
 
-	private LRUMap<String, Object> byFingerprint = new LRUMap<>(16, 200);
+	private final LRUMap<String, Object> byFingerprint = new LRUMap<>(16, 200);
 
-	private LRUMap<String, Object> bySigner = new LRUMap<>(16, 200);
+	private final LRUMap<String, Object> bySigner = new LRUMap<>(16, 200);
 
 	@Override
 	public String getName() {

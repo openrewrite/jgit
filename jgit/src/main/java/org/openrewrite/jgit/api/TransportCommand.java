@@ -115,11 +115,13 @@ public abstract class TransportCommand<C extends GitCommand, T> extends
 	 * @return {@code this}
 	 */
 	protected C configure(Transport transport) {
-		if (credentialsProvider != null)
+		if (credentialsProvider != null) {
 			transport.setCredentialsProvider(credentialsProvider);
+		}
 		transport.setTimeout(timeout);
-		if (transportConfigCallback != null)
+		if (transportConfigCallback != null) {
 			transportConfigCallback.configure(transport);
+		}
 		return self();
 	}
 

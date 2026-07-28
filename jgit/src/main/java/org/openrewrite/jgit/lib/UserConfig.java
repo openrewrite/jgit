@@ -18,7 +18,7 @@ import org.openrewrite.jgit.util.SystemReader;
 /**
  * The standard "user" configuration parameters.
  */
-public class UserConfig {
+public final class UserConfig {
 	/** Key for {@link Config#get(SectionParser)}. */
 	public static final Config.SectionParser<UserConfig> KEY = UserConfig::new;
 
@@ -175,8 +175,9 @@ public class UserConfig {
 	private static String getDefaultUserName() {
 		// get the system user name
 		String username = system().getProperty(Constants.OS_USER_NAME_KEY);
-		if (username == null)
+		if (username == null) {
 			username = Constants.UNKNOWN_USER_DEFAULT;
+		}
 		return username;
 	}
 

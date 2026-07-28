@@ -23,7 +23,7 @@ import org.openrewrite.jgit.treewalk.TreeWalk;
  * into a tree filter graph, as the group supports breaking out of traversal
  * once it is known the path can never match.
  */
-public class PathFilter extends TreeFilter {
+public final class PathFilter extends TreeFilter {
 	/**
 	 * Create a new tree filter for a user supplied path.
 	 * <p>
@@ -42,10 +42,12 @@ public class PathFilter extends TreeFilter {
 	 *             the path supplied was the empty string.
 	 */
 	public static PathFilter create(String path) {
-		while (path.endsWith("/")) //$NON-NLS-1$
+		while (path.endsWith("/")) { //$NON-NLS-1$
 			path = path.substring(0, path.length() - 1);
-		if (path.length() == 0)
+		}
+		if (path.length() == 0) {
 			throw new IllegalArgumentException(JGitText.get().emptyPathNotPermitted);
+		}
 		return new PathFilter(path);
 	}
 
@@ -82,9 +84,11 @@ public class PathFilter extends TreeFilter {
 	/** {@inheritDoc} */
 	@Override
 	public boolean shouldBeRecursive() {
-		for (byte b : pathRaw)
-			if (b == '/')
+		for (byte b : pathRaw) {
+			if (b == '/') {
 				return true;
+			}
+		}
 		return false;
 	}
 

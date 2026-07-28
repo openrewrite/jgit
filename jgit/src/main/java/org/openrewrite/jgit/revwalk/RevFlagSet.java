@@ -59,8 +59,9 @@ public class RevFlagSet extends AbstractSet<RevFlag> {
 	/** {@inheritDoc} */
 	@Override
 	public boolean contains(Object o) {
-		if (o instanceof RevFlag)
+		if (o instanceof RevFlag) {
 			return (mask & ((RevFlag) o).mask) != 0;
+		}
 		return false;
 	}
 
@@ -77,12 +78,14 @@ public class RevFlagSet extends AbstractSet<RevFlag> {
 	/** {@inheritDoc} */
 	@Override
 	public boolean add(RevFlag flag) {
-		if ((mask & flag.mask) != 0)
+		if ((mask & flag.mask) != 0) {
 			return false;
+		}
 		mask |= flag.mask;
 		int p = 0;
-		while (p < active.size() && active.get(p).mask < flag.mask)
+		while (p < active.size() && active.get(p).mask < flag.mask) {
 			p++;
+		}
 		active.add(p, flag);
 		return true;
 	}
@@ -91,12 +94,15 @@ public class RevFlagSet extends AbstractSet<RevFlag> {
 	@Override
 	public boolean remove(Object o) {
 		final RevFlag flag = (RevFlag) o;
-		if ((mask & flag.mask) == 0)
+		if ((mask & flag.mask) == 0) {
 			return false;
+		}
 		mask &= ~flag.mask;
-		for (int i = 0; i < active.size(); i++)
-			if (active.get(i).mask == flag.mask)
+		for (int i = 0;i < active.size();i++) {
+			if (active.get(i).mask == flag.mask) {
 				active.remove(i);
+			}
+		}
 		return true;
 	}
 

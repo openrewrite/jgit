@@ -57,9 +57,10 @@ public class TimeoutInputStream extends FilterInputStream {
 	 *            number of milliseconds before aborting a read. Must be &gt; 0.
 	 */
 	public void setTimeout(int millis) {
-		if (millis < 0)
+		if (millis < 0) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().invalidTimeout, Integer.valueOf(millis)));
+		}
 		timeout = millis;
 	}
 

@@ -22,7 +22,7 @@ import org.openrewrite.jgit.lib.Repository;
  *
  * @since 3.3
  */
-public class MergeConfig {
+public final class MergeConfig {
 
 	/**
 	 * Get merge configuration for the current branch of the repository
@@ -34,8 +34,9 @@ public class MergeConfig {
 	public static MergeConfig getConfigForCurrentBranch(Repository repo) {
 		try {
 			String branch = repo.getBranch();
-			if (branch != null)
+			if (branch != null) {
 				return repo.getConfig().get(getParser(branch));
+			}
 		} catch (IOException e) {
 			// ignore
 		}
@@ -53,7 +54,7 @@ public class MergeConfig {
 	 * @return a parser for use with
 	 *         {@link org.openrewrite.jgit.lib.Config#get(SectionParser)}
 	 */
-	public static final SectionParser<MergeConfig> getParser(
+	public static SectionParser<MergeConfig> getParser(
 			final String branch) {
 		return new MergeConfigSectionParser(branch);
 	}
@@ -110,21 +111,23 @@ public class MergeConfig {
 	private static FastForwardMode getFastForwardMode(Config config,
 			String[] mergeOptions) {
 		for (String option : mergeOptions) {
-			for (FastForwardMode mode : FastForwardMode.values())
-				if (mode.matchConfigValue(option))
+			for (FastForwardMode mode : FastForwardMode.values()) {
+				if (mode.matchConfigValue(option)) {
 					return mode;
+				}
+			}
 		}
-		FastForwardMode ffmode = FastForwardMode.valueOf(config.getEnum(
+		return FastForwardMode.valueOf(config.getEnum(
 				ConfigConstants.CONFIG_KEY_MERGE, null,
 				ConfigConstants.CONFIG_KEY_FF, FastForwardMode.Merge.TRUE));
-		return ffmode;
 	}
 
 	private static boolean isMergeConfigOptionSet(String optionToLookFor,
 			String[] mergeOptions) {
 		for (String option : mergeOptions) {
-			if (optionToLookFor.equals(option))
+			if (optionToLookFor.equals(option)) {
 				return true;
+			}
 		}
 		return false;
 	}

@@ -26,7 +26,7 @@ public class FormatError {
 		WARNING,
 
 		/** The error indicates the script is severely flawed. */
-		ERROR;
+		ERROR
 	}
 
 	private final byte[] buf;

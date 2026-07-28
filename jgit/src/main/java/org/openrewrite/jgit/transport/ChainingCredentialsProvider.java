@@ -22,7 +22,7 @@ import org.openrewrite.jgit.errors.UnsupportedCredentialItem;
  */
 public class ChainingCredentialsProvider extends CredentialsProvider {
 
-	private List<CredentialsProvider> credentialProviders;
+	private final List<CredentialsProvider> credentialProviders;
 
 	/**
 	 * Create a new chaining credential provider. This provider tries to
@@ -42,18 +42,22 @@ public class ChainingCredentialsProvider extends CredentialsProvider {
 	/** {@inheritDoc} */
 	@Override
 	public boolean isInteractive() {
-		for (CredentialsProvider p : credentialProviders)
-			if (p.isInteractive())
+		for (CredentialsProvider p : credentialProviders) {
+			if (p.isInteractive()) {
 				return true;
+			}
+		}
 		return false;
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public boolean supports(CredentialItem... items) {
-		for (CredentialsProvider p : credentialProviders)
-			if (p.supports(items))
+		for (CredentialsProvider p : credentialProviders) {
+			if (p.supports(items)) {
 				return true;
+			}
+		}
 		return false;
 	}
 

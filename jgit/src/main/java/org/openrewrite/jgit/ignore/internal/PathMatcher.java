@@ -27,7 +27,7 @@ import org.openrewrite.jgit.ignore.internal.Strings.PatternState;
  * <p>
  * This class is immutable and thread safe.
  */
-public class PathMatcher extends AbstractMatcher {
+public final class PathMatcher extends AbstractMatcher {
 
 	private static final WildMatcher WILD_NO_DIRECTORY = new WildMatcher(false);
 
@@ -46,11 +46,12 @@ public class PathMatcher extends AbstractMatcher {
 		super(pattern, dirOnly);
 		slash = getPathSeparator(pathSeparator);
 		beginning = pattern.indexOf(slash) == 0;
-		if (isSimplePathWithSegments(pattern))
+		if (isSimplePathWithSegments(pattern)) {
 			matchers = null;
-		else
+		} else {
 			matchers = createMatchers(split(pattern, slash), pathSeparator,
 					dirOnly);
+		}
 	}
 
 	private boolean isSimplePathWithSegments(String path) {
@@ -68,10 +69,11 @@ public class PathMatcher extends AbstractMatcher {
 					dirOnly, i == segments.size() - 1);
 			if (i > 0) {
 				final IMatcher last = matchers.get(matchers.size() - 1);
-				if (isWild(matcher) && isWild(last))
+				if (isWild(matcher) && isWild(last)) {
 					// collapse wildmatchers **/** is same as **, but preserve
 					// dirOnly flag (i.e. always use the last wildmatcher)
 					matchers.remove(matchers.size() - 1);
+				}
 			}
 
 			matchers.add(matcher);
@@ -99,8 +101,9 @@ public class PathMatcher extends AbstractMatcher {
 		char slash = Strings.getPathSeparator(pathSeparator);
 		// ignore possible leading and trailing slash
 		int slashIdx = pattern.indexOf(slash, 1);
-		if (slashIdx > 0 && slashIdx < pattern.length() - 1)
+		if (slashIdx > 0 && slashIdx < pattern.length() - 1) {
 			return new PathMatcher(pattern, pathSeparator, dirOnly);
+		}
 		return createNameMatcher0(pattern, pathSeparator, dirOnly, true);
 	}
 
@@ -119,8 +122,8 @@ public class PathMatcher extends AbstractMatcher {
 					&& pattern.charAt(pattern.length() - 2) == '\\') {
 				// last space was escaped by backslash: remove backslash and
 				// keep space
-				pattern = pattern.substring(0, pattern.length() - 2) + " "; //$NON-NLS-1$
-				return pattern;
+				//$NON-NLS-1$
+				return pattern.substring(0, pattern.length() - 2) + " ";
 			}
 			pattern = pattern.substring(0, pattern.length() - 1);
 		}
@@ -132,9 +135,10 @@ public class PathMatcher extends AbstractMatcher {
 			throws InvalidPatternException {
 		// check if we see /** or ** segments => double star pattern
 		if (WildMatcher.WILDMATCH.equals(segment)
-				|| WildMatcher.WILDMATCH2.equals(segment))
+				|| WildMatcher.WILDMATCH2.equals(segment)) {
 			return dirOnly && lastSegment ? WILD_ONLY_DIRECTORY
 					: WILD_NO_DIRECTORY;
+		}
 
 		PatternState state = checkWildCards(segment);
 		switch (state) {
@@ -186,10 +190,7 @@ public class PathMatcher extends AbstractMatcher {
 		if (pathMatch) {
 			return path.equals(prefix) && (!dirOnly || assumeDirectory);
 		}
-		if (path.startsWith(prefix)) {
-			return true;
-		}
-		return false;
+		return path.startsWith(prefix);
 	}
 
 	/** {@inheritDoc} */

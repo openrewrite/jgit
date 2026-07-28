@@ -34,7 +34,7 @@ import org.openrewrite.jgit.internal.JGitText;
 public final class FilterSpec {
 
 	/** Immutable bit-set representation of a set of Git object types. */
-	static class ObjectTypes {
+	static final class ObjectTypes {
 		static ObjectTypes ALL = allow(OBJ_BLOB, OBJ_TREE, OBJ_COMMIT, OBJ_TAG);
 
 		private final BigInteger val;
@@ -104,7 +104,7 @@ public final class FilterSpec {
 	 */
 	public static FilterSpec fromFilterLine(String filterLine)
 			throws PackProtocolException {
-		if (filterLine.equals("blob:none")) { //$NON-NLS-1$
+		if ("blob:none".equals(filterLine)) { //$NON-NLS-1$
 			return FilterSpec.withObjectTypes(
 					ObjectTypes.allow(OBJ_TREE, OBJ_COMMIT, OBJ_TAG));
 		} else if (filterLine.startsWith("blob:limit=")) { //$NON-NLS-1$

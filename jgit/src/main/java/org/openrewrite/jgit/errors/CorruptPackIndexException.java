@@ -34,7 +34,7 @@ public class CorruptPackIndexException extends Exception {
 		UNKNOWN_OBJ,
 	}
 
-	private ErrorType errorType;
+	private final ErrorType errorType;
 
 	/**
 	 * Report a specific error condition discovered in an index file.

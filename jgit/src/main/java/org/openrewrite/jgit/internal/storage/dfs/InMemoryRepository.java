@@ -172,8 +172,9 @@ public class InMemoryRepository extends DfsRepository {
 			n = new ArrayList<>(desc.size() + packs.size());
 			n.addAll(desc);
 			n.addAll(packs);
-			if (replace != null)
+			if (replace != null) {
 				n.removeAll(replace);
+			}
 			packs = n;
 			clearCache();
 		}
@@ -188,8 +189,9 @@ public class InMemoryRepository extends DfsRepository {
 				throws FileNotFoundException, IOException {
 			MemPack memPack = (MemPack) desc;
 			byte[] file = memPack.get(ext);
-			if (file == null)
+			if (file == null) {
 				throw new FileNotFoundException(desc.getFileName(ext));
+			}
 			return new ByteArrayReadableChannel(file, blockSize);
 		}
 
@@ -236,15 +238,17 @@ public class InMemoryRepository extends DfsRepository {
 		public int read(long position, ByteBuffer buf) {
 			byte[] d = getData();
 			int n = Math.min(buf.remaining(), d.length - (int) position);
-			if (n == 0)
+			if (n == 0) {
 				return -1;
+			}
 			buf.put(d, (int) position, n);
 			return n;
 		}
 
 		byte[] getData() {
-			if (data == null)
+			if (data == null) {
 				data = dst.toByteArray();
+			}
 			return data;
 		}
 
@@ -271,8 +275,9 @@ public class InMemoryRepository extends DfsRepository {
 		@Override
 		public int read(ByteBuffer dst) {
 			int n = Math.min(dst.remaining(), data.length - position);
-			if (n == 0)
+			if (n == 0) {
 				return -1;
+			}
 			dst.put(data, position, n);
 			position += n;
 			return n;

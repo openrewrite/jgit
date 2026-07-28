@@ -18,7 +18,7 @@ package org.openrewrite.jgit.util;
  * @since 4.9
  */
 public class LongMap<V> {
-	private static final float LOAD_FACTOR = 0.75f;
+	private static final float LOAD_FACTOR = 0.75F;
 
 	private Node<V>[] table;
 
@@ -56,8 +56,9 @@ public class LongMap<V> {
 	 */
 	public V get(long key) {
 		for (Node<V> n = table[index(key)]; n != null; n = n.next) {
-			if (n.key == key)
+			if (n.key == key) {
 				return n.value;
+			}
 		}
 		return null;
 	}
@@ -74,10 +75,11 @@ public class LongMap<V> {
 		Node<V> prior = null;
 		while (n != null) {
 			if (n.key == key) {
-				if (prior == null)
+				if (prior == null) {
 					table[index(key)] = n.next;
-				else
+				} else {
 					prior.next = n.next;
+				}
 				size--;
 				return n.value;
 			}
@@ -105,8 +107,9 @@ public class LongMap<V> {
 			}
 		}
 
-		if (++size == growAt)
+		if (++size == growAt) {
 			grow();
+		}
 		insert(new Node<>(key, value));
 		return null;
 	}
@@ -140,7 +143,7 @@ public class LongMap<V> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static final <V> Node<V>[] createArray(int sz) {
+	private static <V> Node<V>[] createArray(int sz) {
 		return new Node[sz];
 	}
 

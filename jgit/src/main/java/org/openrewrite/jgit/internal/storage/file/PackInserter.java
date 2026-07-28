@@ -117,7 +117,7 @@ public class PackInserter extends ObjectInserter {
 	private PackStream packOut;
 	private Inflater cachedInflater;
 
-	private PackConfig pconfig;
+	private final PackConfig pconfig;
 
 	PackInserter(ObjectDirectory db) {
 		this.db = db;
@@ -551,7 +551,7 @@ public class PackInserter extends ObjectInserter {
 		}
 	}
 
-	private class Reader extends ObjectReader {
+	private final class Reader extends ObjectReader {
 		private final ObjectReader ctx;
 
 		private Reader() {

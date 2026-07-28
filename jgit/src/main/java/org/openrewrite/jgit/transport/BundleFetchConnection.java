@@ -69,11 +69,9 @@ class BundleFetchConnection extends BaseFetchConnection {
 		transport = transportBundle;
 		bin = new BufferedInputStream(src);
 		try {
-			switch (readSignature()) {
-			case 2:
+			if (readSignature() == 2) {
 				readBundleV2();
-				break;
-			default:
+			} else {
 				throw new TransportException(transport.uri, JGitText.get().notABundle);
 			}
 		} catch (TransportException err) {
@@ -87,8 +85,9 @@ class BundleFetchConnection extends BaseFetchConnection {
 
 	private int readSignature() throws IOException {
 		final String rev = readLine(new byte[1024]);
-		if (TransportBundle.V2_BUNDLE_SIGNATURE.equals(rev))
+		if (TransportBundle.V2_BUNDLE_SIGNATURE.equals(rev)) {
 			return 2;
+		}
 		throw new TransportException(transport.uri, JGitText.get().notABundle);
 	}
 
@@ -97,14 +96,16 @@ class BundleFetchConnection extends BaseFetchConnection {
 		final LinkedHashMap<String, Ref> avail = new LinkedHashMap<>();
 		for (;;) {
 			String line = readLine(hdrbuf);
-			if (line.length() == 0)
+			if (line.length() == 0) {
 				break;
+			}
 
 			if (line.charAt(0) == '-') {
 				ObjectId id = ObjectId.fromString(line.substring(1, 41));
 				String shortDesc = null;
-				if (line.length() > 42)
+				if (line.length() > 42) {
 					shortDesc = line.substring(42);
+				}
 				prereqs.put(id, shortDesc);
 				continue;
 			}
@@ -113,8 +114,9 @@ class BundleFetchConnection extends BaseFetchConnection {
 			final ObjectId id = ObjectId.fromString(line.substring(0, 40));
 			final Ref prior = avail.put(name, new ObjectIdRef.Unpeeled(
 					Ref.Storage.NETWORK, name, id));
-			if (prior != null)
+			if (prior != null) {
 				throw duplicateAdvertisement(name);
+			}
 		}
 		available(avail);
 	}
@@ -184,14 +186,16 @@ class BundleFetchConnection extends BaseFetchConnection {
 	/** {@inheritDoc} */
 	@Override
 	public Collection<PackLock> getPackLocks() {
-		if (packLock != null)
+		if (packLock != null) {
 			return Collections.singleton(packLock);
+		}
 		return Collections.<PackLock> emptyList();
 	}
 
 	private void verifyPrerequisites() throws TransportException {
-		if (prereqs.isEmpty())
+		if (prereqs.isEmpty()) {
 			return;
+		}
 
 		try (RevWalk rw = new RevWalk(transport.local)) {
 			final RevFlag PREREQ = rw.newFlag("PREREQ"); //$NON-NLS-1$
@@ -215,9 +219,10 @@ class BundleFetchConnection extends BaseFetchConnection {
 							err);
 				}
 			}
-			if (!missing.isEmpty())
+			if (!missing.isEmpty()) {
 				throw new MissingBundlePrerequisiteException(transport.uri,
 						missing);
+			}
 
 			List<Ref> localRefs;
 			try {
@@ -239,8 +244,9 @@ class BundleFetchConnection extends BaseFetchConnection {
 				while ((c = rw.next()) != null) {
 					if (c.has(PREREQ)) {
 						c.add(SEEN);
-						if (--remaining == 0)
+						if (--remaining == 0) {
 							break;
+						}
 					}
 				}
 			} catch (IOException err) {
@@ -250,8 +256,9 @@ class BundleFetchConnection extends BaseFetchConnection {
 
 			if (remaining > 0) {
 				for (RevObject o : commits) {
-					if (!o.has(SEEN))
+					if (!o.has(SEEN)) {
 						missing.put(o, prereqs.get(o));
+					}
 				}
 				throw new MissingBundlePrerequisiteException(transport.uri,
 						missing);

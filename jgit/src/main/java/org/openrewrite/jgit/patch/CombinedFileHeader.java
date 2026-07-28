@@ -164,8 +164,9 @@ public class CombinedFileHeader extends FileHeader {
 		final List<AbbreviatedObjectId> ids = new ArrayList<>();
 		while (ptr < eol) {
 			final int comma = nextLF(buf, ptr, ',');
-			if (eol <= comma)
+			if (eol <= comma) {
 				break;
+			}
 			ids.add(AbbreviatedObjectId.fromString(buf, ptr, comma - 1));
 			ptr = comma;
 		}
@@ -181,8 +182,9 @@ public class CombinedFileHeader extends FileHeader {
 	/** {@inheritDoc} */
 	@Override
 	protected void parseNewFileMode(int ptr, int eol) {
-		for (int i = 0; i < oldModes.length; i++)
+		for (int i = 0;i < oldModes.length;i++) {
 			oldModes[i] = FileMode.MISSING;
+		}
 		super.parseNewFileMode(ptr, eol);
 	}
 
@@ -197,8 +199,9 @@ public class CombinedFileHeader extends FileHeader {
 		int n = 0;
 		while (ptr < eol) {
 			final int comma = nextLF(buf, ptr, ',');
-			if (eol <= comma)
+			if (eol <= comma) {
 				break;
+			}
 			oldModes[n++] = parseFileMode(ptr, comma);
 			ptr = comma;
 		}
@@ -214,8 +217,9 @@ public class CombinedFileHeader extends FileHeader {
 		int n = 0;
 		while (ptr < eol) {
 			final int comma = nextLF(buf, ptr, ',');
-			if (eol <= comma)
+			if (eol <= comma) {
 				break;
+			}
 			oldModes[n++] = parseFileMode(ptr, comma);
 			ptr = comma;
 		}

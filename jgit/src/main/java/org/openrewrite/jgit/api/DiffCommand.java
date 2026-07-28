@@ -93,8 +93,9 @@ public class DiffCommand extends GitCommand<List<DiffEntry>> {
 			if (cached) {
 				if (oldTree == null) {
 					ObjectId head = repo.resolve(HEAD + "^{tree}"); //$NON-NLS-1$
-					if (head == null)
+					if (head == null) {
 						throw new NoHeadException(JGitText.get().cannotReadTree);
+					}
 					CanonicalTreeParser p = new CanonicalTreeParser();
 					try (ObjectReader reader = repo.newObjectReader()) {
 						p.reset(reader, head);

@@ -52,7 +52,7 @@ public class HMACSHA1NonceGenerator implements NonceGenerator {
 	@Override
 	public synchronized String createNonce(Repository repo, long timestamp)
 			throws IllegalStateException {
-		String input = repo.getIdentifier() + ":" + String.valueOf(timestamp); //$NON-NLS-1$
+		String input = repo.getIdentifier() + ":" + timestamp; //$NON-NLS-1$
 		byte[] rawHmac = mac.doFinal(input.getBytes(UTF_8));
 		return Long.toString(timestamp) + "-" + toHex(rawHmac); //$NON-NLS-1$
 	}

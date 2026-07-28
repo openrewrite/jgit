@@ -41,8 +41,9 @@ class PackIndexWriterV1 extends PackIndexWriter {
 		writeFanOutTable();
 
 		for (PackedObjectInfo oe : entries) {
-			if (!canStore(oe))
+			if (!canStore(oe)) {
 				throw new IOException(JGitText.get().packTooLargeForIndexVersion1);
+			}
 			NB.encodeInt32(tmp, 0, (int) oe.getOffset());
 			oe.copyRawTo(tmp, 4);
 			out.write(tmp);

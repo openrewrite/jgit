@@ -95,8 +95,9 @@ public abstract class AbstractPlotRenderer<TLane extends PlotLane, TColor> {
 
 					drawLine(pColor, myLaneX, h / 2, ix, h / 2, LINE_WIDTH);
 					drawLine(pColor, ix, h / 2, cx, h, LINE_WIDTH);
-				} else
+				} else {
 					drawLine(pColor, myLaneX, h / 2, cx, h, LINE_WIDTH);
+				}
 				maxCenter = Math.max(maxCenter, cx);
 			}
 		}
@@ -125,14 +126,16 @@ public abstract class AbstractPlotRenderer<TLane extends PlotLane, TColor> {
 
 			int nonForkingChildren = commit.getChildCount()
 					- commit.forkingOffLanes.length;
-			if (nonForkingChildren > 0)
-						drawLine(myColor, myLaneX, 0, myLaneX, dotY, LINE_WIDTH);
+			if (nonForkingChildren > 0) {
+				drawLine(myColor, myLaneX, 0, myLaneX, dotY, LINE_WIDTH);
+			}
 		}
 
-		if (commit.has(RevFlag.UNINTERESTING))
+		if (commit.has(RevFlag.UNINTERESTING)) {
 			drawBoundaryDot(dotX, dotY, dotSize, dotSize);
-		else
+		} else {
 			drawCommitDot(dotX, dotY, dotSize, dotSize);
+		}
 
 		int textx = Math.max(maxCenter + LANE_WIDTH / 2, dotX + dotSize) + 8;
 		int n = commit.refs.length;
@@ -159,7 +162,7 @@ public abstract class AbstractPlotRenderer<TLane extends PlotLane, TColor> {
 
 	private static int computeDotSize(int h) {
 		int d = (int) (Math.min(h, LANE_WIDTH) * 0.50f);
-		d += (d & 1);
+		d += d & 1;
 		return d;
 	}
 

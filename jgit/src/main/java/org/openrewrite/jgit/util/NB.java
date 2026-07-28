@@ -29,8 +29,9 @@ public final class NB {
 	 */
 	public static int compareUInt32(final int a, final int b) {
 		final int cmp = (a >>> 1) - (b >>> 1);
-		if (cmp != 0)
+		if (cmp != 0) {
 			return cmp;
+		}
 		return (a & 1) - (b & 1);
 	}
 
@@ -55,7 +56,7 @@ public final class NB {
 		} else if (cmp < 0) {
 			return -1;
 		}
-		cmp = ((a & 1) - (b & 1));
+		cmp = (a & 1) - (b & 1);
 		if (cmp > 0) {
 			return 1;
 		} else if (cmp < 0) {
@@ -167,10 +168,10 @@ public final class NB {
 	 */
 	public static long decodeUInt32(final byte[] intbuf, final int offset) {
 		int low = (intbuf[offset + 1] & 0xff) << 8;
-		low |= (intbuf[offset + 2] & 0xff);
+		low |= intbuf[offset + 2] & 0xff;
 		low <<= 8;
 
-		low |= (intbuf[offset + 3] & 0xff);
+		low |= intbuf[offset + 3] & 0xff;
 		return ((long) (intbuf[offset] & 0xff)) << 24 | low;
 	}
 

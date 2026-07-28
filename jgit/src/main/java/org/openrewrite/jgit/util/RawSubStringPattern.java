@@ -34,14 +34,16 @@ public class RawSubStringPattern {
 	 *            string may not be the empty string.
 	 */
 	public RawSubStringPattern(String patternText) {
-		if (patternText.length() == 0)
+		if (patternText.length() == 0) {
 			throw new IllegalArgumentException(JGitText.get().cannotMatchOnEmptyString);
+		}
 		needleString = patternText;
 
 		final byte[] b = Constants.encode(patternText);
 		needle = new byte[b.length];
-		for (int i = 0; i < b.length; i++)
+		for (int i = 0;i < b.length;i++) {
 			needle[i] = lc(b[i]);
+		}
 	}
 
 	/**
@@ -67,25 +69,27 @@ public class RawSubStringPattern {
 				while (++matchPos <= maxPos && neq(first, text[matchPos])) {
 					/* skip */
 				}
-				if (matchPos > maxPos)
+				if (matchPos > maxPos) {
 					return -1;
+				}
 			}
 
 			int si = matchPos + 1;
 			for (int j = 1; j < needleLen; j++, si++) {
-				if (neq(needle[j], text[si]))
+				if (neq(needle[j], text[si])) {
 					continue OUTER;
+				}
 			}
 			return matchPos;
 		}
 		return -1;
 	}
 
-	private static final boolean neq(byte a, byte b) {
+	private static boolean neq(byte a, byte b) {
 		return a != b && a != lc(b);
 	}
 
-	private static final byte lc(byte q) {
+	private static byte lc(byte q) {
 		return (byte) StringUtils.toLowerCase((char) (q & 0xff));
 	}
 

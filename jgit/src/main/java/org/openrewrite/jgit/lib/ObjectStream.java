@@ -94,15 +94,17 @@ public abstract class ObjectStream extends InputStream {
 
 		@Override
 		public int read() {
-			if (ptr == data.length)
+			if (ptr == data.length) {
 				return -1;
+			}
 			return data[ptr++] & 0xff;
 		}
 
 		@Override
 		public int read(byte[] b, int off, int len) {
-			if (ptr == data.length)
+			if (ptr == data.length) {
 				return -1;
+			}
 			int n = Math.min(available(), len);
 			System.arraycopy(data, ptr, b, off, n);
 			ptr += n;

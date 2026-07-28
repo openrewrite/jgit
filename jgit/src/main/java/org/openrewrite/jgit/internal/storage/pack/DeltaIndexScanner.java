@@ -32,7 +32,7 @@ class DeltaIndexScanner {
 		// Clip the length so it falls on a block boundary. We won't
 		// bother to scan the final partial block.
 		//
-		len -= (len % DeltaIndex.BLKSZ);
+		len -= len % DeltaIndex.BLKSZ;
 
 		final int worstCaseBlockCnt = len / DeltaIndex.BLKSZ;
 		if (worstCaseBlockCnt < 1) {
@@ -90,8 +90,9 @@ class DeltaIndexScanner {
 	private static int tableSize(int worstCaseBlockCnt) {
 		int shift = 32 - Integer.numberOfLeadingZeros(worstCaseBlockCnt);
 		int sz = 1 << (shift - 1);
-		if (sz < worstCaseBlockCnt)
+		if (sz < worstCaseBlockCnt) {
 			sz <<= 1;
+		}
 		return sz;
 	}
 }

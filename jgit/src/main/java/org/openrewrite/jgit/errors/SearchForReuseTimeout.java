@@ -10,11 +10,11 @@
 
 package org.openrewrite.jgit.errors;
 
-import org.openrewrite.jgit.internal.JGitText;
-
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.Duration;
+
+import org.openrewrite.jgit.internal.JGitText;
 
 /**
  * Thrown when the search for reuse phase times out.

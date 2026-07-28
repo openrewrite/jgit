@@ -27,5 +27,5 @@ public enum SubmoduleStatusType {
 	 * Submodule commit checked out is different than the commit referenced in
 	 * the index tree
 	 */
-	REV_CHECKED_OUT;
+	REV_CHECKED_OUT
 }

@@ -49,13 +49,15 @@ final class DfsRefUpdate extends RefUpdate {
 	@Override
 	protected boolean tryLock(boolean deref) throws IOException {
 		dstRef = getRef();
-		if (deref)
+		if (deref) {
 			dstRef = dstRef.getLeaf();
+		}
 
-		if (dstRef.isSymbolic())
+		if (dstRef.isSymbolic()) {
 			setOldObjectId(null);
-		else
+		} else {
 			setOldObjectId(dstRef.getObjectId());
+		}
 
 		return true;
 	}
@@ -123,8 +125,9 @@ final class DfsRefUpdate extends RefUpdate {
 						null));
 		if (getRefDatabase().compareAndPut(dstRef, newRef)) {
 			getRefDatabase().stored(newRef);
-			if (dstRef.getStorage() == Ref.Storage.NEW)
+			if (dstRef.getStorage() == Ref.Storage.NEW) {
 				return Result.NEW;
+			}
 			return Result.FORCED;
 		}
 		return Result.LOCK_FAILURE;

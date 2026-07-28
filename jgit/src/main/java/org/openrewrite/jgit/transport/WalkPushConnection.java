@@ -135,26 +135,30 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
 				continue;
 			}
 
-			if (AnyObjectId.isEqual(ObjectId.zeroId(), u.getNewObjectId()))
+			if (AnyObjectId.isEqual(ObjectId.zeroId(), u.getNewObjectId())) {
 				deleteCommand(u);
-			else
+			} else {
 				updates.add(u);
+			}
 		}
 
 		// If we have any updates we need to upload the objects first, to
 		// prevent creating refs pointing at non-existent data. Then we
 		// can update the refs, and the info-refs file for dumb transports.
 		//
-		if (!updates.isEmpty())
+		if (!updates.isEmpty()) {
 			sendpack(updates, monitor);
-		for (RemoteRefUpdate u : updates)
+		}
+		for (RemoteRefUpdate u : updates) {
 			updateCommand(u);
+		}
 
 		// Is this a new repository? If so we should create additional
 		// metadata files so it is properly initialized during the push.
 		//
-		if (!updates.isEmpty() && isNewRepository())
+		if (!updates.isEmpty() && isNewRepository()) {
 			createNewRepository(updates);
+		}
 
 		RefWriter refWriter = new RefWriter(newRefs.values()) {
 			@Override
@@ -166,8 +170,9 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
 		if (!packedRefUpdates.isEmpty()) {
 			try {
 				refWriter.writePackedRefs();
-				for (RemoteRefUpdate u : packedRefUpdates)
+				for (RemoteRefUpdate u : packedRefUpdates) {
 					u.setStatus(Status.OK);
+				}
 			} catch (IOException err) {
 				for (RemoteRefUpdate u : packedRefUpdates) {
 					u.setStatus(Status.REJECTED_OTHER_REASON);
@@ -199,12 +204,14 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
 
 			final Set<ObjectId> need = new HashSet<>();
 			final Set<ObjectId> have = new HashSet<>();
-			for (RemoteRefUpdate r : updates)
+			for (RemoteRefUpdate r : updates) {
 				need.add(r.getNewObjectId());
+			}
 			for (Ref r : getRefs()) {
 				have.add(r.getObjectId());
-				if (r.getPeeledObjectId() != null)
+				if (r.getPeeledObjectId() != null) {
 					have.add(r.getPeeledObjectId());
+				}
 			}
 			writer.preparePack(monitor, need, have);
 
@@ -212,12 +219,14 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
 			// be an empty pack, as the remote has all objects it
 			// needs to complete this change.
 			//
-			if (writer.getObjectCount() == 0)
+			if (writer.getObjectCount() == 0) {
 				return;
+			}
 
 			packNames = new LinkedHashMap<>();
-			for (String n : dest.getPackNames())
+			for (String n : dest.getPackNames()) {
 				packNames.put(n, n);
+			}
 
 			File packDir = new File("pack"); //$NON-NLS-1$
 			pack = new PackFile(packDir, writer.computeName(),
@@ -287,8 +296,9 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
 			return;
 		}
 
-		if (r.getStorage().isPacked())
+		if (r.getStorage().isPacked()) {
 			packedRefUpdates.add(u);
+		}
 
 		if (r.getStorage().isLoose()) {
 			try {
@@ -352,8 +362,9 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
 		//
 		for (RemoteRefUpdate u : updates) {
 			final String n = u.getRemoteName();
-			if (n.equals(Constants.R_HEADS + Constants.MASTER))
+			if (n.equals(Constants.R_HEADS + Constants.MASTER)) {
 				return n;
+			}
 		}
 
 		// Pick any branch, under the assumption the user pushed only
@@ -361,8 +372,9 @@ class WalkPushConnection extends BaseConnection implements PushConnection {
 		//
 		for (RemoteRefUpdate u : updates) {
 			final String n = u.getRemoteName();
-			if (n.startsWith(Constants.R_HEADS))
+			if (n.startsWith(Constants.R_HEADS)) {
 				return n;
+			}
 		}
 		return updates.get(0).getRemoteName();
 	}

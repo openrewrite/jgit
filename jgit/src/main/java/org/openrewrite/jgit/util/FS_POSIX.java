@@ -56,7 +56,7 @@ public class FS_POSIX extends FS {
 
 	private static final String DEFAULT_GIT_LOCATION = "/usr/bin/git"; //$NON-NLS-1$
 
-	private static final int DEFAULT_UMASK = 0022;
+	private static final int DEFAULT_UMASK = 18;
 	private volatile int umask = -1;
 
 	private static final Map<FileStore, Boolean> CAN_HARD_LINK = new ConcurrentHashMap<>();
@@ -208,10 +208,12 @@ public class FS_POSIX extends FS {
 	/** {@inheritDoc} */
 	@Override
 	public boolean setExecute(File f, boolean canExecute) {
-		if (!isFile(f))
+		if (!isFile(f)) {
 			return false;
-		if (!canExecute)
+		}
+		if (!canExecute) {
 			return f.setExecutable(false, false);
+		}
 
 		try {
 			Path path = FileUtils.toPath(f);
@@ -229,8 +231,9 @@ public class FS_POSIX extends FS {
 			// The interface doesn't allow to throw IOException
 			final boolean debug = Boolean.parseBoolean(SystemReader
 					.getInstance().getProperty("jgit.fs.debug")); //$NON-NLS-1$
-			if (debug)
+			if (debug) {
 				System.err.println(e);
+			}
 			return false;
 		}
 	}
@@ -463,7 +466,7 @@ public class FS_POSIX extends FS {
 	}
 
 	private static LockToken token(boolean created, @Nullable Path p) {
-		return ((p != null) && Files.exists(p))
+		return (p != null) && Files.exists(p)
 				? new LockToken(created, Optional.of(p))
 				: new LockToken(created, Optional.empty());
 	}

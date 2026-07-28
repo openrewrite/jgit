@@ -50,47 +50,54 @@ public class RelativeDateFormatter {
 				- when.getTime();
 
 		// shouldn't happen in a perfect world
-		if (ageMillis < 0)
+		if (ageMillis < 0) {
 			return JGitText.get().inTheFuture;
+		}
 
 		// seconds
-		if (ageMillis < upperLimit(MINUTE_IN_MILLIS))
+		if (ageMillis < upperLimit(MINUTE_IN_MILLIS)) {
 			return MessageFormat.format(JGitText.get().secondsAgo,
 					round(ageMillis, SECOND_IN_MILLIS));
+		}
 
 		// minutes
-		if (ageMillis < upperLimit(HOUR_IN_MILLIS))
+		if (ageMillis < upperLimit(HOUR_IN_MILLIS)) {
 			return MessageFormat.format(JGitText.get().minutesAgo,
 					round(ageMillis, MINUTE_IN_MILLIS));
+		}
 
 		// hours
-		if (ageMillis < upperLimit(DAY_IN_MILLIS))
+		if (ageMillis < upperLimit(DAY_IN_MILLIS)) {
 			return MessageFormat.format(JGitText.get().hoursAgo,
 					round(ageMillis, HOUR_IN_MILLIS));
+		}
 
 		// up to 14 days use days
-		if (ageMillis < 14 * DAY_IN_MILLIS)
+		if (ageMillis < 14 * DAY_IN_MILLIS) {
 			return MessageFormat.format(JGitText.get().daysAgo,
 					round(ageMillis, DAY_IN_MILLIS));
+		}
 
 		// up to 10 weeks use weeks
-		if (ageMillis < 10 * WEEK_IN_MILLIS)
+		if (ageMillis < 10 * WEEK_IN_MILLIS) {
 			return MessageFormat.format(JGitText.get().weeksAgo,
 					round(ageMillis, WEEK_IN_MILLIS));
+		}
 
 		// months
-		if (ageMillis < YEAR_IN_MILLIS)
+		if (ageMillis < YEAR_IN_MILLIS) {
 			return MessageFormat.format(JGitText.get().monthsAgo,
 					round(ageMillis, MONTH_IN_MILLIS));
+		}
 
 		// up to 5 years use "year, months" rounded to months
 		if (ageMillis < 5 * YEAR_IN_MILLIS) {
 			long years = round(ageMillis, MONTH_IN_MILLIS) / 12;
-			String yearLabel = (years > 1) ? JGitText.get().years : //
+			String yearLabel = years > 1 ? JGitText.get().years : //
 					JGitText.get().year;
 			long months = round(ageMillis - years * YEAR_IN_MILLIS,
 					MONTH_IN_MILLIS);
-			String monthLabel = (months > 1) ? JGitText.get().months : //
+			String monthLabel = months > 1 ? JGitText.get().months : //
 					(months == 1 ? JGitText.get().month : ""); //$NON-NLS-1$
 			return MessageFormat.format(
 					months == 0 ? JGitText.get().years0MonthsAgo : JGitText
@@ -104,12 +111,10 @@ public class RelativeDateFormatter {
 	}
 
 	private static long upperLimit(long unit) {
-		long limit = unit + unit / 2;
-		return limit;
+		return unit + unit / 2;
 	}
 
 	private static long round(long n, long unit) {
-		long rounded = (n + unit / 2) / unit;
-		return rounded;
+		return (n + unit / 2) / unit;
 	}
 }

@@ -136,9 +136,11 @@ public class BlameResult {
 	 * @return true if the data has been annotated, false otherwise.
 	 */
 	public boolean hasSourceData(int start, int end) {
-		for (; start < end; start++)
-			if (sourceLines[start] == 0)
+		for (;start < end;start++) {
+			if (sourceLines[start] == 0) {
 				return false;
+			}
+		}
 		return true;
 	}
 
@@ -209,12 +211,14 @@ public class BlameResult {
 	 */
 	public void computeAll() throws IOException {
 		BlameGenerator gen = generator;
-		if (gen == null)
+		if (gen == null) {
 			return;
+		}
 
 		try {
-			while (gen.next())
+			while (gen.next()) {
 				loadFrom(gen);
+			}
 		} finally {
 			gen.close();
 			generator = null;
@@ -269,16 +273,18 @@ public class BlameResult {
 	 */
 	public void computeRange(int start, int end) throws IOException {
 		BlameGenerator gen = generator;
-		if (gen == null)
+		if (gen == null) {
 			return;
+		}
 		if (start == 0 && end == resultContents.size()) {
 			computeAll();
 			return;
 		}
 
 		while (start < end) {
-			if (hasSourceData(start, end))
+			if (hasSourceData(start, end)) {
 				return;
+			}
 
 			if (!gen.next()) {
 				gen.close();
@@ -295,11 +301,13 @@ public class BlameResult {
 			int resLine = gen.getResultStart();
 			int resEnd = gen.getResultEnd();
 
-			if (resLine <= start && start < resEnd)
+			if (resLine <= start && start < resEnd) {
 				start = resEnd;
+			}
 
-			if (resLine <= end && end < resEnd)
+			if (resLine <= end && end < resEnd) {
 				end = resLine;
+			}
 		}
 	}
 
@@ -325,8 +333,9 @@ public class BlameResult {
 			// Reverse blame can generate multiple results for the same line.
 			// Favor the first one selected, as this is the oldest and most
 			// likely to be nearest to the inquiry made by the user.
-			if (sourceLines[resLine] != 0)
+			if (sourceLines[resLine] != 0) {
 				continue;
+			}
 
 			sourceCommits[resLine] = srcCommit;
 			sourceAuthors[resLine] = srcAuthor;

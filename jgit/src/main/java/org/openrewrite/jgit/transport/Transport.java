@@ -73,7 +73,7 @@ public abstract class Transport implements AutoCloseable {
 		/** Transport is to fetch objects locally. */
 		FETCH,
 		/** Transport is to push objects remotely. */
-		PUSH;
+		PUSH
 	}
 
 	private static final List<WeakReference<TransportProtocol>> protocols =
@@ -94,11 +94,13 @@ public abstract class Transport implements AutoCloseable {
 
 	private static void registerByService() {
 		ClassLoader ldr = Thread.currentThread().getContextClassLoader();
-		if (ldr == null)
+		if (ldr == null) {
 			ldr = Transport.class.getClassLoader();
+		}
 		Enumeration<URL> catalogs = catalogs(ldr);
-		while (catalogs.hasMoreElements())
+		while (catalogs.hasMoreElements()) {
 			scan(ldr, catalogs.nextElement());
+		}
 	}
 
 	private static Enumeration<URL> catalogs(ClassLoader ldr) {
@@ -117,13 +119,16 @@ public abstract class Transport implements AutoCloseable {
 			String line;
 			while ((line = br.readLine()) != null) {
 				line = line.trim();
-				if (line.length() == 0)
+				if (line.length() == 0) {
 					continue;
+				}
 				int comment = line.indexOf('#');
-				if (comment == 0)
+				if (comment == 0) {
 					continue;
-				if (comment != -1)
+				}
+				if (comment != -1) {
 					line = line.substring(0, comment).trim();
+				}
 				load(ldr, line);
 			}
 		} catch (IOException e) {
@@ -151,8 +156,9 @@ public abstract class Transport implements AutoCloseable {
 					// If we cannot access the field, don't.
 					continue;
 				}
-				if (proto != null)
+				if (proto != null) {
 					register(proto);
+				}
 			}
 		}
 	}
@@ -193,8 +199,9 @@ public abstract class Transport implements AutoCloseable {
 	public static void unregister(TransportProtocol proto) {
 		for (WeakReference<TransportProtocol> ref : protocols) {
 			TransportProtocol refProto = ref.get();
-			if (refProto == null || refProto == proto)
+			if (refProto == null || refProto == proto) {
 				protocols.remove(ref);
+			}
 		}
 	}
 
@@ -208,10 +215,11 @@ public abstract class Transport implements AutoCloseable {
 		List<TransportProtocol> res = new ArrayList<>(cnt);
 		for (WeakReference<TransportProtocol> ref : protocols) {
 			TransportProtocol proto = ref.get();
-			if (proto != null)
+			if (proto != null) {
 				res.add(proto);
-			else
+			} else {
 				protocols.remove(ref);
+			}
 		}
 		return Collections.unmodifiableList(res);
 	}
@@ -390,9 +398,10 @@ public abstract class Transport implements AutoCloseable {
 			final RemoteConfig cfg, final Operation op)
 			throws NotSupportedException, TransportException {
 		final List<URIish> uris = getURIs(cfg, op);
-		if (uris.isEmpty())
+		if (uris.isEmpty()) {
 			throw new IllegalArgumentException(MessageFormat.format(
 					JGitText.get().remoteConfigHasNoURIAssociated, cfg.getName()));
+		}
 		final Transport tn = open(local, uris.get(0), cfg.getName());
 		tn.applyConfig(cfg);
 		return tn;
@@ -460,8 +469,9 @@ public abstract class Transport implements AutoCloseable {
 			return cfg.getURIs();
 		case PUSH: {
 			List<URIish> uris = cfg.getPushURIs();
-			if (uris.isEmpty())
+			if (uris.isEmpty()) {
 				uris = cfg.getURIs();
+			}
 			return uris;
 		}
 		default:
@@ -547,8 +557,9 @@ public abstract class Transport implements AutoCloseable {
 				continue;
 			}
 
-			if (proto.canHandle(uri, null, null))
+			if (proto.canHandle(uri, null, null)) {
 				return proto.open(uri);
+			}
 		}
 
 		throw new NotSupportedException(MessageFormat.format(JGitText.get().URINotSupported, uri));
@@ -583,16 +594,18 @@ public abstract class Transport implements AutoCloseable {
 			final Repository db, final Collection<RefSpec> specs,
 			final Map<String, RefLeaseSpec> leases,
 			Collection<RefSpec> fetchSpecs) throws IOException {
-		if (fetchSpecs == null)
+		if (fetchSpecs == null) {
 			fetchSpecs = Collections.emptyList();
+		}
 		final List<RemoteRefUpdate> result = new LinkedList<>();
 		final Collection<RefSpec> procRefs = expandPushWildcardsFor(db, specs);
 
 		for (RefSpec spec : procRefs) {
 			String srcSpec = spec.getSource();
 			final Ref srcRef = db.findRef(srcSpec);
-			if (srcRef != null)
+			if (srcRef != null) {
 				srcSpec = srcRef.getName();
+			}
 
 			String destSpec = spec.getDestination();
 			if (destSpec == null) {
@@ -661,8 +674,9 @@ public abstract class Transport implements AutoCloseable {
 		for (RefSpec spec : specs) {
 			if (spec.isWildcard()) {
 				for (Ref localRef : localRefs) {
-					if (spec.matchSource(localRef))
+					if (spec.matchSource(localRef)) {
 						procRefs.add(spec.expandFromSource(localRef));
+					}
 				}
 			} else {
 				procRefs.add(spec);
@@ -839,10 +853,11 @@ public abstract class Transport implements AutoCloseable {
 	 *            name of the executable.
 	 */
 	public void setOptionUploadPack(String where) {
-		if (where != null && where.length() > 0)
+		if (where != null && where.length() > 0) {
 			optionUploadPack = where;
-		else
+		} else {
 			optionUploadPack = RemoteConfig.DEFAULT_UPLOAD_PACK;
+		}
 	}
 
 	/**
@@ -908,10 +923,11 @@ public abstract class Transport implements AutoCloseable {
 	 * @see #setObjectChecker(ObjectChecker)
 	 */
 	public void setCheckFetchedObjects(boolean check) {
-		if (check && objectChecker == null)
+		if (check && objectChecker == null) {
 			setObjectChecker(new ObjectChecker());
-		else if (!check && objectChecker != null)
+		} else if (!check && objectChecker != null) {
 			setObjectChecker(null);
+		}
 	}
 
 	/**
@@ -957,10 +973,11 @@ public abstract class Transport implements AutoCloseable {
 	 *            remote executable, if null or empty default one is set;
 	 */
 	public void setOptionReceivePack(String optionReceivePack) {
-		if (optionReceivePack != null && optionReceivePack.length() > 0)
+		if (optionReceivePack != null && optionReceivePack.length() > 0) {
 			this.optionReceivePack = optionReceivePack;
-		else
+		} else {
 			this.optionReceivePack = RemoteConfig.DEFAULT_RECEIVE_PACK;
+		}
 	}
 
 	/**
@@ -1147,8 +1164,9 @@ public abstract class Transport implements AutoCloseable {
 	 * @return the pack configuration. Never null.
 	 */
 	public PackConfig getPackConfig() {
-		if (packConfig == null)
+		if (packConfig == null) {
 			packConfig = new PackConfig(local);
+		}
 		return packConfig;
 	}
 
@@ -1280,8 +1298,9 @@ public abstract class Transport implements AutoCloseable {
 		if (toFetch == null || toFetch.isEmpty()) {
 			// If the caller did not ask for anything use the defaults.
 			//
-			if (fetch.isEmpty())
+			if (fetch.isEmpty()) {
 				throw new TransportException(JGitText.get().nothingToFetch);
+			}
 			toFetch = fetch;
 		} else if (!fetch.isEmpty()) {
 			// If the caller asked for something specific without giving
@@ -1367,8 +1386,9 @@ public abstract class Transport implements AutoCloseable {
 				throw new TransportException(MessageFormat.format(
 						JGitText.get().problemWithResolvingPushRefSpecsLocally, e.getMessage()), e);
 			}
-			if (toPush.isEmpty())
+			if (toPush.isEmpty()) {
 				throw new TransportException(JGitText.get().nothingToPush);
+			}
 		}
 		if (prePush != null) {
 			try {

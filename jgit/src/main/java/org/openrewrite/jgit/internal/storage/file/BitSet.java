@@ -42,8 +42,9 @@ final class BitSet {
 
 	final void clear(int position) {
 		int block = block(position);
-		if (block < words.length)
+		if (block < words.length) {
 			words[block] &= ~mask(position);
+		}
 	}
 
 	final boolean get(int position) {
@@ -62,8 +63,9 @@ final class BitSet {
 				continue;
 			}
 
-			if (lastNonEmptyWord != 0)
+			if (lastNonEmptyWord != 0) {
 				compressed.addWord(lastNonEmptyWord);
+			}
 
 			if (runningEmptyWords > 0) {
 				compressed.addStreamOfEmptyWords(false, runningEmptyWords);
@@ -73,16 +75,17 @@ final class BitSet {
 			lastNonEmptyWord = word;
 		}
 		int bitsThatMatter = 64 - Long.numberOfLeadingZeros(lastNonEmptyWord);
-		if (bitsThatMatter > 0)
+		if (bitsThatMatter > 0) {
 			compressed.addWord(lastNonEmptyWord, bitsThatMatter);
+		}
 		return compressed;
 	}
 
-	private static final int block(int position) {
+	private static int block(int position) {
 		return position >> 6;
 	}
 
-	private static final long mask(int position) {
+	private static long mask(int position) {
 		return 1L << position;
 	}
 }

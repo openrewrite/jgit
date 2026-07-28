@@ -146,26 +146,31 @@ public class FileUtils {
 	 */
 	public static void delete(File f, int options) throws IOException {
 		FS fs = FS.DETECTED;
-		if ((options & SKIP_MISSING) != 0 && !fs.exists(f))
+		if ((options & SKIP_MISSING) != 0 && !fs.exists(f)) {
 			return;
+		}
 
 		if ((options & RECURSIVE) != 0 && fs.isDirectory(f)) {
 			final File[] items = f.listFiles();
 			if (items != null) {
 				List<File> files = new ArrayList<>();
 				List<File> dirs = new ArrayList<>();
-				for (File c : items)
-					if (c.isFile())
+				for (File c : items) {
+					if (c.isFile()) {
 						files.add(c);
-					else
+					} else {
 						dirs.add(c);
+					}
+				}
 				// Try to delete files first, otherwise options
 				// EMPTY_DIRECTORIES_ONLY|RECURSIVE will delete empty
 				// directories before aborting, depending on order.
-				for (File file : files)
+				for (File file : files) {
 					delete(file, options);
-				for (File d : dirs)
+				}
+				for (File d : dirs) {
 					delete(d, options);
+				}
 			}
 		}
 
@@ -360,8 +365,9 @@ public class FileUtils {
 	public static void mkdir(File d, boolean skipExisting)
 			throws IOException {
 		if (!d.mkdir()) {
-			if (skipExisting && d.isDirectory())
+			if (skipExisting && d.isDirectory()) {
 				return;
+			}
 			throw new IOException(MessageFormat.format(
 					JGitText.get().mkDirFailed, d.getAbsolutePath()));
 		}
@@ -407,8 +413,9 @@ public class FileUtils {
 	public static void mkdirs(File d, boolean skipExisting)
 			throws IOException {
 		if (!d.mkdirs()) {
-			if (skipExisting && d.isDirectory())
+			if (skipExisting && d.isDirectory()) {
 				return;
+			}
 			throw new IOException(MessageFormat.format(
 					JGitText.get().mkDirsFailed, d.getAbsolutePath()));
 		}
@@ -431,9 +438,10 @@ public class FileUtils {
 	 *             if the named file already exists or if an I/O error occurred
 	 */
 	public static void createNewFile(File f) throws IOException {
-		if (!f.createNewFile())
+		if (!f.createNewFile()) {
 			throw new IOException(MessageFormat.format(
 					JGitText.get().createNewFileFailed, f));
+		}
 	}
 
 	/**
@@ -505,10 +513,12 @@ public class FileUtils {
 		final int RETRIES = 1; // When something bad happens, retry once.
 		for (int i = 0; i < RETRIES; i++) {
 			File tmp = File.createTempFile(prefix, suffix, dir);
-			if (!tmp.delete())
+			if (!tmp.delete()) {
 				continue;
-			if (!tmp.mkdir())
+			}
+			if (!tmp.mkdir()) {
 				continue;
+			}
 			return tmp;
 		}
 		throw new IOException(JGitText.get().cannotCreateTempDir);
@@ -585,9 +595,10 @@ public class FileUtils {
 	 * @since 4.8
 	 */
 	public static String relativizePath(String base, String other, String dirSeparator, boolean caseSensitive) {
-		if (base.equals(other))
+		if (base.equals(other)) {
 			return ""; //$NON-NLS-1$
 
+		}
 		final String[] baseSegments = base.split(Pattern.quote(dirSeparator));
 		final String[] otherSegments = other.split(Pattern
 				.quote(dirSeparator));
@@ -597,23 +608,26 @@ public class FileUtils {
 				&& commonPrefix < otherSegments.length) {
 			if (caseSensitive
 					&& baseSegments[commonPrefix]
-					.equals(otherSegments[commonPrefix]))
+					.equals(otherSegments[commonPrefix])) {
 				commonPrefix++;
-			else if (!caseSensitive
+			} else if (!caseSensitive
 					&& baseSegments[commonPrefix]
-							.equalsIgnoreCase(otherSegments[commonPrefix]))
+					.equalsIgnoreCase(otherSegments[commonPrefix])) {
 				commonPrefix++;
-			else
+			} else {
 				break;
+			}
 		}
 
 		final StringBuilder builder = new StringBuilder();
-		for (int i = commonPrefix; i < baseSegments.length; i++)
+		for (int i = commonPrefix;i < baseSegments.length;i++) {
 			builder.append("..").append(dirSeparator); //$NON-NLS-1$
-		for (int i = commonPrefix; i < otherSegments.length; i++) {
+		}
+		for (int i = commonPrefix;i < otherSegments.length;i++) {
 			builder.append(otherSegments[i]);
-			if (i < otherSegments.length - 1)
+			if (i < otherSegments.length - 1) {
 				builder.append(dirSeparator);
+			}
 		}
 		return builder.toString();
 	}
@@ -778,9 +792,10 @@ public class FileUtils {
 	 */
 	public static long getLength(File file) throws IOException {
 		Path nioPath = toPath(file);
-		if (Files.isSymbolicLink(nioPath))
+		if (Files.isSymbolicLink(nioPath)) {
 			return Files.readSymbolicLink(nioPath).toString()
 					.getBytes(UTF_8).length;
+		}
 		return Files.size(nioPath);
 	}
 
@@ -848,7 +863,7 @@ public class FileUtils {
 					.getFileAttributeView(nioPath,
 							BasicFileAttributeView.class,
 							LinkOption.NOFOLLOW_LINKS).readAttributes();
-			Attributes attributes = new Attributes(fs, file,
+			return new Attributes(fs, file,
 					true,
 					readAttributes.isDirectory(),
 					fs.supportsExecute() ? file.canExecute() : false,
@@ -859,7 +874,6 @@ public class FileUtils {
 					readAttributes.isSymbolicLink() ? Constants
 							.encode(readSymLink(file)).length
 							: readAttributes.size());
-			return attributes;
 		} catch (IOException e) {
 			return new Attributes(file, fs);
 		}
@@ -884,7 +898,7 @@ public class FileUtils {
 					.getFileAttributeView(nioPath,
 							PosixFileAttributeView.class,
 							LinkOption.NOFOLLOW_LINKS).readAttributes();
-			Attributes attributes = new Attributes(
+			return new Attributes(
 					fs,
 					file,
 					true, //
@@ -896,7 +910,6 @@ public class FileUtils {
 					readAttributes.creationTime().toMillis(), //
 					readAttributes.lastModifiedTime().toInstant(),
 					readAttributes.size());
-			return attributes;
 		} catch (IOException e) {
 			return new Attributes(file, fs);
 		}
@@ -932,8 +945,9 @@ public class FileUtils {
 	 */
 	public static String normalize(String name) {
 		if (SystemReader.getInstance().isMacOS()) {
-			if (name == null)
+			if (name == null) {
 				return null;
+			}
 			return Normalizer.normalize(name, Normalizer.Form.NFC);
 		}
 		return name;

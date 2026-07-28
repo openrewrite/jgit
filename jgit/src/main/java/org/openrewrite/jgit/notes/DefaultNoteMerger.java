@@ -38,14 +38,17 @@ public class DefaultNoteMerger implements NoteMerger {
 	@Override
 	public Note merge(Note base, Note ours, Note theirs, ObjectReader reader,
 			ObjectInserter inserter) throws IOException {
-		if (ours == null)
+		if (ours == null) {
 			return theirs;
+		}
 
-		if (theirs == null)
+		if (theirs == null) {
 			return ours;
+		}
 
-		if (ours.getData().equals(theirs.getData()))
+		if (ours.getData().equals(theirs.getData())) {
 			return ours;
+		}
 
 		ObjectLoader lo = reader.open(ours.getData());
 		ObjectLoader lt = reader.open(theirs.getData());

@@ -84,8 +84,9 @@ public abstract class DiffAlgorithm {
 			return EditList.singleton(region);
 
 		case REPLACE: {
-			if (region.getLengthA() == 1 && region.getLengthB() == 1)
+			if (region.getLengthA() == 1 && region.getLengthB() == 1) {
 				return EditList.singleton(region);
+			}
 
 			SubsequenceComparator<S> cs = new SubsequenceComparator<>(cmp);
 			Subsequence<S> as = Subsequence.a(a, region);
@@ -188,8 +189,8 @@ public abstract class DiffAlgorithm {
 			Edit cur = e.get(i);
 			Edit.Type curType = cur.getType();
 
-			int maxA = (prev == null) ? a.size() : prev.beginA;
-			int maxB = (prev == null) ? b.size() : prev.beginB;
+			int maxA = prev == null ? a.size() : prev.beginA;
+			int maxB = prev == null ? b.size() : prev.beginB;
 
 			if (curType == Edit.Type.INSERT) {
 				while (cur.endA < maxA && cur.endB < maxB

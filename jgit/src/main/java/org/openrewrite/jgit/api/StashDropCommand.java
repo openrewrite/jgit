@@ -75,8 +75,9 @@ public class StashDropCommand extends GitCommand<ObjectId> {
 	 * @return {@code this}
 	 */
 	public StashDropCommand setStashRef(int stashRef) {
-		if (stashRef < 0)
+		if (stashRef < 0) {
 			throw new IllegalArgumentException();
+		}
 
 		stashRefEntry = stashRef;
 		return this;
@@ -116,9 +117,10 @@ public class StashDropCommand extends GitCommand<ObjectId> {
 	private void deleteRef(Ref stashRef) {
 		try {
 			Result result = createRefUpdate(stashRef).delete();
-			if (Result.FORCED != result)
+			if (Result.FORCED != result) {
 				throw new JGitInternalException(MessageFormat.format(
 						JGitText.get().stashDropDeleteRefFailed, result));
+			}
 		} catch (IOException e) {
 			throw new JGitInternalException(JGitText.get().stashDropFailed, e);
 		}
@@ -155,8 +157,9 @@ public class StashDropCommand extends GitCommand<ObjectId> {
 		checkCallable();
 
 		Ref stashRef = getRef();
-		if (stashRef == null)
+		if (stashRef == null) {
 			return null;
+		}
 
 		if (all) {
 			deleteRef(stashRef);
@@ -175,9 +178,10 @@ public class StashDropCommand extends GitCommand<ObjectId> {
 			throw new JGitInternalException(JGitText.get().stashDropFailed, e);
 		}
 
-		if (stashRefEntry >= entries.size())
+		if (stashRefEntry >= entries.size()) {
 			throw new JGitInternalException(
 					JGitText.get().stashDropMissingReflog);
+		}
 
 		if (entries.size() == 1) {
 			deleteRef(stashRef);
@@ -189,9 +193,10 @@ public class StashDropCommand extends GitCommand<ObjectId> {
 		String stashLockRef = ReflogWriter.refLockFor(R_STASH);
 		File stashLockFile = refdb.logFor(stashLockRef);
 		File stashFile = refdb.logFor(R_STASH);
-		if (stashLockFile.exists())
+		if (stashLockFile.exists()) {
 			throw new JGitInternalException(JGitText.get().stashDropFailed,
 					new LockFailedException(stashFile));
+		}
 
 		entries.remove(stashRefEntry);
 		ObjectId entryId = ObjectId.zeroId();

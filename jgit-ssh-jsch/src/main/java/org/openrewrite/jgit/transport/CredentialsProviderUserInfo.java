@@ -52,8 +52,7 @@ public class CredentialsProviderUserInfo implements UserInfo,
 		uri = uri.setScheme("ssh"); //$NON-NLS-1$
 		uri = uri.setUser(session.getUserName());
 		uri = uri.setHost(session.getHost());
-		uri = uri.setPort(session.getPort());
-		return uri;
+		return uri.setPort(session.getPort());
 	}
 
 	/** {@inheritDoc} */
@@ -114,20 +113,24 @@ public class CredentialsProviderUserInfo implements UserInfo,
 	public String[] promptKeyboardInteractive(String destination, String name,
 			String instruction, String[] prompt, boolean[] echo) {
 		CredentialItem.StringType[] v = new CredentialItem.StringType[prompt.length];
-		for (int i = 0; i < prompt.length; i++)
+		for (int i = 0;i < prompt.length;i++) {
 			v[i] = new CredentialItem.StringType(prompt[i], !echo[i]);
+		}
 
 		List<CredentialItem> items = new ArrayList<>();
-		if (instruction != null && instruction.length() > 0)
+		if (instruction != null && instruction.length() > 0) {
 			items.add(new CredentialItem.InformationalMessage(instruction));
+		}
 		items.addAll(Arrays.asList(v));
 
-		if (!provider.get(uri, items))
+		if (!provider.get(uri, items)) {
 			return null; // cancel
 
+		}
 		String[] result = new String[v.length];
-		for (int i = 0; i < v.length; i++)
+		for (int i = 0;i < v.length;i++) {
 			result[i] = v[i].getValue();
+		}
 		return result;
 	}
 }

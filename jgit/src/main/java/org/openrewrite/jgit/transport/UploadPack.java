@@ -135,7 +135,7 @@ public class UploadPack {
 		REACHABLE_COMMIT_TIP,
 
 		/** Client may ask for any SHA-1 in the repository. */
-		ANY;
+		ANY
 	}
 
 	/**
@@ -406,14 +406,16 @@ public class UploadPack {
 	 *            were advertised.
 	 */
 	public void setAdvertisedRefs(@Nullable Map<String, Ref> allRefs) {
-		if (allRefs != null)
+		if (allRefs != null) {
 			refs = allRefs;
-		else
+		} else {
 			refs = db.getAllRefs();
-		if (refFilter == RefFilter.DEFAULT)
+		}
+		if (refFilter == RefFilter.DEFAULT) {
 			refs = transferConfig.getRefFilter().filter(refs);
-		else
+		} else {
 			refs = refFilter.filter(refs);
+		}
 	}
 
 	/**
@@ -471,16 +473,21 @@ public class UploadPack {
 	 *         for a custom request validator.
 	 */
 	public RequestPolicy getRequestPolicy() {
-		if (requestValidator instanceof AdvertisedRequestValidator)
+		if (requestValidator instanceof AdvertisedRequestValidator) {
 			return RequestPolicy.ADVERTISED;
-		if (requestValidator instanceof ReachableCommitRequestValidator)
+		}
+		if (requestValidator instanceof ReachableCommitRequestValidator) {
 			return RequestPolicy.REACHABLE_COMMIT;
-		if (requestValidator instanceof TipRequestValidator)
+		}
+		if (requestValidator instanceof TipRequestValidator) {
 			return RequestPolicy.TIP;
-		if (requestValidator instanceof ReachableCommitTipRequestValidator)
+		}
+		if (requestValidator instanceof ReachableCommitTipRequestValidator) {
 			return RequestPolicy.REACHABLE_COMMIT_TIP;
-		if (requestValidator instanceof AnyRequestValidator)
+		}
+		if (requestValidator instanceof AnyRequestValidator) {
 			return RequestPolicy.ANY;
+		}
 		return null;
 	}
 
@@ -503,10 +510,6 @@ public class UploadPack {
 	 */
 	public void setRequestPolicy(RequestPolicy policy) {
 		switch (policy) {
-			case ADVERTISED:
-			default:
-				requestValidator = new AdvertisedRequestValidator();
-				break;
 			case REACHABLE_COMMIT:
 				requestValidator = new ReachableCommitRequestValidator();
 				break;
@@ -519,6 +522,9 @@ public class UploadPack {
 			case ANY:
 				requestValidator = new AnyRequestValidator();
 				break;
+			case ADVERTISED:
+			default:
+				requestValidator = new AdvertisedRequestValidator();
 		}
 	}
 
@@ -1007,12 +1013,13 @@ public class UploadPack {
 		List<ObjectId> unshallowCommits = new ArrayList<>();
 		FetchRequest req;
 		try {
-			if (biDirectionalPipe)
+			if (biDirectionalPipe) {
 				sendAdvertisedRefs(new PacketLineOutRefAdvertiser(pckOut));
-			else if (requestValidator instanceof AnyRequestValidator)
+			} else if (requestValidator instanceof AnyRequestValidator) {
 				advertised = Collections.emptySet();
-			else
+			} else {
 				advertised = refIdSet(getAdvertisedOrDefaultRefs().values());
+			}
 
 			Instant negotiateStart = Instant.now();
 			accumulator.advertised = advertised.size();
@@ -1034,27 +1041,28 @@ public class UploadPack {
 			if (req.getClientCapabilities().contains(OPTION_MULTI_ACK_DETAILED)) {
 				multiAck = MultiAck.DETAILED;
 				noDone = req.getClientCapabilities().contains(OPTION_NO_DONE);
-			} else if (req.getClientCapabilities().contains(OPTION_MULTI_ACK))
+			} else if (req.getClientCapabilities().contains(OPTION_MULTI_ACK)) {
 				multiAck = MultiAck.CONTINUE;
-			else
+			} else {
 				multiAck = MultiAck.OFF;
+			}
 
 			if (!req.getClientShallowCommits().isEmpty()) {
 				verifyClientShallow(req.getClientShallowCommits());
 			}
 
 			if (req.getDepth() != 0 || req.getDeepenSince() != 0) {
-				computeShallowsAndUnshallows(req, shallow -> {
-					pckOut.writeString("shallow " + shallow.name() + '\n'); //$NON-NLS-1$
-				}, unshallow -> {
+				computeShallowsAndUnshallows(req, shallow ->
+					pckOut.writeString("shallow " + shallow.name() + '\n'), unshallow -> {
 					pckOut.writeString("unshallow " + unshallow.name() + '\n'); //$NON-NLS-1$
 					unshallowCommits.add(unshallow);
 				}, Collections.emptyList());
 				pckOut.end();
 			}
 
-			if (!req.getClientShallowCommits().isEmpty())
+			if (!req.getClientShallowCommits().isEmpty()) {
 				walk.assumeShallow(req.getClientShallowCommits());
+			}
 			sendPack = negotiate(req, accumulator, pckOut);
 			accumulator.timeNegotiating = Duration
 					.between(negotiateStart, Instant.now()).toMillis();
@@ -1191,8 +1199,9 @@ public class UploadPack {
 					unshallowCommit -> unshallowCommits.add(unshallowCommit),
 					deepenNots);
 		}
-		if (!req.getClientShallowCommits().isEmpty())
+		if (!req.getClientShallowCommits().isEmpty()) {
 			walk.assumeShallow(req.getClientShallowCommits());
+		}
 
 		if (req.wasDoneReceived()) {
 			processHaveLines(
@@ -1220,8 +1229,9 @@ public class UploadPack {
 
 		if (req.wasDoneReceived() || (!req.wasWaitForDoneReceived() && okToGiveUp())) {
 			if (mayHaveShallow) {
-				if (sectionSent)
+				if (sectionSent) {
 					pckOut.writeDelim();
+				}
 				pckOut.writeString("shallow-info\n"); //$NON-NLS-1$
 				for (ObjectId o : shallowCommits) {
 					pckOut.writeString("shallow " + o.getName() + '\n'); //$NON-NLS-1$
@@ -1245,8 +1255,9 @@ public class UploadPack {
 				sectionSent = true;
 			}
 
-			if (sectionSent)
+			if (sectionSent) {
 				pckOut.writeDelim();
+			}
 			if (!pckOut.isUsingSideband()) {
 				// sendPack will write "packfile\n" for us if sideband-all is used.
 				// But sideband-all is not used, so we have to write it ourselves.
@@ -1553,17 +1564,20 @@ public class UploadPack {
 		adv.advertiseCapability(OPTION_THIN_PACK);
 		adv.advertiseCapability(OPTION_NO_PROGRESS);
 		adv.advertiseCapability(OPTION_SHALLOW);
-		if (!biDirectionalPipe)
+		if (!biDirectionalPipe) {
 			adv.advertiseCapability(OPTION_NO_DONE);
+		}
 		RequestPolicy policy = getRequestPolicy();
 		if (policy == RequestPolicy.TIP
 				|| policy == RequestPolicy.REACHABLE_COMMIT_TIP
-				|| policy == null)
+				|| policy == null) {
 			adv.advertiseCapability(OPTION_ALLOW_TIP_SHA1_IN_WANT);
+		}
 		if (policy == RequestPolicy.REACHABLE_COMMIT
 				|| policy == RequestPolicy.REACHABLE_COMMIT_TIP
-				|| policy == null)
+				|| policy == null) {
 			adv.advertiseCapability(OPTION_ALLOW_REACHABLE_SHA1_IN_WANT);
+		}
 		adv.advertiseCapability(OPTION_AGENT, UserAgent.get());
 		if (transferConfig.isAllowFilter()) {
 			adv.advertiseCapability(OPTION_FILTER);
@@ -1572,8 +1586,9 @@ public class UploadPack {
 		findSymrefs(adv, advertisedOrDefaultRefs);
 		advertised = adv.send(advertisedOrDefaultRefs.values());
 
-		if (adv.isEmpty())
+		if (adv.isEmpty()) {
 			adv.advertiseId(ObjectId.zeroId(), "capabilities^{}"); //$NON-NLS-1$
+		}
 		adv.end();
 	}
 
@@ -1614,8 +1629,9 @@ public class UploadPack {
 	 * @since 4.0
 	 */
 	public int getDepth() {
-		if (currentRequest == null)
+		if (currentRequest == null) {
 			throw new RequestNotYetReadException();
+		}
 		return currentRequest.getDepth();
 	}
 
@@ -1687,35 +1703,39 @@ public class UploadPack {
 				// disconnected, and will try another request with actual want/have.
 				// Don't report the EOF here, its a bug in the protocol that the client
 				// just disconnects without sending an END.
-				if (!biDirectionalPipe && req.getDepth() > 0)
+				if (!biDirectionalPipe && req.getDepth() > 0) {
 					return false;
+				}
 				throw eof;
 			}
 
 			if (PacketLineIn.isEnd(line)) {
 				last = processHaveLines(peerHas, last, pckOut, accumulator, Option.NONE);
-				if (commonBase.isEmpty() || multiAck != MultiAck.OFF)
+				if (commonBase.isEmpty() || multiAck != MultiAck.OFF) {
 					pckOut.writeString("NAK\n"); //$NON-NLS-1$
+				}
 				if (noDone && sentReady) {
 					pckOut.writeString("ACK " + last.name() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 					return true;
 				}
-				if (!biDirectionalPipe)
+				if (!biDirectionalPipe) {
 					return false;
+				}
 				pckOut.flush();
 
 			} else if (line.startsWith("have ") && line.length() == 45) { //$NON-NLS-1$
 				peerHas.add(ObjectId.fromString(line.substring(5)));
 				accumulator.haves++;
-			} else if (line.equals("done")) { //$NON-NLS-1$
+			} else if ("done".equals(line)) { //$NON-NLS-1$
 				last = processHaveLines(peerHas, last, pckOut, accumulator, Option.NONE);
 
-				if (commonBase.isEmpty())
+				if (commonBase.isEmpty()) {
 					pckOut.writeString("NAK\n"); //$NON-NLS-1$
 
-				else if (multiAck != MultiAck.OFF)
+				} else if (multiAck != MultiAck.OFF) {
 					pckOut.writeString("ACK " + last.name() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 
+				}
 				return true;
 
 			} else {
@@ -1726,7 +1746,7 @@ public class UploadPack {
 
 	private enum Option {
 		WAIT_FOR_DONE,
-		NONE;
+		NONE
 	}
 
 	private ObjectId processHaveLines(List<ObjectId> peerHas, ObjectId last,
@@ -1734,10 +1754,12 @@ public class UploadPack {
 			Option option)
 			throws IOException {
 		preUploadHook.onBeginNegotiateRound(this, wantIds, peerHas.size());
-		if (wantAll.isEmpty() && !wantIds.isEmpty())
+		if (wantAll.isEmpty() && !wantIds.isEmpty()) {
 			parseWants(accumulator);
-		if (peerHas.isEmpty())
+		}
+		if (peerHas.isEmpty()) {
 			return last;
+		}
 
 		sentReady = false;
 		int haveCnt = 0;
@@ -1751,32 +1773,37 @@ public class UploadPack {
 				} catch (MissingObjectException notFound) {
 					continue;
 				}
-				if (obj == null)
+				if (obj == null) {
 					break;
+				}
 
 				last = obj;
 				haveCnt++;
 
 				if (obj instanceof RevCommit) {
 					RevCommit c = (RevCommit) obj;
-					if (oldestTime == 0 || c.getCommitTime() < oldestTime)
+					if (oldestTime == 0 || c.getCommitTime() < oldestTime) {
 						oldestTime = c.getCommitTime();
+					}
 				}
 
-				if (obj.has(PEER_HAS))
+				if (obj.has(PEER_HAS)) {
 					continue;
+				}
 
 				obj.add(PEER_HAS);
-				if (obj instanceof RevCommit)
+				if (obj instanceof RevCommit) {
 					((RevCommit) obj).carry(PEER_HAS);
+				}
 				addCommonBase(obj);
 
 				// If both sides have the same object; let the client know.
 				//
 				switch (multiAck) {
 				case OFF:
-					if (commonBase.size() == 1)
-						out.writeString("ACK " + obj.name() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+					if (commonBase.size() == 1) {
+						out.writeString("ACK " + obj.name() + "\n");
+					} //$NON-NLS-1$ //$NON-NLS-2$
 					break;
 				case CONTINUE:
 					out.writeString("ACK " + obj.name() + " continue\n"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1849,8 +1876,9 @@ public class UploadPack {
 		List<ObjectId> notAdvertisedWants = null;
 		for (ObjectId obj : wantIds) {
 			if (!advertised.contains(obj)) {
-				if (notAdvertisedWants == null)
+				if (notAdvertisedWants == null) {
 					notAdvertisedWants = new ArrayList<>();
+				}
 				notAdvertisedWants.add(obj);
 			}
 		}
@@ -1872,12 +1900,14 @@ public class UploadPack {
 			while ((obj = q.next()) != null) {
 				want(obj);
 
-				if (!(obj instanceof RevCommit))
+				if (!(obj instanceof RevCommit)) {
 					obj.add(SATISFIED);
+				}
 				if (obj instanceof RevTag) {
 					obj = walk.peel(obj);
-					if (obj instanceof RevCommit)
+					if (obj instanceof RevCommit) {
 						want(obj);
+					}
 				}
 			}
 			wantIds.clear();
@@ -1905,10 +1935,11 @@ public class UploadPack {
 		@Override
 		public void checkWants(UploadPack up, List<ObjectId> wants)
 				throws PackProtocolException, IOException {
-			if (!up.isBiDirectionalPipe())
+			if (!up.isBiDirectionalPipe()) {
 				new ReachableCommitRequestValidator().checkWants(up, wants);
-			else if (!wants.isEmpty())
+			} else if (!wants.isEmpty()) {
 				throw new WantNotValidException(wants.iterator().next());
+			}
 		}
 	}
 
@@ -1935,14 +1966,15 @@ public class UploadPack {
 		@Override
 		public void checkWants(UploadPack up, List<ObjectId> wants)
 				throws PackProtocolException, IOException {
-			if (!up.isBiDirectionalPipe())
+			if (!up.isBiDirectionalPipe()) {
 				new ReachableCommitTipRequestValidator().checkWants(up, wants);
-			else if (!wants.isEmpty()) {
+			} else if (!wants.isEmpty()) {
 				Set<ObjectId> refIds =
 						refIdSet(up.getRepository().getRefDatabase().getRefs());
 				for (ObjectId obj : wants) {
-					if (!refIds.contains(obj))
+					if (!refIds.contains(obj)) {
 						throw new WantNotValidException(obj);
+					}
 				}
 			}
 		}
@@ -1988,8 +2020,8 @@ public class UploadPack {
 			List<RevObject> wantsAsObjs = objectIdsToRevObjects(walk,
 					notAdvertisedWants);
 			List<RevCommit> wantsAsCommits = wantsAsObjs.stream()
-					.filter(obj -> obj instanceof RevCommit)
-					.map(obj -> (RevCommit) obj)
+					.filter(RevCommit.class::isInstance)
+					.map(RevCommit.class::cast)
 					.collect(Collectors.toList());
 			boolean allWantsAreCommits = wantsAsObjs.size() == wantsAsCommits
 					.size();
@@ -2134,19 +2166,22 @@ public class UploadPack {
 	}
 
 	private boolean okToGiveUp() throws PackProtocolException {
-		if (okToGiveUp == null)
+		if (okToGiveUp == null) {
 			okToGiveUp = Boolean.valueOf(okToGiveUpImp());
+		}
 		return okToGiveUp.booleanValue();
 	}
 
 	private boolean okToGiveUpImp() throws PackProtocolException {
-		if (commonBase.isEmpty())
+		if (commonBase.isEmpty()) {
 			return false;
+		}
 
 		try {
 			for (RevObject obj : wantAll) {
-				if (!wantSatisfied(obj))
+				if (!wantSatisfied(obj)) {
 					return false;
+				}
 			}
 			return true;
 		} catch (IOException e) {
@@ -2155,8 +2190,9 @@ public class UploadPack {
 	}
 
 	private boolean wantSatisfied(RevObject want) throws IOException {
-		if (want.has(SATISFIED))
+		if (want.has(SATISFIED)) {
 			return true;
+		}
 
 		if (((RevCommit) want).getParentCount() == 0) {
 			want.add(SATISFIED);
@@ -2165,12 +2201,14 @@ public class UploadPack {
 
 		walk.resetRetain(SAVE);
 		walk.markStart((RevCommit) want);
-		if (oldestTime != 0)
+		if (oldestTime != 0) {
 			walk.setRevFilter(CommitTimeRevFilter.after(oldestTime * 1000L));
+		}
 		for (;;) {
 			final RevCommit c = walk.next();
-			if (c == null)
+			if (c == null) {
 				break;
+			}
 			if (c.has(PEER_HAS)) {
 				addCommonBase(c);
 				want.add(SATISFIED);
@@ -2276,8 +2314,9 @@ public class UploadPack {
 		refs = null;
 
 		PackConfig cfg = packConfig;
-		if (cfg == null)
+		if (cfg == null) {
 			cfg = new PackConfig(db);
+		}
 		@SuppressWarnings("resource") // PackWriter is referenced in the finally
 										// block, and is closed there
 		final PackWriter pw = new PackWriter(cfg, walk.getObjectReader(),
@@ -2306,12 +2345,13 @@ public class UploadPack {
 			if (commonBase.isEmpty() && refs != null) {
 				Set<ObjectId> tagTargets = new HashSet<>();
 				for (Ref ref : refs.values()) {
-					if (ref.getPeeledObjectId() != null)
+					if (ref.getPeeledObjectId() != null) {
 						tagTargets.add(ref.getPeeledObjectId());
-					else if (ref.getObjectId() == null)
+					} else if (ref.getObjectId() == null) {
 						continue;
-					else if (ref.getName().startsWith(Constants.R_HEADS))
+					} else if (ref.getName().startsWith(Constants.R_HEADS)) {
 						tagTargets.add(ref.getObjectId());
+					}
 				}
 				pw.setTagTargets(tagTargets);
 			}
@@ -2353,21 +2393,25 @@ public class UploadPack {
 
 					// If the object was already requested, skip it.
 					if (wantAll.isEmpty()) {
-						if (wantIds.contains(objectId))
+						if (wantIds.contains(objectId)) {
 							continue;
+						}
 					} else {
 						RevObject obj = rw.lookupOrNull(objectId);
-						if (obj != null && obj.has(WANT))
+						if (obj != null && obj.has(WANT)) {
 							continue;
+						}
 					}
 
-					if (!ref.isPeeled())
+					if (!ref.isPeeled()) {
 						ref = db.getRefDatabase().peel(ref);
+					}
 
 					ObjectId peeledId = ref.getPeeledObjectId();
 					objectId = ref.getObjectId();
-					if (peeledId == null || objectId == null)
+					if (peeledId == null || objectId == null) {
 						continue;
+					}
 
 					objectId = ref.getObjectId();
 					if (pw.willInclude(peeledId) && !pw.willInclude(objectId)) {

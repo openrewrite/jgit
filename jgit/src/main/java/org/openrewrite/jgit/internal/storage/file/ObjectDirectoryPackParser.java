@@ -91,7 +91,7 @@ public class ObjectDirectoryPackParser extends PackParser {
 	/** The pack that was created, if parsing was successful. */
 	private Pack newPack;
 
-	private PackConfig pconfig;
+	private final PackConfig pconfig;
 
 	ObjectDirectoryPackParser(FileObjectDatabase odb, InputStream src) {
 		super(odb, src);
@@ -144,16 +144,18 @@ public class ObjectDirectoryPackParser extends PackParser {
 	/** {@inheritDoc} */
 	@Override
 	public long getPackSize() {
-		if (newPack == null)
+		if (newPack == null) {
 			return super.getPackSize();
+		}
 
 		File pack = newPack.getPackFile();
 		long size = pack.length();
 		String p = pack.getAbsolutePath();
 		String i = p.substring(0, p.length() - ".pack".length()) + ".idx"; //$NON-NLS-1$ //$NON-NLS-2$
 		File idx = new File(i);
-		if (idx.isFile())
+		if (idx.isFile()) {
 			size += idx.length();
+		}
 		return size;
 	}
 
@@ -180,11 +182,13 @@ public class ObjectDirectoryPackParser extends PackParser {
 
 			return renameAndOpenPack(getLockMessage());
 		} finally {
-			if (def != null)
+			if (def != null) {
 				def.end();
+			}
 			try {
-				if (out != null && out.getChannel().isOpen())
+				if (out != null && out.getChannel().isOpen()) {
 					out.close();
+				}
 			} catch (IOException closeError) {
 				// Ignored. We want to delete the file.
 			}
@@ -306,10 +310,12 @@ public class ObjectDirectoryPackParser extends PackParser {
 	}
 
 	private void cleanupTemporaryFiles() {
-		if (tmpIdx != null && !tmpIdx.delete() && tmpIdx.exists())
+		if (tmpIdx != null && !tmpIdx.delete() && tmpIdx.exists()) {
 			tmpIdx.deleteOnExit();
-		if (tmpPack != null && !tmpPack.delete() && tmpPack.exists())
+		}
+		if (tmpPack != null && !tmpPack.delete() && tmpPack.exists()) {
 			tmpPack.deleteOnExit();
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -336,10 +342,11 @@ public class ObjectDirectoryPackParser extends PackParser {
 		out.write(buf, 0, len);
 		packEnd += len;
 
-		if (def == null)
+		if (def == null) {
 			def = new Deflater(Deflater.DEFAULT_COMPRESSION, false);
-		else
+		} else {
 			def.reset();
+		}
 		def.setInput(data);
 		def.finish();
 
@@ -377,24 +384,28 @@ public class ObjectDirectoryPackParser extends PackParser {
 
 		for (;;) {
 			final int n = out.read(buf);
-			if (n < 0)
+			if (n < 0) {
 				break;
+			}
 			if (origRemaining != 0) {
 				final int origCnt = (int) Math.min(n, origRemaining);
 				origDigest.update(buf, 0, origCnt);
 				origRemaining -= origCnt;
-				if (origRemaining == 0)
+				if (origRemaining == 0) {
 					tailDigest2.update(buf, origCnt, n - origCnt);
-			} else
+				}
+			} else {
 				tailDigest2.update(buf, 0, n);
+			}
 
 			packDigest.update(buf, 0, n);
 		}
 
 		if (!Arrays.equals(origDigest.digest(), origHash) || !Arrays
-				.equals(tailDigest2.digest(), this.tailDigest.digest()))
+				.equals(tailDigest2.digest(), this.tailDigest.digest())) {
 			throw new IOException(
 					JGitText.get().packCorruptedWhileWritingToFilesystem);
+		}
 
 		packHash = packDigest.digest();
 	}
@@ -403,10 +414,11 @@ public class ObjectDirectoryPackParser extends PackParser {
 		List<PackedObjectInfo> list = getSortedObjectList(null /* by ObjectId */);
 		try (FileOutputStream os = new FileOutputStream(tmpIdx)) {
 			final PackIndexWriter iw;
-			if (indexVersion <= 0)
+			if (indexVersion <= 0) {
 				iw = PackIndexWriter.createOldestPossible(os, list);
-			else
+			} else {
 				iw = PackIndexWriter.createVersion(os, indexVersion);
+			}
 			iw.write(list, packHash);
 			os.getChannel().force(true);
 		}
@@ -455,10 +467,11 @@ public class ObjectDirectoryPackParser extends PackParser {
 			// so, or fail fast and don't put the pack in place.
 			//
 			try {
-				if (!keep.lock(lockMessage))
+				if (!keep.lock(lockMessage)) {
 					throw new LockFailedException(finalPack,
 							MessageFormat.format(
 									JGitText.get().cannotLockPackIn, finalPack));
+				}
 			} catch (IOException e) {
 				cleanupTemporaryFiles();
 				throw e;
@@ -480,8 +493,9 @@ public class ObjectDirectoryPackParser extends PackParser {
 		} catch (IOException e) {
 			cleanupTemporaryFiles();
 			keep.unlock();
-			if (!finalPack.delete())
+			if (!finalPack.delete()) {
 				finalPack.deleteOnExit();
+			}
 			throw new IOException(MessageFormat.format(
 					JGitText.get().cannotMoveIndexTo, finalIdx), e);
 		}
@@ -499,10 +513,12 @@ public class ObjectDirectoryPackParser extends PackParser {
 			newPack = db.openPack(finalPack);
 		} catch (IOException err) {
 			keep.unlock();
-			if (finalPack.exists())
+			if (finalPack.exists()) {
 				FileUtils.delete(finalPack);
-			if (finalIdx.exists())
+			}
+			if (finalIdx.exists()) {
 				FileUtils.delete(finalIdx);
+			}
 			throw err;
 		} finally {
 			if (interrupted) {

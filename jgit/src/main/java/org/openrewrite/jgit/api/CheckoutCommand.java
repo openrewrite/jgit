@@ -130,25 +130,25 @@ public class CheckoutCommand extends GitCommand<Ref> {
 
 	private String name;
 
-	private boolean forceRefUpdate = false;
+	private boolean forceRefUpdate;
 
-	private boolean forced = false;
+	private boolean forced;
 
-	private boolean createBranch = false;
+	private boolean createBranch;
 
-	private boolean orphan = false;
+	private boolean orphan;
 
 	private CreateBranchCommand.SetupUpstreamMode upstreamMode;
 
-	private String startPoint = null;
+	private String startPoint;
 
 	private RevCommit startCommit;
 
-	private Stage checkoutStage = null;
+	private Stage checkoutStage;
 
 	private CheckoutResult status;
 
-	private List<String> paths;
+	private final List<String> paths;
 
 	private boolean checkoutAllPaths;
 
@@ -186,12 +186,14 @@ public class CheckoutCommand extends GitCommand<Ref> {
 				try (Git git = new Git(repo)) {
 					CreateBranchCommand command = git.branchCreate();
 					command.setName(name);
-					if (startCommit != null)
+					if (startCommit != null) {
 						command.setStartPoint(startCommit);
-					else
+					} else {
 						command.setStartPoint(startPoint);
-					if (upstreamMode != null)
+					}
+					if (upstreamMode != null) {
 						command.setUpstreamMode(upstreamMode);
+					}
 					command.call();
 				}
 			}
@@ -210,19 +212,21 @@ public class CheckoutCommand extends GitCommand<Ref> {
 				if (startPoint == null && startCommit == null) {
 					Result r = repo.updateRef(Constants.HEAD).link(
 							getBranchName());
-					if (!EnumSet.of(Result.NEW, Result.FORCED).contains(r))
+					if (!EnumSet.of(Result.NEW, Result.FORCED).contains(r)) {
 						throw new JGitInternalException(MessageFormat.format(
 								JGitText.get().checkoutUnexpectedResult,
 								r.name()));
+					}
 					this.status = CheckoutResult.NOT_TRIED_RESULT;
 					return repo.exactRef(Constants.HEAD);
 				}
 				branch = getStartPointObjectId();
 			} else {
 				branch = repo.resolve(name);
-				if (branch == null)
+				if (branch == null) {
 					throw new RefNotFoundException(MessageFormat.format(
 							JGitText.get().refNotResolved, name));
+				}
 			}
 
 			RevCommit headCommit = null;
@@ -256,16 +260,17 @@ public class CheckoutCommand extends GitCommand<Ref> {
 				dc.unlock();
 			}
 			Ref ref = repo.findRef(name);
-			if (ref != null && !ref.getName().startsWith(Constants.R_HEADS))
+			if (ref != null && !ref.getName().startsWith(Constants.R_HEADS)) {
 				ref = null;
+			}
 			String toName = Repository.shortenRefName(name);
 			RefUpdate refUpdate = repo.updateRef(Constants.HEAD, ref == null);
 			refUpdate.setForceUpdate(forceRefUpdate);
 			refUpdate.setRefLogMessage(refLogMessage + " to " + toName, false); //$NON-NLS-1$
 			Result updateResult;
-			if (ref != null)
+			if (ref != null) {
 				updateResult = refUpdate.link(ref.getName());
-			else if (orphan) {
+			} else if (orphan) {
 				updateResult = refUpdate.link(getBranchName());
 				ref = repo.exactRef(Constants.HEAD);
 			} else {
@@ -289,9 +294,10 @@ public class CheckoutCommand extends GitCommand<Ref> {
 				break;
 			}
 
-			if (!ok)
+			if (!ok) {
 				throw new JGitInternalException(MessageFormat.format(JGitText
 						.get().checkoutUnexpectedResult, updateResult.name()));
+			}
 
 
 			if (!dco.getToBeDeleted().isEmpty()) {
@@ -299,16 +305,18 @@ public class CheckoutCommand extends GitCommand<Ref> {
 						dco.getToBeDeleted(),
 						new ArrayList<>(dco.getUpdated().keySet()),
 						dco.getRemoved());
-			} else
+			} else {
 				status = new CheckoutResult(new ArrayList<>(dco
 						.getUpdated().keySet()), dco.getRemoved());
+			}
 
 			return ref;
 		} catch (IOException ioe) {
 			throw new JGitInternalException(ioe.getMessage(), ioe);
 		} finally {
-			if (status == null)
+			if (status == null) {
 				status = CheckoutResult.ERROR_RESULT;
+			}
 		}
 	}
 
@@ -418,11 +426,12 @@ public class CheckoutCommand extends GitCommand<Ref> {
 				TreeWalk treeWalk = new TreeWalk(repo,
 						revWalk.getObjectReader())) {
 			treeWalk.setRecursive(true);
-			if (!checkoutAllPaths)
+			if (!checkoutAllPaths) {
 				treeWalk.setFilter(PathFilterGroup.createFromStrings(paths));
-			if (isCheckoutIndex())
+			}
+			if (isCheckoutIndex()) {
 				checkoutPathsFromIndex(treeWalk, dc, checkout);
-			else {
+			} else {
 				RevCommit commit = revWalk.parseCommit(getStartPointObjectId());
 				checkoutPathsFromCommit(treeWalk, dc, commit, checkout);
 			}
@@ -454,8 +463,9 @@ public class CheckoutCommand extends GitCommand<Ref> {
 		while (treeWalk.next()) {
 			String path = treeWalk.getPathString();
 			// Only add one edit per path
-			if (path.equals(previousPath))
+			if (path.equals(previousPath)) {
 				continue;
+			}
 
 			final EolStreamType eolStreamType = treeWalk
 					.getEolStreamType(CHECKOUT_OP);
@@ -541,15 +551,17 @@ public class CheckoutCommand extends GitCommand<Ref> {
 
 	private ObjectId getStartPointObjectId() throws AmbiguousObjectException,
 			RefNotFoundException, IOException {
-		if (startCommit != null)
+		if (startCommit != null) {
 			return startCommit.getId();
+		}
 
-		String startPointOrHead = (startPoint != null) ? startPoint
+		String startPointOrHead = startPoint != null ? startPoint
 				: Constants.HEAD;
 		ObjectId result = repo.resolve(startPointOrHead);
-		if (result == null)
+		if (result == null) {
 			throw new RefNotFoundException(MessageFormat.format(
 					JGitText.get().refNotResolved, startPointOrHead));
+		}
 		return result;
 	}
 
@@ -557,21 +569,24 @@ public class CheckoutCommand extends GitCommand<Ref> {
 			RefAlreadyExistsException, IOException {
 		if (((!checkoutAllPaths && paths.isEmpty()) || orphan)
 				&& (name == null || !Repository
-						.isValidRefName(Constants.R_HEADS + name)))
+				.isValidRefName(Constants.R_HEADS + name))) {
 			throw new InvalidRefNameException(MessageFormat.format(JGitText
 					.get().branchNameInvalid, name == null ? "<null>" : name)); //$NON-NLS-1$
 
+		}
 		if (orphan) {
 			Ref refToCheck = repo.exactRef(getBranchName());
-			if (refToCheck != null)
+			if (refToCheck != null) {
 				throw new RefAlreadyExistsException(MessageFormat.format(
 						JGitText.get().refAlreadyExists, name));
+			}
 		}
 	}
 
 	private String getBranchName() {
-		if (name.startsWith(Constants.R_REFS))
+		if (name.startsWith(Constants.R_REFS)) {
 			return name;
+		}
 
 		return Constants.R_HEADS + name;
 	}
@@ -781,14 +796,16 @@ public class CheckoutCommand extends GitCommand<Ref> {
 	 * @return the result, never <code>null</code>
 	 */
 	public CheckoutResult getResult() {
-		if (status == null)
+		if (status == null) {
 			return CheckoutResult.NOT_TRIED_RESULT;
+		}
 		return status;
 	}
 
 	private void checkOptions() {
-		if (checkoutStage != null && !isCheckoutIndex())
+		if (checkoutStage != null && !isCheckoutIndex()) {
 			throw new IllegalStateException(
 					JGitText.get().cannotCheckoutOursSwitchBranch);
+		}
 	}
 }

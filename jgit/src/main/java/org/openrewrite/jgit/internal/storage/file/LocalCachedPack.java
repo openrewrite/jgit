@@ -43,15 +43,17 @@ class LocalCachedPack extends CachedPack {
 	@Override
 	public long getObjectCount() throws IOException {
 		long cnt = 0;
-		for (Pack pack : getPacks())
+		for (Pack pack : getPacks()) {
 			cnt += pack.getObjectCount();
+		}
 		return cnt;
 	}
 
 	void copyAsIs(PackOutputStream out, WindowCursor wc)
 			throws IOException {
-		for (Pack pack : getPacks())
+		for (Pack pack : getPacks()) {
 			pack.copyPackAsIs(out, wc);
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -60,8 +62,9 @@ class LocalCachedPack extends CachedPack {
 		try {
 			LocalObjectRepresentation local = (LocalObjectRepresentation) rep;
 			for (Pack pack : getPacks()) {
-				if (local.pack == pack)
+				if (local.pack == pack) {
 					return true;
+				}
 			}
 			return false;
 		} catch (FileNotFoundException packGone) {
@@ -72,8 +75,9 @@ class LocalCachedPack extends CachedPack {
 	private Pack[] getPacks() throws FileNotFoundException {
 		if (packs == null) {
 			Pack[] p = new Pack[packNames.length];
-			for (int i = 0; i < packNames.length; i++)
+			for (int i = 0;i < packNames.length;i++) {
 				p[i] = getPackFile(packNames[i]);
+			}
 			packs = p;
 		}
 		return packs;
@@ -81,8 +85,9 @@ class LocalCachedPack extends CachedPack {
 
 	private Pack getPackFile(String packName) throws FileNotFoundException {
 		for (Pack pack : odb.getPacks()) {
-			if (packName.equals(pack.getPackName()))
+			if (packName.equals(pack.getPackName())) {
 				return pack;
+			}
 		}
 		throw new FileNotFoundException(getPackFilePath(packName));
 	}

@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
+import com.googlecode.javaewah.EWAHCompressedBitmap;
 import org.openrewrite.jgit.internal.JGitText;
 import org.openrewrite.jgit.lib.AnyObjectId;
 import org.openrewrite.jgit.lib.Constants;
@@ -23,8 +24,6 @@ import org.openrewrite.jgit.lib.ObjectId;
 import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
 import org.openrewrite.jgit.util.IO;
 import org.openrewrite.jgit.util.NB;
-
-import com.googlecode.javaewah.EWAHCompressedBitmap;
 
 /**
  * Support for the pack bitmap index v1 format.
@@ -48,7 +47,7 @@ class PackBitmapIndexV1 extends BasePackBitmapIndex {
 
 	PackBitmapIndexV1(final InputStream fd, PackIndex packIndex,
 			PackReverseIndex reverseIndex) throws IOException {
-		super(new ObjectIdOwnerMap<StoredBitmap>());
+		super(new ObjectIdOwnerMap<>());
 		this.packIndex = packIndex;
 		this.reverseIndex = reverseIndex;
 		this.bitmaps = getBitmaps();
@@ -69,22 +68,25 @@ class PackBitmapIndexV1 extends BasePackBitmapIndex {
 
 		// Read the version (2 bytes)
 		final int version = NB.decodeUInt16(scratch, 4);
-		if (version != 1)
+		if (version != 1) {
 			throw new IOException(MessageFormat.format(
 					JGitText.get().unsupportedPackIndexVersion,
 					Integer.valueOf(version)));
+		}
 
 		// Read the options (2 bytes)
 		final int opts = NB.decodeUInt16(scratch, 6);
-		if ((opts & OPT_FULL) == 0)
+		if ((opts & OPT_FULL) == 0) {
 			throw new IOException(MessageFormat.format(
 					JGitText.get().expectedGot, Integer.valueOf(OPT_FULL),
 					Integer.valueOf(opts)));
+		}
 
 		// Read the number of entries (1 int32)
 		long numEntries = NB.decodeUInt32(scratch, 8);
-		if (numEntries > Integer.MAX_VALUE)
+		if (numEntries > Integer.MAX_VALUE) {
 			throw new IOException(JGitText.get().indexFileIsTooLargeForJgit);
+		}
 
 		// Checksum applied on the bottom of the corresponding pack file.
 		this.packChecksum = new byte[20];
@@ -108,31 +110,36 @@ class PackBitmapIndexV1 extends BasePackBitmapIndex {
 			int flags = scratch[5];
 			EWAHCompressedBitmap bitmap = readBitmap(dataInput);
 
-			if (nthObjectId < 0)
+			if (nthObjectId < 0) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().invalidId, String.valueOf(nthObjectId)));
-			if (xorOffset < 0)
+			}
+			if (xorOffset < 0) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().invalidId, String.valueOf(xorOffset)));
-			if (xorOffset > MAX_XOR_OFFSET)
+			}
+			if (xorOffset > MAX_XOR_OFFSET) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().expectedLessThanGot,
 						String.valueOf(MAX_XOR_OFFSET),
 						String.valueOf(xorOffset)));
-			if (xorOffset > i)
+			}
+			if (xorOffset > i) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().expectedLessThanGot, String.valueOf(i),
 						String.valueOf(xorOffset)));
+			}
 
 			ObjectId objectId = packIndex.getObjectId(nthObjectId);
 			StoredBitmap xorBitmap = null;
 			if (xorOffset > 0) {
-				int index = (i - xorOffset);
+				int index = i - xorOffset;
 				xorBitmap = recentBitmaps[index % recentBitmaps.length];
-				if (xorBitmap == null)
+				if (xorBitmap == null) {
 					throw new IOException(MessageFormat.format(
 							JGitText.get().invalidId,
 							String.valueOf(xorOffset)));
+				}
 			}
 
 			StoredBitmap sb = new StoredBitmap(
@@ -146,8 +153,9 @@ class PackBitmapIndexV1 extends BasePackBitmapIndex {
 	@Override
 	public int findPosition(AnyObjectId objectId) {
 		long offset = packIndex.findOffset(objectId);
-		if (offset == -1)
+		if (offset == -1) {
 			return -1;
+		}
 		return reverseIndex.findPostion(offset);
 	}
 
@@ -155,8 +163,9 @@ class PackBitmapIndexV1 extends BasePackBitmapIndex {
 	@Override
 	public ObjectId getObject(int position) throws IllegalArgumentException {
 		ObjectId objectId = reverseIndex.findObjectByPosition(position);
-		if (objectId == null)
+		if (objectId == null) {
 			throw new IllegalArgumentException();
+		}
 		return objectId;
 	}
 
@@ -193,8 +202,9 @@ class PackBitmapIndexV1 extends BasePackBitmapIndex {
 	@Override
 	public boolean equals(Object o) {
 		// TODO(cranger): compare the pack checksum?
-		if (o instanceof PackBitmapIndexV1)
+		if (o instanceof PackBitmapIndexV1) {
 			return getPackIndex() == ((PackBitmapIndexV1) o).getPackIndex();
+		}
 		return false;
 	}
 

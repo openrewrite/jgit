@@ -280,26 +280,30 @@ public final class MergeAlgorithm {
 				// complete conflicting area is common in OURS and THEIRS.
 				int minBSize = oursEndB - oursBeginB;
 				int BSizeDelta = minBSize - (theirsEndB - theirsBeginB);
-				if (BSizeDelta > 0)
+				if (BSizeDelta > 0) {
 					minBSize -= BSizeDelta;
+				}
 
 				int commonPrefix = 0;
 				while (commonPrefix < minBSize
 						&& cmp.equals(ours, oursBeginB + commonPrefix, theirs,
-								theirsBeginB + commonPrefix))
+						theirsBeginB + commonPrefix)) {
 					commonPrefix++;
+				}
 				minBSize -= commonPrefix;
 				int commonSuffix = 0;
 				while (commonSuffix < minBSize
 						&& cmp.equals(ours, oursEndB - commonSuffix - 1, theirs,
-								theirsEndB - commonSuffix - 1))
+						theirsEndB - commonSuffix - 1)) {
 					commonSuffix++;
+				}
 				minBSize -= commonSuffix;
 
 				// Add the common lines at start of conflict
-				if (commonPrefix > 0)
+				if (commonPrefix > 0) {
 					result.add(1, oursBeginB, oursBeginB + commonPrefix,
 							ConflictState.NO_CONFLICT);
+				}
 
 				// Add the conflict (Only if there is a conflict left to report)
 				if (minBSize > 0 || BSizeDelta != 0) {
@@ -326,9 +330,10 @@ public final class MergeAlgorithm {
 				}
 
 				// Add the common lines at end of conflict
-				if (commonSuffix > 0)
+				if (commonSuffix > 0) {
 					result.add(1, oursEndB - commonSuffix, oursEndB,
 							ConflictState.NO_CONFLICT);
+				}
 
 				current = Math.max(oursEdit.getEndA(), theirsEdit.getEndA());
 				oursEdit = nextOursEdit;
@@ -354,6 +359,6 @@ public final class MergeAlgorithm {
 	 *         edits
 	 */
 	private static Edit nextEdit(Iterator<Edit> it) {
-		return (it.hasNext() ? it.next() : END_EDIT);
+		return it.hasNext() ? it.next() : END_EDIT;
 	}
 }

@@ -14,7 +14,7 @@ import org.openrewrite.jgit.lib.Config;
 import org.openrewrite.jgit.lib.Config.SectionParser;
 import org.openrewrite.jgit.lib.CoreConfig;
 
-class WriteConfig {
+final class WriteConfig {
 	/** Key for {@link Config#get(SectionParser)}. */
 	static final Config.SectionParser<WriteConfig> KEY = WriteConfig::new;
 

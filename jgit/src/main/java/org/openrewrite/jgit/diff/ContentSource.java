@@ -187,11 +187,13 @@ public abstract class ContentSource {
 				tw.addTree(iterator);
 				tw.setFilter(PathFilter.create(path));
 				current = path;
-				if (!tw.next())
+				if (!tw.next()) {
 					throw new FileNotFoundException(path);
+				}
 				ptr = tw.getTree(0, WorkingTreeIterator.class);
-				if (ptr == null)
+				if (ptr == null) {
 					throw new FileNotFoundException(path);
+				}
 			}
 		}
 	}

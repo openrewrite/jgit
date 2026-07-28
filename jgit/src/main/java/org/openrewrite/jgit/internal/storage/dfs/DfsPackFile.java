@@ -689,7 +689,7 @@ public final class DfsPackFile extends BlockBasedFile {
 						base += 1;
 						c = ib[p++] & 0xff;
 						base <<= 7;
-						base += (c & 127);
+						base += c & 127;
 					}
 					base = pos - base;
 					delta = new Delta(delta, pos, (int) sz, p, base);
@@ -736,8 +736,9 @@ public final class DfsPackFile extends BlockBasedFile {
 			// At this point there is at least one delta to apply to data.
 			// (Whole objects with no deltas to apply return early above.)
 
-			if (data == null)
+			if (data == null) {
 				throw new LargeObjectException();
+			}
 
 			assert(delta != null);
 			do {
@@ -858,7 +859,7 @@ public final class DfsPackFile extends BlockBasedFile {
 					ofs += 1;
 					c = ib[p++] & 0xff;
 					ofs <<= 7;
-					ofs += (c & 127);
+					ofs += c & 127;
 				}
 				pos = pos - ofs;
 				continue;
@@ -968,7 +969,7 @@ public final class DfsPackFile extends BlockBasedFile {
 				ofs += 1;
 				c = ib[p++] & 0xff;
 				ofs <<= 7;
-				ofs += (c & 127);
+				ofs += c & 127;
 			}
 			r.format = StoredObjectRepresentation.PACK_DELTA;
 			r.baseId = rev.findObject(pos - ofs);

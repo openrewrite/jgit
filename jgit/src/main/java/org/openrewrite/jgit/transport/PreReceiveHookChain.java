@@ -19,7 +19,7 @@ import java.util.List;
  * <p>
  * Hooks are run in the order passed to the constructor.
  */
-public class PreReceiveHookChain implements PreReceiveHook {
+public final class PreReceiveHookChain implements PreReceiveHook {
 	private final PreReceiveHook[] hooks;
 	private final int count;
 
@@ -33,9 +33,11 @@ public class PreReceiveHookChain implements PreReceiveHook {
 	public static PreReceiveHook newChain(List<? extends PreReceiveHook> hooks) {
 		PreReceiveHook[] newHooks = new PreReceiveHook[hooks.size()];
 		int i = 0;
-		for (PreReceiveHook hook : hooks)
-			if (hook != PreReceiveHook.NULL)
+		for (PreReceiveHook hook : hooks) {
+			if (hook != PreReceiveHook.NULL) {
 				newHooks[i++] = hook;
+			}
+		}
 		switch (i) {
 		case 0:
 			return PreReceiveHook.NULL;
@@ -50,8 +52,9 @@ public class PreReceiveHookChain implements PreReceiveHook {
 	@Override
 	public void onPreReceive(ReceivePack rp,
 			Collection<ReceiveCommand> commands) {
-		for (int i = 0; i < count; i++)
+		for (int i = 0;i < count;i++) {
 			hooks[i].onPreReceive(rp, commands);
+		}
 	}
 
 	private PreReceiveHookChain(PreReceiveHook[] hooks, int count) {

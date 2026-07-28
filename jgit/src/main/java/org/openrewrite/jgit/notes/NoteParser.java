@@ -74,8 +74,9 @@ final class NoteParser extends CanonicalTreeParser {
 		// Our path buffer has a '/' that we don't want after the prefix.
 		// Drop it by shifting the path down one position.
 		pathPadding = 0 < prefixLen ? 1 : 0;
-		if (0 < pathPadding)
+		if (0 < pathPadding) {
 			System.arraycopy(path, 0, path, pathPadding, prefixLen);
+		}
 	}
 
 	private InMemoryNoteBucket parse() {
@@ -86,14 +87,13 @@ final class NoteParser extends CanonicalTreeParser {
 
 	private InMemoryNoteBucket parseTree() {
 		for (; !eof(); next(1)) {
-			if (pathLen == pathPadding + OBJECT_ID_STRING_LENGTH && isHex())
+			if (pathLen == pathPadding + OBJECT_ID_STRING_LENGTH && isHex()) {
 				return parseLeafTree();
-
-			else if (getNameLength() == 2 && isHex() && isTree())
+			} else if (getNameLength() == 2 && isHex() && isTree()) {
 				return parseFanoutTree();
-
-			else
+			} else {
 				storeNonNote();
+			}
 		}
 
 		// If we cannot determine the style used, assume its a leaf.
@@ -105,10 +105,11 @@ final class NoteParser extends CanonicalTreeParser {
 		final MutableObjectId idBuf = new MutableObjectId();
 
 		for (; !eof(); next(1)) {
-			if (parseObjectId(idBuf))
+			if (parseObjectId(idBuf)) {
 				leaf.parseOneEntry(idBuf, getEntryObjectId());
-			else
+			} else {
 				storeNonNote();
+			}
 		}
 
 		return leaf;
@@ -131,10 +132,11 @@ final class NoteParser extends CanonicalTreeParser {
 
 		for (; !eof(); next(1)) {
 			final int cell = parseFanoutCell();
-			if (0 <= cell)
+			if (0 <= cell) {
 				fanout.setBucket(cell, getEntryObjectId());
-			else
+			} else {
 				storeNonNote();
+			}
 		}
 
 		return fanout;
@@ -160,10 +162,12 @@ final class NoteParser extends CanonicalTreeParser {
 		getName(name, 0);
 
 		NonNoteEntry ent = new NonNoteEntry(name, fileMode, id);
-		if (firstNonNote == null)
+		if (firstNonNote == null) {
 			firstNonNote = ent;
-		if (lastNonNote != null)
+		}
+		if (lastNonNote != null) {
 			lastNonNote.next = ent;
+		}
 		lastNonNote = ent;
 	}
 
@@ -173,8 +177,9 @@ final class NoteParser extends CanonicalTreeParser {
 
 	private boolean isHex() {
 		try {
-			for (int i = pathOffset; i < pathLen; i++)
+			for (int i = pathOffset;i < pathLen;i++) {
 				parseHexInt4(path[i]);
+			}
 			return true;
 		} catch (ArrayIndexOutOfBoundsException fail) {
 			return false;

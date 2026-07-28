@@ -75,14 +75,16 @@ public abstract class DfsRepository extends Repository {
 	/** {@inheritDoc} */
 	@Override
 	public void create(boolean bare) throws IOException {
-		if (exists())
+		if (exists()) {
 			throw new IOException(MessageFormat.format(
 					JGitText.get().repositoryAlreadyExists, "")); //$NON-NLS-1$
 
+		}
 		String master = Constants.R_HEADS + Constants.MASTER;
 		RefUpdate.Result result = updateRef(Constants.HEAD, true).link(master);
-		if (result != RefUpdate.Result.NEW)
+		if (result != RefUpdate.Result.NEW) {
 			throw new IOException(result.name());
+		}
 	}
 
 	/** {@inheritDoc} */

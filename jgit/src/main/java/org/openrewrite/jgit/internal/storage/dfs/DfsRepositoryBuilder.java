@@ -76,10 +76,12 @@ public abstract class DfsRepositoryBuilder<B extends DfsRepositoryBuilder, R ext
 	@Override
 	public B setup() throws IllegalArgumentException, IOException {
 		super.setup();
-		if (getReaderOptions() == null)
+		if (getReaderOptions() == null) {
 			setReaderOptions(new DfsReaderOptions());
-		if (getRepositoryDescription() == null)
+		}
+		if (getRepositoryDescription() == null) {
 			setRepositoryDescription(new DfsRepositoryDescription());
+		}
 		return self();
 	}
 
@@ -100,16 +102,18 @@ public abstract class DfsRepositoryBuilder<B extends DfsRepositoryBuilder, R ext
 	/** {@inheritDoc} */
 	@Override
 	public B setGitDir(File gitDir) {
-		if (gitDir != null)
+		if (gitDir != null) {
 			throw new IllegalArgumentException();
+		}
 		return self();
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public B setObjectDirectory(File objectDirectory) {
-		if (objectDirectory != null)
+		if (objectDirectory != null) {
 			throw new IllegalArgumentException();
+		}
 		return self();
 	}
 
@@ -123,16 +127,18 @@ public abstract class DfsRepositoryBuilder<B extends DfsRepositoryBuilder, R ext
 	/** {@inheritDoc} */
 	@Override
 	public B setWorkTree(File workTree) {
-		if (workTree != null)
+		if (workTree != null) {
 			throw new IllegalArgumentException();
+		}
 		return self();
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public B setIndexFile(File indexFile) {
-		if (indexFile != null)
+		if (indexFile != null) {
 			throw new IllegalArgumentException();
+		}
 		return self();
 	}
 }

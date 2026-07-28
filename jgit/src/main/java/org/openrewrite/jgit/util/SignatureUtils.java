@@ -71,7 +71,7 @@ public final class SignatureUtils {
 		}
 		result.append(MessageFormat.format(msg, verification.getKeyUser()));
 		if (!TrustLevel.UNKNOWN.equals(verification.getTrustLevel())) {
-			result.append(' ' + MessageFormat
+			result.append(' ').append(MessageFormat
 					.format(JGitText.get().verifySignatureTrust, verification
 							.getTrustLevel().name().toLowerCase(Locale.ROOT)));
 		}

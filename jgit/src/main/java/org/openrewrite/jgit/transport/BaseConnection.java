@@ -111,9 +111,10 @@ public abstract class BaseConnection implements Connection {
 	 *             if operation was already marked as started.
 	 */
 	protected void markStartedOperation() throws TransportException {
-		if (startedOperation)
+		if (startedOperation) {
 			throw new TransportException(
 					JGitText.get().onlyOneOperationCallPerConnectionIsSupported);
+		}
 		startedOperation = true;
 	}
 
@@ -123,8 +124,9 @@ public abstract class BaseConnection implements Connection {
 	 * @return writer to store messages from the remote.
 	 */
 	protected Writer getMessageWriter() {
-		if (messageWriter == null)
+		if (messageWriter == null) {
 			setMessageWriter(new StringWriter());
+		}
 		return messageWriter;
 	}
 
@@ -137,8 +139,9 @@ public abstract class BaseConnection implements Connection {
 	 *            complete contents.
 	 */
 	protected void setMessageWriter(Writer writer) {
-		if (messageWriter != null)
+		if (messageWriter != null) {
 			throw new IllegalStateException(JGitText.get().writerAlreadyInitialized);
+		}
 		messageWriter = writer;
 	}
 }

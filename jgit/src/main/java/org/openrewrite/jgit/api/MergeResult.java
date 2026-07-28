@@ -308,10 +308,12 @@ public class MergeResult {
 		this.mergeStrategy = mergeStrategy;
 		this.description = description;
 		this.failingPaths = failingPaths;
-		if (lowLevelResults != null)
+		if (lowLevelResults != null) {
 			for (Map.Entry<String, org.openrewrite.jgit.merge.MergeResult<?>> result : lowLevelResults
-					.entrySet())
+					.entrySet()) {
 				addConflict(result.getKey(), result.getValue());
+			}
+		}
 	}
 
 	/**
@@ -371,16 +373,17 @@ public class MergeResult {
 		boolean first = true;
 		StringBuilder commits = new StringBuilder();
 		for (ObjectId commit : mergedCommits) {
-			if (!first)
+			if (!first) {
 				commits.append(", ");
-			else
+			} else {
 				first = false;
+			}
 			commits.append(ObjectId.toString(commit));
 		}
 		return MessageFormat.format(
 				JGitText.get().mergeUsingStrategyResultedInDescription,
 				commits, ObjectId.toString(base), mergeStrategy.getName(),
-				mergeStatus, (description == null ? "" : ", " + description));
+				mergeStatus, description == null ? "" : ", " + description);
 	}
 
 	/**
@@ -402,8 +405,9 @@ public class MergeResult {
 	 *            the conflicts to set
 	 */
 	public void addConflict(String path, int[][] conflictingRanges) {
-		if (conflicts == null)
+		if (conflicts == null) {
 			conflicts = new HashMap<>();
+		}
 		conflicts.put(path, conflictingRanges);
 	}
 
@@ -416,10 +420,12 @@ public class MergeResult {
 	 *            a {@link org.openrewrite.jgit.merge.MergeResult}
 	 */
 	public void addConflict(String path, org.openrewrite.jgit.merge.MergeResult<?> lowLevelResult) {
-		if (!lowLevelResult.containsConflicts())
+		if (!lowLevelResult.containsConflicts()) {
 			return;
-		if (conflicts == null)
+		}
+		if (conflicts == null) {
 			conflicts = new HashMap<>();
+		}
 		int nrOfConflicts = 0;
 		// just counting
 		for (MergeChunk mergeChunk : lowLevelResult) {
@@ -443,8 +449,9 @@ public class MergeResult {
 				ret[currentConflict][mergeChunk.getSequenceIndex()] = mergeChunk.getBegin();
 			}
 			if (mergeChunk.getConflictState().equals(ConflictState.NEXT_CONFLICTING_RANGE)) {
-				if (mergeChunk.getEnd() > endOfChunk)
+				if (mergeChunk.getEnd() > endOfChunk) {
 					endOfChunk = mergeChunk.getEnd();
+				}
 				ret[currentConflict][mergeChunk.getSequenceIndex()] = mergeChunk.getBegin();
 			}
 		}

@@ -39,7 +39,7 @@ public class GitDateParser {
 	// Since SimpleDateFormat instances are expensive to instantiate they should
 	// be cached. Since they are also not threadsafe they are cached using
 	// ThreadLocal.
-	private static ThreadLocal<Map<Locale, Map<ParseableSimpleDateFormat, SimpleDateFormat>>> formatCache =
+	private static final ThreadLocal<Map<Locale, Map<ParseableSimpleDateFormat, SimpleDateFormat>>> formatCache =
 			new ThreadLocal<Map<Locale, Map<ParseableSimpleDateFormat, SimpleDateFormat>>>() {
 
 		@Override
@@ -63,10 +63,10 @@ public class GitDateParser {
 			return getNewSimpleDateFormat(f, locale, map);
 		}
 		SimpleDateFormat dateFormat = map.get(f);
-		if (dateFormat != null)
+		if (dateFormat != null) {
 			return dateFormat;
-		SimpleDateFormat df = getNewSimpleDateFormat(f, locale, map);
-		return df;
+		}
+		return getNewSimpleDateFormat(f, locale, map);
 	}
 
 	private static SimpleDateFormat getNewSimpleDateFormat(
@@ -187,14 +187,16 @@ public class GitDateParser {
 		dateStr = dateStr.trim();
 		Date ret;
 
-		if ("never".equalsIgnoreCase(dateStr)) //$NON-NLS-1$
+		if ("never".equalsIgnoreCase(dateStr)) { //$NON-NLS-1$
 			return NEVER;
-		ret = parse_relative(dateStr, now);
-		if (ret != null)
+		}
+		ret = parseRelative(dateStr, now);
+		if (ret != null) {
 			return ret;
+		}
 		for (ParseableSimpleDateFormat f : ParseableSimpleDateFormat.values()) {
 			try {
-				return parse_simple(dateStr, f, locale);
+				return parseSimple(dateStr, f, locale);
 			} catch (ParseException e) {
 				// simply proceed with the next parser
 			}
@@ -202,15 +204,16 @@ public class GitDateParser {
 		ParseableSimpleDateFormat[] values = ParseableSimpleDateFormat.values();
 		StringBuilder allFormats = new StringBuilder("\"") //$NON-NLS-1$
 				.append(values[0].formatStr);
-		for (int i = 1; i < values.length; i++)
+		for (int i = 1;i < values.length;i++) {
 			allFormats.append("\", \"").append(values[i].formatStr); //$NON-NLS-1$
+		}
 		allFormats.append("\""); //$NON-NLS-1$
 		throw new ParseException(MessageFormat.format(
 				JGitText.get().cannotParseDate, dateStr, allFormats.toString()), 0);
 	}
 
 	// tries to parse a string with the formats supported by SimpleDateFormat
-	private static Date parse_simple(String dateStr,
+	private static Date parseSimple(String dateStr,
 			ParseableSimpleDateFormat f, Locale locale)
 			throws ParseException {
 		SimpleDateFormat dateFormat = getDateFormat(f, locale);
@@ -220,22 +223,23 @@ public class GitDateParser {
 
 	// tries to parse a string with a relative time specification
 	@SuppressWarnings("nls")
-	private static Date parse_relative(String dateStr, Calendar now) {
+	private static Date parseRelative(String dateStr, Calendar now) {
 		Calendar cal;
 		SystemReader sysRead = SystemReader.getInstance();
 
 		// check for the static words "yesterday" or "now"
 		if ("now".equals(dateStr)) {
-			return ((now == null) ? new Date(sysRead.getCurrentTime()) : now
-					.getTime());
+			return now == null ? new Date(sysRead.getCurrentTime()) : now
+					.getTime();
 		}
 
 		if (now == null) {
 			cal = new GregorianCalendar(sysRead.getTimeZone(),
 					sysRead.getLocale());
 			cal.setTimeInMillis(sysRead.getCurrentTime());
-		} else
+		} else {
 			cal = (Calendar) now.clone();
+		}
 
 		if ("yesterday".equals(dateStr)) {
 			cal.add(Calendar.DATE, -1);
@@ -253,8 +257,9 @@ public class GitDateParser {
 		// check we have an odd number of parts (at least 3) and that the last
 		// part is "ago"
 		if (partsLength < 3 || (partsLength & 1) == 0
-				|| !"ago".equals(parts[parts.length - 1]))
+				|| !"ago".equals(parts[parts.length - 1])) {
 			return null;
+		}
 		int number;
 		for (int i = 0; i < parts.length - 2; i += 2) {
 			try {

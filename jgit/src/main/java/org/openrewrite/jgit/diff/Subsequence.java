@@ -84,8 +84,9 @@ public final class Subsequence<S extends Sequence> extends Sequence {
 	 */
 	public static <S extends Sequence> EditList toBase(EditList edits,
 			Subsequence<S> a, Subsequence<S> b) {
-		for (Edit e : edits)
+		for (Edit e : edits) {
 			toBase(e, a, b);
+		}
 		return edits;
 	}
 

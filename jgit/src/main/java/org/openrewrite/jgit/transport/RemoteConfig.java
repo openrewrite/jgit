@@ -87,24 +87,25 @@ public class RemoteConfig implements Serializable {
 
 		final List<RemoteConfig> result = new ArrayList<>(names
 				.size());
-		for (String name : names)
+		for (String name : names) {
 			result.add(new RemoteConfig(rc, name));
+		}
 		return result;
 	}
 
-	private String name;
+	private final String name;
 
-	private List<URIish> uris;
+	private final List<URIish> uris;
 
-	private List<URIish> pushURIs;
+	private final List<URIish> pushURIs;
 
-	private List<RefSpec> fetch;
+	private final List<RefSpec> fetch;
 
-	private List<RefSpec> push;
+	private final List<RefSpec> push;
 
-	private String uploadpack;
+	private final String uploadpack;
 
-	private String receivepack;
+	private final String receivepack;
 
 	private TagOpt tagopt;
 
@@ -194,23 +195,27 @@ public class RemoteConfig implements Serializable {
 		final List<String> vlst = new ArrayList<>();
 
 		vlst.clear();
-		for (URIish u : getURIs())
+		for (URIish u : getURIs()) {
 			vlst.add(u.toPrivateString());
+		}
 		rc.setStringList(SECTION, getName(), KEY_URL, vlst);
 
 		vlst.clear();
-		for (URIish u : getPushURIs())
+		for (URIish u : getPushURIs()) {
 			vlst.add(u.toPrivateString());
+		}
 		rc.setStringList(SECTION, getName(), KEY_PUSHURL, vlst);
 
 		vlst.clear();
-		for (RefSpec u : getFetchRefSpecs())
+		for (RefSpec u : getFetchRefSpecs()) {
 			vlst.add(u.toString());
+		}
 		rc.setStringList(SECTION, getName(), KEY_FETCH, vlst);
 
 		vlst.clear();
-		for (RefSpec u : getPushRefSpecs())
+		for (RefSpec u : getPushRefSpecs()) {
 			vlst.add(u.toString());
+		}
 		rc.setStringList(SECTION, getName(), KEY_PUSH, vlst);
 
 		set(rc, KEY_UPLOADPACK, getUploadPack(), DEFAULT_UPLOAD_PACK);
@@ -222,26 +227,29 @@ public class RemoteConfig implements Serializable {
 
 	private void set(final Config rc, final String key,
 			final String currentValue, final String defaultValue) {
-		if (defaultValue.equals(currentValue))
+		if (defaultValue.equals(currentValue)) {
 			unset(rc, key);
-		else
+		} else {
 			rc.setString(SECTION, getName(), key, currentValue);
+		}
 	}
 
 	private void set(final Config rc, final String key,
 			final boolean currentValue, final boolean defaultValue) {
-		if (defaultValue == currentValue)
+		if (defaultValue == currentValue) {
 			unset(rc, key);
-		else
+		} else {
 			rc.setBoolean(SECTION, getName(), key, currentValue);
+		}
 	}
 
 	private void set(final Config rc, final String key, final int currentValue,
 			final int defaultValue) {
-		if (defaultValue == currentValue)
+		if (defaultValue == currentValue) {
 			unset(rc, key);
-		else
+		} else {
 			rc.setInt(SECTION, getName(), key, currentValue);
+		}
 	}
 
 	private void unset(Config rc, String key) {
@@ -251,9 +259,11 @@ public class RemoteConfig implements Serializable {
 	private Map<String, String> getReplacements(final Config config,
 			final String keyName) {
 		final Map<String, String> replacements = new HashMap<>();
-		for (String url : config.getSubsections(KEY_URL))
-			for (String insteadOf : config.getStringList(KEY_URL, url, keyName))
+		for (String url : config.getSubsections(KEY_URL)) {
+			for (String insteadOf : config.getStringList(KEY_URL, url, keyName)) {
 				replacements.put(insteadOf, url);
+			}
+		}
 		return replacements;
 	}
 
@@ -307,8 +317,9 @@ public class RemoteConfig implements Serializable {
 	 * @return true if the URI was added; false if it already exists.
 	 */
 	public boolean addURI(URIish toAdd) {
-		if (uris.contains(toAdd))
+		if (uris.contains(toAdd)) {
 			return false;
+		}
 		return uris.add(toAdd);
 	}
 
@@ -340,8 +351,9 @@ public class RemoteConfig implements Serializable {
 	 * @return true if the URI was added; false if it already exists.
 	 */
 	public boolean addPushURI(URIish toAdd) {
-		if (pushURIs.contains(toAdd))
+		if (pushURIs.contains(toAdd)) {
 			return false;
+		}
 		return pushURIs.add(toAdd);
 	}
 
@@ -373,8 +385,9 @@ public class RemoteConfig implements Serializable {
 	 * @return true if the specification was added; false if it already exists.
 	 */
 	public boolean addFetchRefSpec(RefSpec s) {
-		if (fetch.contains(s))
+		if (fetch.contains(s)) {
 			return false;
+		}
 		return fetch.add(s);
 	}
 
@@ -430,8 +443,9 @@ public class RemoteConfig implements Serializable {
 	 * @return true if the specification was added; false if it already exists.
 	 */
 	public boolean addPushRefSpec(RefSpec s) {
-		if (push.contains(s))
+		if (push.contains(s)) {
 			return false;
+		}
 		return push.add(s);
 	}
 

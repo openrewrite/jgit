@@ -31,7 +31,7 @@ public class BinaryHunkInputStream extends InputStream {
 
 	private byte[] buffer;
 
-	private int pos = 0;
+	private int pos;
 
 	/**
 	 * Creates a new {@link BinaryHunkInputStream}.

@@ -33,8 +33,9 @@ public abstract class RepositoryEvent<T extends RepositoryListener> {
 	 *            the repository.
 	 */
 	public void setRepository(Repository r) {
-		if (repository == null)
+		if (repository == null) {
 			repository = r;
+		}
 	}
 
 	/**
@@ -66,8 +67,9 @@ public abstract class RepositoryEvent<T extends RepositoryListener> {
 	@Override
 	public String toString() {
 		String type = getClass().getSimpleName();
-		if (repository == null)
+		if (repository == null) {
 			return type;
+		}
 		return type + "[" + repository + "]";
 	}
 }

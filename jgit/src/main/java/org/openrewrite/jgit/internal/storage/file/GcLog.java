@@ -40,7 +40,7 @@ class GcLog {
 
 	private static final String LOG_EXPIRY_DEFAULT = "1.day.ago"; //$NON-NLS-1$
 
-	private boolean nonEmpty = false;
+	private boolean nonEmpty;
 
 	/**
 	 * Construct a GcLog object for a {@link FileRepository}

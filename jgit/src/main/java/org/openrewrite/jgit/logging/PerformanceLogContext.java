@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @since 5.10
  */
-public class PerformanceLogContext {
+public final class PerformanceLogContext {
 	/** Singleton instance that stores the statistics. */
 	private static final PerformanceLogContext INSTANCE = new PerformanceLogContext();
 

@@ -53,16 +53,19 @@ public class DeleteTagCommand extends GitCommand<List<String>> {
 	public List<String> call() throws GitAPIException {
 		checkCallable();
 		List<String> result = new ArrayList<>();
-		if (tags.isEmpty())
+		if (tags.isEmpty()) {
 			return result;
+		}
 		try {
 			setCallable(false);
 			for (String tagName : tags) {
-				if (tagName == null)
+				if (tagName == null) {
 					continue;
+				}
 				Ref currentRef = repo.findRef(tagName);
-				if (currentRef == null)
+				if (currentRef == null) {
 					continue;
+				}
 				String fullName = currentRef.getName();
 				RefUpdate update = repo.updateRef(fullName);
 				update.setForceUpdate(true);
@@ -81,10 +84,11 @@ public class DeleteTagCommand extends GitCommand<List<String>> {
 
 				if (ok) {
 					result.add(fullName);
-				} else
+				} else {
 					throw new JGitInternalException(MessageFormat.format(
 							JGitText.get().deleteTagUnexpectedResult,
 							deleteResult.name()));
+				}
 			}
 			return result;
 		} catch (IOException ioe) {

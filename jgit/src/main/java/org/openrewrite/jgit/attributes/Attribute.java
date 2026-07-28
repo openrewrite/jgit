@@ -73,13 +73,15 @@ public final class Attribute {
 	}
 
 	private Attribute(String key, State state, String value) {
-		if (key == null)
+		if (key == null) {
 			throw new NullPointerException(
 					"The key of an attribute should not be null"); //$NON-NLS-1$
-		if (state == null)
+		}
+		if (state == null) {
 			throw new NullPointerException(
 					"The state of an attribute should not be null"); //$NON-NLS-1$
 
+		}
 		this.key = key;
 		this.state = state;
 		this.value = value;
@@ -100,20 +102,26 @@ public final class Attribute {
 	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!(obj instanceof Attribute))
+		}
+		if (!(obj instanceof Attribute)) {
 			return false;
+		}
 		Attribute other = (Attribute) obj;
-		if (!key.equals(other.key))
+		if (!key.equals(other.key)) {
 			return false;
-		if (state != other.state)
+		}
+		if (state != other.state) {
 			return false;
+		}
 		if (value == null) {
-			if (other.value != null)
+			if (other.value != null) {
 				return false;
-		} else if (!value.equals(other.value))
+			}
+		} else if (!value.equals(other.value)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -151,8 +159,7 @@ public final class Attribute {
 		int result = 1;
 		result = prime * result + key.hashCode();
 		result = prime * result + state.hashCode();
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
+		return prime * result + (value == null ? 0 : value.hashCode());
 	}
 
 	/** {@inheritDoc} */

@@ -119,11 +119,13 @@ public class IndexDiffFilter extends TreeFilter {
 		if (di != null) {
 			DirCacheEntry dce = di.getDirCacheEntry();
 			if (dce != null) {
-				if (dce.isAssumeValid())
+				if (dce.isAssumeValid()) {
 					return false;
+				}
 				// Never filter index entries with a stage different from 0
-				if (dce.getStage() != 0)
+				if (dce.getStage() != 0) {
 					return true;
+				}
 			}
 		}
 
@@ -158,8 +160,9 @@ public class IndexDiffFilter extends TreeFilter {
 
 		// If the working tree file doesn't exist, it does exist for at least
 		// one other so include this difference.
-		if (wm == 0)
+		if (wm == 0) {
 			return true;
+		}
 
 		// If the path does not appear in the DirCache and its ignored
 		// we can avoid returning a result here, but only if its not in any
@@ -170,10 +173,12 @@ public class IndexDiffFilter extends TreeFilter {
 				ignoredPaths.add(wi.getEntryPathString());
 				int i = 0;
 				for (; i < cnt; i++) {
-					if (i == dirCache || i == workingTree)
+					if (i == dirCache || i == workingTree) {
 						continue;
-					if (tw.getRawMode(i) != FileMode.TYPE_MISSING)
+					}
+					if (tw.getRawMode(i) != FileMode.TYPE_MISSING) {
 						break;
+					}
 				}
 
 				// If i is cnt then the path does not appear in any other tree,
@@ -186,17 +191,20 @@ public class IndexDiffFilter extends TreeFilter {
 
 		// Always include subtrees as WorkingTreeIterator cannot provide
 		// efficient elimination of unmodified subtrees.
-		if (tw.isSubtree())
+		if (tw.isSubtree()) {
 			return true;
+		}
 
 		// Try the inexpensive comparisons between index and all real trees
 		// first. Only if we don't find a diff here we have to bother with
 		// the working tree
 		for (int i = 0; i < cnt; i++) {
-			if (i == dirCache || i == workingTree)
+			if (i == dirCache || i == workingTree) {
 				continue;
-			if (tw.getRawMode(i) != dm || !tw.idEqual(i, dirCache))
+			}
+			if (tw.getRawMode(i) != dm || !tw.idEqual(i, dirCache)) {
 				return true;
+			}
 		}
 
 		// Only one chance left to detect a diff: between index and working
@@ -279,8 +287,9 @@ public class IndexDiffFilter extends TreeFilter {
 		LinkedList<String> ret = new LinkedList<>(untrackedFolders);
 		if (!untrackedParentFolders.isEmpty()) {
 			String toBeAdded = untrackedParentFolders.getLast();
-			while (!ret.isEmpty() && ret.getLast().startsWith(toBeAdded))
+			while (!ret.isEmpty() && ret.getLast().startsWith(toBeAdded)) {
 				ret.removeLast();
+			}
 			ret.addLast(toBeAdded);
 		}
 		return ret;

@@ -32,8 +32,9 @@ public final class InterIndexDiffFilter extends TreeFilter {
 	@Override
 	public boolean include(TreeWalk walker) {
 		final int n = walker.getTreeCount();
-		if (n == 1) // Assume they meant difference to empty tree.
+		if (n == 1) { // Assume they meant difference to empty tree.
 			return true;
+		}
 
 		final int m = walker.getRawMode(baseTree);
 		for (int i = 1; i < n; i++) {
@@ -45,14 +46,17 @@ public final class InterIndexDiffFilter extends TreeFilter {
 				DirCacheEntry baseDci = baseDirCache.getDirCacheEntry();
 				DirCacheEntry newDci = newDirCache.getDirCacheEntry();
 				if (baseDci != null && newDci != null) {
-					if (baseDci.isAssumeValid() != newDci.isAssumeValid())
+					if (baseDci.isAssumeValid() != newDci.isAssumeValid()) {
 						return true;
-					if (baseDci.isAssumeValid()) // && newDci.isAssumeValid()
+					}
+					if (baseDci.isAssumeValid()) { // && newDci.isAssumeValid()
 						return false;
+					}
 				}
 			}
-			if (walker.getRawMode(i) != m || !walker.idEqual(i, baseTree))
+			if (walker.getRawMode(i) != m || !walker.idEqual(i, baseTree)) {
 				return true;
+			}
 		}
 		return false;
 	}

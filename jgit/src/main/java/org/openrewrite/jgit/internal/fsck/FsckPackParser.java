@@ -48,7 +48,7 @@ public class FsckPackParser extends PackParser {
 
 	private long offset;
 
-	private int blockSize;
+	private final int blockSize;
 
 	/**
 	 * Constructor for FsckPackParser

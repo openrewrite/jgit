@@ -80,32 +80,36 @@ final class DeltaWindow {
 	synchronized DeltaTask.Slice remaining() {
 		int e = end;
 		int halfRemaining = (e - cur) >>> 1;
-		if (0 == halfRemaining)
+		if (0 == halfRemaining) {
 			return null;
+		}
 
 		int split = e - halfRemaining;
 		int h = toSearch[split].getPathHash();
 
 		// Attempt to split on the next path after the 50% split point.
 		for (int n = split + 1; n < e; n++) {
-			if (h != toSearch[n].getPathHash())
+			if (h != toSearch[n].getPathHash()) {
 				return new DeltaTask.Slice(n, e);
+			}
 		}
 
 		if (h != toSearch[cur].getPathHash()) {
 			// Try to split on the path before the 50% split point.
 			// Do not split the path currently being processed.
 			for (int p = split - 1; cur < p; p--) {
-				if (h != toSearch[p].getPathHash())
+				if (h != toSearch[p].getPathHash()) {
 					return new DeltaTask.Slice(p + 1, e);
+				}
 			}
 		}
 		return null;
 	}
 
 	synchronized boolean tryStealWork(DeltaTask.Slice s) {
-		if (s.beginIndex <= cur || end <= s.beginIndex)
+		if (s.beginIndex <= cur || end <= s.beginIndex) {
 			return false;
+		}
 		end = s.beginIndex;
 		return true;
 	}
@@ -115,16 +119,18 @@ final class DeltaWindow {
 			for (;;) {
 				ObjectToPack next;
 				synchronized (this) {
-					if (end <= cur)
+					if (end <= cur) {
 						break;
+					}
 					next = toSearch[cur++];
 				}
 				if (maxMemory != 0) {
 					clear(res);
 					final long need = estimateSize(next);
 					DeltaWindowEntry n = res.next;
-					for (; maxMemory < loaded + need && n != res; n = n.next)
+					for (;maxMemory < loaded + need && n != res;n = n.next) {
 						clear(n);
+					}
 				}
 				res.set(next);
 				clearWindowOnTypeSwitch();
@@ -145,8 +151,9 @@ final class DeltaWindow {
 				}
 			}
 		} finally {
-			if (deflater != null)
+			if (deflater != null) {
 				deflater.end();
+			}
 		}
 	}
 
@@ -155,8 +162,9 @@ final class DeltaWindow {
 	}
 
 	private static long estimateIndexSize(DeltaWindowEntry ent) {
-		if (ent.buffer == null)
+		if (ent.buffer == null) {
 			return estimateSize(ent.object);
+		}
 
 		int len = ent.buffer.length;
 		return DeltaIndex.estimateIndexSize(len) - len;
@@ -172,10 +180,11 @@ final class DeltaWindow {
 	}
 
 	private void clear(DeltaWindowEntry ent) {
-		if (ent.index != null)
+		if (ent.index != null) {
 			loaded -= ent.index.getIndexSize();
-		else if (ent.buffer != null)
+		} else if (ent.buffer != null) {
 			loaded -= ent.buffer.length;
+		}
 		ent.set(null);
 	}
 
@@ -183,10 +192,12 @@ final class DeltaWindow {
 		// Loop through the window backwards, considering every entry.
 		// This lets us look at the bigger objects that came before.
 		for (DeltaWindowEntry src = res.prev; src != res; src = src.prev) {
-			if (src.empty())
+			if (src.empty()) {
 				break;
-			if (delta(src) /* == NEXT_SRC */)
+			}
+			if (delta(src) /* == NEXT_SRC */) {
 				continue;
+			}
 			bestBase = null;
 			deltaBuf = null;
 			return;
@@ -236,16 +247,19 @@ final class DeltaWindow {
 	private boolean delta(DeltaWindowEntry src)
 			throws IOException {
 		// If the sizes are radically different, this is a bad pairing.
-		if (res.size() < src.size() >>> 4)
+		if (res.size() < src.size() >>> 4) {
 			return NEXT_SRC;
+		}
 
 		int msz = deltaSizeLimit(src);
-		if (msz <= 8) // Nearly impossible to fit useful delta.
+		if (msz <= 8) { // Nearly impossible to fit useful delta.
 			return NEXT_SRC;
+		}
 
 		// If we have to insert a lot to make this work, find another.
-		if (res.size() - src.size() > msz)
+		if (res.size() - src.size() > msz) {
 			return NEXT_SRC;
+		}
 
 		DeltaIndex srcIndex;
 		try {
@@ -254,8 +268,9 @@ final class DeltaWindow {
 			// If the source is too big to work on, skip it.
 			return NEXT_SRC;
 		} catch (IOException notAvailable) {
-			if (src.object.isEdge()) // Missing edges are OK.
+			if (src.object.isEdge()) { // Missing edges are OK.
 				return NEXT_SRC;
+			}
 			throw notAvailable;
 		}
 
@@ -271,8 +286,9 @@ final class DeltaWindow {
 			OutputStream delta = msz <= (8 << 10)
 				? new ArrayStream(msz)
 				: new TemporaryBuffer.Heap(msz);
-			if (srcIndex.encode(delta, resBuf, msz))
+			if (srcIndex.encode(delta, resBuf, msz)) {
 				selectDeltaBase(src, delta);
+			}
 		} catch (IOException deltaTooBig) {
 			// Unlikely, encoder should see limit and return false.
 		}
@@ -323,10 +339,11 @@ final class DeltaWindow {
 			try {
 				byte[] zbuf = new byte[deflateBound(deltaLen)];
 				ZipStream zs = new ZipStream(deflater(), zbuf);
-				if (deltaBuf instanceof byte[])
+				if (deltaBuf instanceof byte[]) {
 					zs.write((byte[]) deltaBuf, 0, deltaLen);
-				else
+				} else {
 					((TemporaryBuffer.Heap) deltaBuf).writeTo(zs, null);
+				}
 				deltaBuf = null;
 				int len = zs.finish();
 
@@ -361,8 +378,9 @@ final class DeltaWindow {
 				e.setObjectId(ent.object);
 				throw e;
 			}
-			if (maxMemory != 0)
+			if (maxMemory != 0) {
 				loaded += idx.getIndexSize() - idx.getSourceSize();
+			}
 			ent.index = idx;
 		}
 		return idx;
@@ -375,31 +393,35 @@ final class DeltaWindow {
 			checkLoadable(ent, ent.size());
 
 			buf = PackWriter.buffer(config, reader, ent.object);
-			if (maxMemory != 0)
+			if (maxMemory != 0) {
 				loaded += buf.length;
+			}
 			ent.buffer = buf;
 		}
 		return buf;
 	}
 
 	private void checkLoadable(DeltaWindowEntry ent, long need) {
-		if (maxMemory == 0)
+		if (maxMemory == 0) {
 			return;
+		}
 
 		DeltaWindowEntry n = res.next;
 		for (; maxMemory < loaded + need; n = n.next) {
 			clear(n);
-			if (n == ent)
+			if (n == ent) {
 				throw new LargeObjectException.ExceedsLimit(
 						maxMemory, loaded + need);
+			}
 		}
 	}
 
 	private Deflater deflater() {
-		if (deflater == null)
+		if (deflater == null) {
 			deflater = new Deflater(config.getCompressionLevel());
-		else
+		} else {
 			deflater.reset();
+		}
 		return deflater;
 	}
 
@@ -418,13 +440,15 @@ final class DeltaWindow {
 		int finish() throws IOException {
 			deflater.finish();
 			for (;;) {
-				if (outPtr == zbuf.length)
+				if (outPtr == zbuf.length) {
 					throw new EOFException();
+				}
 
 				int n = deflater.deflate(zbuf, outPtr, zbuf.length - outPtr);
 				if (n == 0) {
-					if (deflater.finished())
+					if (deflater.finished()) {
 						return outPtr;
+					}
 					throw new IOException();
 				}
 				outPtr += n;
@@ -435,13 +459,15 @@ final class DeltaWindow {
 		public void write(byte[] b, int off, int len) throws IOException {
 			deflater.setInput(b, off, len);
 			for (;;) {
-				if (outPtr == zbuf.length)
+				if (outPtr == zbuf.length) {
 					throw new EOFException();
+				}
 
 				int n = deflater.deflate(zbuf, outPtr, zbuf.length - outPtr);
 				if (n == 0) {
-					if (deflater.needsInput())
+					if (deflater.needsInput()) {
 						break;
+					}
 					throw new IOException();
 				}
 				outPtr += n;
@@ -464,15 +490,17 @@ final class DeltaWindow {
 
 		@Override
 		public void write(int b) throws IOException {
-			if (cnt == buf.length)
+			if (cnt == buf.length) {
 				throw new IOException();
+			}
 			buf[cnt++] = (byte) b;
 		}
 
 		@Override
 		public void write(byte[] b, int off, int len) throws IOException {
-			if (len > buf.length - cnt)
+			if (len > buf.length - cnt) {
 				throw new IOException();
+			}
 			System.arraycopy(b, off, buf, cnt, len);
 			cnt += len;
 		}

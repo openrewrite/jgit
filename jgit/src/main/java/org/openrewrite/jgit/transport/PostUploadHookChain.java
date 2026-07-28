@@ -56,7 +56,7 @@ import org.openrewrite.jgit.storage.pack.PackStatistics;
  *
  * @since 4.1
  */
-public class PostUploadHookChain implements PostUploadHook {
+public final class PostUploadHookChain implements PostUploadHook {
 	private final List<PostUploadHook> hooks;
 
 	/**

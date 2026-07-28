@@ -153,12 +153,13 @@ public class FastIgnoreRule {
 	 * @since 4.11
 	 */
 	public boolean isMatch(String path, boolean directory, boolean pathMatch) {
-		if (path == null)
+		if (path == null) {
 			return false;
-		if (path.length() == 0)
+		}
+		if (path.length() == 0) {
 			return false;
-		boolean match = matcher.matches(path, directory, pathMatch);
-		return match;
+		}
+		return matcher.matches(path, directory, pathMatch);
 	}
 
 	/**
@@ -212,11 +213,13 @@ public class FastIgnoreRule {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (inverse)
+		if (inverse) {
 			sb.append('!');
+		}
 		sb.append(matcher);
-		if (dirOnly)
+		if (dirOnly) {
 			sb.append(PATH_SEPARATOR);
+		}
 		return sb.toString();
 
 	}
@@ -228,23 +231,26 @@ public class FastIgnoreRule {
 		int result = 1;
 		result = prime * result + (inverse ? 1231 : 1237);
 		result = prime * result + (dirOnly ? 1231 : 1237);
-		result = prime * result + ((matcher == null) ? 0 : matcher.hashCode());
-		return result;
+		return prime * result + (matcher == null ? 0 : matcher.hashCode());
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!(obj instanceof FastIgnoreRule))
+		}
+		if (!(obj instanceof FastIgnoreRule)) {
 			return false;
+		}
 
 		FastIgnoreRule other = (FastIgnoreRule) obj;
-		if (inverse != other.inverse)
+		if (inverse != other.inverse) {
 			return false;
-		if (dirOnly != other.dirOnly)
+		}
+		if (dirOnly != other.dirOnly) {
 			return false;
+		}
 		return matcher.equals(other.matcher);
 	}
 }

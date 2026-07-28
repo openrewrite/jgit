@@ -136,8 +136,9 @@ public class RawText extends Sequence {
 			throws IOException {
 		int start = getStart(i);
 		int end = getEnd(i);
-		if (content[end - 1] == '\n')
+		if (content[end - 1] == '\n') {
 			end--;
+		}
 		out.write(content, start, end - start);
 	}
 
@@ -148,8 +149,9 @@ public class RawText extends Sequence {
 	 */
 	public boolean isMissingNewlineAtEnd() {
 		final int end = lines.get(lines.size() - 1);
-		if (end == 0)
+		if (end == 0) {
 			return true;
+		}
 		return content[end - 1] != '\n';
 	}
 
@@ -200,13 +202,15 @@ public class RawText extends Sequence {
 	 * @return the text for lines {@code [begin, end)}.
 	 */
 	public String getString(int begin, int end, boolean dropLF) {
-		if (begin == end)
+		if (begin == end) {
 			return ""; //$NON-NLS-1$
 
+		}
 		int s = getStart(begin);
 		int e = getEnd(end - 1);
-		if (dropLF && content[e - 1] == '\n')
+		if (dropLF && content[e - 1] == '\n') {
 			e--;
+		}
 		return decode(s, e);
 	}
 
@@ -267,8 +271,9 @@ public class RawText extends Sequence {
 		int cnt = 0;
 		while (cnt < buffer.length) {
 			final int n = raw.read(buffer, cnt, buffer.length - cnt);
-			if (n == -1)
+			if (n == -1) {
 				break;
+			}
 			cnt += n;
 		}
 		return isBinary(buffer, cnt);
@@ -288,11 +293,14 @@ public class RawText extends Sequence {
 	 */
 	public static boolean isBinary(byte[] raw, int length) {
 		// Same heuristic as C Git
-		if (length > FIRST_FEW_BYTES)
+		if (length > FIRST_FEW_BYTES) {
 			length = FIRST_FEW_BYTES;
-		for (int ptr = 0; ptr < length; ptr++)
-			if (raw[ptr] == '\0')
+		}
+		for (int ptr = 0;ptr < length;ptr++) {
+			if (raw[ptr] == '\0') {
 				return true;
+			}
+		}
 
 		return false;
 	}

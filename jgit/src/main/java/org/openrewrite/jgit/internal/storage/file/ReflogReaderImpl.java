@@ -28,7 +28,7 @@ import org.openrewrite.jgit.util.RawParseUtils;
  * Utility for reading reflog entries
  */
 class ReflogReaderImpl implements ReflogReader {
-	private File logName;
+	private final File logName;
 
 	/**
 	 * @param db
@@ -62,8 +62,9 @@ class ReflogReaderImpl implements ReflogReader {
 	/** {@inheritDoc} */
 	@Override
 	public ReflogEntry getReverseEntry(int number) throws IOException {
-		if (number < 0)
+		if (number < 0) {
 			throw new IllegalArgumentException();
+		}
 
 		final byte[] log;
 		try {
@@ -79,8 +80,9 @@ class ReflogReaderImpl implements ReflogReader {
 		int current = 0;
 		while (rs >= 0) {
 			rs = RawParseUtils.prevLF(log, rs);
-			if (number == current)
+			if (number == current) {
 				return new ReflogEntryImpl(log, rs < 0 ? 0 : rs + 2);
+			}
 			current++;
 		}
 		return null;

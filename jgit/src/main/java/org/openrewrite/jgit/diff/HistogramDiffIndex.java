@@ -88,7 +88,7 @@ final class HistogramDiffIndex<S extends Sequence> {
 	 * are converted to array indexes by subtracting {@link #ptrShift}, which is
 	 * just a cached version of {@code region.beginA}.
 	 */
-	private int[] next;
+	private final int[] next;
 
 	/**
 	 * For element {@code ptr} in A, index of the record in {@link #recs} array.
@@ -100,10 +100,10 @@ final class HistogramDiffIndex<S extends Sequence> {
 	 * sequence A. This index provides constant-time access to the record, and
 	 * avoids needing to scan the hash chain.
 	 */
-	private int[] recIdx;
+	private final int[] recIdx;
 
 	/** Value to subtract from element indexes to key {@link #next} array. */
-	private int ptrShift;
+	private final int ptrShift;
 
 	private Edit lcs;
 
@@ -119,9 +119,10 @@ final class HistogramDiffIndex<S extends Sequence> {
 		this.b = b;
 		this.region = r;
 
-		if (region.endA >= MAX_PTR)
+		if (region.endA >= MAX_PTR) {
 			throw new IllegalArgumentException(
 					JGitText.get().sequenceTooLargeForDiffAlgorithm);
+		}
 
 		final int sz = r.getLengthA();
 		final int tableBits = tableBits(sz);
@@ -135,14 +136,16 @@ final class HistogramDiffIndex<S extends Sequence> {
 	}
 
 	Edit findLongestCommonSequence() {
-		if (!scanA())
+		if (!scanA()) {
 			return null;
+		}
 
 		lcs = new Edit(0, 0);
 		cnt = maxChainLength + 1;
 
-		for (int bPtr = region.beginB; bPtr < region.endB;)
+		for (int bPtr = region.beginB;bPtr < region.endB;) {
 			bPtr = tryLongestCommonSequence(bPtr);
+		}
 
 		return hasCommon && maxChainLength < cnt ? null : lcs;
 	}
@@ -164,8 +167,9 @@ final class HistogramDiffIndex<S extends Sequence> {
 					// the front of the existing element chain.
 					//
 					int newCnt = recCnt(rec) + 1;
-					if (MAX_CNT < newCnt)
+					if (MAX_CNT < newCnt) {
 						newCnt = MAX_CNT;
+					}
 					recs[rIdx] = recCreate(recNext(rec), ptr, newCnt);
 					next[ptr - ptrShift] = recPtr(rec);
 					recIdx[ptr - ptrShift] = rIdx;
@@ -176,8 +180,9 @@ final class HistogramDiffIndex<S extends Sequence> {
 				chainLen++;
 			}
 
-			if (chainLen == maxChainLength)
+			if (chainLen == maxChainLength) {
 				return false;
+			}
 
 			// This is the first time we have ever seen this particular
 			// element in the sequence. Construct a new chain for it.
@@ -205,14 +210,16 @@ final class HistogramDiffIndex<S extends Sequence> {
 
 			// If there are more occurrences in A, don't use this chain.
 			if (recCnt(rec) > cnt) {
-				if (!hasCommon)
+				if (!hasCommon) {
 					hasCommon = cmp.equals(a, recPtr(rec), b, bPtr);
+				}
 				continue;
 			}
 
 			int as = recPtr(rec);
-			if (!cmp.equals(a, as, b, bPtr))
+			if (!cmp.equals(a, as, b, bPtr)) {
 				continue;
+			}
 
 			hasCommon = true;
 			TRY_LOCATIONS: for (;;) {
@@ -226,19 +233,22 @@ final class HistogramDiffIndex<S extends Sequence> {
 						&& cmp.equals(a, as - 1, b, bs - 1)) {
 					as--;
 					bs--;
-					if (1 < rc)
+					if (1 < rc) {
 						rc = Math.min(rc, recCnt(recs[recIdx[as - ptrShift]]));
+					}
 				}
 				while (ae < region.endA && be < region.endB
 						&& cmp.equals(a, ae, b, be)) {
-					if (1 < rc)
+					if (1 < rc) {
 						rc = Math.min(rc, recCnt(recs[recIdx[ae - ptrShift]]));
+					}
 					ae++;
 					be++;
 				}
 
-				if (bNext < be)
+				if (bNext < be) {
 					bNext = be;
+				}
 				if (lcs.getLengthA() < ae - as || rc < cnt) {
 					// If this region is the longest, or there are less
 					// occurrences of it in A, its now our LCS.
@@ -255,16 +265,18 @@ final class HistogramDiffIndex<S extends Sequence> {
 				// element of the sequence and thus would have been the
 				// value of as at the start of the TRY_LOCATIONS loop.
 				//
-				if (np == 0)
+				if (np == 0) {
 					break TRY_LOCATIONS;
+				}
 
 				while (np < ae) {
 					// The next location to consider was actually within
 					// the LCS we examined above. Don't reconsider it.
 					//
 					np = next[np - ptrShift];
-					if (np == 0)
+					if (np == 0) {
 						break TRY_LOCATIONS;
+					}
 				}
 
 				as = np;
@@ -297,10 +309,12 @@ final class HistogramDiffIndex<S extends Sequence> {
 
 	private static int tableBits(int sz) {
 		int bits = 31 - Integer.numberOfLeadingZeros(sz);
-		if (bits == 0)
+		if (bits == 0) {
 			bits = 1;
-		if (1 << bits < sz)
+		}
+		if (1 << bits < sz) {
 			bits++;
+		}
 		return bits;
 	}
 }

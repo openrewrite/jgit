@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Cache of active {@link org.openrewrite.jgit.lib.Repository} instances.
  */
-public class RepositoryCache {
+public final class RepositoryCache {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(RepositoryCache.class);
 
@@ -408,8 +408,9 @@ public class RepositoryCache {
 
 		@Override
 		public Repository open(boolean mustExist) throws IOException {
-			if (mustExist && !isGitRepository(path, fs))
+			if (mustExist && !isGitRepository(path, fs)) {
 				throw new RepositoryNotFoundException(path);
+			}
 			return new FileRepository(path);
 		}
 
@@ -460,10 +461,12 @@ public class RepositoryCache {
 			try {
 				final byte[] buf = IO.readFully(head, 4096);
 				int n = buf.length;
-				if (n == 0)
+				if (n == 0) {
 					return null;
-				if (buf[n - 1] == '\n')
+				}
+				if (buf[n - 1] == '\n') {
 					n--;
+				}
 				return RawParseUtils.decode(buf, 0, n);
 			} catch (IOException e) {
 				return null;
@@ -490,15 +493,18 @@ public class RepositoryCache {
 		 *         null if there is no suitable match.
 		 */
 		public static File resolve(File directory, FS fs) {
-			if (isGitRepository(directory, fs))
+			if (isGitRepository(directory, fs)) {
 				return directory;
-			if (isGitRepository(new File(directory, Constants.DOT_GIT), fs))
+			}
+			if (isGitRepository(new File(directory, Constants.DOT_GIT), fs)) {
 				return new File(directory, Constants.DOT_GIT);
+			}
 
 			final String name = directory.getName();
 			final File parent = directory.getParentFile();
-			if (isGitRepository(new File(parent, name + Constants.DOT_GIT_EXT), fs))
+			if (isGitRepository(new File(parent, name + Constants.DOT_GIT_EXT), fs)) {
 				return new File(parent, name + Constants.DOT_GIT_EXT);
+			}
 			return null;
 		}
 	}

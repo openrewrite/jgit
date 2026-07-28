@@ -93,17 +93,19 @@ class StartGenerator extends Generator {
 
 		final DateRevQueue pending;
 		int pendingOutputType = 0;
-		if (q instanceof DateRevQueue)
-			pending = (DateRevQueue)q;
-		else
+		if (q instanceof DateRevQueue) {
+			pending = (DateRevQueue) q;
+		} else {
 			pending = new DateRevQueue(q);
+		}
 		if (tf != TreeFilter.ALL) {
 			int rewriteFlag;
 			if (w.getRewriteParents()) {
 				pendingOutputType |= HAS_REWRITE | NEEDS_REWRITE;
 				rewriteFlag = RevWalk.REWRITE;
-			} else
+			} else {
 				rewriteFlag = 0;
+			}
 			rf = AndRevFilter.create(new TreeRevFilter(w, tf, rewriteFlag), rf);
 		}
 
@@ -147,19 +149,21 @@ class StartGenerator extends Generator {
 				&& (g.outputType() & SORT_TOPO) == 0) {
 			g = new TopoNonIntermixSortGenerator(g);
 		}
-		if (walker.hasRevSort(RevSort.REVERSE))
+		if (walker.hasRevSort(RevSort.REVERSE)) {
 			g = new LIFORevQueue(g);
-		if (boundary)
+		}
+		if (boundary) {
 			g = new BoundaryGenerator(w, g);
-		else if (uninteresting) {
+		} else if (uninteresting) {
 			// Try to protect ourselves from uninteresting commits producing
 			// due to clock skew in the commit time stamps. Delay such that
 			// we have a chance at coloring enough of the graph correctly,
 			// and then strip any UNINTERESTING nodes that may have leaked
 			// through early.
 			//
-			if (pending.peek() != null)
+			if (pending.peek() != null) {
 				g = new DelayRevQueue(g);
+			}
 			g = new FixUninterestingGenerator(g);
 		}
 

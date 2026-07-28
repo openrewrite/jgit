@@ -128,10 +128,12 @@ public class BundleWriter {
 	 */
 	public void include(String name, AnyObjectId id) {
 		boolean validRefName = Repository.isValidRefName(name) || Constants.HEAD.equals(name);
-		if (!validRefName)
+		if (!validRefName) {
 			throw new IllegalArgumentException(MessageFormat.format(JGitText.get().invalidRefName, name));
-		if (include.containsKey(name))
+		}
+		if (include.containsKey(name)) {
 			throw new IllegalStateException(JGitText.get().duplicateRef + name);
+		}
 		include.put(name, id.toObjectId());
 	}
 
@@ -147,12 +149,12 @@ public class BundleWriter {
 	public void include(Ref r) {
 		include(r.getName(), r.getObjectId());
 
-		if (r.getPeeledObjectId() != null)
+		if (r.getPeeledObjectId() != null) {
 			tagTargets.add(r.getPeeledObjectId());
-
-		else if (r.getObjectId() != null
-				&& r.getName().startsWith(Constants.R_HEADS))
+		} else if (r.getObjectId() != null
+				&& r.getName().startsWith(Constants.R_HEADS)) {
 			tagTargets.add(r.getObjectId());
+		}
 	}
 
 	/**
@@ -188,8 +190,9 @@ public class BundleWriter {
 	 *            debugging information available in the bundle stream.
 	 */
 	public void assume(RevCommit c) {
-		if (c != null)
+		if (c != null) {
 			assume.add(c);
+		}
 	}
 
 	/**

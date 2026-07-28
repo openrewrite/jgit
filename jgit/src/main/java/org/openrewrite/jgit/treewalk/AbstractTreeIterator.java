@@ -155,8 +155,9 @@ public abstract class AbstractTreeIterator {
 			pathLen = b.limit();
 			path = new byte[Math.max(DEFAULT_PATH_SIZE, pathLen + 1)];
 			b.get(path, 0, pathLen);
-			if (path[pathLen - 1] != '/')
+			if (path[pathLen - 1] != '/') {
 				path[pathLen++] = '/';
+			}
 			pathOffset = pathLen;
 		} else {
 			path = new byte[DEFAULT_PATH_SIZE];
@@ -186,8 +187,9 @@ public abstract class AbstractTreeIterator {
 			pathLen = prefix.length;
 			path = new byte[Math.max(DEFAULT_PATH_SIZE, pathLen + 1)];
 			System.arraycopy(prefix, 0, path, 0, pathLen);
-			if (path[pathLen - 1] != '/')
+			if (path[pathLen - 1] != '/') {
 				path[pathLen++] = '/';
+			}
 			pathOffset = pathLen;
 		} else {
 			path = new byte[DEFAULT_PATH_SIZE];
@@ -255,13 +257,15 @@ public abstract class AbstractTreeIterator {
 	 *            the amount of live bytes in path buffer
 	 */
 	protected void ensurePathCapacity(int capacity, int len) {
-		if (path.length >= capacity)
+		if (path.length >= capacity) {
 			return;
+		}
 		final byte[] o = path;
 		int current = o.length;
 		int newCapacity = current;
-		while (newCapacity < capacity && newCapacity > 0)
+		while (newCapacity < capacity && newCapacity > 0) {
 			newCapacity <<= 1;
+		}
 		setPathCapacity(newCapacity, len);
 	}
 
@@ -277,8 +281,9 @@ public abstract class AbstractTreeIterator {
 		final byte[] o = path;
 		final byte[] n = new byte[capacity];
 		System.arraycopy(o, 0, n, 0, len);
-		for (AbstractTreeIterator p = this; p != null && p.path == o; p = p.parent)
+		for (AbstractTreeIterator p = this;p != null && p.path == o;p = p.parent) {
 			p.path = n;
+		}
 	}
 
 	/**
@@ -367,10 +372,12 @@ public abstract class AbstractTreeIterator {
 		for (;;) {
 			final AbstractTreeIterator ap = a.parent;
 			final AbstractTreeIterator bp = b.parent;
-			if (ap == null || bp == null)
+			if (ap == null || bp == null) {
 				return 0;
-			if (ap.matches == bp.matches)
+			}
+			if (ap.matches == bp.matches) {
 				return a.pathOffset;
+			}
 			a = ap;
 			b = bp;
 		}
@@ -478,8 +485,9 @@ public abstract class AbstractTreeIterator {
 		int hash = 0;
 		for (int i = Math.max(0, pathLen - 16); i < pathLen; i++) {
 			byte c = path[i];
-			if (c != ' ')
+			if (c != ' ') {
 				hash = (hash >>> 2) + (c << 24);
+			}
 		}
 		return hash;
 	}
@@ -571,8 +579,9 @@ public abstract class AbstractTreeIterator {
 	 *             the tree is invalid.
 	 */
 	public void reset() throws CorruptObjectException {
-		while (!first())
+		while (!first()) {
 			back(1);
+		}
 	}
 
 	/**

@@ -10,10 +10,9 @@
 
 package org.openrewrite.jgit.internal.storage.file;
 
+import com.googlecode.javaewah.EWAHCompressedBitmap;
 import org.openrewrite.jgit.lib.AnyObjectId;
 import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
-
-import com.googlecode.javaewah.EWAHCompressedBitmap;
 
 /**
  * Base implementation of the PackBitmapIndex.
@@ -75,8 +74,9 @@ abstract class BasePackBitmapIndex extends PackBitmapIndex {
 		EWAHCompressedBitmap getBitmapWithoutCaching() {
 			// Fast path to immediately return the expanded result.
 			Object r = bitmapContainer;
-			if (r instanceof EWAHCompressedBitmap)
+			if (r instanceof EWAHCompressedBitmap) {
 				return (EWAHCompressedBitmap) r;
+			}
 
 			// Expand the bitmap but not cache the result.
 			XorCompressedBitmap xb = (XorCompressedBitmap) r;

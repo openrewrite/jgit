@@ -38,7 +38,7 @@ public class RevObjectList<E extends RevObject> extends AbstractList<E> {
 	protected Block contents = new Block(0);
 
 	/** Current number of elements in the list. */
-	protected int size = 0;
+	protected int size;
 
 	/**
 	 * Create an empty object list.
@@ -50,10 +50,11 @@ public class RevObjectList<E extends RevObject> extends AbstractList<E> {
 	/** {@inheritDoc} */
 	@Override
 	public void add(int index, E element) {
-		if (index != size)
+		if (index != size) {
 			throw new UnsupportedOperationException(MessageFormat.format(
 					JGitText.get().unsupportedOperationNotAddAtEnd,
 					Integer.valueOf(index)));
+		}
 		set(index, element);
 		size++;
 	}
@@ -71,8 +72,9 @@ public class RevObjectList<E extends RevObject> extends AbstractList<E> {
 		while (s.shift > 0) {
 			final int i = index >> s.shift;
 			index -= i << s.shift;
-			if (s.contents[i] == null)
+			if (s.contents[i] == null) {
 				s.contents[i] = new Block(s.shift - BLOCK_SHIFT);
+			}
 			s = (Block) s.contents[i];
 		}
 		final Object old = s.contents[index];
@@ -85,8 +87,9 @@ public class RevObjectList<E extends RevObject> extends AbstractList<E> {
 	@SuppressWarnings("unchecked")
 	public E get(int index) {
 		Block s = contents;
-		if (index >> s.shift >= 1024)
+		if (index >> s.shift >= 1024) {
 			return null;
+		}
 		while (s != null && s.shift > 0) {
 			final int i = index >> s.shift;
 			index -= i << s.shift;

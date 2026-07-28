@@ -71,15 +71,18 @@ class BaseSearch {
 	void addBase(int objectType, byte[] pathBuf, int pathLen, int pathHash)
 			throws IOException {
 		final int tailMode = modeForType(objectType);
-		if (tailMode == 0)
+		if (tailMode == 0) {
 			return;
+		}
 
-		if (!alreadyProcessed.add(pathHash))
+		if (!alreadyProcessed.add(pathHash)) {
 			return;
+		}
 
 		if (pathLen == 0) {
-			for (ObjectId root : baseTrees)
+			for (ObjectId root : baseTrees) {
 				add(root, OBJ_TREE, pathHash);
+			}
 			return;
 		}
 
@@ -99,8 +102,9 @@ class BaseSearch {
 					continue;
 				}
 
-				if (cmp > 0)
+				if (cmp > 0) {
 					continue CHECK_BASE;
+				}
 
 				if (end == pathLen) {
 					if (parser.getEntryFileMode().getObjectType() == objectType) {
@@ -110,8 +114,9 @@ class BaseSearch {
 					continue CHECK_BASE;
 				}
 
-				if (!FileMode.TREE.equals(parser.getEntryRawMode()))
+				if (!FileMode.TREE.equals(parser.getEntryRawMode())) {
 					continue CHECK_BASE;
+				}
 
 				ptr = end + 1;
 				end = nextSlash(pathBuf, ptr, pathLen);
@@ -137,8 +142,9 @@ class BaseSearch {
 	}
 
 	private static int nextSlash(byte[] pathBuf, int ptr, int end) {
-		while (ptr < end && pathBuf[ptr] != '/')
+		while (ptr < end && pathBuf[ptr] != '/') {
 			ptr++;
+		}
 		return ptr;
 	}
 
@@ -156,8 +162,9 @@ class BaseSearch {
 	private byte[] readTree(AnyObjectId id) throws MissingObjectException,
 			IncorrectObjectTypeException, IOException {
 		TreeWithData tree = treeCache.get(id);
-		if (tree != null)
+		if (tree != null) {
 			return tree.buf;
+		}
 
 		ObjectLoader ldr = reader.open(id, OBJ_TREE);
 		byte[] buf = ldr.getCachedBytes(Integer.MAX_VALUE);

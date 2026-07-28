@@ -57,8 +57,9 @@ public class LongList {
 	 *             the index outside the valid range
 	 */
 	public long get(int i) {
-		if (count <= i)
+		if (count <= i) {
 			throw new ArrayIndexOutOfBoundsException(i);
+		}
 		return entries[i];
 	}
 
@@ -70,9 +71,11 @@ public class LongList {
 	 * @return true of {@code value} appears in this list.
 	 */
 	public boolean contains(long value) {
-		for (int i = 0; i < count; i++)
-			if (entries[i] == value)
+		for (int i = 0;i < count;i++) {
+			if (entries[i] == value) {
 				return true;
+			}
+		}
 		return false;
 	}
 
@@ -90,8 +93,9 @@ public class LongList {
 	 *            the number to add.
 	 */
 	public void add(long n) {
-		if (count == entries.length)
+		if (count == entries.length) {
 			grow();
+		}
 		entries[count++] = n;
 	}
 
@@ -104,12 +108,13 @@ public class LongList {
 	 *            value to store at the position.
 	 */
 	public void set(int index, long n) {
-		if (count < index)
+		if (count < index) {
 			throw new ArrayIndexOutOfBoundsException(index);
-		else if (count == index)
+		} else if (count == index) {
 			add(n);
-		else
+		} else {
 			entries[index] = n;
+		}
 	}
 
 	/**
@@ -123,8 +128,9 @@ public class LongList {
 	 *            value to insert into padded positions.
 	 */
 	public void fillTo(int toIndex, long val) {
-		while (count < toIndex)
+		while (count < toIndex) {
 			add(val);
+		}
 	}
 
 	/**
@@ -146,8 +152,9 @@ public class LongList {
 		final StringBuilder r = new StringBuilder();
 		r.append('[');
 		for (int i = 0; i < count; i++) {
-			if (i > 0)
+			if (i > 0) {
 				r.append(", "); //$NON-NLS-1$
+			}
 			r.append(entries[i]);
 		}
 		r.append(']');

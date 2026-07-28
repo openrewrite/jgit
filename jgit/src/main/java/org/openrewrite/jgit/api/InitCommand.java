@@ -56,40 +56,46 @@ public class InitCommand implements Callable<Git> {
 	public Git call() throws GitAPIException {
 		try {
 			RepositoryBuilder builder = new RepositoryBuilder();
-			if (bare)
+			if (bare) {
 				builder.setBare();
+			}
 			if (fs != null) {
 				builder.setFS(fs);
 			}
 			builder.readEnvironment();
-			if (gitDir != null)
+			if (gitDir != null) {
 				builder.setGitDir(gitDir);
-			else
+			} else {
 				gitDir = builder.getGitDir();
+			}
 			if (directory != null) {
-				if (bare)
+				if (bare) {
 					builder.setGitDir(directory);
-				else {
+				} else {
 					builder.setWorkTree(directory);
-					if (gitDir == null)
+					if (gitDir == null) {
 						builder.setGitDir(new File(directory, Constants.DOT_GIT));
+					}
 				}
 			} else if (builder.getGitDir() == null) {
 				String dStr = SystemReader.getInstance()
 						.getProperty("user.dir"); //$NON-NLS-1$
-				if (dStr == null)
+				if (dStr == null) {
 					dStr = "."; //$NON-NLS-1$
+				}
 				File d = new File(dStr);
-				if (!bare)
+				if (!bare) {
 					d = new File(d, Constants.DOT_GIT);
+				}
 				builder.setGitDir(d);
 			} else {
 				// directory was not set but gitDir was set
 				if (!bare) {
 					String dStr = SystemReader.getInstance().getProperty(
 							"user.dir"); //$NON-NLS-1$
-					if (dStr == null)
+					if (dStr == null) {
 						dStr = "."; //$NON-NLS-1$
+					}
 					builder.setWorkTree(new File(dStr));
 				}
 			}
@@ -99,8 +105,9 @@ public class InitCommand implements Callable<Git> {
 							ConfigConstants.CONFIG_KEY_DEFAULT_BRANCH)
 					: initialBranch);
 			Repository repository = builder.build();
-			if (!repository.getObjectDatabase().exists())
+			if (!repository.getObjectDatabase().exists()) {
 				repository.create(bare);
+			}
 			return new Git(repository, true);
 		} catch (IOException | ConfigInvalidException e) {
 			throw new JGitInternalException(e.getMessage(), e);
@@ -151,15 +158,17 @@ public class InitCommand implements Callable<Git> {
 			throws IllegalStateException {
 		if (directory != null) {
 			if (bare) {
-				if (gitDir != null && !gitDir.equals(directory))
+				if (gitDir != null && !gitDir.equals(directory)) {
 					throw new IllegalStateException(MessageFormat.format(
 							JGitText.get().initFailedBareRepoDifferentDirs,
 							gitDir, directory));
+				}
 			} else {
-				if (gitDir != null && gitDir.equals(directory))
+				if (gitDir != null && gitDir.equals(directory)) {
 					throw new IllegalStateException(MessageFormat.format(
 							JGitText.get().initFailedNonBareRepoSameDirs,
 							gitDir, directory));
+				}
 			}
 		}
 	}

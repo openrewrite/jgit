@@ -89,8 +89,9 @@ class Region {
 		StringBuilder buf = new StringBuilder();
 		Region r = this;
 		do {
-			if (r != this)
+			if (r != this) {
 				buf.append(',');
+			}
 			buf.append(r.resultStart);
 			buf.append('-');
 			buf.append(r.resultStart + r.length);

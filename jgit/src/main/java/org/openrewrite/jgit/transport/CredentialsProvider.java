@@ -62,9 +62,11 @@ public abstract class CredentialsProvider {
 	 * @since 4.2
 	 */
 	protected static boolean isAnyNull(CredentialItem... items) {
-		for (CredentialItem i : items)
-			if (i == null)
+		for (CredentialItem i : items) {
+			if (i == null) {
 				return true;
+			}
+		}
 		return false;
 	}
 

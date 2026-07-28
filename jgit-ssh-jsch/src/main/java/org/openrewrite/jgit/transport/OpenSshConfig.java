@@ -18,11 +18,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.jcraft.jsch.ConfigRepository;
 import org.openrewrite.jgit.internal.transport.ssh.OpenSshConfigFile;
 import org.openrewrite.jgit.internal.transport.ssh.OpenSshConfigFile.HostEntry;
 import org.openrewrite.jgit.util.FS;
-
-import com.jcraft.jsch.ConfigRepository;
 
 /**
  * Fairly complete configuration parser for the OpenSSH ~/.ssh/config file.
@@ -66,16 +65,17 @@ public class OpenSshConfig implements ConfigRepository {
 	 */
 	public static OpenSshConfig get(FS fs) {
 		File home = fs.userHome();
-		if (home == null)
+		if (home == null) {
 			home = new File(".").getAbsoluteFile(); //$NON-NLS-1$
 
+		}
 		final File config = new File(new File(home, SshConstants.SSH_DIR),
 				SshConstants.CONFIG);
 		return new OpenSshConfig(home, config);
 	}
 
 	/** The base file. */
-	private OpenSshConfigFile configFile;
+	private final OpenSshConfigFile configFile;
 
 	OpenSshConfig(File h, File cfg) {
 		configFile = new OpenSshConfigFile(h, cfg,
@@ -287,8 +287,8 @@ public class OpenSshConfig implements ConfigRepository {
 					public String getValue(String key) {
 						// See com.jcraft.jsch.OpenSSHConfig.MyConfig.getValue()
 						// for this special case.
-						if (key.equals("compression.s2c") //$NON-NLS-1$
-								|| key.equals("compression.c2s")) { //$NON-NLS-1$
+						if ("compression.s2c".equals(key) //$NON-NLS-1$
+								|| "compression.c2s".equals(key)) { //$NON-NLS-1$
 							if (!OpenSshConfigFile.flag(
 									Host.this.entry.getValue(mapKey(key)))) {
 								return "none,zlib@openssh.com,zlib"; //$NON-NLS-1$

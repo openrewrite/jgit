@@ -58,16 +58,18 @@ public class ThreadSafeProgressMonitor implements ProgressMonitor {
 	/** {@inheritDoc} */
 	@Override
 	public void start(int totalTasks) {
-		if (!isMainThread())
+		if (!isMainThread()) {
 			throw new IllegalStateException();
+		}
 		pm.start(totalTasks);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public void beginTask(String title, int totalWork) {
-		if (!isMainThread())
+		if (!isMainThread()) {
 			throw new IllegalStateException();
+		}
 		pm.beginTask(title, totalWork);
 	}
 
@@ -92,8 +94,9 @@ public class ThreadSafeProgressMonitor implements ProgressMonitor {
 	 * Notify the monitor a worker is finished.
 	 */
 	public void endWorker() {
-		if (workers.decrementAndGet() == 0)
+		if (workers.decrementAndGet() == 0) {
 			process.release();
+		}
 	}
 
 	/**
@@ -128,15 +131,17 @@ public class ThreadSafeProgressMonitor implements ProgressMonitor {
 
 	private void doUpdates() {
 		int cnt = pendingUpdates.getAndSet(0);
-		if (0 < cnt)
+		if (0 < cnt) {
 			pm.update(cnt);
+		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public void update(int completed) {
-		if (0 == pendingUpdates.getAndAdd(completed))
+		if (0 == pendingUpdates.getAndAdd(completed)) {
 			process.release();
+		}
 	}
 
 	/** {@inheritDoc} */
@@ -153,8 +158,9 @@ public class ThreadSafeProgressMonitor implements ProgressMonitor {
 	/** {@inheritDoc} */
 	@Override
 	public void endTask() {
-		if (!isMainThread())
+		if (!isMainThread()) {
 			throw new IllegalStateException();
+		}
 		pm.endTask();
 	}
 

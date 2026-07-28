@@ -18,7 +18,7 @@ import org.openrewrite.jgit.revwalk.RevCommit;
 /**
  * The result of a {@link org.openrewrite.jgit.api.RebaseCommand} execution
  */
-public class RebaseResult {
+public final class RebaseResult {
 	/**
 	 * The overall status
 	 */

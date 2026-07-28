@@ -65,7 +65,7 @@ import org.openrewrite.jgit.internal.JGitText;
  * @author Robert Harder
  * @author rob@iharder.net
  */
-public class Base64 {
+public final class Base64 {
 	/** The equals sign (=) as a byte. */
 	private static final byte EQUALS_SIGN = (byte) '=';
 
@@ -98,8 +98,9 @@ public class Base64 {
 		DEC = new byte[128];
 		Arrays.fill(DEC, INVALID_DEC);
 
-		for (int i = 0; i < 64; i++)
+		for (int i = 0;i < 64;i++) {
 			DEC[ENC[i]] = (byte) i;
+		}
 		DEC[EQUALS_SIGN] = EQUALS_SIGN_DEC;
 
 		DEC['\t'] = WHITE_SPACE_DEC;
@@ -144,10 +145,12 @@ public class Base64 {
 		switch (numSigBytes) {
 		case 3:
 			inBuff |= (source[srcOffset + 2] << 24) >>> 24;
+			break;
 			//$FALL-THROUGH$
 
 		case 2:
 			inBuff |= (source[srcOffset + 1] << 24) >>> 16;
+			break;
 			//$FALL-THROUGH$
 
 		case 1:
@@ -159,7 +162,7 @@ public class Base64 {
 			destination[destOffset] = ENC[(inBuff >>> 18)];
 			destination[destOffset + 1] = ENC[(inBuff >>> 12) & 0x3f];
 			destination[destOffset + 2] = ENC[(inBuff >>> 6) & 0x3f];
-			destination[destOffset + 3] = ENC[(inBuff) & 0x3f];
+			destination[destOffset + 3] = ENC[inBuff & 0x3f];
 			break;
 
 		case 2:
@@ -208,8 +211,9 @@ public class Base64 {
 		int e = 0;
 		int len2 = len - 2;
 
-		for (; d < len2; d += 3, e += 4)
+		for (;d < len2;d += 3, e += 4) {
 			encode3to4(source, d + off, 3, outBuff, e);
+		}
 
 		if (d < len) {
 			encode3to4(source, d + off, len - d, outBuff, e);
@@ -265,7 +269,7 @@ public class Base64 {
 			int outBuff = ((DEC[source[srcOffset]] & 0xFF) << 18)
 					| ((DEC[source[srcOffset + 1]] & 0xFF) << 12)
 					| ((DEC[source[srcOffset + 2]] & 0xFF) << 6)
-					| ((DEC[source[srcOffset + 3]] & 0xFF));
+					| (DEC[source[srcOffset + 3]] & 0xFF);
 
 			destination[destOffset] = (byte) (outBuff >> 16);
 			destination[destOffset + 1] = (byte) (outBuff >> 8);
@@ -306,18 +310,21 @@ public class Base64 {
 					b4Posn = 0;
 
 					// If that was the equals sign, break out of 'for' loop
-					if (sbiCrop == EQUALS_SIGN)
+					if (sbiCrop == EQUALS_SIGN) {
 						break;
+					}
 				}
 
-			} else if (sbiDecode != WHITE_SPACE_DEC)
+			} else if (sbiDecode != WHITE_SPACE_DEC) {
 				throw new IllegalArgumentException(MessageFormat.format(
 						JGitText.get().badBase64InputCharacterAt,
 						Integer.valueOf(i), Integer.valueOf(source[i] & 0xff)));
+			}
 		}
 
-		if (outBuff.length == outBuffPosn)
+		if (outBuff.length == outBuffPosn) {
 			return outBuff;
+		}
 
 		byte[] out = new byte[outBuffPosn];
 		System.arraycopy(outBuff, 0, out, 0, outBuffPosn);

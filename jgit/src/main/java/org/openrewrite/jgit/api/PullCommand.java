@@ -62,7 +62,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 
 	private ProgressMonitor monitor = NullProgressMonitor.INSTANCE;
 
-	private BranchRebaseMode pullRebaseMode = null;
+	private BranchRebaseMode pullRebaseMode;
 
 	private String remote;
 
@@ -76,7 +76,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 
 	private FastForwardMode fastForwardMode;
 
-	private FetchRecurseSubmodulesMode submoduleRecurseMode = null;
+	private FetchRecurseSubmodulesMode submoduleRecurseMode;
 
 	/**
 	 * Constructor for PullCommand.
@@ -216,10 +216,11 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 					JGitText.get().cannotCheckoutFromUnbornBranch);
 		}
 
-		if (!repo.getRepositoryState().equals(RepositoryState.SAFE))
+		if (!repo.getRepositoryState().equals(RepositoryState.SAFE)) {
 			throw new WrongRepositoryStateException(MessageFormat.format(
 					JGitText.get().cannotPullOnARepoWithState, repo
 							.getRepositoryState().name()));
+		}
 
 		if (remote == null && branchName != null) {
 			// get the configured remote for the currently checked out branch
@@ -239,7 +240,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 		}
 
 
-		final boolean isRemote = !remote.equals("."); //$NON-NLS-1$
+		final boolean isRemote = !".".equals(remote); //$NON-NLS-1$
 		String remoteUri;
 		FetchResult fetchRes;
 		if (isRemote) {
@@ -253,10 +254,11 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 						JGitText.get().missingConfigurationForKey, missingKey));
 			}
 
-			if (monitor.isCancelled())
+			if (monitor.isCancelled()) {
 				throw new CanceledException(MessageFormat.format(
 						JGitText.get().operationCanceled,
 						JGitText.get().pullTaskName));
+			}
 
 			FetchCommand fetch = new FetchCommand(repo).setRemote(remote)
 					.setProgressMonitor(monitor).setTagOpt(tagOption)
@@ -272,10 +274,11 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 
 		monitor.update(1);
 
-		if (monitor.isCancelled())
+		if (monitor.isCancelled()) {
 			throw new CanceledException(MessageFormat.format(
 					JGitText.get().operationCanceled,
 					JGitText.get().pullTaskName));
+		}
 
 		// we check the updates to see which of the updated branches
 		// corresponds to the remote branch name
@@ -348,8 +351,6 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 										srcCommit));
 					}
 				}
-			} catch (NoHeadException e) {
-				throw e;
 			} catch (IOException e) {
 				throw new JGitInternalException(JGitText
 						.get().exceptionCaughtDuringExecutionOfPullCommand, e);

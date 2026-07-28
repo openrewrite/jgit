@@ -70,11 +70,13 @@ public abstract class SshTransport extends TcpTransport {
 	 *             if session has been already created.
 	 */
 	public void setSshSessionFactory(SshSessionFactory factory) {
-		if (factory == null)
+		if (factory == null) {
 			throw new NullPointerException(JGitText.get().theFactoryMustNotBeNull);
-		if (sock != null)
+		}
+		if (sock != null) {
 			throw new IllegalStateException(
 					JGitText.get().anSSHSessionHasBeenAlreadyCreated);
+		}
 		sch = factory;
 	}
 
@@ -96,8 +98,9 @@ public abstract class SshTransport extends TcpTransport {
 	 *             in case of error with opening SSH session
 	 */
 	protected RemoteSession getSession() throws TransportException {
-		if (sock != null)
+		if (sock != null) {
 			return sock;
+		}
 
 		final int tms = getTimeout() > 0 ? getTimeout() * 1000 : 0;
 

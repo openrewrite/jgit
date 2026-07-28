@@ -12,8 +12,8 @@ package org.openrewrite.jgit.internal.storage.file;
 
 import static org.openrewrite.jgit.internal.storage.pack.PackExt.BITMAP_INDEX;
 import static org.openrewrite.jgit.internal.storage.pack.PackExt.INDEX;
-import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
 import static org.openrewrite.jgit.internal.storage.pack.PackExt.KEEP;
+import static org.openrewrite.jgit.internal.storage.pack.PackExt.PACK;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -257,7 +257,7 @@ public class GC {
 	}
 
 	private ExecutorService executor() {
-		return (executor != null) ? executor : WorkQueue.getExecutor();
+		return executor != null ? executor : WorkQueue.getExecutor();
 	}
 
 	private Collection<Pack> doGc() throws IOException, ParseException {
@@ -336,9 +336,11 @@ public class GC {
 			String oldName = oldPack.getPackName();
 			// check whether an old pack file is also among the list of new
 			// pack files. Then we must not delete it.
-			for (Pack newPack : newPacks)
-				if (oldName.equals(newPack.getPackName()))
+			for (Pack newPack : newPacks) {
+				if (oldName.equals(newPack.getPackName())) {
 					continue oldPackLoop;
+				}
+			}
 
 			if (!oldPack.shouldBeKept()
 					&& repo.getFS()
@@ -442,15 +444,18 @@ public class GC {
 				for (String d : fanout) {
 					checkCancelled();
 					pm.update(1);
-					if (d.length() != 2)
+					if (d.length() != 2) {
 						continue;
+					}
 					String[] entries = new File(objects, d).list();
-					if (entries == null)
+					if (entries == null) {
 						continue;
+					}
 					for (String e : entries) {
 						checkCancelled();
-						if (e.length() != Constants.OBJECT_ID_STRING_LENGTH - 2)
+						if (e.length() != Constants.OBJECT_ID_STRING_LENGTH - 2) {
 							continue;
+						}
 						ObjectId id;
 						try {
 							id = ObjectId.fromString(d + e);
@@ -467,10 +472,11 @@ public class GC {
 								break;
 							}
 						}
-						if (found)
+						if (found) {
 							FileUtils.delete(objdb.fileFor(id), FileUtils.RETRY
 									| FileUtils.SKIP_MISSING
 									| FileUtils.IGNORE_ERRORS);
+						}
 					}
 				}
 			} finally {
@@ -510,8 +516,9 @@ public class GC {
 			for (String d : fanout) {
 				checkCancelled();
 				pm.update(1);
-				if (d.length() != 2)
+				if (d.length() != 2) {
 					continue;
+				}
 				File dir = new File(objects, d);
 				File[] entries = dir.listFiles();
 				if (entries == null || entries.length == 0) {
@@ -521,20 +528,24 @@ public class GC {
 				for (File f : entries) {
 					checkCancelled();
 					String fName = f.getName();
-					if (fName.length() != Constants.OBJECT_ID_STRING_LENGTH - 2)
+					if (fName.length() != Constants.OBJECT_ID_STRING_LENGTH - 2) {
 						continue;
+					}
 					if (repo.getFS().lastModifiedInstant(f)
 							.toEpochMilli() >= expireDate) {
 						continue;
 					}
 					try {
 						ObjectId id = ObjectId.fromString(d + fName);
-						if (objectsToKeep.contains(id))
+						if (objectsToKeep.contains(id)) {
 							continue;
-						if (indexObjects == null)
+						}
+						if (indexObjects == null) {
 							indexObjects = listNonHEADIndexObjects();
-						if (indexObjects.contains(id))
+						}
+						if (indexObjects.contains(id)) {
 							continue;
+						}
 						deletionCandidates.put(id, f);
 					} catch (IllegalArgumentException notAnObject) {
 						// ignoring the file that does not represent loose
@@ -557,9 +568,9 @@ public class GC {
 		// added or modified since the last repack. Only these can save existing
 		// loose refs from being pruned.
 		Collection<Ref> newRefs;
-		if (lastPackedRefs == null || lastPackedRefs.isEmpty())
+		if (lastPackedRefs == null || lastPackedRefs.isEmpty()) {
 			newRefs = getAllRefs();
-		else {
+		} else {
 			Map<String, Ref> last = new HashMap<>();
 			for (Ref r : lastPackedRefs) {
 				last.put(r.getName(), r);
@@ -585,18 +596,20 @@ public class GC {
 					checkCancelled();
 					w.markStart(w.parseAny(cr.getObjectId()));
 				}
-				if (lastPackedRefs != null)
+				if (lastPackedRefs != null) {
 					for (Ref lpr : lastPackedRefs) {
 						w.markUninteresting(w.parseAny(lpr.getObjectId()));
 					}
+				}
 				removeReferenced(deletionCandidates, w);
 			} finally {
 				w.dispose();
 			}
 		}
 
-		if (deletionCandidates.isEmpty())
+		if (deletionCandidates.isEmpty()) {
 			return;
+		}
 
 		// Since we have not left the method yet there are still
 		// deletionCandidates. Last chance for these objects not to be pruned is
@@ -605,23 +618,26 @@ public class GC {
 		// additional reflog entries not handled during last repack()
 		ObjectWalk w = new ObjectWalk(repo);
 		try {
-			for (Ref ar : getAllRefs())
+			for (Ref ar : getAllRefs()) {
 				for (ObjectId id : listRefLogObjects(ar, lastRepackTime)) {
 					checkCancelled();
 					w.markStart(w.parseAny(id));
 				}
-			if (lastPackedRefs != null)
+			}
+			if (lastPackedRefs != null) {
 				for (Ref lpr : lastPackedRefs) {
 					checkCancelled();
 					w.markUninteresting(w.parseAny(lpr.getObjectId()));
 				}
+			}
 			removeReferenced(deletionCandidates, w);
 		} finally {
 			w.dispose();
 		}
 
-		if (deletionCandidates.isEmpty())
+		if (deletionCandidates.isEmpty()) {
 			return;
+		}
 
 		checkCancelled();
 
@@ -650,16 +666,19 @@ public class GC {
 
 		if (expire == null && expireAgeMillis == -1) {
 			String pruneExpireStr = getPruneExpireStr();
-			if (pruneExpireStr == null)
+			if (pruneExpireStr == null) {
 				pruneExpireStr = PRUNE_EXPIRE_DEFAULT;
+			}
 			expire = GitDateParser.parse(pruneExpireStr, null, SystemReader
 					.getInstance().getLocale());
 			expireAgeMillis = -1;
 		}
-		if (expire != null)
+		if (expire != null) {
 			expireDate = expire.getTime();
-		if (expireAgeMillis != -1)
+		}
+		if (expireAgeMillis != -1) {
 			expireDate = System.currentTimeMillis() - expireAgeMillis;
+		}
 		return expireDate;
 	}
 
@@ -676,16 +695,19 @@ public class GC {
 			String prunePackExpireStr = repo.getConfig().getString(
 					ConfigConstants.CONFIG_GC_SECTION, null,
 					ConfigConstants.CONFIG_KEY_PRUNEPACKEXPIRE);
-			if (prunePackExpireStr == null)
+			if (prunePackExpireStr == null) {
 				prunePackExpireStr = PRUNE_PACK_EXPIRE_DEFAULT;
+			}
 			packExpire = GitDateParser.parse(prunePackExpireStr, null,
 					SystemReader.getInstance().getLocale());
 			packExpireAgeMillis = -1;
 		}
-		if (packExpire != null)
+		if (packExpire != null) {
 			packExpireDate = packExpire.getTime();
-		if (packExpireAgeMillis != -1)
+		}
+		if (packExpireAgeMillis != -1) {
 			packExpireDate = System.currentTimeMillis() - packExpireAgeMillis;
+		}
 		return packExpireDate;
 	}
 
@@ -758,8 +780,9 @@ public class GC {
 		try {
 			for (Ref ref : refs) {
 				checkCancelled();
-				if (!ref.isSymbolic() && ref.getStorage().isLoose())
+				if (!ref.isSymbolic() && ref.getStorage().isLoose()) {
 					refsToBePacked.add(ref.getName());
+				}
 				pm.update(1);
 			}
 			((RefDirectory) repo.getRefDatabase()).pack(refsToBePacked);
@@ -817,8 +840,9 @@ public class GC {
 		List<ObjectIdSet> excluded = new LinkedList<>();
 		for (Pack p : repo.getObjectDatabase().getPacks()) {
 			checkCancelled();
-			if (p.shouldBeKept())
+			if (p.shouldBeKept()) {
 				excluded.add(p.getIndex());
+			}
 		}
 
 		// Don't exclude tags that are also branch tips
@@ -849,14 +873,16 @@ public class GC {
 		if (!nonHeads.isEmpty()) {
 			Pack rest = writePack(nonHeads, allHeadsAndTags, PackWriter.NONE,
 					tagTargets, excluded);
-			if (rest != null)
+			if (rest != null) {
 				ret.add(rest);
+			}
 		}
 		if (!txnHeads.isEmpty()) {
 			Pack txn = writePack(txnHeads, PackWriter.NONE, PackWriter.NONE,
 					null, excluded);
-			if (txn != null)
+			if (txn != null) {
 				ret.add(txn);
+			}
 		}
 		try {
 			deleteOldPacks(toBeDeleted, ret);
@@ -1025,18 +1051,22 @@ public class GC {
 		}
 		List<ReflogEntry> rlEntries = reflogReader
 				.getReverseEntries();
-		if (rlEntries == null || rlEntries.isEmpty())
+		if (rlEntries == null || rlEntries.isEmpty()) {
 			return Collections.emptySet();
+		}
 		Set<ObjectId> ret = new HashSet<>();
 		for (ReflogEntry e : rlEntries) {
-			if (e.getWho().getWhen().getTime() < minTime)
+			if (e.getWho().getWhen().getTime() < minTime) {
 				break;
+			}
 			ObjectId newId = e.getNewId();
-			if (newId != null && !ObjectId.zeroId().equals(newId))
+			if (newId != null && !ObjectId.zeroId().equals(newId)) {
 				ret.add(newId);
+			}
 			ObjectId oldId = e.getOldId();
-			if (oldId != null && !ObjectId.zeroId().equals(oldId))
+			if (oldId != null && !ObjectId.zeroId().equals(oldId)) {
 				ret.add(oldId);
+			}
 		}
 		return ret;
 	}
@@ -1115,7 +1145,7 @@ public class GC {
 							JGitText.get().corruptObjectInvalidMode3,
 							String.format("%o", //$NON-NLS-1$
 									Integer.valueOf(treeWalk.getRawMode(0))),
-							(objectId == null) ? "null" : objectId.name(), //$NON-NLS-1$
+							objectId == null ? "null" : objectId.name(), //$NON-NLS-1$
 							treeWalk.getPathString(), //
 							repo.getIndexFile()));
 				}
@@ -1154,12 +1184,15 @@ public class GC {
 			if (tagTargets != null) {
 				pw.setTagTargets(tagTargets);
 			}
-			if (excludeObjects != null)
-				for (ObjectIdSet idx : excludeObjects)
+			if (excludeObjects != null) {
+				for (ObjectIdSet idx : excludeObjects) {
 					pw.excludeObjects(idx);
+				}
+			}
 			pw.preparePack(pm, want, have, PackWriter.NONE, tags);
-			if (pw.getObjectCount() == 0)
+			if (pw.getObjectCount() == 0) {
 				return null;
+			}
 			checkCancelled();
 
 			// create temporary files
@@ -1172,9 +1205,10 @@ public class GC {
 			File tmpIdx = new File(packdir, tmpBase + ".idx_tmp"); //$NON-NLS-1$
 			tmpExts.put(INDEX, tmpIdx);
 
-			if (!tmpIdx.createNewFile())
+			if (!tmpIdx.createNewFile()) {
 				throw new IOException(MessageFormat.format(
 						JGitText.get().cannotCreateIndexfile, tmpIdx.getPath()));
+			}
 
 			// write the packfile
 			try (FileOutputStream fos = new FileOutputStream(tmpPack);
@@ -1198,10 +1232,11 @@ public class GC {
 				File tmpBitmapIdx = new File(packdir, tmpBase + ".bitmap_tmp"); //$NON-NLS-1$
 				tmpExts.put(BITMAP_INDEX, tmpBitmapIdx);
 
-				if (!tmpBitmapIdx.createNewFile())
+				if (!tmpBitmapIdx.createNewFile()) {
 					throw new IOException(MessageFormat.format(
 							JGitText.get().cannotCreateIndexfile,
 							tmpBitmapIdx.getPath()));
+				}
 
 				try (FileOutputStream fos = new FileOutputStream(tmpBitmapIdx);
 						FileChannel idxChannel = fos.getChannel();
@@ -1261,11 +1296,13 @@ public class GC {
 				}
 			}
 		} finally {
-			if (tmpPack != null && tmpPack.exists())
+			if (tmpPack != null && tmpPack.exists()) {
 				tmpPack.delete();
+			}
 			for (File tmpExt : tmpExts.values()) {
-				if (tmpExt.exists())
+				if (tmpExt.exists()) {
 					tmpExt.delete();
+				}
 			}
 		}
 	}
@@ -1351,21 +1388,25 @@ public class GC {
 			ret.numberOfPackedObjects += p.getIndex().getObjectCount();
 			ret.numberOfPackFiles++;
 			ret.sizeOfPackedObjects += p.getPackFile().length();
-			if (p.getBitmapIndex() != null)
+			if (p.getBitmapIndex() != null) {
 				ret.numberOfBitmaps += p.getBitmapIndex().getBitmapCount();
+			}
 		}
 		File objDir = repo.getObjectsDirectory();
 		String[] fanout = objDir.list();
 		if (fanout != null && fanout.length > 0) {
 			for (String d : fanout) {
-				if (d.length() != 2)
+				if (d.length() != 2) {
 					continue;
+				}
 				File[] entries = new File(objDir, d).listFiles();
-				if (entries == null)
+				if (entries == null) {
 					continue;
+				}
 				for (File f : entries) {
-					if (f.getName().length() != Constants.OBJECT_ID_STRING_LENGTH - 2)
+					if (f.getName().length() != Constants.OBJECT_ID_STRING_LENGTH - 2) {
 						continue;
+					}
 					ret.numberOfLooseObjects++;
 					ret.sizeOfLooseObjects += f.length();
 				}
@@ -1375,10 +1416,12 @@ public class GC {
 		RefDatabase refDb = repo.getRefDatabase();
 		for (Ref r : refDb.getRefs()) {
 			Storage storage = r.getStorage();
-			if (storage == Storage.LOOSE || storage == Storage.LOOSE_PACKED)
+			if (storage == Storage.LOOSE || storage == Storage.LOOSE_PACKED) {
 				ret.numberOfLooseRefs++;
-			if (storage == Storage.PACKED || storage == Storage.LOOSE_PACKED)
+			}
+			if (storage == Storage.PACKED || storage == Storage.LOOSE_PACKED) {
 				ret.numberOfPackedRefs++;
+			}
 		}
 
 		return ret;
@@ -1391,7 +1434,7 @@ public class GC {
 	 * @return this
 	 */
 	public GC setProgressMonitor(ProgressMonitor pm) {
-		this.pm = (pm == null) ? NullProgressMonitor.INSTANCE : pm;
+		this.pm = pm == null ? NullProgressMonitor.INSTANCE : pm;
 		return this;
 	}
 

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  *
  * @since 5.5
  */
-public class ProtocolV2HookChain implements ProtocolV2Hook {
+public final class ProtocolV2HookChain implements ProtocolV2Hook {
 	private final List<? extends ProtocolV2Hook> hooks;
 
 	/**

@@ -41,25 +41,30 @@ final class InflatingBitSet {
 	}
 
 	final boolean maybeContains(int position) {
-		if (get(position))
+		if (get(position)) {
 			return true;
+		}
 		return nextPosition <= position && position < sizeInBits;
 	}
 
 	final boolean contains(int position) {
-		if (get(position))
+		if (get(position)) {
 			return true;
-		if (position <= nextPosition || position >= sizeInBits)
+		}
+		if (position <= nextPosition || position >= sizeInBits) {
 			return position == nextPosition;
+		}
 
 		if (iterator == null) {
 			iterator = bitmap.intIterator();
-			if (iterator.hasNext())
+			if (iterator.hasNext()) {
 				nextPosition = iterator.next();
-			else
+			} else {
 				return false;
-		} else if (!iterator.hasNext())
+			}
+		} else if (!iterator.hasNext()) {
 			return false;
+		}
 
 		int positionBlock = block(position);
 		if (positionBlock >= inflated.length) {
@@ -73,8 +78,9 @@ final class InflatingBitSet {
 		int end = Math.max(nextPosition, position) | 63;
 		while (iterator.hasNext()) {
 			nextPosition = iterator.next();
-			if (end < nextPosition)
+			if (end < nextPosition) {
 				break;
+			}
 
 			int b = block(nextPosition);
 			long m = mask(nextPosition);
@@ -95,11 +101,11 @@ final class InflatingBitSet {
 		return b < inflated.length && (inflated[b] & mask(position)) != 0;
 	}
 
-	private static final int block(int position) {
+	private static int block(int position) {
 		return position >> 6;
 	}
 
-	private static final long mask(int position) {
+	private static long mask(int position) {
 		return 1L << position;
 	}
 
@@ -108,21 +114,24 @@ final class InflatingBitSet {
 	}
 
 	final InflatingBitSet or(EWAHCompressedBitmap other) {
-		if (other.sizeInBits() == 0)
+		if (other.sizeInBits() == 0) {
 			return this;
+		}
 		return new InflatingBitSet(bitmap.or(other), inflated);
 	}
 
 	final InflatingBitSet andNot(EWAHCompressedBitmap other) {
-		if (isEmpty())
+		if (isEmpty()) {
 			return this;
+		}
 		return new InflatingBitSet(bitmap.andNot(other));
 	}
 
 	final InflatingBitSet xor(EWAHCompressedBitmap other) {
 		if (isEmpty()) {
-			if (other.sizeInBits() == 0)
+			if (other.sizeInBits() == 0) {
 				return this;
+			}
 			return new InflatingBitSet(other);
 		}
 		return new InflatingBitSet(bitmap.xor(other));

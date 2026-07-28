@@ -69,9 +69,10 @@ public class ReflogCommand extends GitCommand<Collection<ReflogEntry>> {
 
 		try {
 			ReflogReader reader = repo.getReflogReader(ref);
-			if (reader == null)
+			if (reader == null) {
 				throw new RefNotFoundException(MessageFormat.format(
 						JGitText.get().refNotResolved, ref));
+			}
 			return reader.getReverseEntries();
 		} catch (IOException e) {
 			throw new InvalidRefNameException(MessageFormat.format(

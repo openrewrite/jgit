@@ -56,10 +56,12 @@ class ConfigSnapshot {
 	Set<String> getSubsections(String section) {
 		Map<String, Set<String>> m = names().subsections;
 		Set<String> r = m.get(section);
-		if (r == null)
+		if (r == null) {
 			r = m.get(toLowerCase(section));
-		if (r == null)
+		}
+		if (r == null) {
 			return Collections.emptySet();
+		}
 		return Collections.unmodifiableSet(r);
 	}
 
@@ -76,34 +78,41 @@ class ConfigSnapshot {
 			String subsection, boolean recursive) {
 		List<ConfigLine> s = sorted();
 		int idx = find(s, section, subsection, ""); //$NON-NLS-1$
-		if (idx < 0)
+		if (idx < 0) {
 			idx = -(idx + 1);
+		}
 
 		Map<String, String> m = new LinkedHashMap<>();
 		while (idx < s.size()) {
 			ConfigLine e = s.get(idx++);
-			if (!e.match(section, subsection))
+			if (!e.match(section, subsection)) {
 				break;
-			if (e.name == null)
+			}
+			if (e.name == null) {
 				continue;
+			}
 			String l = toLowerCase(e.name);
-			if (!m.containsKey(l))
+			if (!m.containsKey(l)) {
 				m.put(l, e.name);
+			}
 		}
-		if (recursive && baseState != null)
+		if (recursive && baseState != null) {
 			m.putAll(baseState.getNamesInternal(section, subsection, recursive));
+		}
 		return m;
 	}
 
 	String[] get(String section, String subsection, String name) {
 		List<ConfigLine> s = sorted();
 		int idx = find(s, section, subsection, name);
-		if (idx < 0)
+		if (idx < 0) {
 			return null;
+		}
 		int end = end(s, idx, section, subsection, name);
 		String[] r = new String[end - idx];
-		for (int i = 0; idx < end;)
+		for (int i = 0;idx < end;) {
 			r[i++] = s.get(idx++).value;
+		}
 		return r;
 	}
 
@@ -116,48 +125,53 @@ class ConfigSnapshot {
 			int cmp = compare2(
 					s1, s2, name,
 					e.section, e.subsection, e.name);
-			if (cmp < 0)
+			if (cmp < 0) {
 				high = mid;
-			else if (cmp == 0)
+			} else if (cmp == 0) {
 				return first(s, mid, s1, s2, name);
-			else
+			} else {
 				low = mid + 1;
+			}
 		}
 		return -(low + 1);
 	}
 
 	private int first(List<ConfigLine> s, int i, String s1, String s2, String n) {
 		while (0 < i) {
-			if (s.get(i - 1).match(s1, s2, n))
+			if (s.get(i - 1).match(s1, s2, n)) {
 				i--;
-			else
+			} else {
 				return i;
+			}
 		}
 		return i;
 	}
 
 	private int end(List<ConfigLine> s, int i, String s1, String s2, String n) {
 		while (i < s.size()) {
-			if (s.get(i).match(s1, s2, n))
+			if (s.get(i).match(s1, s2, n)) {
 				i++;
-			else
+			} else {
 				return i;
+			}
 		}
 		return i;
 	}
 
 	private List<ConfigLine> sorted() {
 		List<ConfigLine> r = sorted;
-		if (r == null)
+		if (r == null) {
 			sorted = r = sort(entryList);
+		}
 		return r;
 	}
 
 	private static List<ConfigLine> sort(List<ConfigLine> in) {
 		List<ConfigLine> sorted = new ArrayList<>(in.size());
 		for (ConfigLine line : in) {
-			if (line.section != null && line.name != null)
+			if (line.section != null && line.name != null) {
 				sorted.add(line);
+			}
 		}
 		Collections.sort(sorted, new LineComparator());
 		return sorted;
@@ -167,17 +181,21 @@ class ConfigSnapshot {
 			String aSection, String aSubsection, String aName,
 			String bSection, String bSubsection, String bName) {
 		int c = compareIgnoreCase(aSection, bSection);
-		if (c != 0)
+		if (c != 0) {
 			return c;
+		}
 
-		if (aSubsection == null && bSubsection != null)
+		if (aSubsection == null && bSubsection != null) {
 			return -1;
-		if (aSubsection != null && bSubsection == null)
+		}
+		if (aSubsection != null && bSubsection == null) {
 			return 1;
+		}
 		if (aSubsection != null) {
 			c = compareWithCase(aSubsection, bSubsection);
-			if (c != 0)
+			if (c != 0) {
 				return c;
+			}
 		}
 
 		return compareIgnoreCase(aName, bName);
@@ -194,8 +212,9 @@ class ConfigSnapshot {
 
 	private SectionNames names() {
 		SectionNames n = names;
-		if (n == null)
+		if (n == null) {
 			names = n = new SectionNames(this);
+		}
 		return n;
 	}
 
@@ -208,15 +227,18 @@ class ConfigSnapshot {
 			Map<String, Set<String>> sub = new HashMap<>();
 			while (cfg != null) {
 				for (ConfigLine e : cfg.entryList) {
-					if (e.section == null)
+					if (e.section == null) {
 						continue;
+					}
 
 					String l1 = toLowerCase(e.section);
-					if (!sec.containsKey(l1))
+					if (!sec.containsKey(l1)) {
 						sec.put(l1, e.section);
+					}
 
-					if (e.subsection == null)
+					if (e.subsection == null) {
 						continue;
+					}
 
 					Set<String> m = sub.get(l1);
 					if (m == null) {

@@ -18,6 +18,7 @@ import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.text.MessageFormat;
+
 import org.openrewrite.jgit.annotations.Nullable;
 import org.openrewrite.jgit.errors.ConfigInvalidException;
 import org.openrewrite.jgit.internal.JGitText;
@@ -31,17 +32,17 @@ import org.openrewrite.jgit.util.RawParseUtils;
  *
  * @since 5.13
  */
-public class CommitConfig {
+public final class CommitConfig {
 	/**
 	 * Key for {@link Config#get(SectionParser)}.
 	 */
 	public static final Config.SectionParser<CommitConfig> KEY = CommitConfig::new;
 
-	private final static Charset DEFAULT_COMMIT_MESSAGE_ENCODING = StandardCharsets.UTF_8;
+	private static final Charset DEFAULT_COMMIT_MESSAGE_ENCODING = StandardCharsets.UTF_8;
 
-	private String i18nCommitEncoding;
+	private final String i18nCommitEncoding;
 
-	private String commitTemplatePath;
+	private final String commitTemplatePath;
 
 	private CommitConfig(Config rc) {
 		commitTemplatePath = rc.getString(ConfigConstants.CONFIG_COMMIT_SECTION,

@@ -14,6 +14,8 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import com.googlecode.javaewah.EWAHCompressedBitmap;
+import com.googlecode.javaewah.IntIterator;
 import org.openrewrite.jgit.internal.JGitText;
 import org.openrewrite.jgit.lib.AnyObjectId;
 import org.openrewrite.jgit.lib.BitmapIndex;
@@ -22,9 +24,6 @@ import org.openrewrite.jgit.lib.Constants;
 import org.openrewrite.jgit.lib.ObjectId;
 import org.openrewrite.jgit.lib.ObjectIdOwnerMap;
 import org.openrewrite.jgit.util.BlockList;
-
-import com.googlecode.javaewah.EWAHCompressedBitmap;
-import com.googlecode.javaewah.IntIterator;
 
 /**
  * A compressed bitmap representation of the entire object graph.
@@ -58,8 +57,9 @@ public class BitmapIndexImpl implements BitmapIndex {
 	@Override
 	public CompressedBitmap getBitmap(AnyObjectId objectId) {
 		EWAHCompressedBitmap compressed = packIndex.getBitmap(objectId);
-		if (compressed == null)
+		if (compressed == null) {
 			return null;
+		}
 		return new CompressedBitmap(compressed, this);
 	}
 
@@ -73,8 +73,9 @@ public class BitmapIndexImpl implements BitmapIndex {
 		int position = packIndex.findPosition(objectId);
 		if (position < 0) {
 			position = mutableIndex.findPosition(objectId);
-			if (position >= 0)
+			if (position >= 0) {
 				position += indexObjectCount;
+			}
 		}
 		return position;
 	}
@@ -116,56 +117,67 @@ public class BitmapIndexImpl implements BitmapIndex {
 				toRemove = null;
 			}
 
-			if (toAddCompressed != null)
+			if (toAddCompressed != null) {
 				or(toAddCompressed);
-			if (toRemoveCompressed != null)
+			}
+			if (toRemoveCompressed != null) {
 				andNot(toRemoveCompressed);
+			}
 			return inflatingBitmap.getBitmap();
 		}
 
 		void or(EWAHCompressedBitmap inbits) {
-			if (toRemove != null)
+			if (toRemove != null) {
 				combine();
+			}
 			inflatingBitmap = inflatingBitmap.or(inbits);
 		}
 
 		void andNot(EWAHCompressedBitmap inbits) {
-			if (toAdd != null || toRemove != null)
+			if (toAdd != null || toRemove != null) {
 				combine();
+			}
 			inflatingBitmap = inflatingBitmap.andNot(inbits);
 		}
 
 		void xor(EWAHCompressedBitmap inbits) {
-			if (toAdd != null || toRemove != null)
+			if (toAdd != null || toRemove != null) {
 				combine();
+			}
 			inflatingBitmap = inflatingBitmap.xor(inbits);
 		}
 
 		boolean contains(int position) {
-			if (toRemove != null && toRemove.get(position))
+			if (toRemove != null && toRemove.get(position)) {
 				return false;
-			if (toAdd != null && toAdd.get(position))
+			}
+			if (toAdd != null && toAdd.get(position)) {
 				return true;
+			}
 			return inflatingBitmap.contains(position);
 		}
 
 		void remove(int position) {
-			if (toAdd != null)
+			if (toAdd != null) {
 				toAdd.clear(position);
+			}
 
 			if (inflatingBitmap.maybeContains(position)) {
-				if (toRemove == null)
+				if (toRemove == null) {
 					toRemove = new BitSet(position + EXTRA_BITS);
+				}
 				toRemove.set(position);
 			}
 		}
 
 		void set(int position) {
-			if (toRemove != null)
+			if (toRemove != null) {
 				toRemove.clear(position);
+			}
 
-			if (toAdd == null)
+			if (toAdd == null) {
 				toAdd = new BitSet(position + EXTRA_BITS);
+			}
 			toAdd.set(position);
 		}
 	}
@@ -194,8 +206,9 @@ public class BitmapIndexImpl implements BitmapIndex {
 		@Override
 		public void remove(AnyObjectId objectId) {
 			int position = bitmapIndex.findPosition(objectId);
-			if (0 <= position)
+			if (0 <= position) {
 				bitset.remove(position);
+			}
 		}
 
 		@Override
@@ -234,15 +247,17 @@ public class BitmapIndexImpl implements BitmapIndex {
 
 		@Override
 		public boolean removeAllOrNone(PackBitmapIndex index) {
-			if (!bitmapIndex.packIndex.equals(index))
+			if (!bitmapIndex.packIndex.equals(index)) {
 				return false;
+			}
 
 			EWAHCompressedBitmap curr = bitset.combine()
 					.xor(ones(bitmapIndex.indexObjectCount));
 
 			IntIterator ii = curr.intIterator();
-			if (ii.hasNext() && ii.next() < bitmapIndex.indexObjectCount)
+			if (ii.hasNext() && ii.next() < bitmapIndex.indexObjectCount) {
 				return false;
+			}
 			bitset = new ComboBitset(curr);
 			return true;
 		}
@@ -354,8 +369,9 @@ public class BitmapIndexImpl implements BitmapIndex {
 
 				@Override
 				public BitmapObject next() {
-					if (!hasNext())
+					if (!hasNext()) {
 						throw new NoSuchElementException();
+					}
 
 					int position = cached.next();
 					if (position < bitmapIndex.indexObjectCount) {
@@ -410,18 +426,20 @@ public class BitmapIndexImpl implements BitmapIndex {
 
 		int findPosition(AnyObjectId objectId) {
 			MutableEntry entry = revMap.get(objectId);
-			if (entry == null)
+			if (entry == null) {
 				return -1;
+			}
 			return entry.position;
 		}
 
 		MutableEntry getObject(int position) {
 			try {
 				MutableEntry entry = revList.get(position);
-				if (entry == null)
+				if (entry == null) {
 					throw new IllegalArgumentException(MessageFormat.format(
 							JGitText.get().objectNotFound,
 							String.valueOf(position)));
+				}
 				return entry;
 			} catch (IndexOutOfBoundsException ex) {
 				throw new IllegalArgumentException(ex);
@@ -465,13 +483,14 @@ public class BitmapIndexImpl implements BitmapIndex {
 		}
 	}
 
-	static final EWAHCompressedBitmap ones(int sizeInBits) {
+	static EWAHCompressedBitmap ones(int sizeInBits) {
 		EWAHCompressedBitmap mask = new EWAHCompressedBitmap();
 		mask.addStreamOfEmptyWords(
 				true, sizeInBits / EWAHCompressedBitmap.WORD_IN_BITS);
 		int remaining = sizeInBits % EWAHCompressedBitmap.WORD_IN_BITS;
-		if (remaining > 0)
+		if (remaining > 0) {
 			mask.addWord((1L << remaining) - 1, remaining);
+		}
 		return mask;
 	}
 }

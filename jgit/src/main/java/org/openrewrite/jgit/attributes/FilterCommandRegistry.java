@@ -24,7 +24,7 @@ import org.openrewrite.jgit.lib.Repository;
  * @since 4.6
  */
 public class FilterCommandRegistry {
-	private static Map<String, FilterCommandFactory> filterCommandRegistry = new ConcurrentHashMap<>();
+	private static final Map<String, FilterCommandFactory> filterCommandRegistry = new ConcurrentHashMap<>();
 
 	/**
 	 * Register a {@link org.openrewrite.jgit.attributes.FilterCommandFactory}
@@ -112,7 +112,7 @@ public class FilterCommandRegistry {
 			Repository db, InputStream in, OutputStream out)
 			throws IOException {
 		FilterCommandFactory cf = filterCommandRegistry.get(filterCommandName);
-		return (cf == null) ? null : cf.create(db, in, out);
+		return cf == null ? null : cf.create(db, in, out);
 	}
 
 }

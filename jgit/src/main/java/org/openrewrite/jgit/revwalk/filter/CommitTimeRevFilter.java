@@ -31,7 +31,7 @@ public abstract class CommitTimeRevFilter extends RevFilter {
 	 *            the point in time to cut on.
 	 * @return a new filter to select commits on or before <code>ts</code>.
 	 */
-	public static final RevFilter before(Date ts) {
+	public static RevFilter before(Date ts) {
 		return before(ts.getTime());
 	}
 
@@ -42,7 +42,7 @@ public abstract class CommitTimeRevFilter extends RevFilter {
 	 *            the point in time to cut on, in milliseconds
 	 * @return a new filter to select commits on or before <code>ts</code>.
 	 */
-	public static final RevFilter before(long ts) {
+	public static RevFilter before(long ts) {
 		return new Before(ts);
 	}
 
@@ -53,7 +53,7 @@ public abstract class CommitTimeRevFilter extends RevFilter {
 	 *            the point in time to cut on.
 	 * @return a new filter to select commits on or after <code>ts</code>.
 	 */
-	public static final RevFilter after(Date ts) {
+	public static RevFilter after(Date ts) {
 		return after(ts.getTime());
 	}
 
@@ -64,7 +64,7 @@ public abstract class CommitTimeRevFilter extends RevFilter {
 	 *            the point in time to cut on, in milliseconds.
 	 * @return a new filter to select commits on or after <code>ts</code>.
 	 */
-	public static final RevFilter after(long ts) {
+	public static RevFilter after(long ts) {
 		return new After(ts);
 	}
 
@@ -76,7 +76,7 @@ public abstract class CommitTimeRevFilter extends RevFilter {
 	 * @param until the point in time to cut off.
 	 * @return a new filter to select commits between the given date/times.
 	 */
-	public static final RevFilter between(Date since, Date until) {
+	public static RevFilter between(Date since, Date until) {
 		return between(since.getTime(), until.getTime());
 	}
 
@@ -88,7 +88,7 @@ public abstract class CommitTimeRevFilter extends RevFilter {
 	 * @param until the point in time to cut off, in millisconds.
 	 * @return a new filter to select commits between the given date/times.
 	 */
-	public static final RevFilter between(long since, long until) {
+	public static RevFilter between(long since, long until) {
 		return new Between(since, until);
 	}
 
@@ -142,8 +142,9 @@ public abstract class CommitTimeRevFilter extends RevFilter {
 			// reasonably certain there is nothing remaining worth our
 			// scanning if this commit is before the point in question.
 			//
-			if (cmit.getCommitTime() < when)
+			if (cmit.getCommitTime() < when) {
 				throw StopWalkException.INSTANCE;
+			}
 			return true;
 		}
 

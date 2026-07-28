@@ -232,7 +232,7 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 	 * @param packTransport
 	 *            the transport.
 	 */
-	public BasePackFetchConnection(PackTransport packTransport) {
+	protected BasePackFetchConnection(PackTransport packTransport) {
 		super(packTransport);
 
 		if (local != null) {
@@ -323,8 +323,9 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 	/** {@inheritDoc} */
 	@Override
 	public Collection<PackLock> getPackLocks() {
-		if (packLock != null)
+		if (packLock != null) {
 			return Collections.singleton(packLock);
+		}
 		return Collections.<PackLock> emptyList();
 	}
 
@@ -585,8 +586,9 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 	/** {@inheritDoc} */
 	@Override
 	public void close() {
-		if (walk != null)
+		if (walk != null) {
 			walk.close();
+		}
 		super.close();
 	}
 
@@ -601,8 +603,9 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 				final RevObject obj = walk.parseAny(r.getObjectId());
 				if (obj instanceof RevCommit) {
 					final int cTime = ((RevCommit) obj).getCommitTime();
-					if (maxTime < cTime)
+					if (maxTime < cTime) {
 						maxTime = cTime;
+					}
 				}
 			} catch (IOException error) {
 				// We don't have it, but we want to fetch (thus fixing error).
@@ -615,18 +618,22 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 			throws IOException {
 		for (Ref r : local.getRefDatabase().getRefs()) {
 			ObjectId id = r.getPeeledObjectId();
-			if (id == null)
+			if (id == null) {
 				id = r.getObjectId();
-			if (id == null)
+			}
+			if (id == null) {
 				continue;
+			}
 			parseReachable(id);
 		}
 
-		for (ObjectId id : local.getAdditionalHaves())
+		for (ObjectId id : local.getAdditionalHaves()) {
 			parseReachable(id);
+		}
 
-		for (ObjectId id : have)
+		for (ObjectId id : have) {
 			parseReachable(id);
+		}
 
 		if (maxTime > 0) {
 			// Mark reachable commits until we reach maxTime. These may
@@ -639,8 +646,9 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 			walk.setRevFilter(CommitTimeRevFilter.after(maxWhen));
 			for (;;) {
 				final RevCommit c = walk.next();
-				if (c == null)
+				if (c == null) {
 					break;
+				}
 				if (c.has(ADVERTISED) && !c.has(COMMON)) {
 					// This is actually going to be a common commit, but
 					// our peer doesn't know that fact yet.
@@ -732,28 +740,35 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 
 	private String enableCapabilities() throws TransportException {
 		final StringBuilder line = new StringBuilder();
-		if (noProgress)
+		if (noProgress) {
 			wantCapability(line, OPTION_NO_PROGRESS);
-		if (includeTags)
+		}
+		if (includeTags) {
 			includeTags = wantCapability(line, OPTION_INCLUDE_TAG);
-		if (allowOfsDelta)
+		}
+		if (allowOfsDelta) {
 			wantCapability(line, OPTION_OFS_DELTA);
+		}
 
 		if (wantCapability(line, OPTION_MULTI_ACK_DETAILED)) {
 			multiAck = MultiAck.DETAILED;
-			if (statelessRPC)
+			if (statelessRPC) {
 				noDone = wantCapability(line, OPTION_NO_DONE);
-		} else if (wantCapability(line, OPTION_MULTI_ACK))
+			}
+		} else if (wantCapability(line, OPTION_MULTI_ACK)) {
 			multiAck = MultiAck.CONTINUE;
-		else
+		} else {
 			multiAck = MultiAck.OFF;
+		}
 
-		if (thinPack)
+		if (thinPack) {
 			thinPack = wantCapability(line, OPTION_THIN_PACK);
-		if (wantCapability(line, OPTION_SIDE_BAND_64K))
+		}
+		if (wantCapability(line, OPTION_SIDE_BAND_64K)) {
 			sideband = true;
-		else if (wantCapability(line, OPTION_SIDE_BAND))
+		} else if (wantCapability(line, OPTION_SIDE_BAND)) {
 			sideband = true;
+		}
 
 		if (statelessRPC && multiAck != MultiAck.DETAILED) {
 			// Our stateless RPC implementation relies upon the detailed
@@ -977,8 +992,9 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 	private void markRefsAdvertised() {
 		for (Ref r : getRefs()) {
 			markAdvertised(r.getObjectId());
-			if (r.getPeeledObjectId() != null)
+			if (r.getPeeledObjectId() != null) {
 				markAdvertised(r.getPeeledObjectId());
+			}
 		}
 	}
 
@@ -997,17 +1013,19 @@ public abstract class BasePackFetchConnection extends BasePackConnection
 			obj.add(STATE);
 		}
 		obj.add(COMMON);
-		if (obj instanceof RevCommit)
+		if (obj instanceof RevCommit) {
 			((RevCommit) obj).carry(COMMON);
+		}
 	}
 
 	private void receivePack(final ProgressMonitor monitor,
 			OutputStream outputStream) throws IOException {
 		onReceivePack();
 		InputStream input = in;
-		if (sideband)
+		if (sideband) {
 			input = new SideBandInputStream(input, monitor, getMessageWriter(),
 					outputStream);
+		}
 
 		try (ObjectInserter ins = local.newObjectInserter()) {
 			PackParser parser = ins.newPackParser(input);
