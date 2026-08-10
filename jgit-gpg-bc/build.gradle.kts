@@ -2,14 +2,14 @@ plugins {
     id("org.openrewrite.build.language-library")
 }
 
-val bcVersion = "1.70"
+val bcVersion = "1.85"
+val bcProvVersion = "1.85.2"
 dependencies {
     implementation(project(":jgit"))
     compileOnly("org.slf4j:slf4j-api:1.7.36")
-    implementation("org.bouncycastle:bcpg-jdk15on:$bcVersion")
-    implementation("org.bouncycastle:bcprov-jdk15on:$bcVersion")
-    implementation("org.bouncycastle:bcutil-jdk15on:$bcVersion")
-    implementation("org.bouncycastle:bcpkix-jdk15on:$bcVersion")
+    implementation("org.bouncycastle:bcpg-jdk18on:$bcVersion")
+    implementation("org.bouncycastle:bcprov-jdk18on:$bcProvVersion")
+    implementation("org.bouncycastle:bcutil-jdk18on:$bcVersion")
 }
 
 java {
