@@ -68,6 +68,15 @@ class OCBPBEProtectionRemoverFactory
 		return new PBESecretKeyDecryptor(passphrase, calculatorProvider) {
 
 			@Override
+			public byte[] recoverKeyData(int encAlgorithm, int aeadAlgorithm,
+					byte[] key, byte[] iv, int packetTag, int keyVersion,
+					byte[] keyData, byte[] pubkeyData) throws PGPException {
+				// The AAD is fixed at factory level, so this decryptor cannot
+				// serve the v6 key format, which derives it per key.
+				throw new PGPException(BCText.get().cryptAeadUnsupported);
+			}
+
+			@Override
 			public byte[] recoverKeyData(int encAlgorithm, byte[] key,
 					byte[] iv, byte[] encrypted, int encryptedOffset,
 					int encryptedLength) throws PGPException {

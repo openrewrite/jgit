@@ -29,6 +29,7 @@ public final class BCText extends TranslationBundle {
 	// @formatter:off
 	/***/ public String corrupt25519Key;
 	/***/ public String credentialPassphrase;
+	/***/ public String cryptAeadUnsupported;
 	/***/ public String cryptCipherError;
 	/***/ public String cryptWrongDecryptedLength;
 	/***/ public String gpgFailedToParseSecretKey;
