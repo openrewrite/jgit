@@ -10,10 +10,6 @@ dependencies {
     implementation("org.bouncycastle:bcpg-jdk18on:$bcVersion")
     implementation("org.bouncycastle:bcprov-jdk18on:$bcProvVersion")
     implementation("org.bouncycastle:bcutil-jdk18on:$bcVersion")
-    testImplementation("org.assertj:assertj-core:3.26.3") {
-        version { strictly("3.26.3") }
-    }
-    testRuntimeOnly("org.slf4j:slf4j-simple:1.7.36")
 }
 
 java {
