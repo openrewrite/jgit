@@ -702,7 +702,10 @@ public class ApplyCommand extends GitCommand<ApplyResult> {
 			}
 			afterLastHunk = applyAt;
 		}
-		if (!isNoNewlineAtEndOfFile(fh)) {
+		boolean noNewlineAtEnd = afterLastHunk < newLines.size()
+				? rt.isMissingNewlineAtEnd()
+				: isNoNewlineAtEndOfFile(fh);
+		if (!noNewlineAtEnd) {
 			newLines.add(null);
 		}
 		if (!rt.isMissingNewlineAtEnd()) {

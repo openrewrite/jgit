@@ -165,6 +165,45 @@ class ApplyCommandTest {
 				.hasMessageContaining("hunk");
 	}
 
+	/**
+	 * Test that applying a mid-file hunk to a file that has no trailing newline
+	 * preserves the missing trailing newline, matching {@code git apply}.
+	 */
+	@Test
+	void midFileHunkPreservesMissingTrailingNewline() throws Exception {
+		// given
+		StringBuilder fileContent = new StringBuilder();
+		for (int i = 1; i <= 20; i++) {
+			fileContent.append("Line ").append(i);
+			if (i < 20) {
+				fileContent.append('\n');
+			}
+		}
+		writeFileAndCommit("test.txt", fileContent.toString());
+
+		String patch = "diff --git a/test.txt b/test.txt\n"
+				+ "--- a/test.txt\n"
+				+ "+++ b/test.txt\n"
+				+ "@@ -5,6 +5,7 @@\n"
+				+ " Line 5\n"
+				+ " Line 6\n"
+				+ " Line 7\n"
+				+ "+New Line\n"
+				+ " Line 8\n"
+				+ " Line 9\n"
+				+ " Line 10\n";
+
+		// when
+		ApplyResult result = applyPatch(patch);
+
+		// then
+		assertThat(result.getUpdatedFiles()).isNotEmpty();
+		String resultContent = readFile("test.txt");
+		assertThat(resultContent).contains("New Line");
+		assertThat(resultContent).doesNotEndWith("\n");
+		assertThat(resultContent).endsWith("Line 20");
+	}
+
 	private String multiHunkPatch(String eol) {
 		return "diff --git a/test.txt b/test.txt" + eol
 				+ "--- a/test.txt" + eol
