@@ -35,6 +35,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -748,6 +749,9 @@ public abstract class Transport implements AutoCloseable {
 	/** Should push be all-or-nothing atomic behavior? */
 	private boolean pushAtomic;
 
+	/** Objects the remote has that it doesn't advertise as a ref. */
+	private Set<ObjectId> additionalHaves = Collections.emptySet();
+
 	/** Should push just check for operation result, not really push. */
 	private boolean dryRun;
 
@@ -1009,6 +1013,31 @@ public abstract class Transport implements AutoCloseable {
 	 */
 	public void setPushAtomic(boolean atomic) {
 		this.pushAtomic = atomic;
+	}
+
+	/**
+	 * Get objects push may assume the remote already has.
+	 *
+	 * @return objects the remote has beyond those it advertises as refs.
+	 */
+	@NonNull
+	public Set<ObjectId> getAdditionalHaves() {
+		return additionalHaves;
+	}
+
+	/**
+	 * Tell push the remote already has these objects, in addition to the ones
+	 * it advertises as refs and the ones it reports as additional haves of its
+	 * own. Push otherwise sends everything reachable from what is being pushed
+	 * that isn't reachable from an advertised ref, which is the whole history
+	 * when the local repository holds a commit the remote no longer advertises.
+	 *
+	 * @param additionalHaves
+	 *            objects the remote is known to have. They must be present
+	 *            locally as well, or preparing the pack fails.
+	 */
+	public void setAdditionalHaves(Collection<ObjectId> additionalHaves) {
+		this.additionalHaves = new LinkedHashSet<>(additionalHaves);
 	}
 
 	/**
