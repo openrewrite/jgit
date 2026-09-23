@@ -309,6 +309,7 @@ public abstract class BasePackPushConnection extends BasePackConnection implemen
 					remoteObjects.add(oid);
 			}
 			remoteObjects.addAll(additionalHaves);
+			remoteObjects.addAll(transport.getAdditionalHaves());
 			for (RemoteRefUpdate r : refUpdates.values()) {
 				if (!ObjectId.zeroId().equals(r.getNewObjectId()))
 					newObjects.add(r.getNewObjectId());
