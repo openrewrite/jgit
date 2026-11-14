@@ -1044,9 +1044,8 @@ public class UploadPack {
 			}
 
 			if (req.getDepth() != 0 || req.getDeepenSince() != 0) {
-				computeShallowsAndUnshallows(req, shallow -> {
-					pckOut.writeString("shallow " + shallow.name() + '\n'); //$NON-NLS-1$
-				}, unshallow -> {
+				computeShallowsAndUnshallows(req, shallow ->
+					pckOut.writeString("shallow " + shallow.name() + '\n'), unshallow -> {
 					pckOut.writeString("unshallow " + unshallow.name() + '\n'); //$NON-NLS-1$
 					unshallowCommits.add(unshallow);
 				}, Collections.emptyList());
