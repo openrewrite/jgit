@@ -21,6 +21,7 @@ import org.openrewrite.jgit.annotations.Nullable;
 import org.openrewrite.jgit.api.errors.GitAPIException;
 import org.openrewrite.jgit.api.errors.InvalidRemoteException;
 import org.openrewrite.jgit.api.errors.JGitInternalException;
+import org.openrewrite.jgit.api.errors.TransportException;
 import org.openrewrite.jgit.dircache.DirCache;
 import org.openrewrite.jgit.dircache.DirCacheCheckout;
 import org.openrewrite.jgit.errors.IncorrectObjectTypeException;
@@ -159,7 +160,7 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 	 */
 	@Override
 	public Git call() throws GitAPIException, InvalidRemoteException,
-			org.openrewrite.jgit.api.errors.TransportException {
+			TransportException {
 		URIish u = null;
 		try {
 			u = new URIish(uri);
@@ -277,7 +278,7 @@ public class CloneCommand extends TransportCommand<CloneCommand, Git> {
 
 	private FetchResult fetch(Repository clonedRepo, URIish u)
 			throws URISyntaxException,
-			org.openrewrite.jgit.api.errors.TransportException, IOException,
+			TransportException, IOException,
 			GitAPIException {
 		// create the remote config and save it
 		RemoteConfig config = new RemoteConfig(clonedRepo.getConfig(), remote);

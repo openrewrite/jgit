@@ -38,31 +38,31 @@ public interface HttpConnection {
 	/**
 	 * @see HttpURLConnection#HTTP_OK
 	 */
-	int HTTP_OK = java.net.HttpURLConnection.HTTP_OK;
+	int HTTP_OK = HttpURLConnection.HTTP_OK;
 
 	/**
 	 * @see HttpURLConnection#HTTP_NOT_AUTHORITATIVE
 	 * @since 5.8
 	 */
-	int HTTP_NOT_AUTHORITATIVE = java.net.HttpURLConnection.HTTP_NOT_AUTHORITATIVE;
+	int HTTP_NOT_AUTHORITATIVE = HttpURLConnection.HTTP_NOT_AUTHORITATIVE;
 
 	/**
 	 * @see HttpURLConnection#HTTP_MOVED_PERM
 	 * @since 4.7
 	 */
-	int HTTP_MOVED_PERM = java.net.HttpURLConnection.HTTP_MOVED_PERM;
+	int HTTP_MOVED_PERM = HttpURLConnection.HTTP_MOVED_PERM;
 
 	/**
 	 * @see HttpURLConnection#HTTP_MOVED_TEMP
 	 * @since 4.9
 	 */
-	int HTTP_MOVED_TEMP = java.net.HttpURLConnection.HTTP_MOVED_TEMP;
+	int HTTP_MOVED_TEMP = HttpURLConnection.HTTP_MOVED_TEMP;
 
 	/**
 	 * @see HttpURLConnection#HTTP_SEE_OTHER
 	 * @since 4.9
 	 */
-	int HTTP_SEE_OTHER = java.net.HttpURLConnection.HTTP_SEE_OTHER;
+	int HTTP_SEE_OTHER = HttpURLConnection.HTTP_SEE_OTHER;
 
 	/**
 	 * HTTP 1.1 additional "temporary redirect" status code; value = 307.
@@ -87,17 +87,17 @@ public interface HttpConnection {
 	/**
 	 * @see HttpURLConnection#HTTP_NOT_FOUND
 	 */
-	int HTTP_NOT_FOUND = java.net.HttpURLConnection.HTTP_NOT_FOUND;
+	int HTTP_NOT_FOUND = HttpURLConnection.HTTP_NOT_FOUND;
 
 	/**
 	 * @see HttpURLConnection#HTTP_UNAUTHORIZED
 	 */
-	int HTTP_UNAUTHORIZED = java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
+	int HTTP_UNAUTHORIZED = HttpURLConnection.HTTP_UNAUTHORIZED;
 
 	/**
 	 * @see HttpURLConnection#HTTP_FORBIDDEN
 	 */
-	int HTTP_FORBIDDEN = java.net.HttpURLConnection.HTTP_FORBIDDEN;
+	int HTTP_FORBIDDEN = HttpURLConnection.HTTP_FORBIDDEN;
 
 	/**
 	 * Get response code

@@ -16,6 +16,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
+import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.URI;
@@ -255,7 +256,7 @@ public class HttpSupport {
 	 * @throws java.io.IOException
 	 *             communications error prevented obtaining the response code.
 	 */
-	public static int response(java.net.HttpURLConnection c)
+	public static int response(HttpURLConnection c)
 			throws IOException {
 		try {
 			return c.getResponseCode();
