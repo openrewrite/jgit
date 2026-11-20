@@ -10,6 +10,7 @@
 package org.openrewrite.jgit.util;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Map with only up to n entries. If a new entry is added so that the map
@@ -44,7 +45,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> {
 	}
 
 	@Override
-	protected boolean removeEldestEntry(java.util.Map.Entry<K, V> eldest) {
+	protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
 		return size() > limit;
 	}
 }

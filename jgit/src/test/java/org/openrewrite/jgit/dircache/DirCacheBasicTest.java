@@ -56,6 +56,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.openrewrite.jgit.api.Git;
 import org.openrewrite.jgit.errors.CorruptObjectException;
 import org.openrewrite.jgit.internal.JGitText;
+import org.openrewrite.jgit.lib.Config;
 import org.openrewrite.jgit.lib.ConfigConstants;
 import org.openrewrite.jgit.lib.Constants;
 import org.openrewrite.jgit.lib.FileMode;
@@ -63,6 +64,7 @@ import org.openrewrite.jgit.lib.ObjectInserter;
 import org.openrewrite.jgit.lib.Repository;
 import org.openrewrite.jgit.lib.StoredConfig;
 import org.openrewrite.jgit.storage.file.FileBasedConfig;
+import org.openrewrite.jgit.util.FS;
 import org.openrewrite.jgit.util.FileUtils;
 import org.openrewrite.jgit.util.SystemReader;
 
@@ -359,20 +361,20 @@ class DirCacheBasicTest {
 		}
 
 		@Override
-		public FileBasedConfig openUserConfig(org.openrewrite.jgit.lib.Config parent,
-				org.openrewrite.jgit.util.FS fs) {
+		public FileBasedConfig openUserConfig(Config parent,
+				FS fs) {
 			return delegate.openUserConfig(parent, fs);
 		}
 
 		@Override
-		public FileBasedConfig openSystemConfig(org.openrewrite.jgit.lib.Config parent,
-				org.openrewrite.jgit.util.FS fs) {
+		public FileBasedConfig openSystemConfig(Config parent,
+				FS fs) {
 			return delegate.openSystemConfig(parent, fs);
 		}
 
 		@Override
-		public FileBasedConfig openJGitConfig(org.openrewrite.jgit.lib.Config parent,
-				org.openrewrite.jgit.util.FS fs) {
+		public FileBasedConfig openJGitConfig(Config parent,
+				FS fs) {
 			return delegate.openJGitConfig(parent, fs);
 		}
 

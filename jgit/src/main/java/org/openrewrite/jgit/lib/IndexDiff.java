@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -652,7 +653,7 @@ public class IndexDiff {
 	}
 
 	private boolean hasFiles(File directory) {
-		try (DirectoryStream<java.nio.file.Path> dir = Files
+		try (DirectoryStream<Path> dir = Files
 				.newDirectoryStream(directory.toPath())) {
 			return dir.iterator().hasNext();
 		} catch (DirectoryIteratorException | IOException e) {

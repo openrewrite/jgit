@@ -26,6 +26,7 @@ import org.openrewrite.jgit.api.errors.JGitInternalException;
 import org.openrewrite.jgit.api.errors.NoHeadException;
 import org.openrewrite.jgit.api.errors.RefNotAdvertisedException;
 import org.openrewrite.jgit.api.errors.RefNotFoundException;
+import org.openrewrite.jgit.api.errors.TransportException;
 import org.openrewrite.jgit.api.errors.WrongRepositoryStateException;
 import org.openrewrite.jgit.dircache.DirCacheCheckout;
 import org.openrewrite.jgit.internal.JGitText;
@@ -183,7 +184,7 @@ public class PullCommand extends TransportCommand<PullCommand, PullResult> {
 			WrongRepositoryStateException, InvalidConfigurationException,
 			InvalidRemoteException, CanceledException,
 			RefNotFoundException, RefNotAdvertisedException, NoHeadException,
-			org.openrewrite.jgit.api.errors.TransportException {
+			TransportException {
 		checkCallable();
 
 		monitor.beginTask(JGitText.get().pullTaskName, 2);

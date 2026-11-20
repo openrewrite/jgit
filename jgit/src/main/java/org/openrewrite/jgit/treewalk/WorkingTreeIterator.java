@@ -25,6 +25,7 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.CharsetEncoder;
+import java.nio.file.NotLinkException;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.time.Instant;
@@ -1100,7 +1101,7 @@ public abstract class WorkingTreeIterator extends AbstractTreeIterator {
 	 */
 	protected String readSymlinkTarget(Entry entry) throws IOException {
 		if (!entry.getMode().equals(FileMode.SYMLINK)) {
-			throw new java.nio.file.NotLinkException(entry.getName());
+			throw new NotLinkException(entry.getName());
 		}
 		long length = entry.getLength();
 		byte[] content = new byte[(int) length];
